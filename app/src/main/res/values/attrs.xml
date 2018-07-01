@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BottomNavigationBehavior_Params">
+        <attr name="tabLayoutId" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomTextInputLayout">
+        <attr name="helperText" format="string"/>
+        <attr name="helperTextColor" format="color|reference"/>
+    </declare-styleable>
+
+    <style name="HelperTextAppearance" parent="TextAppearance.Design.Error">
+        <item name="android:textColor">@color/slate_green</item>
+    </style>
+</resources>
