@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/black</color>
+    <color name="colorPrimary">@color/scarlet</color>
     <color name="colorPrimaryDark">@color/scarlet</color>
     <color name="colorAccent">@color/scarlet</color>
     <color name="light_gray">#dbdbdb</color>
@@ -51,4 +51,5 @@
     <color name="charcoal">#324636</color>
     <color name="white_12">#1effffff</color>
     <color name="light_grey_green">#b6da90</color>
+    <color name="darkish_pink">#d54694</color>
 </resources>

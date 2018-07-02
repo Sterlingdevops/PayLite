@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SnapHelper
+import android.view.Gravity
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 import com.sterlingng.paylite.di.annotations.ActivityContext
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.rx.AppSchedulerProvider
@@ -12,12 +15,28 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
+import com.sterlingng.paylite.ui.home.DealsAdapter
+import com.sterlingng.paylite.ui.home.HomeMvpContract
+import com.sterlingng.paylite.ui.home.HomeMvpView
+import com.sterlingng.paylite.ui.home.HomePresenter
 import com.sterlingng.paylite.ui.login.LogInMvpContract
 import com.sterlingng.paylite.ui.login.LogInMvpView
 import com.sterlingng.paylite.ui.login.LogInPresenter
 import com.sterlingng.paylite.ui.main.MainMvpContract
 import com.sterlingng.paylite.ui.main.MainMvpView
 import com.sterlingng.paylite.ui.main.MainPresenter
+import com.sterlingng.paylite.ui.payment.PaymentMvpContract
+import com.sterlingng.paylite.ui.payment.PaymentMvpView
+import com.sterlingng.paylite.ui.payment.PaymentPresenter
+import com.sterlingng.paylite.ui.payment.pay.PayMvpContract
+import com.sterlingng.paylite.ui.payment.pay.PayMvpView
+import com.sterlingng.paylite.ui.payment.pay.PayPresenter
+import com.sterlingng.paylite.ui.payment.request.RequestMvpContract
+import com.sterlingng.paylite.ui.payment.request.RequestMvpView
+import com.sterlingng.paylite.ui.payment.request.RequestPresenter
+import com.sterlingng.paylite.ui.payment.scheduled.ScheduledMvpContract
+import com.sterlingng.paylite.ui.payment.scheduled.ScheduledMvpView
+import com.sterlingng.paylite.ui.payment.scheduled.ScheduledPresenter
 import com.sterlingng.paylite.ui.signup.SignUpMvpContract
 import com.sterlingng.paylite.ui.signup.SignUpMvpView
 import com.sterlingng.paylite.ui.signup.SignUpPresenter
@@ -63,16 +82,16 @@ class ActivityModule(private val activity: AppCompatActivity) {
     // Provide Utility Contexts
 
     @Provides
+    internal fun provideSnapHelper(): SnapHelper = GravitySnapHelper(Gravity.START)
+
+    @Provides
     internal fun provideSchedulerProvider(): SchedulerProvider = AppSchedulerProvider()
 
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
-//
-//    @Provides
-//    internal fun provideBidsAdapter(activity: AppCompatActivity): BidsAdapter = BidsAdapter(activity)
-//
-//    @Provides
-//    internal fun provideCardsAdapter(activity: AppCompatActivity): CardsAdapter = CardsAdapter(activity)
+
+    @Provides
+    internal fun provideDealsAdapter(activity: AppCompatActivity): DealsAdapter = DealsAdapter(activity)
 //
 //    @Provides
 //    internal fun provideFxRateAdapter(activity: AppCompatActivity): FxRateAdapter = FxRateAdapter(activity)
@@ -122,6 +141,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     // Provide Fragment Contexts
 
     @Provides
+    internal fun providePayPresenter(presenter: PayPresenter<PayMvpView>): PayMvpContract<PayMvpView> = presenter
+
+    @Provides
     internal fun provideOtpPresenter(presenter: OtpPresenter<OtpMvpView>): OtpMvpContract<OtpMvpView> = presenter
 
     @Provides
@@ -131,11 +153,23 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideNamePresenter(presenter: NamePresenter<NameMvpView>): NameMvpContract<NameMvpView> = presenter
 
     @Provides
+    internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter
+
+    @Provides
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
+
+    @Provides
+    internal fun providePaymentPresenter(presenter: PaymentPresenter<PaymentMvpView>): PaymentMvpContract<PaymentMvpView> = presenter
+
+    @Provides
+    internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
 
     @Provides
     internal fun provideCompletePresenter(presenter: CompletePresenter<CompleteMvpView>): CompleteMvpContract<CompleteMvpView> = presenter
 
     @Provides
     internal fun providePasswordPresenter(presenter: PasswordPresenter<PasswordMvpView>): PasswordMvpContract<PasswordMvpView> = presenter
+
+    @Provides
+    internal fun provideScheduledPresenter(presenter: ScheduledPresenter<ScheduledMvpView>): ScheduledMvpContract<ScheduledMvpView> = presenter
 }

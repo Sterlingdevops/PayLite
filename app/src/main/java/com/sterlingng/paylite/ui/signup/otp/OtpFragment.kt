@@ -9,6 +9,11 @@ import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.utils.OnChildDidClickNext
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class OtpFragment : BaseFragment(), OtpMvpView {
@@ -20,6 +25,7 @@ class OtpFragment : BaseFragment(), OtpMvpView {
     lateinit var next: Button
     lateinit var resend: Button
     private lateinit var pinView: PinView
+    lateinit var disposable: Disposable
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_otp, container, false)
@@ -29,9 +35,23 @@ class OtpFragment : BaseFragment(), OtpMvpView {
         return view
     }
 
+    override fun bindViews(view: View) {
+        next = view.findViewById(R.id.next)
+        resend = view.findViewById(R.id.resend)
+        pinView = view.findViewById(R.id.pin_view)
+    }
+
     override fun setUp(view: View) {
+        disposable = Flowable.interval(1, TimeUnit.SECONDS, Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it > 0)
+                        resend.text = "Resend code in ${(20 - it) % 20}"
+                }
+
         pinView.setPinViewEventListener { _, _ ->
             mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!)
+            disposable.dispose()
             hideKeyboard()
         }
         resend.setOnClickListener {
@@ -39,14 +59,14 @@ class OtpFragment : BaseFragment(), OtpMvpView {
         }
         next.setOnClickListener {
             mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!)
+            disposable.dispose()
             hideKeyboard()
         }
     }
 
-    override fun bindViews(view: View) {
-        next = view.findViewById(R.id.next)
-        resend = view.findViewById(R.id.resend)
-        pinView = view.findViewById(R.id.pin_view)
+    override fun onDetach() {
+        super.onDetach()
+        disposable.dispose()
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

@@ -3,8 +3,13 @@ package com.sterlingng.paylite.di.component
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.main.MainActivity
+import com.sterlingng.paylite.ui.payment.PaymentFragment
+import com.sterlingng.paylite.ui.payment.pay.PayFragment
+import com.sterlingng.paylite.ui.payment.request.RequestFragment
+import com.sterlingng.paylite.ui.payment.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
 import com.sterlingng.paylite.ui.signup.email.EmailFragment
@@ -13,7 +18,6 @@ import com.sterlingng.paylite.ui.signup.otp.OtpFragment
 import com.sterlingng.paylite.ui.signup.password.PasswordFragment
 import com.sterlingng.paylite.ui.signup.pin.PinFragment
 import dagger.Component
-
 
 /**
  * Created by rtukpe on 13/03/2018.
@@ -37,15 +41,25 @@ interface ActivityComponent {
 
     fun inject(otpFragment: OtpFragment)
 
+    fun inject(payFragment: PayFragment)
+
     fun inject(pinFragment: PinFragment)
 
     fun inject(nameFragment: NameFragment)
 
+    fun inject(homeFragment: HomeFragment)
+
     fun inject(emailFragment: EmailFragment)
+
+    fun inject(requestFragment: RequestFragment)
+
+    fun inject(paymentFragment: PaymentFragment)
 
     fun inject(countryFragment: PasswordFragment)
 
     fun inject(completeFragment: CompleteFragment)
+
+    fun inject(scheduledFragment: ScheduledFragment)
 
     // Dialogs
 

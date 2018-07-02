@@ -72,9 +72,12 @@
 
 
     <style name="EditText" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/black</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
-        <item name="android:background">@color/lighter_gray</item>
+    </style>
+
+    <style name="MyAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="FullWidthEditText" parent="Widget.AppCompat.EditText">

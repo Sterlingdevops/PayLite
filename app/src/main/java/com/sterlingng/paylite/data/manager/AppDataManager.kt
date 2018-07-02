@@ -1,7 +1,7 @@
 package com.sterlingng.paylite.data.manager
 
 import android.content.Context
-import com.sterlingng.paylite.data.model.*
+import com.sterlingng.paylite.data.model.Deal
 import com.sterlingng.paylite.data.repository.mock.MockHelper
 import com.sterlingng.paylite.data.repository.remote.helpers.RemoteServiceHelper
 import com.sterlingng.paylite.di.annotations.ApplicationContext
@@ -18,27 +18,7 @@ class AppDataManager
 @Inject
 internal constructor(@param:ApplicationContext val context: Context, private val remoteServiceHelper: RemoteServiceHelper, private val mockHelper: MockHelper) : DataManager {
 
-    override fun mockResults(): Observable<ArrayList<Result>> {
-        return mockHelper.mockResults()
-    }
-
-    override fun mockTransactions(): Observable<ArrayList<Transaction>> {
-        return mockHelper.mockTransactions()
-    }
-
-    override fun mockAccounts(): Observable<ArrayList<Account>> {
-        return mockHelper.mockAccounts()
-    }
-
-    override fun mockCreditCards(): Observable<ArrayList<Card>> {
-        return mockHelper.mockCreditCards()
-    }
-
-    override fun mockBids(): Observable<ArrayList<Bid>> {
-        return mockHelper.mockBids()
-    }
-
-    override fun mockRates(): Observable<ArrayList<Rate>> {
-        return mockHelper.mockRates()
+    override fun mockDeals(): Observable<ArrayList<Deal>> {
+        return mockHelper.mockDeals()
     }
 }

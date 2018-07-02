@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lipstick"
+    android:background="@drawable/main_background"
     tools:context=".ui.main.MainActivity">
 
     <TextView
@@ -27,10 +27,10 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="easy as it gets"
+        android:text="@string/easy_as_it_gets"
         android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"

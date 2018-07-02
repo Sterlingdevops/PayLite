@@ -72,7 +72,7 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
 
         mViewPager.adapter = mPagerAdapter
         mViewPager.isPagingEnabled = false
-        mViewPager.offscreenPageLimit = mPagerAdapter.count
+        mViewPager.offscreenPageLimit = 1
     }
 
     override fun onBackPressed() {

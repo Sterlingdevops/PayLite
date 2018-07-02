@@ -11,6 +11,8 @@ import android.view.View
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
+import com.sterlingng.paylite.ui.home.HomeFragment
+import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.utils.Log
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
@@ -23,10 +25,8 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
     lateinit var mPresenter: DashboardMvpContract<DashboardMvpView>
     private var mFragmentManager: FragmentManager = supportFragmentManager
     private lateinit var mCurrentFragment: Fragment
-    private lateinit var settingsFragment: Fragment
-    private lateinit var marketFragment: Fragment
-    private lateinit var walletFragment: Fragment
-    private lateinit var bidsFragment: Fragment
+    private lateinit var homeFragment: Fragment
+    private lateinit var paymentFragment: Fragment
     private var mSelectedItem = 0
 
     override fun attachBaseContext(newBase: Context) {
@@ -72,10 +72,8 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
     }
 
     override fun setUp() {
-//        settingsFragment = SettingsFragment.newInstance()
-//        walletFragment = WalletFragment.newInstance()
-//        marketFragment = MarketFragment.newInstance()
-//        bidsFragment = BidsFragment.newInstance()
+        homeFragment = HomeFragment.newInstance()
+        paymentFragment = PaymentFragment.newInstance()
 
         createFragments()
 
@@ -123,19 +121,16 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
 
     //Add all the fragments that need to be added and hidden. Also, add the one that is supposed to be the starting one, that one is not hidden.
     private fun createFragments() {
-//        mFragmentManager
-//                .beginTransaction()
-//                .remove(bidsFragment)
-//                .remove(walletFragment)
-//                .remove(settingsFragment)
-//                .remove(marketFragment).commit()
-//
-//        addHideFragment(settingsFragment, settings)
-//        addHideFragment(walletFragment, wallet)
-//        addHideFragment(bidsFragment, bids)
-//
-//        mFragmentManager.beginTransaction().add(R.id.container, marketFragment, market).commit()
-//        mCurrentFragment = marketFragment
+        mFragmentManager
+                .beginTransaction()
+                .remove(homeFragment)
+                .remove(paymentFragment)
+                .commit()
+
+        addHideFragment(paymentFragment, payment)
+
+        mFragmentManager.beginTransaction().add(R.id.container, homeFragment, home).commit()
+        mCurrentFragment = homeFragment
     }
 
     private fun selectFragment(item: MenuItem): Boolean {
@@ -143,31 +138,26 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
             return false
         }
 
-//        when (item.itemId) {
-//            R.id.nav_market -> {
-//                mCurrentFragment = hideShowFragment(mCurrentFragment, marketFragment)
-//            }
-//            R.id.nav_bid -> {
-//                mCurrentFragment = hideShowFragment(mCurrentFragment, bidsFragment)
-//            }
-//            R.id.nav_wallet -> {
-//                mCurrentFragment = hideShowFragment(mCurrentFragment, walletFragment)
-//            }
-//            R.id.nav_settings -> {
-//                mCurrentFragment = hideShowFragment(mCurrentFragment, settingsFragment)
-//            }
-//        }
+        when (item.itemId) {
+            R.id.nav_home -> {
+                mCurrentFragment = hideShowFragment(mCurrentFragment, homeFragment)
+            }
+            R.id.nav_payments -> {
+                mCurrentFragment = hideShowFragment(mCurrentFragment, paymentFragment)
+            }
+            R.id.nav_give -> {
+                mCurrentFragment = hideShowFragment(mCurrentFragment, homeFragment)
+            }
+        }
 
         mSelectedItem = item.itemId
         return true
     }
 
     companion object {
-        private const val bids = "BidsFragment"
-        private const val wallet = "WalletFragment"
-        private const val market = "MarketFragment"
+        private const val home = "HomeFragment"
+        private const val payment = "PaymentFragment"
         const val SELECTED_ITEM = "arg_selected_item"
-        private const val settings = "SettingsFragment"
 
         fun getStartIntent(context: Context): Intent {
             val intent = Intent(context, DashboardActivity::class.java)
