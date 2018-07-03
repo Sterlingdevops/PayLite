@@ -92,4 +92,6 @@
     <string name="pay_code">Pay Code</string>
     <string name="you_habe_no_scheduled_payments_created">You have no scheduled payments</string>
     <string name="create">Create</string>
+    <string name="irrigation_2018">Irrigation 2018</string>
+    <string name="agriculture">Agriculture</string>
 </resources>

@@ -1,8 +1,11 @@
 package com.sterlingng.paylite.di.component
 
+import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.give.GiveFragment
+import com.sterlingng.paylite.ui.give.categories.CategoriesFragment
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.main.MainActivity
@@ -45,6 +48,8 @@ interface ActivityComponent {
 
     fun inject(pinFragment: PinFragment)
 
+    fun inject(giveFragment: GiveFragment)
+
     fun inject(nameFragment: NameFragment)
 
     fun inject(homeFragment: HomeFragment)
@@ -59,7 +64,11 @@ interface ActivityComponent {
 
     fun inject(completeFragment: CompleteFragment)
 
+    fun inject(charitiesFragment: CharitiesFragment)
+
     fun inject(scheduledFragment: ScheduledFragment)
+
+    fun inject(categoriesFragment: CategoriesFragment)
 
     // Dialogs
 

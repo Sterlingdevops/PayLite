@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.utils
+package com.sterlingng.paylite.ui.give
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import java.lang.ref.WeakReference
 import java.util.*
 
-open class CustomPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
+class GivePagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
     private val instantiatedFragments = SparseArray<WeakReference<Fragment>>()
     private val mFragmentList = ArrayList<Fragment>()
     private val mFragmentTitleList = ArrayList<String>()

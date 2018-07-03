@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.data.manager
 
 import android.content.Context
+import com.sterlingng.paylite.data.model.Category
 import com.sterlingng.paylite.data.model.Deal
 import com.sterlingng.paylite.data.repository.mock.MockHelper
 import com.sterlingng.paylite.data.repository.remote.helpers.RemoteServiceHelper
@@ -16,7 +17,13 @@ import javax.inject.Singleton
 @Singleton
 class AppDataManager
 @Inject
-internal constructor(@param:ApplicationContext val context: Context, private val remoteServiceHelper: RemoteServiceHelper, private val mockHelper: MockHelper) : DataManager {
+internal constructor(@param:ApplicationContext val context: Context,
+                     private val remoteServiceHelper: RemoteServiceHelper,
+                     private val mockHelper: MockHelper) : DataManager {
+
+    override fun mockCategories(): Observable<ArrayList<Category>> {
+        return mockHelper.mockCategories()
+    }
 
     override fun mockDeals(): Observable<ArrayList<Deal>> {
         return mockHelper.mockDeals()

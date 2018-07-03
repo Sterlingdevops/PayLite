@@ -15,6 +15,16 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
+import com.sterlingng.paylite.ui.give.GiveMvpContract
+import com.sterlingng.paylite.ui.give.GiveMvpView
+import com.sterlingng.paylite.ui.give.GivePresenter
+import com.sterlingng.paylite.ui.give.categories.CategoriesAdapter
+import com.sterlingng.paylite.ui.give.categories.CategoriesMvpContract
+import com.sterlingng.paylite.ui.give.categories.CategoriesMvpView
+import com.sterlingng.paylite.ui.give.categories.CategoriesPresenter
+import com.sterlingng.paylite.ui.give.charities.CharitiesMvpContract
+import com.sterlingng.paylite.ui.give.charities.CharitiesMvpView
+import com.sterlingng.paylite.ui.give.charities.CharitiesPresenter
 import com.sterlingng.paylite.ui.home.DealsAdapter
 import com.sterlingng.paylite.ui.home.HomeMvpContract
 import com.sterlingng.paylite.ui.home.HomeMvpView
@@ -64,7 +74,6 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 
-
 /**
  * Created by rtukpe on 13/03/2018.
  */
@@ -92,24 +101,15 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideDealsAdapter(activity: AppCompatActivity): DealsAdapter = DealsAdapter(activity)
-//
-//    @Provides
-//    internal fun provideFxRateAdapter(activity: AppCompatActivity): FxRateAdapter = FxRateAdapter(activity)
-//
-//    @Provides
-//    internal fun provideResultsAdapter(activity: AppCompatActivity): ResultsAdapter = ResultsAdapter(activity)
-//
-//    @Provides
-//    internal fun provideAccountsAdapter(activity: AppCompatActivity): AccountsAdapter = AccountsAdapter(activity)
-//
-//    @Provides
-//    internal fun provideTransactionsAdapter(activity: AppCompatActivity): TransactionsAdapter = TransactionsAdapter(activity)
+
+    @Provides
+    internal fun provideCategoriesAdapter(activity: AppCompatActivity): CategoriesAdapter = CategoriesAdapter(activity)
 
     @Provides
     internal fun provideLinearLayoutManager(activity: AppCompatActivity): LinearLayoutManager = LinearLayoutManager(activity)
 
     @Provides
-    internal fun provideGridLayoutManager(activity: AppCompatActivity): GridLayoutManager = GridLayoutManager(activity, 3)
+    internal fun provideGridLayoutManager(activity: AppCompatActivity): GridLayoutManager = GridLayoutManager(activity, 2)
 
     @Provides
     internal fun provideCustomPagerAdapter(activity: AppCompatActivity): CustomPagerAdapter = CustomPagerAdapter(activity.supportFragmentManager)
@@ -153,6 +153,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideNamePresenter(presenter: NamePresenter<NameMvpView>): NameMvpContract<NameMvpView> = presenter
 
     @Provides
+    internal fun provideGivePresenter(presenter: GivePresenter<GiveMvpView>): GiveMvpContract<GiveMvpView> = presenter
+
+    @Provides
     internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter
 
     @Provides
@@ -172,4 +175,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideScheduledPresenter(presenter: ScheduledPresenter<ScheduledMvpView>): ScheduledMvpContract<ScheduledMvpView> = presenter
+
+    @Provides
+    internal fun provideCharitiesPresenter(presenter: CharitiesPresenter<CharitiesMvpView>): CharitiesMvpContract<CharitiesMvpView> = presenter
+
+    @Provides
+    internal fun provideCategoriesPresenter(presenter: CategoriesPresenter<CategoriesMvpView>): CategoriesMvpContract<CategoriesMvpView> = presenter
 }

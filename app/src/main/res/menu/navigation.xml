@@ -8,20 +8,20 @@
         android:icon="@drawable/home_light"
         android:orderInCategory="100"
         android:title="@string/home"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/nav_payments"
         android:icon="@drawable/payments_light"
         android:orderInCategory="101"
         android:title="@string/payments"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/nav_give"
         android:icon="@drawable/give_light"
         android:orderInCategory="102"
         android:title="@string/give"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
 </menu>

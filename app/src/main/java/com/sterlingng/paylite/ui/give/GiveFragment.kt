@@ -1,4 +1,5 @@
-package com.sterlingng.paylite.ui.payment
+package com.sterlingng.paylite.ui.give
+
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,24 +8,23 @@ import android.view.ViewGroup
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.payment.pay.PayFragment
-import com.sterlingng.paylite.ui.payment.request.RequestFragment
-import com.sterlingng.paylite.ui.payment.scheduled.ScheduledFragment
+import com.sterlingng.paylite.ui.give.categories.CategoriesFragment
+import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
 import com.sterlingng.paylite.utils.widgets.CustomViewPager
 import javax.inject.Inject
 
-class PaymentFragment : BaseFragment(), PaymentMvpView {
+class GiveFragment : BaseFragment(), GiveMvpView {
 
     @Inject
-    lateinit var mPresenter: PaymentMvpContract<PaymentMvpView>
+    lateinit var mPresenter: GiveMvpContract<GiveMvpView>
 
-    lateinit var mPagerAdapter: PaymentPagerAdapter
+    lateinit var mPagerAdapter: GivePagerAdapter
 
     private lateinit var mViewPager: CustomViewPager
     private lateinit var mSmartTabLayout: SmartTabLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_payment, container, false)
+        val view = inflater.inflate(R.layout.fragment_give, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)
@@ -37,10 +37,9 @@ class PaymentFragment : BaseFragment(), PaymentMvpView {
     }
 
     override fun setUp(view: View) {
-        mPagerAdapter = PaymentPagerAdapter(childFragmentManager)
-        mPagerAdapter.addFragment(PayFragment.newInstance(), "Pay")
-        mPagerAdapter.addFragment(RequestFragment.newInstance(), "Request")
-        mPagerAdapter.addFragment(ScheduledFragment.newInstance(), "Scheduled")
+        mPagerAdapter = GivePagerAdapter(childFragmentManager)
+        mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "Categories")
+        mPagerAdapter.addFragment(CharitiesFragment.newInstance(), "Charities")
 
         mViewPager.adapter = mPagerAdapter
         mViewPager.isPagingEnabled = true
@@ -48,14 +47,15 @@ class PaymentFragment : BaseFragment(), PaymentMvpView {
         mSmartTabLayout.setViewPager(mViewPager)
     }
 
+
     override fun recyclerViewListClicked(v: View, position: Int) {
 
     }
 
     companion object {
 
-        fun newInstance(): PaymentFragment {
-            val fragment = PaymentFragment()
+        fun newInstance(): GiveFragment {
+            val fragment = GiveFragment()
             val args = Bundle()
             fragment.arguments = args
             return fragment

@@ -11,6 +11,7 @@ import android.view.View
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
+import com.sterlingng.paylite.ui.give.GiveFragment
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.utils.Log
@@ -25,9 +26,11 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
     lateinit var mPresenter: DashboardMvpContract<DashboardMvpView>
     private var mFragmentManager: FragmentManager = supportFragmentManager
     private lateinit var mCurrentFragment: Fragment
+    private var mSelectedItem = 0
+
     private lateinit var homeFragment: Fragment
     private lateinit var paymentFragment: Fragment
-    private var mSelectedItem = 0
+    private lateinit var giveFragment: Fragment
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -74,18 +77,18 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
     override fun setUp() {
         homeFragment = HomeFragment.newInstance()
         paymentFragment = PaymentFragment.newInstance()
+        giveFragment = GiveFragment.newInstance()
 
         createFragments()
 
         mBottomNavigationView.onNavigationItemSelectedListener = this
         mBottomNavigationView.enableAnimation(true)
         mBottomNavigationView.enableShiftingMode(false)
-        mBottomNavigationView.enableItemShiftingMode(false)
+        mBottomNavigationView.enableItemShiftingMode(true)
 
         mSelectedItem = intent.getIntExtra(SELECTED_ITEM, 0)
 
         val homeItem = mBottomNavigationView.menu.getItem(mSelectedItem)
-        Log.d(homeItem.itemId.toString())
         mBottomNavigationView.selectedItemId = homeItem.itemId
         selectFragment(homeItem)
     }
@@ -124,10 +127,12 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
         mFragmentManager
                 .beginTransaction()
                 .remove(homeFragment)
+                .remove(giveFragment)
                 .remove(paymentFragment)
                 .commit()
 
         addHideFragment(paymentFragment, payment)
+        addHideFragment(giveFragment, give)
 
         mFragmentManager.beginTransaction().add(R.id.container, homeFragment, home).commit()
         mCurrentFragment = homeFragment
@@ -146,7 +151,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
                 mCurrentFragment = hideShowFragment(mCurrentFragment, paymentFragment)
             }
             R.id.nav_give -> {
-                mCurrentFragment = hideShowFragment(mCurrentFragment, homeFragment)
+                mCurrentFragment = hideShowFragment(mCurrentFragment, giveFragment)
             }
         }
 
@@ -157,6 +162,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
     companion object {
         private const val home = "HomeFragment"
         private const val payment = "PaymentFragment"
+        private const val give = "GiveFragment"
         const val SELECTED_ITEM = "arg_selected_item"
 
         fun getStartIntent(context: Context): Intent {
