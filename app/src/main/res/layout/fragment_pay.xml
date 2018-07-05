@@ -7,11 +7,12 @@
     android:layout_height="match_parent">
 
     <com.sterlingng.paylite.utils.widgets.SquareImageView
+        android:id="@+id/squareImageView2"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/send_money"
+        app:layout_constraintBottom_toBottomOf="@+id/ref1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/send_money"
         app:srcCompat="@drawable/send_money"/>
@@ -21,13 +22,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:padding="16dp"
+        android:gravity="top"
         android:paddingEnd="0dp"
         android:paddingStart="56dp"
+        android:paddingTop="8dp"
         android:text="@string/send_money"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
@@ -36,116 +34,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@id/send_money"
-        app:layout_constraintEnd_toEndOf="@+id/send_money"
-        app:layout_constraintTop_toTopOf="@id/send_money"
-        app:srcCompat="@drawable/chevron_right"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/light_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/pay_code"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pay_code"/>
-
-    <com.sterlingng.paylite.utils.widgets.SquareImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/qr_payment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/qr_payment"
-        app:srcCompat="@drawable/qr_payments"/>
-
     <TextView
-        android:id="@+id/qr_payment"
+        android:id="@+id/ref1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:paddingEnd="0dp"
-        android:paddingStart="56dp"
-        android:text="@string/qr_payment"
-        android:textColor="@color/blue_black_dark"
-        android:textSize="16sp"
+        android:layout_marginStart="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/reference"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pay_code"
-        tools:layout_editor_absoluteY="237dp"/>
-
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@id/qr_payment"
-        app:layout_constraintEnd_toEndOf="@+id/qr_payment"
-        app:layout_constraintTop_toTopOf="@id/qr_payment"
-        app:srcCompat="@drawable/chevron_right"/>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/light_gray"
-        app:layout_constraintBottom_toBottomOf="@id/qr_payment"
-        app:layout_constraintEnd_toEndOf="@id/qr_payment"
-        app:layout_constraintStart_toStartOf="@id/qr_payment"/>
-
-    <com.sterlingng.paylite.utils.widgets.SquareImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/pay_code"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pay_code"
-        app:srcCompat="@drawable/pay_code"/>
-
-    <TextView
-        android:id="@+id/pay_code"
-        android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:paddingEnd="0dp"
-        android:paddingStart="56dp"
-        android:text="@string/pay_code"
-        android:textColor="@color/blue_black_dark"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/squareImageView2"
         app:layout_constraintTop_toBottomOf="@id/send_money"/>
 
     <ImageView
@@ -156,19 +55,140 @@
         android:layout_marginEnd="8dp"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/pay_code"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pay_code"
+        app:layout_constraintBottom_toBottomOf="@+id/ref1"
+        app:layout_constraintEnd_toEndOf="@+id/send_money"
+        app:layout_constraintTop_toTopOf="@id/send_money"
         app:srcCompat="@drawable/chevron_right"/>
 
     <View
+        android:id="@+id/view2"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="16dp"
         android:background="@color/light_gray"
-        app:layout_constraintBottom_toBottomOf="@id/send_money"
         app:layout_constraintEnd_toEndOf="@id/send_money"
-        app:layout_constraintStart_toStartOf="@id/send_money"/>
+        app:layout_constraintStart_toStartOf="@id/send_money"
+        app:layout_constraintTop_toBottomOf="@+id/ref1"/>
+
+    <com.sterlingng.paylite.utils.widgets.SquareImageView
+        android:id="@+id/squareImageView4"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/ref3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/qr_payment"
+        app:srcCompat="@drawable/qr_payments"/>
+
+    <TextView
+        android:id="@+id/qr_payment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:paddingEnd="0dp"
+        android:paddingStart="56dp"
+        android:paddingTop="8dp"
+        android:text="@string/qr_payment"
+        android:textColor="@color/blue_black_dark"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view3"/>
+
+    <TextView
+        android:id="@+id/ref3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/reference"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/squareImageView4"
+        app:layout_constraintTop_toBottomOf="@+id/qr_payment"/>
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/ref3"
+        app:layout_constraintEnd_toEndOf="@+id/qr_payment"
+        app:layout_constraintTop_toTopOf="@id/qr_payment"
+        app:srcCompat="@drawable/chevron_right"/>
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ref2"/>
+
+    <com.sterlingng.paylite.utils.widgets.SquareImageView
+        android:id="@+id/squareImageView3"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/ref2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pay_code"
+        app:srcCompat="@drawable/pay_code"/>
+
+    <TextView
+        android:id="@+id/pay_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:paddingEnd="0dp"
+        android:paddingStart="56dp"
+        android:paddingTop="8dp"
+        android:text="@string/pay_code"
+        android:textColor="@color/blue_black_dark"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view2"
+        tools:layout_editor_absoluteY="74dp"/>
+
+    <TextView
+        android:id="@+id/ref2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/reference"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/squareImageView3"
+        app:layout_constraintTop_toBottomOf="@id/pay_code"/>
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/ref2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pay_code"
+        app:srcCompat="@drawable/chevron_right"/>
 
     <com.sterlingng.paylite.utils.widgets.SquareImageView
         android:id="@+id/squareImageView"
@@ -184,11 +204,21 @@
         app:layout_constraintTop_toBottomOf="@+id/view"
         app:layout_constraintVertical_chainStyle="packed"/>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="@id/qr_payment"
+        app:layout_constraintStart_toStartOf="@id/qr_payment"
+        app:layout_constraintTop_toBottomOf="@+id/ref3"/>
+
     <Button
         android:id="@+id/invite_friends"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/button_red"
         android:clickable="true"
         android:focusable="true"
@@ -205,16 +235,5 @@
         app:layout_constraintTop_toBottomOf="@+id/squareImageView"
         app:layout_constraintVertical_bias="0.181"
         tools:targetApi="lollipop"/>
-
-    <android.support.constraint.Barrier
-        android:id="@+id/barrier3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="send_money"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

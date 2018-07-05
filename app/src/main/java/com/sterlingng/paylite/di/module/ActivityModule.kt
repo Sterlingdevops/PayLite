@@ -22,9 +22,13 @@ import com.sterlingng.paylite.ui.give.categories.CategoriesAdapter
 import com.sterlingng.paylite.ui.give.categories.CategoriesMvpContract
 import com.sterlingng.paylite.ui.give.categories.CategoriesMvpView
 import com.sterlingng.paylite.ui.give.categories.CategoriesPresenter
+import com.sterlingng.paylite.ui.give.charities.CharitiesAdapter
 import com.sterlingng.paylite.ui.give.charities.CharitiesMvpContract
 import com.sterlingng.paylite.ui.give.charities.CharitiesMvpView
 import com.sterlingng.paylite.ui.give.charities.CharitiesPresenter
+import com.sterlingng.paylite.ui.give.filter.FilterMvpContract
+import com.sterlingng.paylite.ui.give.filter.FilterMvpView
+import com.sterlingng.paylite.ui.give.filter.FilterPresenter
 import com.sterlingng.paylite.ui.home.DealsAdapter
 import com.sterlingng.paylite.ui.home.HomeMvpContract
 import com.sterlingng.paylite.ui.home.HomeMvpView
@@ -103,6 +107,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideDealsAdapter(activity: AppCompatActivity): DealsAdapter = DealsAdapter(activity)
 
     @Provides
+    internal fun provideCharitiesAdapter(activity: AppCompatActivity): CharitiesAdapter = CharitiesAdapter(activity)
+
+    @Provides
     internal fun provideCategoriesAdapter(activity: AppCompatActivity): CategoriesAdapter = CategoriesAdapter(activity)
 
     @Provides
@@ -160,6 +167,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
+
+    @Provides
+    internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter
 
     @Provides
     internal fun providePaymentPresenter(presenter: PaymentPresenter<PaymentMvpView>): PaymentMvpContract<PaymentMvpView> = presenter

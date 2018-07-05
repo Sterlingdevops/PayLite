@@ -1,31 +1,27 @@
-package com.sterlingng.paylite.ui.give.charities
+package com.sterlingng.paylite.ui.give.filter
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
-class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+class FilterAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    val charities: ArrayList<Charity> = ArrayList()
+    val items: ArrayList<String> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
-    lateinit var onRetryClickedListener: OnRetryClicked
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View?
         return when (viewType) {
             VIEW_TYPE_NORMAL -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_charities_item, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_filter_item, parent, false)
                 ViewHolder(view, mRecyclerViewClickListener)
             }
             VIEW_TYPE_EMPTY -> {
@@ -39,27 +35,27 @@ class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHol
         }
     }
 
-    fun getCharityAtPosition(position: Int): Charity = charities[position]
+    fun getItemAtPosition(position: Int): String = items[position]
 
-    fun addCharity(charity: Charity) {
-        charities.add(charity)
-        notifyItemInserted(this.charities.size - 1)
+    fun addItem(String: String) {
+        items.add(String)
+        notifyItemInserted(this.items.size - 1)
     }
 
-    fun addCharities(charitys: Collection<Charity>) {
-        val index = this.charities.size - 1
-        this.charities.addAll(charitys)
-        notifyItemRangeInserted(index, charitys.size - 1)
+    fun addItems(Strings: Collection<String>) {
+        val index = this.items.size - 1
+        this.items.addAll(Strings)
+        notifyItemRangeInserted(index, Strings.size - 1)
     }
 
-    fun removeCharity(index: Int) {
-        this.charities.removeAt(index)
+    fun removeItem(index: Int) {
+        this.items.removeAt(index)
         notifyItemRemoved(index)
     }
 
     fun clear() {
-        charities.clear()
-        notifyItemRangeRemoved(0, this.charities.size)
+        items.clear()
+        notifyItemRangeRemoved(0, this.items.size)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -67,7 +63,7 @@ class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHol
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (charities.size > 0) {
+        return if (items.size > 0) {
             VIEW_TYPE_NORMAL
         } else {
             VIEW_TYPE_EMPTY
@@ -75,8 +71,8 @@ class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHol
     }
 
     override fun getItemCount(): Int {
-        return if (charities.size > 0) {
-            charities.size
+        return if (items.size > 0) {
+            items.size
         } else {
             1
         }
@@ -84,17 +80,13 @@ class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHol
 
     inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
 
-        val charityNameTextView: TextView = itemView.findViewById(R.id.charity_name)
-        val charityTypeTextView: TextView = itemView.findViewById(R.id.charity_type)
-        val charityLogoImageView: ImageView = itemView.findViewById(R.id.charity_logo)
+        private val filterItemTextView: TextView = itemView.findViewById(R.id.filter_item)
 
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            with(charities[position]) {
-                charityTypeTextView.text = category
-                charityNameTextView.text = name
-                charityLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_list_england))
+            with(items[position]) {
+                filterItemTextView.text = this
             }
             itemView.setOnClickListener {
                 recyclerViewClickListener.recyclerViewListClicked(it, position)
@@ -121,12 +113,7 @@ class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHol
 
         private fun retryClicked() {
             checkConnection()
-            onRetryClickedListener.onRetryClicked()
         }
-    }
-
-    interface OnRetryClicked {
-        fun onRetryClicked()
     }
 
     companion object {

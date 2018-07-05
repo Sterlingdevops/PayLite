@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.data.repository.mock
 
 import com.sterlingng.paylite.data.model.Category
+import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.data.model.Deal
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -25,6 +26,17 @@ internal constructor() : MockerInterface {
         categories += Category("Irrigation 2018", "Agriculture")
         categories += Category("Children’s day", "Health")
         return Observable.just(categories)
+    }
+
+    override fun mockCharities(): Observable<ArrayList<Charity>> {
+        val charities: ArrayList<Charity> = ArrayList()
+        charities += Charity("Red Cross Society", "Health")
+        charities += Charity("S.O.S Village", "Orphanage")
+        charities += Charity("Sacred Heart", "NGO")
+        charities += Charity("S.T.E.R", "women and children")
+        charities += Charity("Lifebank", "Donation / disaster relief")
+        charities += Charity("Trauma Care", "Health")
+        return Observable.just(charities)
     }
 
     override fun mockDeals(): Observable<ArrayList<Deal>> {

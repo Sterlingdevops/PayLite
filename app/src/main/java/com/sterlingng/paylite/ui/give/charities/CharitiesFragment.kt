@@ -1,17 +1,28 @@
 package com.sterlingng.paylite.ui.give.charities
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.ui.base.BaseFragment
 import javax.inject.Inject
 
-class CharitiesFragment : BaseFragment(), CharitiesMvpView {
+class CharitiesFragment : BaseFragment(), CharitiesMvpView, CharitiesAdapter.OnRetryClicked {
 
     @Inject
     lateinit var mPresenter: CharitiesMvpContract<CharitiesMvpView>
+
+    @Inject
+    lateinit var mLinearLayoutManager: LinearLayoutManager
+
+    @Inject
+    lateinit var mCharitiesAdapter: CharitiesAdapter
+
+    private lateinit var mRecyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_charities, container, false)
@@ -21,11 +32,25 @@ class CharitiesFragment : BaseFragment(), CharitiesMvpView {
         return view
     }
 
-    override fun bindViews(view: View) {
+    override fun updateCharities(it: ArrayList<Charity>) {
+        mCharitiesAdapter.addCharities(it)
+    }
 
+    override fun bindViews(view: View) {
+        mRecyclerView = view.findViewById(R.id.recyclerView)
     }
 
     override fun setUp(view: View) {
+        mCharitiesAdapter.mRecyclerViewClickListener = this
+        mCharitiesAdapter.onRetryClickedListener = this
+        mRecyclerView.adapter = mCharitiesAdapter
+        mRecyclerView.layoutManager = mLinearLayoutManager
+        mRecyclerView.scrollToPosition(0)
+
+        mPresenter.loadCharities()
+    }
+
+    override fun onRetryClicked() {
 
     }
 

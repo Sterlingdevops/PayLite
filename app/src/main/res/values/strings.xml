@@ -94,4 +94,7 @@
     <string name="create">Create</string>
     <string name="irrigation_2018">Irrigation 2018</string>
     <string name="agriculture">Agriculture</string>
+    <string name="reference">Reference</string>
+    <string name="red_cross_society">Red Cross Society</string>
+    <string name="health">Health</string>
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
@@ -20,8 +21,11 @@ class GiveFragment : BaseFragment(), GiveMvpView {
 
     lateinit var mPagerAdapter: GivePagerAdapter
 
+    private lateinit var filter: ImageView
     private lateinit var mViewPager: CustomViewPager
     private lateinit var mSmartTabLayout: SmartTabLayout
+
+    lateinit var onFilterClickedListener: OnFilterClicked
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_give, container, false)
@@ -32,21 +36,29 @@ class GiveFragment : BaseFragment(), GiveMvpView {
     }
 
     override fun bindViews(view: View) {
+        filter = view.findViewById(R.id.filter)
         mViewPager = view.findViewById(R.id.viewpager)
         mSmartTabLayout = view.findViewById(R.id.viewpagertab)
     }
 
     override fun setUp(view: View) {
         mPagerAdapter = GivePagerAdapter(childFragmentManager)
-        mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "Categories")
+
+        val categoriesFragment = CategoriesFragment.newInstance()
+        onFilterClickedListener = categoriesFragment
+
+        mPagerAdapter.addFragment(categoriesFragment, "Categories")
         mPagerAdapter.addFragment(CharitiesFragment.newInstance(), "Charities")
 
         mViewPager.adapter = mPagerAdapter
         mViewPager.isPagingEnabled = true
 
         mSmartTabLayout.setViewPager(mViewPager)
-    }
 
+        filter.setOnClickListener {
+            onFilterClickedListener.onFilterClicked()
+        }
+    }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
 

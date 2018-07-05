@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.ui.give.categories
 
 
+import android.app.Dialog
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -10,11 +11,12 @@ import android.view.ViewGroup
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Category
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.give.OnFilterClicked
+import com.sterlingng.paylite.ui.give.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.utils.ItemOffsetDecoration
 import javax.inject.Inject
 
-class CategoriesFragment : BaseFragment(), CategoriesMvpView, CategoriesAdapter.OnRetryClicked {
-
+class CategoriesFragment : BaseFragment(), CategoriesMvpView, CategoriesAdapter.OnRetryClicked, OnFilterClicked, FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
     lateinit var mPresenter: CategoriesMvpContract<CategoriesMvpView>
@@ -54,6 +56,17 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, CategoriesAdapter.
 
     override fun onRetryClicked() {
 
+    }
+
+    override fun onFilterClicked() {
+        val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
+        filterBottomSheetFragment.onFilterItemSelectedListener = this
+        filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
+    }
+
+    override fun onFilterItemSelected(dialog: Dialog, s: String) {
+        show(s, true)
+        dialog.dismiss()
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
