@@ -85,6 +85,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
 
     implementation project(':pinview')
+    implementation project(':expandabletextview')
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     implementation 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'
@@ -130,6 +131,8 @@ dependencies {
     }
     implementation "com.andkulikov:transitionseverywhere:1.8.0"
     implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
+    implementation 'com.budiyev.android:circular-progress-bar:1.2.0'
+
 
     kapt 'com.github.bumptech.glide:compiler:4.7.1'
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"

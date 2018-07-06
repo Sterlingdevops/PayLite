@@ -15,6 +15,9 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
+import com.sterlingng.paylite.ui.donate.DonateMvpContract
+import com.sterlingng.paylite.ui.donate.DonateMvpView
+import com.sterlingng.paylite.ui.donate.DonatePresenter
 import com.sterlingng.paylite.ui.give.GiveMvpContract
 import com.sterlingng.paylite.ui.give.GiveMvpView
 import com.sterlingng.paylite.ui.give.GivePresenter
@@ -51,6 +54,9 @@ import com.sterlingng.paylite.ui.payment.request.RequestPresenter
 import com.sterlingng.paylite.ui.payment.scheduled.ScheduledMvpContract
 import com.sterlingng.paylite.ui.payment.scheduled.ScheduledMvpView
 import com.sterlingng.paylite.ui.payment.scheduled.ScheduledPresenter
+import com.sterlingng.paylite.ui.project.ProjectMvpContract
+import com.sterlingng.paylite.ui.project.ProjectMvpView
+import com.sterlingng.paylite.ui.project.ProjectPresenter
 import com.sterlingng.paylite.ui.signup.SignUpMvpContract
 import com.sterlingng.paylite.ui.signup.SignUpMvpView
 import com.sterlingng.paylite.ui.signup.SignUpPresenter
@@ -143,6 +149,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    internal fun provideProjectPresenter(presenter: ProjectPresenter<ProjectMvpView>): ProjectMvpContract<ProjectMvpView> = presenter
+
+    @Provides
+    @PerActivity
     internal fun provideDashboardPresenter(presenter: DashboardPresenter<DashboardMvpView>): DashboardMvpContract<DashboardMvpView> = presenter
 
     // Provide Fragment Contexts
@@ -167,6 +177,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
+
+    @Provides
+    internal fun provideDonatePresenter(presenter: DonatePresenter<DonateMvpView>): DonateMvpContract<DonateMvpView> = presenter
 
     @Provides
     internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter

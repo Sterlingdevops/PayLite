@@ -13,6 +13,7 @@ import com.sterlingng.paylite.data.model.Category
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.give.OnFilterClicked
 import com.sterlingng.paylite.ui.give.filter.FilterBottomSheetFragment
+import com.sterlingng.paylite.ui.project.ProjectActivity
 import com.sterlingng.paylite.utils.ItemOffsetDecoration
 import javax.inject.Inject
 
@@ -70,7 +71,8 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, CategoriesAdapter.
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
-
+        val intent = ProjectActivity.getStartIntent(baseActivity)
+        startActivity(intent)
     }
 
     override fun updateDeals(it: ArrayList<Category>) {

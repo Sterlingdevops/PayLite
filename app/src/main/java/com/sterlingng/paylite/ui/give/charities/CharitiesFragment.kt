@@ -1,5 +1,6 @@
 package com.sterlingng.paylite.ui.give.charities
 
+import android.app.Dialog
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -9,9 +10,11 @@ import android.view.ViewGroup
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.give.OnFilterClicked
+import com.sterlingng.paylite.ui.give.filter.FilterBottomSheetFragment
 import javax.inject.Inject
 
-class CharitiesFragment : BaseFragment(), CharitiesMvpView, CharitiesAdapter.OnRetryClicked {
+class CharitiesFragment : BaseFragment(), CharitiesMvpView, CharitiesAdapter.OnRetryClicked, OnFilterClicked, FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
     lateinit var mPresenter: CharitiesMvpContract<CharitiesMvpView>
@@ -56,6 +59,17 @@ class CharitiesFragment : BaseFragment(), CharitiesMvpView, CharitiesAdapter.OnR
 
     override fun recyclerViewListClicked(v: View, position: Int) {
 
+    }
+
+    override fun onFilterClicked() {
+        val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
+        filterBottomSheetFragment.onFilterItemSelectedListener = this
+        filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
+    }
+
+    override fun onFilterItemSelected(dialog: Dialog, s: String) {
+        show(s, true)
+        dialog.dismiss()
     }
 
     companion object {
