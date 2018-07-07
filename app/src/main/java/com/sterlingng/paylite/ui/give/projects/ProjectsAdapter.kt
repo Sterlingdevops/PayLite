@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.give.categories
+package com.sterlingng.paylite.ui.give.projects
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
@@ -15,7 +15,7 @@ import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
-class CategoriesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
     val categories: ArrayList<Category> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener

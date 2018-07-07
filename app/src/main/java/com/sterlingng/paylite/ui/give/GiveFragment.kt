@@ -9,7 +9,7 @@ import android.widget.ImageView
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.give.categories.CategoriesFragment
+import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
 import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
 import com.sterlingng.paylite.utils.widgets.CustomViewPager
 import javax.inject.Inject
@@ -44,7 +44,7 @@ class GiveFragment : BaseFragment(), GiveMvpView {
     override fun setUp(view: View) {
         mPagerAdapter = GivePagerAdapter(childFragmentManager)
 
-        val categoriesFragment = CategoriesFragment.newInstance()
+        val categoriesFragment = ProjectsFragment.newInstance()
         onFilterClickedListener = categoriesFragment
 
         mPagerAdapter.addFragment(categoriesFragment, "Categories")

@@ -126,4 +126,10 @@
     <string name="_22_jun_2018">22 Jun, 2018</string>
     <string name="never">Never</string>
     <string name="repeat">Repeat</string>
+
+    <string name="_continue">Continue</string>
+    <string name="confirm_payment">Enter your transaction PIN\nto confirm payment</string>
+    <string name="yemi_odubiyi">Yemi Odubiyi</string>
+    <string name="test_payment">Test Payment</string>
+    <string name="repeat_status">Weekly from 22/06/2018 until 23/06/2018</string>
 </resources>

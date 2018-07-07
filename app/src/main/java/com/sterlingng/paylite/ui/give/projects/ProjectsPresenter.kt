@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.give.categories
+package com.sterlingng.paylite.ui.give.projects
 
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.rx.SchedulerProvider
@@ -10,10 +10,10 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
-class CategoriesPresenter<V : CategoriesMvpView>
+class ProjectsPresenter<V : ProjectsMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CategoriesMvpContract<V> {
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ProjectsMvpContract<V> {
 
     override fun loadCategories() {
         val retrySubject = PublishSubject.create<Any>()

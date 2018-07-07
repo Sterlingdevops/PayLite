@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.give.categories
+package com.sterlingng.paylite.ui.give.projects
 
 
 import android.app.Dialog
@@ -17,16 +17,16 @@ import com.sterlingng.paylite.ui.project.ProjectActivity
 import com.sterlingng.paylite.utils.ItemOffsetDecoration
 import javax.inject.Inject
 
-class CategoriesFragment : BaseFragment(), CategoriesMvpView, CategoriesAdapter.OnRetryClicked, OnFilterClicked, FilterBottomSheetFragment.OnFilterItemSelected {
+class ProjectsFragment : BaseFragment(), ProjectsMvpView, ProjectsAdapter.OnRetryClicked, OnFilterClicked, FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
-    lateinit var mPresenter: CategoriesMvpContract<CategoriesMvpView>
+    lateinit var mPresenter: ProjectsMvpContract<ProjectsMvpView>
 
     @Inject
     lateinit var mGridLayoutManager: GridLayoutManager
 
     @Inject
-    lateinit var mCategoriesAdapter: CategoriesAdapter
+    lateinit var mProjectsAdapter: ProjectsAdapter
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var itemOffsetDecoration: ItemOffsetDecoration
@@ -45,9 +45,9 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, CategoriesAdapter.
 
     override fun setUp(view: View) {
         itemOffsetDecoration = ItemOffsetDecoration(baseActivity, R.dimen.item_offset)
-        mCategoriesAdapter.mRecyclerViewClickListener = this
-        mCategoriesAdapter.onRetryClickedListener = this
-        mRecyclerView.adapter = mCategoriesAdapter
+        mProjectsAdapter.mRecyclerViewClickListener = this
+        mProjectsAdapter.onRetryClickedListener = this
+        mRecyclerView.adapter = mProjectsAdapter
         mRecyclerView.layoutManager = mGridLayoutManager
         mRecyclerView.addItemDecoration(itemOffsetDecoration)
         mRecyclerView.scrollToPosition(0)
@@ -76,13 +76,13 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, CategoriesAdapter.
     }
 
     override fun updateDeals(it: ArrayList<Category>) {
-        mCategoriesAdapter.addCategories(it)
+        mProjectsAdapter.addCategories(it)
     }
 
     companion object {
 
-        fun newInstance(): CategoriesFragment {
-            val fragment = CategoriesFragment()
+        fun newInstance(): ProjectsFragment {
+            val fragment = ProjectsFragment()
             val args = Bundle()
             fragment.arguments = args
             return fragment

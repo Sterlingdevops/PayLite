@@ -12,19 +12,21 @@ import com.sterlingng.paylite.di.annotations.ActivityContext
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.rx.AppSchedulerProvider
 import com.sterlingng.paylite.rx.SchedulerProvider
+import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
+import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
+import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
 import com.sterlingng.paylite.ui.donate.DonateMvpContract
 import com.sterlingng.paylite.ui.donate.DonateMvpView
 import com.sterlingng.paylite.ui.donate.DonatePresenter
+import com.sterlingng.paylite.ui.donate.repeat.RepeatMvpContract
+import com.sterlingng.paylite.ui.donate.repeat.RepeatMvpView
+import com.sterlingng.paylite.ui.donate.repeat.RepeatPresenter
 import com.sterlingng.paylite.ui.give.GiveMvpContract
 import com.sterlingng.paylite.ui.give.GiveMvpView
 import com.sterlingng.paylite.ui.give.GivePresenter
-import com.sterlingng.paylite.ui.give.categories.CategoriesAdapter
-import com.sterlingng.paylite.ui.give.categories.CategoriesMvpContract
-import com.sterlingng.paylite.ui.give.categories.CategoriesMvpView
-import com.sterlingng.paylite.ui.give.categories.CategoriesPresenter
 import com.sterlingng.paylite.ui.give.charities.CharitiesAdapter
 import com.sterlingng.paylite.ui.give.charities.CharitiesMvpContract
 import com.sterlingng.paylite.ui.give.charities.CharitiesMvpView
@@ -32,6 +34,10 @@ import com.sterlingng.paylite.ui.give.charities.CharitiesPresenter
 import com.sterlingng.paylite.ui.give.filter.FilterMvpContract
 import com.sterlingng.paylite.ui.give.filter.FilterMvpView
 import com.sterlingng.paylite.ui.give.filter.FilterPresenter
+import com.sterlingng.paylite.ui.give.projects.ProjectsAdapter
+import com.sterlingng.paylite.ui.give.projects.ProjectsMvpContract
+import com.sterlingng.paylite.ui.give.projects.ProjectsMvpView
+import com.sterlingng.paylite.ui.give.projects.ProjectsPresenter
 import com.sterlingng.paylite.ui.home.DealsAdapter
 import com.sterlingng.paylite.ui.home.HomeMvpContract
 import com.sterlingng.paylite.ui.home.HomeMvpView
@@ -116,7 +122,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideCharitiesAdapter(activity: AppCompatActivity): CharitiesAdapter = CharitiesAdapter(activity)
 
     @Provides
-    internal fun provideCategoriesAdapter(activity: AppCompatActivity): CategoriesAdapter = CategoriesAdapter(activity)
+    internal fun provideCategoriesAdapter(activity: AppCompatActivity): ProjectsAdapter = ProjectsAdapter(activity)
 
     @Provides
     internal fun provideLinearLayoutManager(activity: AppCompatActivity): LinearLayoutManager = LinearLayoutManager(activity)
@@ -145,7 +151,15 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    internal fun provideDonatePresenter(presenter: DonatePresenter<DonateMvpView>): DonateMvpContract<DonateMvpView> = presenter
+
+    @Provides
+    @PerActivity
     internal fun provideSignUpPresenter(presenter: SignUpPresenter<SignUpMvpView>): SignUpMvpContract<SignUpMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun provideConfirmPresenter(presenter: ConfirmPresenter<ConfirmMvpView>): ConfirmMvpContract<ConfirmMvpView> = presenter
 
     @Provides
     @PerActivity
@@ -179,9 +193,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
 
     @Provides
-    internal fun provideDonatePresenter(presenter: DonatePresenter<DonateMvpView>): DonateMvpContract<DonateMvpView> = presenter
-
-    @Provides
     internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter
 
     @Provides
@@ -189,6 +200,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
+
+    @Provides
+    internal fun provideRepeatPresenter(presenter: RepeatPresenter<RepeatMvpView>): RepeatMvpContract<RepeatMvpView> = presenter
 
     @Provides
     internal fun provideCompletePresenter(presenter: CompletePresenter<CompleteMvpView>): CompleteMvpContract<CompleteMvpView> = presenter
@@ -203,5 +217,5 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideCharitiesPresenter(presenter: CharitiesPresenter<CharitiesMvpView>): CharitiesMvpContract<CharitiesMvpView> = presenter
 
     @Provides
-    internal fun provideCategoriesPresenter(presenter: CategoriesPresenter<CategoriesMvpView>): CategoriesMvpContract<CategoriesMvpView> = presenter
+    internal fun provideCategoriesPresenter(presenter: ProjectsPresenter<ProjectsMvpView>): ProjectsMvpContract<ProjectsMvpView> = presenter
 }

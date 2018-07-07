@@ -35,5 +35,6 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.project.ProjectActivity"/>
         <activity android:name=".ui.donate.DonateActivity"/>
+        <activity android:name=".ui.confirm.ConfirmActivity"/>
     </application>
 </manifest>
