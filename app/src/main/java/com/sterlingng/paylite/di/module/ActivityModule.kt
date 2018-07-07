@@ -48,6 +48,9 @@ import com.sterlingng.paylite.ui.login.LogInPresenter
 import com.sterlingng.paylite.ui.main.MainMvpContract
 import com.sterlingng.paylite.ui.main.MainMvpView
 import com.sterlingng.paylite.ui.main.MainPresenter
+import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpContract
+import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpView
+import com.sterlingng.paylite.ui.main.onboarding.OnBoardingPresenter
 import com.sterlingng.paylite.ui.payment.PaymentMvpContract
 import com.sterlingng.paylite.ui.payment.PaymentMvpView
 import com.sterlingng.paylite.ui.payment.PaymentPresenter
@@ -193,6 +196,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
 
     @Provides
+    internal fun provideRepeatPresenter(presenter: RepeatPresenter<RepeatMvpView>): RepeatMvpContract<RepeatMvpView> = presenter
+
+    @Provides
     internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter
 
     @Provides
@@ -202,13 +208,13 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
 
     @Provides
-    internal fun provideRepeatPresenter(presenter: RepeatPresenter<RepeatMvpView>): RepeatMvpContract<RepeatMvpView> = presenter
-
-    @Provides
     internal fun provideCompletePresenter(presenter: CompletePresenter<CompleteMvpView>): CompleteMvpContract<CompleteMvpView> = presenter
 
     @Provides
     internal fun providePasswordPresenter(presenter: PasswordPresenter<PasswordMvpView>): PasswordMvpContract<PasswordMvpView> = presenter
+
+    @Provides
+    internal fun provideCategoriesPresenter(presenter: ProjectsPresenter<ProjectsMvpView>): ProjectsMvpContract<ProjectsMvpView> = presenter
 
     @Provides
     internal fun provideScheduledPresenter(presenter: ScheduledPresenter<ScheduledMvpView>): ScheduledMvpContract<ScheduledMvpView> = presenter
@@ -217,5 +223,5 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideCharitiesPresenter(presenter: CharitiesPresenter<CharitiesMvpView>): CharitiesMvpContract<CharitiesMvpView> = presenter
 
     @Provides
-    internal fun provideCategoriesPresenter(presenter: ProjectsPresenter<ProjectsMvpView>): ProjectsMvpContract<ProjectsMvpView> = presenter
+    internal fun provideOnBoardingPresenter(presenter: OnBoardingPresenter<OnBoardingMvpView>): OnBoardingMvpContract<OnBoardingMvpView> = presenter
 }

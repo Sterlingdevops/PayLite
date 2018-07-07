@@ -14,7 +14,7 @@
     <color name="black_effective">#2a2a2a</color>
     <color name="shadow">#d0d8dc</color>
     <color name="transparent">#00000000</color>
-    <color name="translucent_white">#aaffffff</color>
+    <color name="translucent_white">#80ffffff</color>
     <color name="whitish_gray">#efefef</color>
     <color name="fb">#3b5998</color>
     <color name="google">#d34836</color>
@@ -52,4 +52,5 @@
     <color name="white_12">#1effffff</color>
     <color name="light_grey_green">#b6da90</color>
     <color name="darkish_pink">#d54694</color>
+    <color name="icon_disabled">#FF63727B</color>
 </resources>

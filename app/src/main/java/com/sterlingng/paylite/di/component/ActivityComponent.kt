@@ -13,6 +13,7 @@ import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.main.MainActivity
+import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.payment.pay.PayFragment
 import com.sterlingng.paylite.ui.payment.request.RequestFragment
@@ -81,8 +82,11 @@ interface ActivityComponent {
 
     fun inject(categoriesFragment: ProjectsFragment)
 
-    // Dialogs
-    fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
-    fun inject(repeatBottomSheetFragment: RepeatBottomSheetFragment)
+    fun inject(onBoardingFragment: OnBoardingFragment)
 
+    // Dialogs
+
+    fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
+
+    fun inject(repeatBottomSheetFragment: RepeatBottomSheetFragment)
 }

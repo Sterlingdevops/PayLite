@@ -5,37 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_background"
     tools:context=".ui.main.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/mdtp_white"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+    <com.sterlingng.paylite.utils.widgets.CustomViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/easy_as_it_gets"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineLeft"
@@ -73,9 +53,8 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="onSignUpClicked"
         android:stateListAnimator="@null"
-        android:text="@string/sign_up"
+        android:text="@string/new_to_paylite"
         android:textAllCaps="false"
         android:textColor="@color/scarlet"
         android:textSize="20sp"
@@ -84,6 +63,28 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         tools:targetApi="lollipop"/>
 
+    <com.ogaclejapan.smarttablayout.SmartTabLayout
+        android:id="@+id/viewpagertab"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toTopOf="@+id/sign_in"
+        app:layout_constraintEnd_toEndOf="@+id/sign_in"
+        app:layout_constraintStart_toStartOf="@+id/sign_in"
+        app:stl_clickable="false"
+        app:stl_customTabTextLayoutId="@layout/custom_tab_circle"
+        app:stl_dividerColor="@color/transparent"
+        app:stl_dividerThickness="0dp"
+        app:stl_indicatorColor="@color/white"
+        app:stl_indicatorCornerRadius="4dp"
+        app:stl_indicatorGravity="center"
+        app:stl_indicatorInterpolation="smart"
+        app:stl_indicatorThickness="8dp"
+        app:stl_underlineColor="@color/transparent"
+        app:stl_underlineThickness="0dp"/>
+
     <Button
         android:id="@+id/log_in"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -91,11 +92,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:onClick="onLogInClicked"
-        android:text="@string/log_in"
+        android:text="@string/already_using_paylite"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"/>
+
 </android.support.constraint.ConstraintLayout>
