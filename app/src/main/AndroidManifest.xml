@@ -33,8 +33,22 @@
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".ui.project.ProjectActivity"/>
-        <activity android:name=".ui.donate.DonateActivity"/>
-        <activity android:name=".ui.confirm.ConfirmActivity"/>
+        <activity
+            android:name=".ui.project.ProjectActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".ui.donate.DonateActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".ui.confirm.ConfirmActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".ui.profile.edit.EditActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.profile.notifications.NotificationActivity"/>
+        <activity android:name=".ui.charity.CharityActivity"/>
     </application>
 </manifest>

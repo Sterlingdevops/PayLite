@@ -4,6 +4,7 @@ import android.content.Context
 import com.sterlingng.paylite.data.model.Category
 import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.data.model.Deal
+import com.sterlingng.paylite.data.model.Notification
 import com.sterlingng.paylite.data.repository.mock.MockHelper
 import com.sterlingng.paylite.data.repository.remote.helpers.RemoteServiceHelper
 import com.sterlingng.paylite.di.annotations.ApplicationContext
@@ -21,6 +22,10 @@ class AppDataManager
 internal constructor(@param:ApplicationContext val context: Context,
                      private val remoteServiceHelper: RemoteServiceHelper,
                      private val mockHelper: MockHelper) : DataManager {
+
+    override fun mockNotifications(): Observable<ArrayList<Notification>> {
+        return mockHelper.mockNotifications()
+    }
 
     override fun mockCharities(): Observable<ArrayList<Charity>> {
         return mockHelper.mockCharities()

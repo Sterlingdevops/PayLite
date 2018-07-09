@@ -71,7 +71,7 @@ class MainActivity : BaseActivity(), MainMvpView {
                     )), "")
             addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_4, false,
                     ScreenData(
-                            title = "Give", info = "Donate to projects close\n to your heart or charities you love"
+                            title = "Give", info = "Donate to projects close\n to your heart or notifications you love"
                     )), "")
             addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_5, false,
                     ScreenData(

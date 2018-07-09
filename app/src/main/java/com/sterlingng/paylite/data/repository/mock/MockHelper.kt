@@ -1,13 +1,31 @@
 package com.sterlingng.paylite.data.repository.mock
 
+import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Category
 import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.data.model.Deal
+import com.sterlingng.paylite.data.model.Notification
 import io.reactivex.Observable
+import java.util.*
 import javax.inject.Inject
 
 class MockHelper @Inject
 internal constructor() : MockerInterface {
+
+    override fun mockNotifications(): Observable<ArrayList<Notification>> {
+        val notifications: ArrayList<Notification> = ArrayList()
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        notifications += Notification(Date(), "", R.drawable.button_light_green)
+        return Observable.just(notifications)
+    }
 
     override fun mockCategories(): Observable<ArrayList<Category>> {
         val categories: ArrayList<Category> = ArrayList()

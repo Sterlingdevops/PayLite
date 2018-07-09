@@ -2,6 +2,7 @@ package com.sterlingng.paylite.di.component
 
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
+import com.sterlingng.paylite.ui.charity.CharityActivity
 import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.donate.DonateActivity
@@ -18,6 +19,9 @@ import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.payment.pay.PayFragment
 import com.sterlingng.paylite.ui.payment.request.RequestFragment
 import com.sterlingng.paylite.ui.payment.scheduled.ScheduledFragment
+import com.sterlingng.paylite.ui.profile.ProfileActivity
+import com.sterlingng.paylite.ui.profile.edit.EditActivity
+import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
 import com.sterlingng.paylite.ui.project.ProjectActivity
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
@@ -38,9 +42,13 @@ interface ActivityComponent {
 
     // Activities
 
+    fun inject(editActivity: EditActivity)
+
     fun inject(mainActivity: MainActivity)
 
     fun inject(logInActivity: LogInActivity)
+
+    fun inject(charityActivity: CharityActivity)
 
     fun inject(donateActivity: DonateActivity)
 
@@ -48,9 +56,13 @@ interface ActivityComponent {
 
     fun inject(projectActivity: ProjectActivity)
 
+    fun inject(profileActivity: ProfileActivity)
+
     fun inject(onBoardingActivity: SignUpActivity)
 
     fun inject(dashboardActivity: DashboardActivity)
+
+    fun inject(notificationActivity: NotificationActivity)
 
     // Fragments
 

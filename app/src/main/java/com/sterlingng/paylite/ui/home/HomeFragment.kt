@@ -11,6 +11,8 @@ import android.widget.Button
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Deal
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.profile.ProfileActivity
+import de.hdodenhof.circleimageview.CircleImageView
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment(), HomeMvpView, DealsAdapter.OnRetryClicked {
@@ -26,6 +28,8 @@ class HomeFragment : BaseFragment(), HomeMvpView, DealsAdapter.OnRetryClicked {
 
     @Inject
     lateinit var mSnapHelper: SnapHelper
+
+    private lateinit var mProfileImageView: CircleImageView
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mTopUpButton: Button
@@ -43,6 +47,7 @@ class HomeFragment : BaseFragment(), HomeMvpView, DealsAdapter.OnRetryClicked {
         mTopUpButton = view.findViewById(R.id.top_up)
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mHistoryButton = view.findViewById(R.id.view_history)
+        mProfileImageView = view.findViewById(R.id.profile_icon)
     }
 
     override fun setUp(view: View) {
@@ -55,6 +60,10 @@ class HomeFragment : BaseFragment(), HomeMvpView, DealsAdapter.OnRetryClicked {
         mSnapHelper.attachToRecyclerView(mRecyclerView)
 
         mPresenter.loadDeals()
+
+        mProfileImageView.setOnClickListener {
+            startActivity(ProfileActivity.getStartIntent(baseActivity))
+        }
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

@@ -137,4 +137,21 @@
     <string name="pay">Pay</string>
     <string name="lite">lite</string>
     <string name="send_money_to_anyone">Send money to anyone with just\n their phone number, email\n or social handle.</string>
+    <string name="rt">RT</string>
+    <string name="movie_tickets">Movie Tickets</string>
+    <string name="profile">Profile</string>
+    <string name="olayinka_oni_gmail_com">olayinka.oni@gmail.com</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="log_out">Log Out</string>
+    <string name="general">GENERAL</string>
+    <string name="passcode">Passcode</string>
+    <string name="face_id">Face ID</string>
+    <string name="notifications_settings">Notifications Settings</string>
+    <string name="payment_methods">PAYMENT METHODS</string>
+    <string name="mastercard_2334">MASTERCARD 2334</string>
+    <string name="add_new_payment_method">Add new payment method</string>
+    <string name="notifications">Notifications</string>
+    <string name="clear">Clear</string>
+    <string name="notifications_message_or_something_like_that">Notifications message or something like that</string>
+    <string name="_4_days_ago">4 days ago</string>
 </resources>

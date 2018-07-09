@@ -12,6 +12,9 @@ import com.sterlingng.paylite.di.annotations.ActivityContext
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.rx.AppSchedulerProvider
 import com.sterlingng.paylite.rx.SchedulerProvider
+import com.sterlingng.paylite.ui.charity.CharityMvpContract
+import com.sterlingng.paylite.ui.charity.CharityMvpView
+import com.sterlingng.paylite.ui.charity.CharityPresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
@@ -63,6 +66,16 @@ import com.sterlingng.paylite.ui.payment.request.RequestPresenter
 import com.sterlingng.paylite.ui.payment.scheduled.ScheduledMvpContract
 import com.sterlingng.paylite.ui.payment.scheduled.ScheduledMvpView
 import com.sterlingng.paylite.ui.payment.scheduled.ScheduledPresenter
+import com.sterlingng.paylite.ui.profile.ProfileMvpContract
+import com.sterlingng.paylite.ui.profile.ProfileMvpView
+import com.sterlingng.paylite.ui.profile.ProfilePresenter
+import com.sterlingng.paylite.ui.profile.edit.EditMvpContract
+import com.sterlingng.paylite.ui.profile.edit.EditMvpView
+import com.sterlingng.paylite.ui.profile.edit.EditPresenter
+import com.sterlingng.paylite.ui.profile.notifications.NotificationMvpContract
+import com.sterlingng.paylite.ui.profile.notifications.NotificationMvpView
+import com.sterlingng.paylite.ui.profile.notifications.NotificationPresenter
+import com.sterlingng.paylite.ui.profile.notifications.NotificationsAdapter
 import com.sterlingng.paylite.ui.project.ProjectMvpContract
 import com.sterlingng.paylite.ui.project.ProjectMvpView
 import com.sterlingng.paylite.ui.project.ProjectPresenter
@@ -131,6 +144,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideLinearLayoutManager(activity: AppCompatActivity): LinearLayoutManager = LinearLayoutManager(activity)
 
     @Provides
+    internal fun provideNotificationsAdapter(activity: AppCompatActivity): NotificationsAdapter = NotificationsAdapter(activity)
+
+    @Provides
     internal fun provideGridLayoutManager(activity: AppCompatActivity): GridLayoutManager = GridLayoutManager(activity, 2)
 
     @Provides
@@ -143,6 +159,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideDividerItemDecoration(activity: AppCompatActivity): DividerItemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
 
     //Provide Activity Contexts
+
+    @Provides
+    @PerActivity
+    internal fun provideEditPresenter(presenter: EditPresenter<EditMvpView>): EditMvpContract<EditMvpView> = presenter
 
     @Provides
     @PerActivity
@@ -166,11 +186,23 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    internal fun provideCharityPresenter(presenter: CharityPresenter<CharityMvpView>): CharityMvpContract<CharityMvpView> = presenter
+
+    @Provides
+    @PerActivity
     internal fun provideProjectPresenter(presenter: ProjectPresenter<ProjectMvpView>): ProjectMvpContract<ProjectMvpView> = presenter
 
     @Provides
     @PerActivity
+    internal fun provideProfilePresenter(presenter: ProfilePresenter<ProfileMvpView>): ProfileMvpContract<ProfileMvpView> = presenter
+
+    @Provides
+    @PerActivity
     internal fun provideDashboardPresenter(presenter: DashboardPresenter<DashboardMvpView>): DashboardMvpContract<DashboardMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun provideNotificationPresenter(presenter: NotificationPresenter<NotificationMvpView>): NotificationMvpContract<NotificationMvpView> = presenter
 
     // Provide Fragment Contexts
 
