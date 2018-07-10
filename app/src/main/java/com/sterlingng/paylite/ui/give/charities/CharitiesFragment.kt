@@ -11,8 +11,8 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.charity.CharityActivity
+import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.give.OnFilterClicked
-import com.sterlingng.paylite.ui.give.filter.FilterBottomSheetFragment
 import javax.inject.Inject
 
 class CharitiesFragment : BaseFragment(), CharitiesMvpView, CharitiesAdapter.OnRetryClicked, OnFilterClicked, FilterBottomSheetFragment.OnFilterItemSelected {
@@ -66,10 +66,11 @@ class CharitiesFragment : BaseFragment(), CharitiesMvpView, CharitiesAdapter.OnR
     override fun onFilterClicked() {
         val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
         filterBottomSheetFragment.onFilterItemSelectedListener = this
+        filterBottomSheetFragment.items = listOf("Health", "Education", "Agriculture", "Transportation")
         filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
     }
 
-    override fun onFilterItemSelected(dialog: Dialog, s: String) {
+    override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
         show(s, true)
         dialog.dismiss()
     }

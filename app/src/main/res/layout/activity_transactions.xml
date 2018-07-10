@@ -23,7 +23,7 @@
     <View
         android:id="@+id/view8"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="24dp"
         android:background="@color/scarlet_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

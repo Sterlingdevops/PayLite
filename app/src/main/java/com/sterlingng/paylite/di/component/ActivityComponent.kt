@@ -2,6 +2,8 @@ package com.sterlingng.paylite.di.component
 
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
+import com.sterlingng.paylite.ui.airtime.AirTimeActivity
+import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.charity.CharityActivity
 import com.sterlingng.paylite.ui.charity.about.AboutFragment
 import com.sterlingng.paylite.ui.charity.program.ProgramFragment
@@ -11,7 +13,7 @@ import com.sterlingng.paylite.ui.donate.DonateActivity
 import com.sterlingng.paylite.ui.donate.repeat.RepeatBottomSheetFragment
 import com.sterlingng.paylite.ui.give.GiveFragment
 import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
-import com.sterlingng.paylite.ui.give.filter.FilterBottomSheetFragment
+import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
@@ -52,11 +54,15 @@ interface ActivityComponent {
 
     fun inject(logInActivity: LogInActivity)
 
-    fun inject(charityActivity: CharityActivity)
+    fun inject(billsActivity: BillsActivity)
 
     fun inject(donateActivity: DonateActivity)
 
+    fun inject(charityActivity: CharityActivity)
+
     fun inject(confirmActivity: ConfirmActivity)
+
+    fun inject(airTimeActivity: AirTimeActivity)
 
     fun inject(projectActivity: ProjectActivity)
 

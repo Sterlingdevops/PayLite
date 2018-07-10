@@ -14,7 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseDialog
-import com.sterlingng.paylite.ui.give.filter.FilterAdapter
+import com.sterlingng.paylite.ui.filter.FilterAdapter
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import javax.inject.Inject
 

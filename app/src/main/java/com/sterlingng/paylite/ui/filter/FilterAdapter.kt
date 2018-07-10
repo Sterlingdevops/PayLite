@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.give.filter
+package com.sterlingng.paylite.ui.filter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

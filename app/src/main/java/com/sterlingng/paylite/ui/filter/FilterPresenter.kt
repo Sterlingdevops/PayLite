@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.give.filter
+package com.sterlingng.paylite.ui.filter
 
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.rx.SchedulerProvider

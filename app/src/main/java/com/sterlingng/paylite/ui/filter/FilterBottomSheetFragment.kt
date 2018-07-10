@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.give.filter
+package com.sterlingng.paylite.ui.filter
 
 
 import android.annotation.SuppressLint
@@ -33,7 +33,8 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     @Inject
     lateinit var mDividerItemDecoration: DividerItemDecoration
 
-    private val items = listOf("Health", "Education", "Agriculture", "Transportation")
+    lateinit var items: List<String>
+    var selector: Int = -1
 
     private val mBottomSheetBehaviorCallback = object : BottomSheetBehavior.BottomSheetCallback() {
 
@@ -92,11 +93,11 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
-        onFilterItemSelectedListener.onFilterItemSelected(dialog, items[position])
+        onFilterItemSelectedListener.onFilterItemSelected(dialog, selector, items[position])
     }
 
     interface OnFilterItemSelected {
-        fun onFilterItemSelected(dialog: Dialog, s: String)
+        fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String)
     }
 
     companion object {

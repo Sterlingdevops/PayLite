@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Deal
+import com.sterlingng.paylite.ui.airtime.AirTimeActivity
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.profile.ProfileActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsActivity
@@ -35,6 +37,7 @@ class HomeFragment : BaseFragment(), HomeMvpView, DealsAdapter.OnRetryClicked {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mTopUpButton: Button
     private lateinit var mHistoryButton: Button
+    private lateinit var mAirTimeDateImageView: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
@@ -49,6 +52,7 @@ class HomeFragment : BaseFragment(), HomeMvpView, DealsAdapter.OnRetryClicked {
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mHistoryButton = view.findViewById(R.id.view_history)
         mProfileImageView = view.findViewById(R.id.profile_icon)
+        mAirTimeDateImageView = view.findViewById(R.id.airtime_data)
     }
 
     override fun setUp(view: View) {
@@ -61,6 +65,10 @@ class HomeFragment : BaseFragment(), HomeMvpView, DealsAdapter.OnRetryClicked {
         mSnapHelper.attachToRecyclerView(mRecyclerView)
 
         mPresenter.loadDeals()
+
+        mAirTimeDateImageView.setOnClickListener {
+            startActivity(AirTimeActivity.getStartIntent(baseActivity))
+        }
 
         mProfileImageView.setOnClickListener {
             startActivity(ProfileActivity.getStartIntent(baseActivity))

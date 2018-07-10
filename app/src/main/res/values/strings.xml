@@ -166,4 +166,10 @@
     <string name="apr">APR</string>
     <string name="mar">MAR</string>
     <string name="feb">FEB</string>
+    <string name="balance_201_00">Balance ₦2,000.00</string>
+    <string name="network_provider">Network provider</string>
+    <string name="mobile_top_up">Mobile Top-up</string>
+    <string name="category">Category</string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="available_bundles">Available bundles</string>
 </resources>

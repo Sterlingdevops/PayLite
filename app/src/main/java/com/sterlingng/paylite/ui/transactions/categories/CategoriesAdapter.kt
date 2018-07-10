@@ -12,7 +12,6 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
-import java.text.SimpleDateFormat
 import java.util.*
 
 class CategoriesAdapter(private val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
@@ -90,11 +89,10 @@ class CategoriesAdapter(private val mContext: Context) : RecyclerView.Adapter<Ba
 
         override fun onBind(position: Int) {
             super.onBind(position)
-            val dateFormat = SimpleDateFormat("dd-MMM-yy", Locale.US)
             with(transactions[position]) {
                 transactionAmount.text = "${mContext.getString(R.string.naira)}$amount"
                 transactionName.text = name
-                transactionDate.text = dateFormat.format(date)
+                transactionDate.text = count
                 transactionType.setImageDrawable(ContextCompat.getDrawable(mContext, if (type == Transaction.TransactionType.Credit) R.drawable.arrow_bottom_left else R.drawable.arrow_top_right))
                 transactionType.setColorFilter(ContextCompat.getColor(mContext, if (type == Transaction.TransactionType.Credit) R.color.apple_green else R.color.scarlet), android.graphics.PorterDuff.Mode.SRC_IN)
                 transactionAmount.setTextColor(ContextCompat.getColor(mContext, if (type == Transaction.TransactionType.Credit) R.color.apple_green else R.color.scarlet))

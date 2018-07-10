@@ -243,15 +243,16 @@
         android:src="@drawable/bills"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"/>
+        app:layout_constraintStart_toEndOf="@+id/airtime_data"
+        app:layout_constraintTop_toTopOf="@+id/airtime_data"/>
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/airtime_data"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
+        android:contentDescription="@string/airtime_data"
         android:scaleType="centerInside"
         android:src="@drawable/airtime_data"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
@@ -266,7 +267,7 @@
         android:layout_marginTop="24dp"
         android:scaleType="centerInside"
         android:src="@drawable/send_money_black"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintEnd_toStartOf="@+id/airtime_data"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -363,9 +364,9 @@
         android:layout_marginTop="8dp"
         android:text="@string/airtime_data"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"/>
+        app:layout_constraintEnd_toEndOf="@+id/airtime_data"
+        app:layout_constraintStart_toStartOf="@+id/airtime_data"
+        app:layout_constraintTop_toBottomOf="@+id/airtime_data"/>
 
     <TextView
         android:id="@+id/textView9"

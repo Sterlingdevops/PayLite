@@ -11,14 +11,14 @@ internal constructor() : MockerInterface {
 
     override fun mockTransactions(): Observable<ArrayList<Transaction>> {
         val transactions: ArrayList<Transaction> = ArrayList()
-        transactions += Transaction("11,000", "Raymond Tukpe", Transaction.TransactionType.Credit, Calendar.getInstance().time)
-        transactions += Transaction("3,000", "Emmanuella Esezobor", Transaction.TransactionType.Debit, Calendar.getInstance().time)
-        transactions += Transaction("110,000", "Isma'il Shomala", Transaction.TransactionType.Credit, Calendar.getInstance().time)
-        transactions += Transaction("100,000", "Afitafo Akande", Transaction.TransactionType.Credit, Calendar.getInstance().time)
-        transactions += Transaction("10,000", "Sylas Adewale", Transaction.TransactionType.Debit, Calendar.getInstance().time)
-        transactions += Transaction("1,000", "Eniola Adegoke", Transaction.TransactionType.Credit, Calendar.getInstance().time)
-        transactions += Transaction("122,000", "Chiebuka Obumselu", Transaction.TransactionType.Debit, Calendar.getInstance().time)
-        transactions += Transaction("11,000", "Ebun Fasina", Transaction.TransactionType.Debit, Calendar.getInstance().time)
+        transactions += Transaction("11,000", "Income", Transaction.TransactionType.Credit, "2 transactions")
+        transactions += Transaction("3,000", "General", Transaction.TransactionType.Debit, "5 transactions")
+        transactions += Transaction("110,000", "Vacation", Transaction.TransactionType.Debit, "1 transaction")
+        transactions += Transaction("100,000", "Wedding Gifts", Transaction.TransactionType.Credit, "2 transactions")
+        transactions += Transaction("10,000", "Income", Transaction.TransactionType.Credit, "2 transactions")
+        transactions += Transaction("1,000", "Side Hustle", Transaction.TransactionType.Credit, "3 transactions")
+        transactions += Transaction("122,000", "Allowance", Transaction.TransactionType.Debit, "4 transactions")
+        transactions += Transaction("11,000", "Allowance", Transaction.TransactionType.Debit, "1 transaction")
         return Observable.just(transactions)
     }
 

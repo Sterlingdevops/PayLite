@@ -12,6 +12,12 @@ import com.sterlingng.paylite.di.annotations.ActivityContext
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.rx.AppSchedulerProvider
 import com.sterlingng.paylite.rx.SchedulerProvider
+import com.sterlingng.paylite.ui.airtime.AirTimeMvpContract
+import com.sterlingng.paylite.ui.airtime.AirTimeMvpView
+import com.sterlingng.paylite.ui.airtime.AirTimePresenter
+import com.sterlingng.paylite.ui.bills.BillsMvpContract
+import com.sterlingng.paylite.ui.bills.BillsMvpView
+import com.sterlingng.paylite.ui.bills.BillsPresenter
 import com.sterlingng.paylite.ui.charity.CharityMvpContract
 import com.sterlingng.paylite.ui.charity.CharityMvpView
 import com.sterlingng.paylite.ui.charity.CharityPresenter
@@ -40,9 +46,9 @@ import com.sterlingng.paylite.ui.give.charities.CharitiesAdapter
 import com.sterlingng.paylite.ui.give.charities.CharitiesMvpContract
 import com.sterlingng.paylite.ui.give.charities.CharitiesMvpView
 import com.sterlingng.paylite.ui.give.charities.CharitiesPresenter
-import com.sterlingng.paylite.ui.give.filter.FilterMvpContract
-import com.sterlingng.paylite.ui.give.filter.FilterMvpView
-import com.sterlingng.paylite.ui.give.filter.FilterPresenter
+import com.sterlingng.paylite.ui.filter.FilterMvpContract
+import com.sterlingng.paylite.ui.filter.FilterMvpView
+import com.sterlingng.paylite.ui.filter.FilterPresenter
 import com.sterlingng.paylite.ui.give.projects.ProjectsAdapter
 import com.sterlingng.paylite.ui.give.projects.ProjectsMvpContract
 import com.sterlingng.paylite.ui.give.projects.ProjectsMvpView
@@ -186,6 +192,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    internal fun provideBillsPresenter(presenter: BillsPresenter<BillsMvpView>): BillsMvpContract<BillsMvpView> = presenter
+
+    @Provides
+    @PerActivity
     internal fun provideLogInPresenter(presenter: LogInPresenter<LogInMvpView>): LogInMvpContract<LogInMvpView> = presenter
 
     @Provides
@@ -203,6 +213,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     internal fun provideCharityPresenter(presenter: CharityPresenter<CharityMvpView>): CharityMvpContract<CharityMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun provideAirTimePresenter(presenter: AirTimePresenter<AirTimeMvpView>): AirTimeMvpContract<AirTimeMvpView> = presenter
 
     @Provides
     @PerActivity

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -14,10 +15,8 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/mdtp_next_month_arrow"
         android:tint="@color/scarlet"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/arrow_top_right"/>
 
     <TextView
@@ -30,7 +29,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/transaction_type"
-        app:layout_constraintTop_toTopOf="@+id/transaction_type"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
 
     <TextView
         android:id="@+id/transaction_amount"
@@ -41,7 +40,7 @@
         android:textColor="@color/scarlet"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintTop_toTopOf="@+id/transaction_name"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
 
     <TextView
         android:id="@+id/transaction_date"
@@ -61,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="16dp"/>
+        app:layout_constraintGuide_begin="8dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineLeft"
@@ -82,6 +81,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="16dp"/>
+        app:layout_constraintGuide_end="8dp"/>
 
 </android.support.constraint.ConstraintLayout>
