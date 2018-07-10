@@ -1,7 +1,6 @@
 package com.sterlingng.paylite.ui.give.charities
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -94,7 +93,7 @@ class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHol
             with(charities[position]) {
                 charityTypeTextView.text = category
                 charityNameTextView.text = name
-                charityLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_list_england))
+//                charityLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.country_flag_gb))
             }
             itemView.setOnClickListener {
                 recyclerViewClickListener.recyclerViewListClicked(it, position)

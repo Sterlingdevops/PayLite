@@ -23,6 +23,7 @@ class ProjectActivity : BaseActivity(), ProjectMvpView {
     private lateinit var exit: ImageView
     private lateinit var giveButton: Button
     private lateinit var giveButton2: Button
+    private lateinit var floatingView: View
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -50,6 +51,18 @@ class ProjectActivity : BaseActivity(), ProjectMvpView {
             startActivity(intent)
         }
 
+//        floatingView.setOnTouchListener { v, event ->
+//            when (event.action) {
+//                MotionEvent.ACTION_DOWN -> {
+//                    floatingView.animate().scaleX(.9f).scaleY(.9f).start()
+//                }
+//                MotionEvent.ACTION_UP -> {
+//                    floatingView.animate().scaleX(1f).scaleY(1f).start()
+//                }
+//            }
+//            return@setOnTouchListener true
+//        }
+
         mAboutExpandableTextView.text = getString(R.string.placeholder)
     }
 
@@ -57,6 +70,7 @@ class ProjectActivity : BaseActivity(), ProjectMvpView {
         exit = findViewById(R.id.exit)
         giveButton = findViewById(R.id.give)
         giveButton2 = findViewById(R.id.give2)
+        floatingView = findViewById(R.id.floating_view)
         mAboutExpandableTextView = findViewById(R.id.text)
     }
 

@@ -9,8 +9,8 @@ import android.widget.ImageView
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
 import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
+import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
 import com.sterlingng.paylite.utils.widgets.CustomViewPager
 import javax.inject.Inject
 
@@ -25,7 +25,7 @@ class GiveFragment : BaseFragment(), GiveMvpView {
     private lateinit var mViewPager: CustomViewPager
     private lateinit var mSmartTabLayout: SmartTabLayout
 
-    lateinit var onFilterClickedListener: OnFilterClicked
+    private lateinit var onFilterClickedListener: OnFilterClicked
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_give, container, false)

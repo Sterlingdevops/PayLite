@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sterling_heart"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/innerGuidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"/>
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/orphanage_drive"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/innerGuidelineLeft"/>
+
+    <me.chensir.expandabletextview.ExpandableTextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/placeholder"
+        android:textColor="@color/dark_gray"
+        app:contentTextColor="@color/dark_gray"
+        app:layout_constraintEnd_toStartOf="@+id/innerGuidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/innerGuidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:maxCollapsedLines="4"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/innerGuidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="16dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/innerGuidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/innerGuidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp"/>
+
+
+</android.support.constraint.ConstraintLayout>

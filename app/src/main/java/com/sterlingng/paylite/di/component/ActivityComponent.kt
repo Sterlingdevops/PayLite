@@ -3,6 +3,7 @@ package com.sterlingng.paylite.di.component
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.ui.charity.CharityActivity
+import com.sterlingng.paylite.ui.charity.about.AboutFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.donate.DonateActivity
@@ -77,6 +78,8 @@ interface ActivityComponent {
     fun inject(nameFragment: NameFragment)
 
     fun inject(homeFragment: HomeFragment)
+
+    fun inject(aboutFragment: AboutFragment)
 
     fun inject(emailFragment: EmailFragment)
 

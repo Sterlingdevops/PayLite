@@ -41,7 +41,7 @@
                 android:id="@+id/project1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sterling_orphanage_drive"
+                android:text="@string/orphanage_drive"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toTopOf="@+id/learn_more"
                 app:layout_constraintStart_toStartOf="@+id/innerGuidelineLeft"/>
@@ -361,7 +361,7 @@
         android:id="@+id/project2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sterling_orphanage_drive"
+        android:text="@string/orphanage_drive"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/learn_more2"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"

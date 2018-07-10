@@ -98,16 +98,14 @@
     <string name="red_cross_society">Red Cross Society</string>
     <string name="health">Health</string>
     <string name="exit">exit</string>
-    <string name="placeholder"><b>Children of Blood and Bone</b> was
-        written by <b>Tomi Adeyemi in 2018</b>. It has continued to be a best seller
-        in many languages. Presently, it is translated into modern English, with illustrations
-        by Benjamin Martinez and an Introduction by Adolph … more The Prince is a classic book
-        that explores the attainment, maintenance, and utilization of political power in the western
-        world. Machiavelli wrote The Prince to demonstrate his skill in the art of the state, presenting
-        advice on how a prince might acquire and hold power. Machiavelli defended the notion of rule by force
-        rather than by law. Accordingly, The Prince seems to rationalize a number of actions done solely to
-        perpetuate power. It is an examination of power-its attainment, development, and successful use.</string>
-    <string name="sterling_orphanage_drive">Sterling Orphanage Drive</string>
+    <string name="placeholder">
+        We are a youth-led Not-for-Profit Organization advocating against sexual violence,
+        providing prevention mechanisms and supporting survivors with psychosocial services.
+        Read more advocate for rape survivors who can’t speak about their ordeal due to stigmatization,
+        by enlighten our community on the need to end rape and victim blaming. We use various platforms
+        to educate people and also engage in interactive sessions via social media. We are working towards
+        the day when rape is part of history, rather than a part of our everyday lives.
+    </string>
     <string name="learn_more_about_h_e_a_r_t">Learn more about H.E.A.R.T</string>
     <string name="sterling_heart_foundation">Sterling Heart Foundation</string>
     <string name="_60_percent">60%</string>
@@ -154,4 +152,5 @@
     <string name="clear">Clear</string>
     <string name="notifications_message_or_something_like_that">Notifications message or something like that</string>
     <string name="_4_days_ago">4 days ago</string>
+    <string name="donate_to_support_s_t_e_r">Donate to support S.T.E.R</string>
 </resources>

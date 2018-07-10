@@ -5,16 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.sterlingng.paylite.utils.widgets.SquareImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/charity_logo"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
-        android:scaleType="centerCrop"
+        android:src="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="@+id/charity_type"
         app:layout_constraintStart_toStartOf="@+id/charity_name"
-        app:layout_constraintTop_toTopOf="@+id/charity_name"
-        app:srcCompat="@drawable/send_money"/>
+        app:layout_constraintTop_toTopOf="@+id/charity_name"/>
 
     <TextView
         android:id="@+id/charity_name"

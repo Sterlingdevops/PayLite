@@ -8,6 +8,8 @@ import android.widget.ImageView
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
+import com.sterlingng.paylite.ui.charity.about.AboutFragment
+import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.paylite.utils.widgets.CustomViewPager
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -18,7 +20,6 @@ class CharityActivity : BaseActivity(), CharityMvpView {
     @Inject
     lateinit var mPresenter: CharityMvpContract<CharityMvpView>
 
-    @Inject
     lateinit var mPagerAdapter: CustomPagerAdapter
 
     private lateinit var mViewPager: CustomViewPager
@@ -38,8 +39,10 @@ class CharityActivity : BaseActivity(), CharityMvpView {
     }
 
     override fun setUp() {
-//        mPagerAdapter.addFragment(CardsFragment.newInstance(), "Cards")
-//        mPagerAdapter.addFragment(AccountsFragment.newInstance(), "Accounts")
+        mPagerAdapter = CustomPagerAdapter(supportFragmentManager)
+
+        mPagerAdapter.addFragment(AboutFragment.newInstance(), "About")
+        mPagerAdapter.addFragment(CharitiesFragment.newInstance(), "Charities")
 
         mViewPager.adapter = mPagerAdapter
         mViewPager.isPagingEnabled = true

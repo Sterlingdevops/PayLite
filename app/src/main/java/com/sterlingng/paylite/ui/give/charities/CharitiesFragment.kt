@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.charity.CharityActivity
 import com.sterlingng.paylite.ui.give.OnFilterClicked
 import com.sterlingng.paylite.ui.give.filter.FilterBottomSheetFragment
 import javax.inject.Inject
@@ -58,7 +59,8 @@ class CharitiesFragment : BaseFragment(), CharitiesMvpView, CharitiesAdapter.OnR
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
-
+        val intent = CharityActivity.getStartIntent(baseActivity)
+        startActivity(intent)
     }
 
     override fun onFilterClicked() {

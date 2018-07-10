@@ -15,6 +15,9 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.charity.CharityMvpContract
 import com.sterlingng.paylite.ui.charity.CharityMvpView
 import com.sterlingng.paylite.ui.charity.CharityPresenter
+import com.sterlingng.paylite.ui.charity.about.AboutMvpContract
+import com.sterlingng.paylite.ui.charity.about.AboutMvpView
+import com.sterlingng.paylite.ui.charity.about.AboutPresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
@@ -223,6 +226,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter
+
+    @Provides
+    internal fun provideAboutPresenter(presenter: AboutPresenter<AboutMvpView>): AboutMvpContract<AboutMvpView> = presenter
 
     @Provides
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
