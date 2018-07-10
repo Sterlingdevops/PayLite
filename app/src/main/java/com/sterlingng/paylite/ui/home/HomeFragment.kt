@@ -12,6 +12,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Deal
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.profile.ProfileActivity
+import com.sterlingng.paylite.ui.transactions.TransactionsActivity
 import de.hdodenhof.circleimageview.CircleImageView
 import javax.inject.Inject
 
@@ -63,6 +64,10 @@ class HomeFragment : BaseFragment(), HomeMvpView, DealsAdapter.OnRetryClicked {
 
         mProfileImageView.setOnClickListener {
             startActivity(ProfileActivity.getStartIntent(baseActivity))
+        }
+
+        mHistoryButton.setOnClickListener {
+            startActivity(TransactionsActivity.getStartIntent(baseActivity))
         }
     }
 

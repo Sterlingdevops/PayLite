@@ -1,34 +1,31 @@
-package com.sterlingng.paylite.ui.charity
+package com.sterlingng.paylite.ui.transactions
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
-import com.sterlingng.paylite.ui.charity.about.AboutFragment
-import com.sterlingng.paylite.ui.charity.program.ProgramFragment
-import com.sterlingng.paylite.ui.donate.DonateActivity
+import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.paylite.utils.widgets.CustomViewPager
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
-class CharityActivity : BaseActivity(), CharityMvpView {
+class TransactionsActivity : BaseActivity(), TransactionsMvpView {
 
     @Inject
-    lateinit var mPresenter: CharityMvpContract<CharityMvpView>
+    lateinit var mPresenter: TransactionsMvpContract<TransactionsMvpView>
 
+    @Inject
     lateinit var mPagerAdapter: CustomPagerAdapter
 
     private lateinit var mViewPager: CustomViewPager
     private lateinit var mSmartTabLayout: SmartTabLayout
 
     private lateinit var exit: ImageView
-    private lateinit var giveButton2: TextView
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -36,37 +33,31 @@ class CharityActivity : BaseActivity(), CharityMvpView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_charity)
+        setContentView(R.layout.activity_transactions)
         activityComponent.inject(this)
         mPresenter.onAttach(this)
     }
 
     override fun setUp() {
-        mPagerAdapter = CustomPagerAdapter(supportFragmentManager)
-
-        mPagerAdapter.addFragment(AboutFragment.newInstance(), "About")
-        mPagerAdapter.addFragment(ProgramFragment.newInstance(), "Program")
+        mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "Merchants")
+        mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "Categories")
+        mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "All")
 
         mViewPager.adapter = mPagerAdapter
         mViewPager.isPagingEnabled = true
+        mViewPager.offscreenPageLimit = 3
 
         mSmartTabLayout.setViewPager(mViewPager)
 
         exit.setOnClickListener {
             onBackPressed()
         }
-
-        giveButton2.setOnClickListener {
-            val intent = DonateActivity.getStartIntent(this)
-            startActivity(intent)
-        }
     }
 
     override fun bindViews() {
-        exit = findViewById(R.id.exit)
-        giveButton2 = findViewById(R.id.give2)
         mViewPager = findViewById(R.id.viewpager)
         mSmartTabLayout = findViewById(R.id.viewpagertab)
+        exit = findViewById(R.id.exit)
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
@@ -76,7 +67,7 @@ class CharityActivity : BaseActivity(), CharityMvpView {
     companion object {
 
         fun getStartIntent(context: Context): Intent {
-            return Intent(context, CharityActivity::class.java)
+            return Intent(context, TransactionsActivity::class.java)
         }
     }
 }

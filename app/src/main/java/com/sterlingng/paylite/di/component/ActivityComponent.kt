@@ -4,6 +4,7 @@ import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.ui.charity.CharityActivity
 import com.sterlingng.paylite.ui.charity.about.AboutFragment
+import com.sterlingng.paylite.ui.charity.program.ProgramFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.donate.DonateActivity
@@ -31,6 +32,8 @@ import com.sterlingng.paylite.ui.signup.name.NameFragment
 import com.sterlingng.paylite.ui.signup.otp.OtpFragment
 import com.sterlingng.paylite.ui.signup.password.PasswordFragment
 import com.sterlingng.paylite.ui.signup.pin.PinFragment
+import com.sterlingng.paylite.ui.transactions.TransactionsActivity
+import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
 import dagger.Component
 
 /**
@@ -63,6 +66,8 @@ interface ActivityComponent {
 
     fun inject(dashboardActivity: DashboardActivity)
 
+    fun inject(transactionsActivity: TransactionsActivity)
+
     fun inject(notificationActivity: NotificationActivity)
 
     // Fragments
@@ -83,6 +88,8 @@ interface ActivityComponent {
 
     fun inject(emailFragment: EmailFragment)
 
+    fun inject(programFragment: ProgramFragment)
+
     fun inject(requestFragment: RequestFragment)
 
     fun inject(paymentFragment: PaymentFragment)
@@ -96,6 +103,8 @@ interface ActivityComponent {
     fun inject(scheduledFragment: ScheduledFragment)
 
     fun inject(categoriesFragment: ProjectsFragment)
+
+    fun inject(categoriesFragment: CategoriesFragment)
 
     fun inject(onBoardingFragment: OnBoardingFragment)
 

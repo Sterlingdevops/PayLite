@@ -50,5 +50,6 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.profile.notifications.NotificationActivity"/>
         <activity android:name=".ui.charity.CharityActivity"/>
+        <activity android:name=".ui.transactions.TransactionsActivity"/>
     </application>
 </manifest>

@@ -18,6 +18,9 @@ import com.sterlingng.paylite.ui.charity.CharityPresenter
 import com.sterlingng.paylite.ui.charity.about.AboutMvpContract
 import com.sterlingng.paylite.ui.charity.about.AboutMvpView
 import com.sterlingng.paylite.ui.charity.about.AboutPresenter
+import com.sterlingng.paylite.ui.charity.program.ProgramMvpContract
+import com.sterlingng.paylite.ui.charity.program.ProgramMvpView
+import com.sterlingng.paylite.ui.charity.program.ProgramPresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
@@ -103,6 +106,13 @@ import com.sterlingng.paylite.ui.signup.password.PasswordPresenter
 import com.sterlingng.paylite.ui.signup.pin.PinMvpContract
 import com.sterlingng.paylite.ui.signup.pin.PinMvpView
 import com.sterlingng.paylite.ui.signup.pin.PinPresenter
+import com.sterlingng.paylite.ui.transactions.TransactionsMvpContract
+import com.sterlingng.paylite.ui.transactions.TransactionsMvpView
+import com.sterlingng.paylite.ui.transactions.TransactionsPresenter
+import com.sterlingng.paylite.ui.transactions.categories.CategoriesAdapter
+import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpContract
+import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpView
+import com.sterlingng.paylite.ui.transactions.categories.CategoriesPresenter
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.paylite.utils.NoScrollingLinearLayoutManager
 import dagger.Module
@@ -138,10 +148,13 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideDealsAdapter(activity: AppCompatActivity): DealsAdapter = DealsAdapter(activity)
 
     @Provides
+    internal fun provideProjectsAdapter(activity: AppCompatActivity): ProjectsAdapter = ProjectsAdapter(activity)
+
+    @Provides
     internal fun provideCharitiesAdapter(activity: AppCompatActivity): CharitiesAdapter = CharitiesAdapter(activity)
 
     @Provides
-    internal fun provideCategoriesAdapter(activity: AppCompatActivity): ProjectsAdapter = ProjectsAdapter(activity)
+    internal fun provideCategoriesAdapter(activity: AppCompatActivity): CategoriesAdapter = CategoriesAdapter(activity)
 
     @Provides
     internal fun provideLinearLayoutManager(activity: AppCompatActivity): LinearLayoutManager = LinearLayoutManager(activity)
@@ -207,6 +220,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @PerActivity
     internal fun provideNotificationPresenter(presenter: NotificationPresenter<NotificationMvpView>): NotificationMvpContract<NotificationMvpView> = presenter
 
+    @Provides
+    @PerActivity
+    internal fun provideTransactionsPresenter(presenter: TransactionsPresenter<TransactionsMvpView>): TransactionsMvpContract<TransactionsMvpView> = presenter
+
     // Provide Fragment Contexts
 
     @Provides
@@ -243,6 +260,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun providePaymentPresenter(presenter: PaymentPresenter<PaymentMvpView>): PaymentMvpContract<PaymentMvpView> = presenter
 
     @Provides
+    internal fun provideProgramPresenter(presenter: ProgramPresenter<ProgramMvpView>): ProgramMvpContract<ProgramMvpView> = presenter
+
+    @Provides
     internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
 
     @Provides
@@ -252,7 +272,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun providePasswordPresenter(presenter: PasswordPresenter<PasswordMvpView>): PasswordMvpContract<PasswordMvpView> = presenter
 
     @Provides
-    internal fun provideCategoriesPresenter(presenter: ProjectsPresenter<ProjectsMvpView>): ProjectsMvpContract<ProjectsMvpView> = presenter
+    internal fun provideProjectsPresenter(presenter: ProjectsPresenter<ProjectsMvpView>): ProjectsMvpContract<ProjectsMvpView> = presenter
 
     @Provides
     internal fun provideScheduledPresenter(presenter: ScheduledPresenter<ScheduledMvpView>): ScheduledMvpContract<ScheduledMvpView> = presenter
@@ -262,4 +282,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideOnBoardingPresenter(presenter: OnBoardingPresenter<OnBoardingMvpView>): OnBoardingMvpContract<OnBoardingMvpView> = presenter
+
+    @Provides
+    internal fun provideCategoriesPresenter(presenter: CategoriesPresenter<CategoriesMvpView>): CategoriesMvpContract<CategoriesMvpView> = presenter
 }

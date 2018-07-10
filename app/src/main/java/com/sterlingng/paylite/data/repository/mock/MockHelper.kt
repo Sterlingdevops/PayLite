@@ -1,16 +1,26 @@
 package com.sterlingng.paylite.data.repository.mock
 
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Category
-import com.sterlingng.paylite.data.model.Charity
-import com.sterlingng.paylite.data.model.Deal
-import com.sterlingng.paylite.data.model.Notification
+import com.sterlingng.paylite.data.model.*
 import io.reactivex.Observable
 import java.util.*
 import javax.inject.Inject
 
 class MockHelper @Inject
 internal constructor() : MockerInterface {
+
+    override fun mockTransactions(): Observable<ArrayList<Transaction>> {
+        val transactions: ArrayList<Transaction> = ArrayList()
+        transactions += Transaction("11,000", "Raymond Tukpe", Transaction.TransactionType.Credit, Calendar.getInstance().time)
+        transactions += Transaction("3,000", "Emmanuella Esezobor", Transaction.TransactionType.Debit, Calendar.getInstance().time)
+        transactions += Transaction("110,000", "Isma'il Shomala", Transaction.TransactionType.Credit, Calendar.getInstance().time)
+        transactions += Transaction("100,000", "Afitafo Akande", Transaction.TransactionType.Credit, Calendar.getInstance().time)
+        transactions += Transaction("10,000", "Sylas Adewale", Transaction.TransactionType.Debit, Calendar.getInstance().time)
+        transactions += Transaction("1,000", "Eniola Adegoke", Transaction.TransactionType.Credit, Calendar.getInstance().time)
+        transactions += Transaction("122,000", "Chiebuka Obumselu", Transaction.TransactionType.Debit, Calendar.getInstance().time)
+        transactions += Transaction("11,000", "Ebun Fasina", Transaction.TransactionType.Debit, Calendar.getInstance().time)
+        return Observable.just(transactions)
+    }
 
     override fun mockNotifications(): Observable<ArrayList<Notification>> {
         val notifications: ArrayList<Notification> = ArrayList()
