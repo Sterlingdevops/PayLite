@@ -36,9 +36,9 @@ import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
 import com.sterlingng.paylite.ui.donate.DonateMvpContract
 import com.sterlingng.paylite.ui.donate.DonateMvpView
 import com.sterlingng.paylite.ui.donate.DonatePresenter
-import com.sterlingng.paylite.ui.donate.repeat.RepeatMvpContract
-import com.sterlingng.paylite.ui.donate.repeat.RepeatMvpView
-import com.sterlingng.paylite.ui.donate.repeat.RepeatPresenter
+import com.sterlingng.paylite.ui.filter.FilterMvpContract
+import com.sterlingng.paylite.ui.filter.FilterMvpView
+import com.sterlingng.paylite.ui.filter.FilterPresenter
 import com.sterlingng.paylite.ui.give.GiveMvpContract
 import com.sterlingng.paylite.ui.give.GiveMvpView
 import com.sterlingng.paylite.ui.give.GivePresenter
@@ -46,9 +46,6 @@ import com.sterlingng.paylite.ui.give.charities.CharitiesAdapter
 import com.sterlingng.paylite.ui.give.charities.CharitiesMvpContract
 import com.sterlingng.paylite.ui.give.charities.CharitiesMvpView
 import com.sterlingng.paylite.ui.give.charities.CharitiesPresenter
-import com.sterlingng.paylite.ui.filter.FilterMvpContract
-import com.sterlingng.paylite.ui.filter.FilterMvpView
-import com.sterlingng.paylite.ui.filter.FilterPresenter
 import com.sterlingng.paylite.ui.give.projects.ProjectsAdapter
 import com.sterlingng.paylite.ui.give.projects.ProjectsMvpContract
 import com.sterlingng.paylite.ui.give.projects.ProjectsMvpView
@@ -263,9 +260,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
-
-    @Provides
-    internal fun provideRepeatPresenter(presenter: RepeatPresenter<RepeatMvpView>): RepeatMvpContract<RepeatMvpView> = presenter
 
     @Provides
     internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter

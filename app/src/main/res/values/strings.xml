@@ -172,4 +172,6 @@
     <string name="category">Category</string>
     <string name="mobile_number">Mobile number</string>
     <string name="available_bundles">Available bundles</string>
+    <string name="select_a_bundle">Select A Bundle</string>
+    <string name="close">Close</string>
 </resources>

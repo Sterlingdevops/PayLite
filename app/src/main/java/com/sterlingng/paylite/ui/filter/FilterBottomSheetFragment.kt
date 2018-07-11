@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseDialog
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
@@ -24,6 +26,8 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
 
     lateinit var onFilterItemSelectedListener: OnFilterItemSelected
 
+    lateinit var titleTextView: TextView
+    lateinit var closeImageView: ImageView
     lateinit var mRecyclerView: RecyclerView
     lateinit var mFilterAdapter: FilterAdapter
 
@@ -34,6 +38,7 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     lateinit var mDividerItemDecoration: DividerItemDecoration
 
     lateinit var items: List<String>
+    lateinit var title: String
     var selector: Int = -1
 
     private val mBottomSheetBehaviorCallback = object : BottomSheetBehavior.BottomSheetCallback() {
@@ -76,6 +81,8 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     }
 
     override fun bindViews(view: View) {
+        titleTextView = view.findViewById(R.id.title)
+        closeImageView = view.findViewById(R.id.close)
         mRecyclerView = view.findViewById(R.id.recyclerView)
     }
 
@@ -86,6 +93,11 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
         mRecyclerView.adapter = mFilterAdapter
         mRecyclerView.layoutManager = mLinearLayoutManager
         mRecyclerView.addItemDecoration(mDividerItemDecoration)
+
+        titleTextView.text = title
+        closeImageView.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
     override fun show(message: String, useToast: Boolean) {

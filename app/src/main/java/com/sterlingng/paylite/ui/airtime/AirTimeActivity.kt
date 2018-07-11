@@ -68,6 +68,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 1
+            filterBottomSheetFragment.title = "Select a bundle"
             filterBottomSheetFragment.items = listOf("30MB - 24hrs", "300MB - 48hrs", "3000MB - 72hrs", "Unlimted - 1 month")
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
@@ -77,6 +78,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 2
+            filterBottomSheetFragment.title = "Category"
             filterBottomSheetFragment.items = listOf("Data bundle", "Mobile Top-up")
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
@@ -86,6 +88,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 0
+            filterBottomSheetFragment.title = "Network provider"
             filterBottomSheetFragment.items = listOf("Airtel", "Glo", "MTN", "9 Mobile", "nTel")
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
@@ -118,7 +121,8 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_SELECT_CONTACT -> {
-                handleContactPickerResult(data?.data!!)
+                if (data != null)
+                    handleContactPickerResult(data.data)
             }
         }
     }

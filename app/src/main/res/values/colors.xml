@@ -44,6 +44,7 @@
     <color name="dark_sage">#507c58</color>
     <color name="slate_dark">#324636</color>
     <color name="blueberry">#3e3f81</color>
+    <color name="sienna">#b23c1b</color>
     <color name="apple_green">#7ed321</color>
     <color name="scarlet">#d0021b</color>
     <color name="scarlet_dark">#b5051a</color>
@@ -52,6 +53,7 @@
     <color name="bluish_grey">#829192</color>
     <color name="charcoal">#324636</color>
     <color name="white_12">#1effffff</color>
+    <color name="reddish_purple">#8d0b6b</color>
     <color name="light_grey_green">#b6da90</color>
     <color name="darkish_pink">#d54694</color>
     <color name="icon_disabled">#FF63727B</color>

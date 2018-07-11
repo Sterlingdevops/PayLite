@@ -52,6 +52,8 @@ class OnBoardingFragment : BaseFragment(), OnBoardingMvpView {
     private lateinit var infoTextView: TextView
     private lateinit var illustration: ImageView
 
+    var colorId = 0
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_on_boarding, container, false)
         val component = activityComponent
@@ -75,6 +77,9 @@ class OnBoardingFragment : BaseFragment(), OnBoardingMvpView {
         lite.visibility = View.GONE
         easy.visibility = View.GONE
 
+//        (baseActivity as MainActivity).mSignInButton.setTextColor(ContextCompat.getColor(baseActivity, arguments?.getInt(color)!!))
+
+        colorId = arguments?.getInt(color)!!
         backdrop.setImageDrawable(ContextCompat.getDrawable(baseActivity, arguments?.getInt(resId)!!))
         if (arguments?.getBoolean(main)!!) {
             pay.visibility = View.VISIBLE
@@ -106,14 +111,16 @@ class OnBoardingFragment : BaseFragment(), OnBoardingMvpView {
 
     companion object {
 
-        const val resId = "backdrop"
         const val main = "main"
+        const val color = "color"
+        const val resId = "backdrop"
         const val screenData = "ScreenData"
 
-        fun newInstance(res: Int, isMain: Boolean, data: ScreenData): Fragment {
+        fun newInstance(res: Int, isMain: Boolean, colorId: Int, data: ScreenData): Fragment {
             val fragment = OnBoardingFragment()
             val args = Bundle()
             args.putInt(resId, res)
+            args.putInt(color, colorId)
             args.putBoolean(main, isMain)
             args.putParcelable(screenData, data)
             fragment.arguments = args

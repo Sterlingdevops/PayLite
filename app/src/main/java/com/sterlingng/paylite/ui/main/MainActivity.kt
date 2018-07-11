@@ -3,6 +3,8 @@ package com.sterlingng.paylite.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewPager
 import android.view.View
 import android.widget.Button
 import com.ogaclejapan.smarttablayout.SmartTabLayout
@@ -22,8 +24,8 @@ class MainActivity : BaseActivity(), MainMvpView {
     @Inject
     lateinit var mPresenter: MainMvpContract<MainMvpView>
 
-    private lateinit var mLogInButton: Button
-    private lateinit var mSignInButton: Button
+    lateinit var mLogInButton: Button
+    lateinit var mSignInButton: Button
 
     @Inject
     lateinit var mPagerAdapter: CustomPagerAdapter
@@ -44,8 +46,8 @@ class MainActivity : BaseActivity(), MainMvpView {
 
     override fun bindViews() {
         mLogInButton = findViewById(R.id.log_in)
-        mSignInButton = findViewById(R.id.sign_in)
         mViewPager = findViewById(R.id.viewpager)
+        mSignInButton = findViewById(R.id.sign_in)
         mSmartTabLayout = findViewById(R.id.viewpagertab)
     }
 
@@ -60,20 +62,20 @@ class MainActivity : BaseActivity(), MainMvpView {
             startActivity(intent)
         }
         mPagerAdapter.run {
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_1, true, ScreenData("", "")), "")
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_2, false,
+            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_1, true, R.color.scarlet, ScreenData("", "")), "")
+            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_2, false, R.color.dark_sage,
                     ScreenData(
                             title = "Send Money", info = "Send money to anyone with just\n their phone number, email or social handle."
                     )), "")
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_3, false,
+            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_3, false, R.color.blueberry,
                     ScreenData(
                             title = "Generate Paycodes", info = "Generate cash withdrawal codes\n that can be collected at ATMs, branches or agents."
                     )), "")
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_4, false,
+            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_4, false, R.color.sienna,
                     ScreenData(
                             title = "Give", info = "Donate to projects close\n to your heart or notifications you love"
                     )), "")
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_5, false,
+            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_5, false, R.color.reddish_purple,
                     ScreenData(
                             title = "Request Payment", info = "Ask family, friends or clients\n for money using our customised payment links"
                     )), "")
@@ -82,16 +84,24 @@ class MainActivity : BaseActivity(), MainMvpView {
         mViewPager.adapter = mPagerAdapter
         mViewPager.isPagingEnabled = true
         mViewPager.offscreenPageLimit = mPagerAdapter.count
+        mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                mSignInButton.setTextColor(ContextCompat.getColor(this@MainActivity,
+                        (mPagerAdapter.getFragment(position) as OnBoardingFragment).colorId))
+            }
+
+        })
 
         mSmartTabLayout.setViewPager(mViewPager)
     }
-
-//    override fun onBackPressed() {
-//        if (mViewPager.currentItem == 0)
-//            super.onBackPressed()
-//        else
-//            --mViewPager.currentItem
-//    }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
 

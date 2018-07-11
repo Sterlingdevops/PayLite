@@ -62,6 +62,7 @@ class ProjectsFragment : BaseFragment(), ProjectsMvpView, ProjectsAdapter.OnRetr
     override fun onFilterClicked() {
         val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
         filterBottomSheetFragment.onFilterItemSelectedListener = this
+        filterBottomSheetFragment.title = "Category"
         filterBottomSheetFragment.items = listOf("Health", "Education", "Agriculture", "Transportation")
         filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
     }

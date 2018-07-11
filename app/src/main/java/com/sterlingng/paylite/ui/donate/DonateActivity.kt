@@ -12,14 +12,14 @@ import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.confirm.ConfirmActivity
-import com.sterlingng.paylite.ui.donate.repeat.RepeatBottomSheetFragment
+import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSetListener, RepeatBottomSheetFragment.OnRepeatItemSelected {
+class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSetListener, FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
     lateinit var mPresenter: DonateMvpContract<DonateMvpView>
@@ -124,9 +124,11 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
         }
 
         setRepeatTextView.setOnClickListener {
-            val repeatBottomSheetFragment = RepeatBottomSheetFragment.newInstance()
-            repeatBottomSheetFragment.mOnRepeatItemSelectedListener = this
-            repeatBottomSheetFragment.show(supportFragmentManager, "Repeat")
+            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
+            filterBottomSheetFragment.onFilterItemSelectedListener = this
+            filterBottomSheetFragment.title = "Repeat Payment"
+            filterBottomSheetFragment.items = listOf("Never", "Daily", "Weekly", "Monthly", "Yearly")
+            filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
 
         setDateTextView.setOnClickListener {
@@ -175,8 +177,7 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
         dateTextView.text = simpleDateFormat.format(today)
     }
 
-    override fun onRepeatItemSelected(dialog: Dialog, s: String) {
-        show(s, true)
+    override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
         repeatTextView.text = s
         dialog.dismiss()
     }

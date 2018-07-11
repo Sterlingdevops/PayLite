@@ -10,10 +10,9 @@ import com.sterlingng.paylite.ui.charity.program.ProgramFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.donate.DonateActivity
-import com.sterlingng.paylite.ui.donate.repeat.RepeatBottomSheetFragment
+import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.give.GiveFragment
 import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
-import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
@@ -117,6 +116,4 @@ interface ActivityComponent {
     // Dialogs
 
     fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
-
-    fun inject(repeatBottomSheetFragment: RepeatBottomSheetFragment)
 }
