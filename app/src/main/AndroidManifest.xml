@@ -54,5 +54,6 @@
         <activity android:name=".ui.transactions.TransactionsActivity"/>
         <activity android:name=".ui.bills.BillsActivity"/>
         <activity android:name=".ui.airtime.AirTimeActivity"/>
+        <activity android:name=".ui.fund.FundActivity"/>
     </application>
 </manifest>

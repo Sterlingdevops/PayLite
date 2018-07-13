@@ -15,6 +15,7 @@ import com.sterlingng.paylite.data.model.Deal
 import com.sterlingng.paylite.ui.airtime.AirTimeActivity
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.donate.DonateActivity
+import com.sterlingng.paylite.ui.fund.FundActivity
 import com.sterlingng.paylite.ui.profile.ProfileActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsActivity
 import de.hdodenhof.circleimageview.CircleImageView
@@ -122,6 +123,10 @@ class HomeFragment : BaseFragment(), HomeMvpView, DealsAdapter.OnRetryClicked {
 
         mProfileImageView.setOnClickListener {
             startActivity(ProfileActivity.getStartIntent(baseActivity))
+        }
+
+        mTopUpButton.setOnClickListener {
+            startActivity(FundActivity.getStartIntent(baseActivity))
         }
 
         mHistoryButton.setOnClickListener {

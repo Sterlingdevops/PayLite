@@ -11,6 +11,11 @@ import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.donate.DonateActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
+import com.sterlingng.paylite.ui.fund.FundActivity
+import com.sterlingng.paylite.ui.fund.choose.ChooseBottomSheetFragment
+import com.sterlingng.paylite.ui.fund.cvv.CvvBottomSheetFragment
+import com.sterlingng.paylite.ui.fund.expiry.ExpiryBottomSheetFragment
+import com.sterlingng.paylite.ui.fund.number.NumberBottomSheetFragment
 import com.sterlingng.paylite.ui.give.GiveFragment
 import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
 import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
@@ -48,6 +53,8 @@ interface ActivityComponent {
     // Activities
 
     fun inject(editActivity: EditActivity)
+
+    fun inject(fundActivity: FundActivity)
 
     fun inject(mainActivity: MainActivity)
 
@@ -115,5 +122,13 @@ interface ActivityComponent {
 
     // Dialogs
 
+    fun inject(cvvBottomSheetFragment: CvvBottomSheetFragment)
+
     fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
+
+    fun inject(chooseBottomSheetFragment: ChooseBottomSheetFragment)
+
+    fun inject(numberBottomSheetFragment: NumberBottomSheetFragment)
+
+    fun inject(expiryBottomSheetFragment: ExpiryBottomSheetFragment)
 }

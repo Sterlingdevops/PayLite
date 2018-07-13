@@ -39,6 +39,21 @@ import com.sterlingng.paylite.ui.donate.DonatePresenter
 import com.sterlingng.paylite.ui.filter.FilterMvpContract
 import com.sterlingng.paylite.ui.filter.FilterMvpView
 import com.sterlingng.paylite.ui.filter.FilterPresenter
+import com.sterlingng.paylite.ui.fund.FundMvpContract
+import com.sterlingng.paylite.ui.fund.FundMvpView
+import com.sterlingng.paylite.ui.fund.FundPresenter
+import com.sterlingng.paylite.ui.fund.choose.ChooseMvpContract
+import com.sterlingng.paylite.ui.fund.choose.ChooseMvpView
+import com.sterlingng.paylite.ui.fund.choose.ChoosePresenter
+import com.sterlingng.paylite.ui.fund.cvv.CvvMvpContract
+import com.sterlingng.paylite.ui.fund.cvv.CvvMvpView
+import com.sterlingng.paylite.ui.fund.cvv.CvvPresenter
+import com.sterlingng.paylite.ui.fund.expiry.ExpiryMvpContract
+import com.sterlingng.paylite.ui.fund.expiry.ExpiryMvpView
+import com.sterlingng.paylite.ui.fund.expiry.ExpiryPresenter
+import com.sterlingng.paylite.ui.fund.number.NumberMvpContract
+import com.sterlingng.paylite.ui.fund.number.NumberMvpView
+import com.sterlingng.paylite.ui.fund.number.NumberPresenter
 import com.sterlingng.paylite.ui.give.GiveMvpContract
 import com.sterlingng.paylite.ui.give.GiveMvpView
 import com.sterlingng.paylite.ui.give.GivePresenter
@@ -185,6 +200,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    internal fun provideFundPresenter(presenter: FundPresenter<FundMvpView>): FundMvpContract<FundMvpView> = presenter
+
+    @Provides
+    @PerActivity
     internal fun provideMainPresenter(presenter: MainPresenter<MainMvpView>): MainMvpContract<MainMvpView> = presenter
 
     @Provides
@@ -241,6 +260,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun providePayPresenter(presenter: PayPresenter<PayMvpView>): PayMvpContract<PayMvpView> = presenter
 
     @Provides
+    internal fun provideCvvPresenter(presenter: CvvPresenter<CvvMvpView>): CvvMvpContract<CvvMvpView> = presenter
+
+    @Provides
     internal fun provideOtpPresenter(presenter: OtpPresenter<OtpMvpView>): OtpMvpContract<OtpMvpView> = presenter
 
     @Provides
@@ -262,7 +284,16 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
 
     @Provides
+    internal fun provideChoosePresenter(presenter: ChoosePresenter<ChooseMvpView>): ChooseMvpContract<ChooseMvpView> = presenter
+
+    @Provides
     internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter
+
+    @Provides
+    internal fun provideNumberPresenter(presenter: NumberPresenter<NumberMvpView>): NumberMvpContract<NumberMvpView> = presenter
+
+    @Provides
+    internal fun provideExpiryPresenter(presenter: ExpiryPresenter<ExpiryMvpView>): ExpiryMvpContract<ExpiryMvpView> = presenter
 
     @Provides
     internal fun providePaymentPresenter(presenter: PaymentPresenter<PaymentMvpView>): PaymentMvpContract<PaymentMvpView> = presenter

@@ -176,4 +176,14 @@
     <string name="close">Close</string>
     <string name="account_number_email_or_phone">Account number, email or phone</string>
     <string name="recipient_name">Recipient name</string>
+    <string name="mastercard">Mastercard</string>
+    <string name="card_details">Card Details</string>
+    <string name="_0000">0000</string>
+    <string name="american_express">American Express</string>
+    <string name="card_type">Card Type</string>
+    <string name="link_card">Link Card</string>
+    <string name="add">Add</string>
+    <string name="please_input_your_card_number">Please input your card number</string>
+    <string name="now_enter_your_cards_expiration_date">Enter your card\'s expiration date.</string>
+    <string name="enter_your_security_code">Enter your card\'s security code</string>
 </resources>

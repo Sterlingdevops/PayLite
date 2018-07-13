@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.filter
+package com.sterlingng.paylite.ui.fund.choose
 
 
 import android.annotation.SuppressLint
@@ -19,17 +19,17 @@ import com.sterlingng.paylite.ui.base.BaseDialog
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import javax.inject.Inject
 
-class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClickListener {
+class ChooseBottomSheetFragment : BaseDialog(), ChooseMvpView, RecyclerViewClickListener {
 
     @Inject
-    lateinit var mPresenter: FilterMvpContract<FilterMvpView>
+    lateinit var mPresenter: ChooseMvpContract<ChooseMvpView>
 
-    lateinit var onFilterItemSelectedListener: OnFilterItemSelected
+    lateinit var onChooseCardSelectedListener: OnChooseCardSelected
 
     private lateinit var titleTextView: TextView
     private lateinit var closeImageView: ImageView
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mFilterAdapter: FilterAdapter
+    private lateinit var mChooseCardAdapter: ChooseCardAdapter
 
     @Inject
     lateinit var mLinearLayoutManager: LinearLayoutManager
@@ -37,7 +37,7 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     @Inject
     lateinit var mDividerItemDecoration: DividerItemDecoration
 
-    lateinit var items: List<String>
+    lateinit var items: List<Card>
     lateinit var title: String
     var selector: Int = -1
 
@@ -62,7 +62,7 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
 
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_filter_bottom_sheet, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.fragment_choose_bottom_sheet, null)
 
         val component = activityComponent
         dialog.setContentView(view)
@@ -87,10 +87,11 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     }
 
     override fun setUp(view: View) {
-        mFilterAdapter = FilterAdapter(baseActivity)
-        mFilterAdapter.mRecyclerViewClickListener = this
-        mFilterAdapter.addItems(items)
-        mRecyclerView.adapter = mFilterAdapter
+        mChooseCardAdapter = ChooseCardAdapter(baseActivity)
+        mChooseCardAdapter.mRecyclerViewClickListener = this
+        mChooseCardAdapter.addCards(items)
+
+        mRecyclerView.adapter = mChooseCardAdapter
         mRecyclerView.layoutManager = mLinearLayoutManager
         mRecyclerView.addItemDecoration(mDividerItemDecoration)
 
@@ -105,17 +106,17 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
-        onFilterItemSelectedListener.onFilterItemSelected(dialog, selector, items[position])
+        onChooseCardSelectedListener.onChooseCardSelected(dialog, selector, items[position])
     }
 
-    interface OnFilterItemSelected {
-        fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String)
+    interface OnChooseCardSelected {
+        fun onChooseCardSelected(dialog: Dialog, selector: Int, s: Card)
     }
 
     companion object {
 
-        fun newInstance(): FilterBottomSheetFragment {
-            val dialog = FilterBottomSheetFragment()
+        fun newInstance(): ChooseBottomSheetFragment {
+            val dialog = ChooseBottomSheetFragment()
             val args = Bundle()
             dialog.arguments = args
             return dialog
