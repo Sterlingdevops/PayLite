@@ -174,4 +174,6 @@
     <string name="available_bundles">Available bundles</string>
     <string name="select_a_bundle">Select A Bundle</string>
     <string name="close">Close</string>
+    <string name="account_number_email_or_phone">Account number, email or phone</string>
+    <string name="recipient_name">Recipient name</string>
 </resources>

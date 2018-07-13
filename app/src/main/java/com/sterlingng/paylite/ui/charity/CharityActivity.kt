@@ -58,6 +58,8 @@ class CharityActivity : BaseActivity(), CharityMvpView {
 
         giveButton2.setOnClickListener {
             val intent = DonateActivity.getStartIntent(this)
+                    .putExtra(DonateActivity.donateTitle, "Give")
+                    .putExtra(DonateActivity.donateType, 0)
             startActivity(intent)
         }
     }

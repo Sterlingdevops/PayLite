@@ -4,6 +4,10 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.constraint.Group
+import android.support.design.widget.TextInputEditText
+import android.support.design.widget.TextInputLayout
+import android.text.InputType
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -29,15 +33,23 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
 
     private var now = Calendar.getInstance()
 
-    private lateinit var setDateTextView: TextView
-    private lateinit var setRepeatTextView: TextView
-    private lateinit var repeatTextView: TextView
-    private lateinit var dateTextView: TextView
-    private lateinit var dateView: View
-    private lateinit var repeatView: View
-    private lateinit var switch: Switch
-    private lateinit var schedule: TextView
-    private lateinit var ref: TextView
+    private lateinit var mScheduleRepeatSwitch: Switch
+    private lateinit var mReferenceTextView: TextView
+    private lateinit var mSetRepeatTextView: TextView
+    private lateinit var mScheduleTextView: TextView
+    private lateinit var mSetDateTextView: TextView
+    private lateinit var mRepeatTextView: TextView
+    private lateinit var mDateTextView: TextView
+    private lateinit var mRepeatView: View
+    private lateinit var mDateView: View
+
+    private lateinit var mBeneficiaryTextInputEditText: TextInputEditText
+    private lateinit var mRecipientNameTextInputLayout: TextInputLayout
+    private lateinit var mBeneficiaryTextInputLayout: TextInputLayout
+    private lateinit var mPasswordTextInputLayout: TextInputLayout
+    private lateinit var mBeneficiaryTextView: TextView
+    private lateinit var mTitleTextView: TextView
+    private lateinit var mScheduleGroup: Group
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -50,33 +62,49 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
         mPresenter.onAttach(this)
     }
 
-    override fun bindViews() {
-        exit = findViewById(R.id.exit)
-        next = findViewById(R.id.next)
-
-        ref = findViewById(R.id.ref)
-        schedule = findViewById(R.id.schedule)
-        switch = findViewById(R.id.schedule_switch)
-
-        setDateTextView = findViewById(R.id.set_date)
-        dateTextView = findViewById(R.id.date)
-        dateView = findViewById(R.id.set_date_view)
-
-        setRepeatTextView = findViewById(R.id.set_repeat)
-        repeatTextView = findViewById(R.id.repeat)
-        repeatView = findViewById(R.id.set_repeat_view)
-    }
-
     override fun setUp() {
-        setDateTextView.visibility = View.GONE
-        dateTextView.visibility = View.GONE
-        dateView.visibility = View.GONE
-        setRepeatTextView.visibility = View.GONE
-        repeatTextView.visibility = View.GONE
-        repeatView.visibility = View.GONE
+        val type = intent?.getIntExtra(donateType, 0)
+        when (type) {
+            0 -> { //give
+                mRecipientNameTextInputLayout.visibility = View.GONE
+                mBeneficiaryTextInputLayout.visibility = View.GONE
+                mPasswordTextInputLayout.visibility = View.GONE
+
+                mBeneficiaryTextView.visibility = View.VISIBLE
+                mScheduleGroup.visibility = View.VISIBLE
+                mTitleTextView.text = "Give"
+            }
+            1 -> { //send money
+                mRecipientNameTextInputLayout.visibility = View.VISIBLE
+                mBeneficiaryTextInputLayout.visibility = View.VISIBLE
+                mPasswordTextInputLayout.visibility = View.GONE
+
+                mTitleTextView.text = intent.getStringExtra(donateTitle)
+                mBeneficiaryTextView.visibility = View.GONE
+                mScheduleGroup.visibility = View.VISIBLE
+            }
+            2 -> {
+                mRecipientNameTextInputLayout.visibility = View.VISIBLE
+                mBeneficiaryTextInputLayout.visibility = View.VISIBLE
+                mPasswordTextInputLayout.visibility = View.VISIBLE
+                mBeneficiaryTextInputLayout.hint = "Recipients Phone number"
+                mBeneficiaryTextInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
+
+                mTitleTextView.text = intent.getStringExtra(donateTitle)
+                mBeneficiaryTextView.visibility = View.GONE
+                mScheduleGroup.visibility = View.GONE
+            }
+        }
+
+        mSetDateTextView.visibility = View.GONE
+        mDateTextView.visibility = View.GONE
+        mDateView.visibility = View.GONE
+        mSetRepeatTextView.visibility = View.GONE
+        mRepeatTextView.visibility = View.GONE
+        mRepeatView.visibility = View.GONE
 
         val simpleDateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.US)
-        dateTextView.text = simpleDateFormat.format(Date())
+        mDateTextView.text = simpleDateFormat.format(Date())
 
         exit.setOnClickListener {
             onBackPressed()
@@ -87,43 +115,43 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
             startActivity(intent)
         }
 
-        schedule.setOnClickListener {
-            if (switch.isChecked) {
-                setDateTextView.visibility = View.VISIBLE
-                dateTextView.visibility = View.VISIBLE
-                dateView.visibility = View.VISIBLE
-                setRepeatTextView.visibility = View.VISIBLE
-                repeatTextView.visibility = View.VISIBLE
-                repeatView.visibility = View.VISIBLE
+        mScheduleTextView.setOnClickListener {
+            if (mScheduleRepeatSwitch.isChecked) {
+                mSetDateTextView.visibility = View.VISIBLE
+                mDateTextView.visibility = View.VISIBLE
+                mDateView.visibility = View.VISIBLE
+                mSetRepeatTextView.visibility = View.VISIBLE
+                mRepeatTextView.visibility = View.VISIBLE
+                mRepeatView.visibility = View.VISIBLE
             } else {
-                setDateTextView.visibility = View.GONE
-                dateTextView.visibility = View.GONE
-                dateView.visibility = View.GONE
-                setRepeatTextView.visibility = View.GONE
-                repeatTextView.visibility = View.GONE
-                repeatView.visibility = View.GONE
+                mSetDateTextView.visibility = View.GONE
+                mDateTextView.visibility = View.GONE
+                mDateView.visibility = View.GONE
+                mSetRepeatTextView.visibility = View.GONE
+                mRepeatTextView.visibility = View.GONE
+                mRepeatView.visibility = View.GONE
             }
         }
 
-        ref.setOnClickListener {
-            if (switch.isChecked) {
-                setDateTextView.visibility = View.VISIBLE
-                dateTextView.visibility = View.VISIBLE
-                dateView.visibility = View.VISIBLE
-                setRepeatTextView.visibility = View.VISIBLE
-                repeatTextView.visibility = View.VISIBLE
-                repeatView.visibility = View.VISIBLE
+        mReferenceTextView.setOnClickListener {
+            if (mScheduleRepeatSwitch.isChecked) {
+                mSetDateTextView.visibility = View.VISIBLE
+                mDateTextView.visibility = View.VISIBLE
+                mDateView.visibility = View.VISIBLE
+                mSetRepeatTextView.visibility = View.VISIBLE
+                mRepeatTextView.visibility = View.VISIBLE
+                mRepeatView.visibility = View.VISIBLE
             } else {
-                setDateTextView.visibility = View.GONE
-                dateTextView.visibility = View.GONE
-                dateView.visibility = View.GONE
-                setRepeatTextView.visibility = View.GONE
-                repeatTextView.visibility = View.GONE
-                repeatView.visibility = View.GONE
+                mSetDateTextView.visibility = View.GONE
+                mDateTextView.visibility = View.GONE
+                mDateView.visibility = View.GONE
+                mSetRepeatTextView.visibility = View.GONE
+                mRepeatTextView.visibility = View.GONE
+                mRepeatView.visibility = View.GONE
             }
         }
 
-        setRepeatTextView.setOnClickListener {
+        mSetRepeatTextView.setOnClickListener {
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.title = "Repeat Payment"
@@ -131,28 +159,53 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
 
-        setDateTextView.setOnClickListener {
+        mSetDateTextView.setOnClickListener {
             showDatePicker("Payment Date")
             hideKeyboard()
         }
 
-        switch.setOnCheckedChangeListener { _, isChecked ->
+        mScheduleRepeatSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                setDateTextView.visibility = View.VISIBLE
-                dateTextView.visibility = View.VISIBLE
-                dateView.visibility = View.VISIBLE
-                setRepeatTextView.visibility = View.VISIBLE
-                repeatTextView.visibility = View.VISIBLE
-                repeatView.visibility = View.VISIBLE
+                mSetDateTextView.visibility = View.VISIBLE
+                mDateTextView.visibility = View.VISIBLE
+                mDateView.visibility = View.VISIBLE
+                mSetRepeatTextView.visibility = View.VISIBLE
+                mRepeatTextView.visibility = View.VISIBLE
+                mRepeatView.visibility = View.VISIBLE
             } else {
-                setDateTextView.visibility = View.GONE
-                dateTextView.visibility = View.GONE
-                dateView.visibility = View.GONE
-                setRepeatTextView.visibility = View.GONE
-                repeatTextView.visibility = View.GONE
-                repeatView.visibility = View.GONE
+                mSetDateTextView.visibility = View.GONE
+                mDateTextView.visibility = View.GONE
+                mDateView.visibility = View.GONE
+                mSetRepeatTextView.visibility = View.GONE
+                mRepeatTextView.visibility = View.GONE
+                mRepeatView.visibility = View.GONE
             }
         }
+    }
+
+    override fun bindViews() {
+        exit = findViewById(R.id.exit)
+        next = findViewById(R.id.next)
+
+        mReferenceTextView = findViewById(R.id.ref)
+        mScheduleTextView = findViewById(R.id.schedule)
+        mScheduleRepeatSwitch = findViewById(R.id.schedule_switch)
+
+        mSetDateTextView = findViewById(R.id.set_date)
+        mDateTextView = findViewById(R.id.date)
+        mDateView = findViewById(R.id.set_date_view)
+
+        mSetRepeatTextView = findViewById(R.id.set_repeat)
+        mRepeatTextView = findViewById(R.id.repeat)
+        mRepeatView = findViewById(R.id.set_repeat_view)
+
+        mRecipientNameTextInputLayout = findViewById(R.id.textInputLayout4)
+        mBeneficiaryTextInputLayout = findViewById(R.id.textInputLayout3)
+        mBeneficiaryTextInputEditText = findViewById(R.id.beneficiary)
+        mPasswordTextInputLayout = findViewById(R.id.textInputLayout5)
+        mBeneficiaryTextView = findViewById(R.id.beneficiary_text)
+        mScheduleGroup = findViewById(R.id.schedule_group)
+        mTitleTextView = findViewById(R.id.title)
     }
 
     private fun showDatePicker(date: String) {
@@ -174,11 +227,11 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
         val df = SimpleDateFormat("yyyy/MM/dd", Locale.US)
         val today = df.parse(date)
         val simpleDateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.US)
-        dateTextView.text = simpleDateFormat.format(today)
+        mDateTextView.text = simpleDateFormat.format(today)
     }
 
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
-        repeatTextView.text = s
+        mRepeatTextView.text = s
         dialog.dismiss()
     }
 
@@ -187,6 +240,9 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
     }
 
     companion object {
+
+        const val donateTitle = "DonateActivity.TITLE"
+        const val donateType = "DonateActivity.TYPE"
 
         fun getStartIntent(context: Context): Intent {
             return Intent(context, DonateActivity::class.java)
