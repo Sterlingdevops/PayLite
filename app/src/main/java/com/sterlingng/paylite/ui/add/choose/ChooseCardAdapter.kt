@@ -1,28 +1,30 @@
-package com.sterlingng.paylite.ui.home
+package com.sterlingng.paylite.ui.add.choose
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Deal
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
-class DealsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+data class Card(val name: String, val logo: Int)
 
-    val deals: ArrayList<Deal> = ArrayList()
+class ChooseCardAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+
+    val cards: ArrayList<Card> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
-    lateinit var onRetryClickedListener: OnRetryClicked
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View?
         return when (viewType) {
             VIEW_TYPE_NORMAL -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_deals_preview_item, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_card_item, parent, false)
                 ViewHolder(view, mRecyclerViewClickListener)
             }
             VIEW_TYPE_EMPTY -> {
@@ -36,27 +38,27 @@ class DealsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>
         }
     }
 
-    fun getDealAtPosition(position: Int): Deal = deals[position]
+    fun getCardAtPosition(position: Int): Card = cards[position]
 
-    fun addDeal(deal: Deal) {
-        deals.add(deal)
-        notifyItemInserted(this.deals.size - 1)
+    fun addCard(card: Card) {
+        cards.add(card)
+        notifyItemInserted(this.cards.size - 1)
     }
 
-    fun addDeals(deals: Collection<Deal>) {
-        val index = this.deals.size - 1
-        this.deals.addAll(deals)
-        notifyItemRangeInserted(index, deals.size - 1)
+    fun addCards(cards: List<Card>) {
+        val index = this.cards.size - 1
+        this.cards.addAll(cards)
+        notifyItemRangeInserted(index, cards.size - 1)
     }
 
-    fun removeDeal(index: Int) {
-        this.deals.removeAt(index)
+    fun removeCard(index: Int) {
+        this.cards.removeAt(index)
         notifyItemRemoved(index)
     }
 
     fun clear() {
-        deals.clear()
-        notifyItemRangeRemoved(0, this.deals.size)
+        cards.clear()
+        notifyItemRangeRemoved(0, this.cards.size)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -64,7 +66,7 @@ class DealsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (deals.size > 0) {
+        return if (cards.size > 0) {
             VIEW_TYPE_NORMAL
         } else {
             VIEW_TYPE_EMPTY
@@ -72,20 +74,24 @@ class DealsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>
     }
 
     override fun getItemCount(): Int {
-        return if (deals.size > 0) {
-            deals.size
+        return if (cards.size > 0) {
+            cards.size
         } else {
             1
         }
     }
 
-    inner class ViewHolder(itemView: View, var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
+    inner class ViewHolder(cardView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(cardView) {
+
+        private val cardNameTextView: TextView = cardView.findViewById(R.id.card_name)
+        private val cardLogoImageView: ImageView = cardView.findViewById(R.id.card_logo)
 
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            with(deals[position]) {
-
+            with(cards[position]) {
+                cardNameTextView.text = name
+                cardLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, logo))
             }
             itemView.setOnClickListener {
                 recyclerViewClickListener.recyclerViewListClicked(it, position)
@@ -93,10 +99,10 @@ class DealsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>
         }
     }
 
-    inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView) {
+    inner class EmptyViewHolder(cardView: View) : BaseViewHolder(cardView) {
 
-        private var errorText: TextView = itemView.findViewById(R.id.error_text)
-        private var retry: TextView = itemView.findViewById(R.id.retry)
+        private var errorText: TextView = cardView.findViewById(R.id.error_text)
+        private var retry: TextView = cardView.findViewById(R.id.retry)
 
         override fun onBind(position: Int) {
             super.onBind(position)
@@ -110,12 +116,7 @@ class DealsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>
 
         private fun retryClicked() {
             checkConnection()
-            onRetryClickedListener.onRetryClicked()
         }
-    }
-
-    interface OnRetryClicked {
-        fun onRetryClicked()
     }
 
     companion object {

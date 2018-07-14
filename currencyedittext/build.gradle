@@ -2,19 +2,22 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.7.0"
+        versionCode 202
+        versionName "2.0.2"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { java.srcDirs = ['src/main/java'] } }
 }
 
 dependencies {
@@ -22,3 +25,12 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
 }
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+
+//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+

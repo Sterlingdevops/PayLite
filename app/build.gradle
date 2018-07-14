@@ -85,17 +85,18 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
 
     implementation project(':pinview')
-    implementation project(':expandabletextview')
     implementation project(':editcredit')
+    implementation project(':currencyedittext')
+    implementation project(':expandabletextview')
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+    implementation 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'
     implementation 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'javax.inject:javax.inject:1'
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     implementation 'com.github.AndroidDeveloperLB:AutoFitTextView:4'
     implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.0@aar'
-    implementation "com.android.support:design:$rootProject.supportVersion"
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'

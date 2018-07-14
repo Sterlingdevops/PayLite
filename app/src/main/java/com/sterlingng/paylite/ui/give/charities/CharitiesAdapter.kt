@@ -10,7 +10,6 @@ import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.ui.base.BaseViewHolder
-import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
@@ -113,9 +112,7 @@ class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHol
         }
 
         private fun checkConnection() {
-            if (!AppUtils.hasInternetConnection(mContext)) {
-                errorText.text = mContext.resources.getString(R.string.offline)
-            }
+            errorText.text = mContext.resources.getString(R.string.offline)
         }
 
         private fun retryClicked() {

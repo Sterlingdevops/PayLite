@@ -65,7 +65,8 @@
     <string name="to_keep_your_account_secure">To keep your account secure</string>
     <string name="paylite">Paylite</string>
     <string name="available_balance">Available Balance</string>
-    <string name="amount_naira">₦10,000,000</string>
+    <string name="amount_naira">₦10,000.00</string>
+    <string name="amount_0">0.00</string>
     <string name="top_up">Top Up</string>
     <string name="view_history">View History</string>
     <string name="see_all">See all</string>
@@ -186,4 +187,7 @@
     <string name="please_input_your_card_number">Please input your card number</string>
     <string name="now_enter_your_cards_expiration_date">Enter your card\'s expiration date.</string>
     <string name="enter_your_security_code">Enter your card\'s security code</string>
+    <string name="enter_the_amount_to_fund_your_account_with">Enter the amount to fund\n your account with</string>
+    <string name="fund_account">Fund Account</string>
+    <string name="ngn">NGN</string>
 </resources>

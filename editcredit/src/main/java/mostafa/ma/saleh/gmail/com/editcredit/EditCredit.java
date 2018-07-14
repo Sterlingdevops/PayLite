@@ -9,9 +9,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.TextViewCompat;
-import android.support.v7.widget.AppCompatEditText;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EditCredit extends AppCompatEditText {
+public class EditCredit extends TextInputEditText {
 
     @Deprecated
     public static final int NO_SEPARATOR = 0;

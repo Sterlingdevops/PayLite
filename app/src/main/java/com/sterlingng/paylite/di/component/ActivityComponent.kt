@@ -2,6 +2,12 @@ package com.sterlingng.paylite.di.component
 
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
+import com.sterlingng.paylite.ui.add.AddActivity
+import com.sterlingng.paylite.ui.fund.amount.AmountBottomSheetFragment
+import com.sterlingng.paylite.ui.add.choose.ChooseBottomSheetFragment
+import com.sterlingng.paylite.ui.add.cvv.CvvBottomSheetFragment
+import com.sterlingng.paylite.ui.add.expiry.ExpiryBottomSheetFragment
+import com.sterlingng.paylite.ui.add.number.NumberBottomSheetFragment
 import com.sterlingng.paylite.ui.airtime.AirTimeActivity
 import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.charity.CharityActivity
@@ -12,10 +18,6 @@ import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.donate.DonateActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.fund.FundActivity
-import com.sterlingng.paylite.ui.fund.choose.ChooseBottomSheetFragment
-import com.sterlingng.paylite.ui.fund.cvv.CvvBottomSheetFragment
-import com.sterlingng.paylite.ui.fund.expiry.ExpiryBottomSheetFragment
-import com.sterlingng.paylite.ui.fund.number.NumberBottomSheetFragment
 import com.sterlingng.paylite.ui.give.GiveFragment
 import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
 import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
@@ -51,6 +53,8 @@ import dagger.Component
 interface ActivityComponent {
 
     // Activities
+
+    fun inject(fundActivity: AddActivity)
 
     fun inject(editActivity: EditActivity)
 
@@ -131,4 +135,6 @@ interface ActivityComponent {
     fun inject(numberBottomSheetFragment: NumberBottomSheetFragment)
 
     fun inject(expiryBottomSheetFragment: ExpiryBottomSheetFragment)
+
+    fun inject(amountBottomSheetFragment: AmountBottomSheetFragment)
 }
