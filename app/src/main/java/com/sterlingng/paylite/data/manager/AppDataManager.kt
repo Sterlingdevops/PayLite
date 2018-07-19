@@ -20,6 +20,10 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val remoteServiceHelper: RemoteServiceHelper,
                      private val mockHelper: MockHelper) : DataManager {
 
+    override fun mockLogin(email: String, password: String): Observable<User> {
+        return mockHelper.mockLogin(email, password)
+    }
+
     override fun mockTransactions(): Observable<ArrayList<Transaction>> {
         return mockHelper.mockTransactions()
     }

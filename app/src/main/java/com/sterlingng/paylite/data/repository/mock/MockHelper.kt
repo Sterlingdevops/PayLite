@@ -9,6 +9,10 @@ import javax.inject.Inject
 class MockHelper @Inject
 internal constructor() : MockerInterface {
 
+    override fun mockLogin(email: String, password: String): Observable<User> {
+        return Observable.just(User("email", password, null))
+    }
+
     override fun mockTransactions(): Observable<ArrayList<Transaction>> {
         val transactions: ArrayList<Transaction> = ArrayList()
         transactions += Transaction("11,000", "Income", Transaction.TransactionType.Credit, "2 transactions")
@@ -62,7 +66,7 @@ internal constructor() : MockerInterface {
         charities += Charity("S.O.S Village", "Orphanage")
         charities += Charity("Sacred Heart", "NGO")
         charities += Charity("S.T.E.R", "women and children")
-        charities += Charity("Lifebank", "Donation / disaster relief")
+        charities += Charity("LifeBank", "Donation / disaster relief")
         charities += Charity("Trauma Care", "Health")
         return Observable.just(charities)
     }

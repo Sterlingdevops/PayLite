@@ -21,7 +21,7 @@ class FundActivity : BaseActivity(), FundMvpView, AmountBottomSheetFragment.OnAd
     @Inject
     lateinit var mPresenter: FundMvpContract<FundMvpView>
 
-    var mCardAmount: String = ""
+    private var mCardAmount: String = ""
     private lateinit var exit: ImageView
     private lateinit var next: Button
     private lateinit var mAmountTextView: TextView

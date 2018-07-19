@@ -19,12 +19,12 @@ class ApplicationModule(private val application: Application) {
 
     @Provides
     @ApplicationContext
-    internal fun provideContext(): Context = application
+    fun provideContext(): Context = application
 
     @Provides
-    internal fun provideApplication(): Application = application
+    fun provideApplication(): Application = application
 
     @Provides
     @Singleton
-    internal fun provideDataManager(appDataManager: AppDataManager): DataManager = appDataManager
+    fun provideDataManager(appDataManager: AppDataManager): DataManager = appDataManager
 }

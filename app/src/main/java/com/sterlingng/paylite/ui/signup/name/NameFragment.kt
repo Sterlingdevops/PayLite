@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.utils.OnChildDidClickNext
-import kotlinx.android.synthetic.main.fragment_name.*
 import javax.inject.Inject
 
 class NameFragment : BaseFragment(), NameMvpView {
@@ -19,6 +19,7 @@ class NameFragment : BaseFragment(), NameMvpView {
 
     lateinit var firstNameTextView: TextView
     lateinit var lastNameTextView: TextView
+    lateinit var next: Button
 
     lateinit var mDidClickNext: OnChildDidClickNext
 
@@ -31,17 +32,16 @@ class NameFragment : BaseFragment(), NameMvpView {
     }
 
     override fun bindViews(view: View) {
-        firstNameTextView = view.findViewById(R.id.first_name)
+        next = view.findViewById(R.id.next_name)
         lastNameTextView = view.findViewById(R.id.last_name)
-
-        next_name.setOnClickListener {
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!)
-            hideKeyboard()
-        }
+        firstNameTextView = view.findViewById(R.id.first_name)
     }
 
     override fun setUp(view: View) {
-
+        next.setOnClickListener {
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!)
+            hideKeyboard()
+        }
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

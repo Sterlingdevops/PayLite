@@ -28,7 +28,7 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
     }
 
     override fun bindViews(view: View) {
-        next = view.findViewById(R.id.next)
+        next = view.findViewById(R.id.next_complete)
     }
 
     override fun setUp(view: View) {

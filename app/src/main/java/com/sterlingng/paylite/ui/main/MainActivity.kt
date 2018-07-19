@@ -24,8 +24,8 @@ class MainActivity : BaseActivity(), MainMvpView {
     @Inject
     lateinit var mPresenter: MainMvpContract<MainMvpView>
 
-    lateinit var mLogInButton: Button
-    lateinit var mSignInButton: Button
+    private lateinit var mLogInButton: Button
+    private lateinit var mSignInButton: Button
 
     @Inject
     lateinit var mPagerAdapter: CustomPagerAdapter
@@ -65,19 +65,19 @@ class MainActivity : BaseActivity(), MainMvpView {
             addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_1, true, R.color.scarlet, ScreenData("", "")), "")
             addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_2, false, R.color.dark_sage,
                     ScreenData(
-                            title = "Send Money", info = "Send money to anyone with just\n their phone number, email or social handle."
+                            title = "Send Money", info = "Send money to anyone with just\n their phone number,\n email or social handle."
                     )), "")
             addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_3, false, R.color.blueberry,
                     ScreenData(
-                            title = "Generate Paycodes", info = "Generate cash withdrawal codes\n that can be collected at ATMs, branches or agents."
+                            title = "Generate Paycodes", info = "Generate cash withdrawal codes\n that can be collected\n at ATMs, branches or agents."
                     )), "")
             addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_4, false, R.color.sienna,
                     ScreenData(
-                            title = "Give", info = "Donate to projects close\n to your heart or notifications you love"
+                            title = "Give", info = "Donate to projects close\n to your heart or\n notifications you love"
                     )), "")
             addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_5, false, R.color.reddish_purple,
                     ScreenData(
-                            title = "Request Payment", info = "Ask family, friends or clients\n for money using our customised payment links"
+                            title = "Request Payment", info = "Ask family, friends or clients\n for money using\n our customised payment links"
                     )), "")
         }
 

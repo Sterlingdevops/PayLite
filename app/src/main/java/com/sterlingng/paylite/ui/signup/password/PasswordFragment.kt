@@ -28,7 +28,7 @@ class PasswordFragment : BaseFragment(), PasswordMvpView {
     }
 
     override fun bindViews(view: View) {
-        next = view.findViewById(R.id.next)
+        next = view.findViewById(R.id.next_password)
     }
 
     override fun setUp(view: View) {

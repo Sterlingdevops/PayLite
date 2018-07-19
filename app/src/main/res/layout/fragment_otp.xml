@@ -34,24 +34,6 @@
         app:layout_constraintTop_toBottomOf="@+id/pin_view"
         app:layout_constraintVertical_bias="0.5"/>
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_button"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:stateListAnimator="@null"
-        android:text="@string/next"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        tools:targetApi="lollipop"/>
-
     <com.goodiebag.pinview.PinView
         android:id="@+id/pin_view"
         android:layout_width="0dp"
@@ -70,6 +52,24 @@
         app:pinHeight="40dp"
         app:pinLength="5"
         app:pinWidth="40dp"/>
+
+    <Button
+        android:id="@+id/next_otp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:stateListAnimator="@null"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        tools:targetApi="lollipop"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"

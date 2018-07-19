@@ -15,7 +15,7 @@ class HomePresenter<V : HomeMvpView>
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), HomeMvpContract<V> {
 
-    override fun loadDeals()  {
+    override fun loadDeals() {
         val retrySubject = PublishSubject.create<Any>()
         mvpView.showLoading()
         compositeDisposable.addAll(

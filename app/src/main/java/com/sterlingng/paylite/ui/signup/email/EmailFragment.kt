@@ -37,7 +37,7 @@ class EmailFragment : BaseFragment(), EmailMvpView {
     }
 
     override fun bindViews(view: View) {
-        next = view.findViewById(R.id.next)
+        next = view.findViewById(R.id.next_email)
         phoneInput = view.findViewById(R.id.phone_input_layout)
     }
 

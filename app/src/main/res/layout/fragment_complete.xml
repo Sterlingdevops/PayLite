@@ -24,14 +24,14 @@
         android:layout_height="128dp"
         android:layout_marginTop="32dp"
         android:contentDescription="@string/account_setup_completed"
-        app:layout_constraintBottom_toTopOf="@+id/next"
+        app:layout_constraintBottom_toTopOf="@+id/next_complete"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:srcCompat="@drawable/complete"/>
 
     <Button
-        android:id="@+id/next"
+        android:id="@+id/next_complete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/round_button"

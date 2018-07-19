@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.ui.signup.otp
 
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,9 @@ import android.widget.Button
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.OnChildDidClickNext
+import com.sterlingng.paylite.utils.get
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -36,12 +39,14 @@ class OtpFragment : BaseFragment(), OtpMvpView {
     }
 
     override fun bindViews(view: View) {
-        next = view.findViewById(R.id.next)
+        next = view.findViewById(R.id.next_otp)
         resend = view.findViewById(R.id.resend)
         pinView = view.findViewById(R.id.pin_view)
     }
 
     override fun setUp(view: View) {
+        Log.d((next.parent as ConstraintLayout)[next].toString())
+
         disposable = Flowable.interval(1, TimeUnit.SECONDS, Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -56,6 +61,8 @@ class OtpFragment : BaseFragment(), OtpMvpView {
         }
         resend.setOnClickListener {
             show("Resending token", true)
+            disposable.dispose()
+            hideKeyboard()
         }
         next.setOnClickListener {
             mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!)

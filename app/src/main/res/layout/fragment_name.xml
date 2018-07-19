@@ -56,6 +56,7 @@
         android:id="@+id/passwordTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -74,7 +75,7 @@
     </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
 
     <Button
-        android:id="@+id/next.name"
+        android:id="@+id/next_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/round_button"
