@@ -18,10 +18,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
-        app:itemIconTint="@color/scarlet"
-        app:layout_behavior="com.sterlingng.paylite.utils.widgets.BottomNavigationBehavior"
-        app:itemTextColor="@color/scarlet"
-        app:menu="@menu/navigation"/>
+        app:menu="@menu/menu_navigation"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

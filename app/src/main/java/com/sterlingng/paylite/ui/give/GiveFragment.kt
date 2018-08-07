@@ -44,10 +44,10 @@ class GiveFragment : BaseFragment(), GiveMvpView {
     override fun setUp(view: View) {
         mPagerAdapter = GivePagerAdapter(childFragmentManager)
 
-        val categoriesFragment = ProjectsFragment.newInstance()
-        onFilterClickedListener = categoriesFragment
+        val projectsFragment = ProjectsFragment.newInstance()
+        onFilterClickedListener = projectsFragment
 
-        mPagerAdapter.addFragment(categoriesFragment, "Categories")
+        mPagerAdapter.addFragment(projectsFragment, "Projects")
         mPagerAdapter.addFragment(CharitiesFragment.newInstance(), "Charities")
 
         mViewPager.adapter = mPagerAdapter

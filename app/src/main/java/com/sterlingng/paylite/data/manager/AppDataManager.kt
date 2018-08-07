@@ -20,27 +20,17 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val remoteServiceHelper: RemoteServiceHelper,
                      private val mockHelper: MockHelper) : DataManager {
 
-    override fun mockLogin(email: String, password: String): Observable<User> {
-        return mockHelper.mockLogin(email, password)
-    }
+    override fun mockCategories(): ArrayList<PaymentCategory> = mockHelper.mockCategories()
 
-    override fun mockTransactions(): Observable<ArrayList<Transaction>> {
-        return mockHelper.mockTransactions()
-    }
+    override fun mockLogin(email: String, password: String): Observable<User> = mockHelper.mockLogin(email, password)
 
-    override fun mockNotifications(): Observable<ArrayList<Notification>> {
-        return mockHelper.mockNotifications()
-    }
+    override fun mockTransactions(): ArrayList<Transaction> = mockHelper.mockTransactions()
 
-    override fun mockCharities(): Observable<ArrayList<Charity>> {
-        return mockHelper.mockCharities()
-    }
+    override fun mockNotifications(): ArrayList<Notification> = mockHelper.mockNotifications()
 
-    override fun mockCategories(): Observable<ArrayList<Category>> {
-        return mockHelper.mockCategories()
-    }
+    override fun mockCharities(): ArrayList<Charity> = mockHelper.mockCharities()
 
-    override fun mockDeals(): Observable<ArrayList<Deal>> {
-        return mockHelper.mockDeals()
-    }
+    override fun mockProjects(): ArrayList<Project> = mockHelper.mockProjects()
+
+    override fun mockDeals(): ArrayList<Deal> = mockHelper.mockDeals()
 }

@@ -12,9 +12,12 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
+import java.text.SimpleDateFormat
 import java.util.*
 
-class CategoriesAdapter(private val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>(),
+        StickyRecyclerHeadersAdapter<TransactionAdapter.HeaderViewHolder> {
 
     val transactions: ArrayList<Transaction> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
@@ -81,6 +84,22 @@ class CategoriesAdapter(private val mContext: Context) : RecyclerView.Adapter<Ba
         }
     }
 
+    override fun getHeaderId(position: Int): Long {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(transactions[position].date.time * 1000)
+        return calendar.get(Calendar.WEEK_OF_YEAR).toLong()
+    }
+
+    override fun onCreateHeaderViewHolder(parent: ViewGroup): HeaderViewHolder {
+        val view = LayoutInflater.from(mContext).inflate(R.layout.layout_transactions_header_item, parent, false)
+        return HeaderViewHolder(view)
+    }
+
+    override fun onBindHeaderViewHolder(holder: HeaderViewHolder, position: Int) {
+        val date = SimpleDateFormat("dd MMMM, yyyy", Locale.US).format(Date(transactions[position].date.time * 1000))
+        holder.headerName.text = date
+    }
+
     inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
         private var transactionType: ImageView = itemView.findViewById(R.id.transaction_type)
         private var transactionDate: TextView = itemView.findViewById(R.id.transaction_date)
@@ -90,7 +109,7 @@ class CategoriesAdapter(private val mContext: Context) : RecyclerView.Adapter<Ba
         override fun onBind(position: Int) {
             super.onBind(position)
             with(transactions[position]) {
-                transactionAmount.text = "${mContext.getString(R.string.naira)}$amount"
+                transactionAmount.text = if (type == Transaction.TransactionType.Credit) "+${mContext.getString(R.string.naira)} $amount" else "-${mContext.getString(R.string.naira)} $amount"
                 transactionName.text = name
                 transactionDate.text = count
                 transactionType.setImageDrawable(ContextCompat.getDrawable(mContext, if (type == Transaction.TransactionType.Credit) R.drawable.arrow_bottom_left else R.drawable.arrow_top_right))
@@ -101,6 +120,10 @@ class CategoriesAdapter(private val mContext: Context) : RecyclerView.Adapter<Ba
                 recyclerViewClickListener.recyclerViewListClicked(it, position)
             }
         }
+    }
+
+    inner class HeaderViewHolder(itemView: View) : BaseViewHolder(itemView) {
+        var headerName: TextView = itemView.findViewById(R.id.header_name)
     }
 
     inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView) {

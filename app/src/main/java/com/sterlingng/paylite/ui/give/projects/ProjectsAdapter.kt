@@ -9,14 +9,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Category
+import com.sterlingng.paylite.data.model.Project
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
 class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    val categories: ArrayList<Category> = ArrayList()
+    val projects: ArrayList<Project> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
     lateinit var onRetryClickedListener: OnRetryClicked
 
@@ -24,7 +24,7 @@ class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHold
         val view: View?
         return when (viewType) {
             VIEW_TYPE_NORMAL -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_categories_item, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_project_item, parent, false)
                 ViewHolder(view, mRecyclerViewClickListener)
             }
             VIEW_TYPE_EMPTY -> {
@@ -38,27 +38,27 @@ class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHold
         }
     }
 
-    fun getCategoryAtPosition(position: Int): Category = categories[position]
+    fun getCategoryAtPosition(position: Int): Project = projects[position]
 
-    fun addCategory(Category: Category) {
-        categories.add(Category)
-        notifyItemInserted(this.categories.size - 1)
+    fun addCategory(Project: Project) {
+        projects.add(Project)
+        notifyItemInserted(this.projects.size - 1)
     }
 
-    fun addCategories(Categorys: Collection<Category>) {
-        val index = this.categories.size - 1
-        this.categories.addAll(Categorys)
-        notifyItemRangeInserted(index, Categorys.size - 1)
+    fun addCategories(projects: Collection<Project>) {
+        val index = this.projects.size - 1
+        this.projects.addAll(projects)
+        notifyItemRangeInserted(index, projects.size - 1)
     }
 
     fun removeCategory(index: Int) {
-        this.categories.removeAt(index)
+        this.projects.removeAt(index)
         notifyItemRemoved(index)
     }
 
     fun clear() {
-        categories.clear()
-        notifyItemRangeRemoved(0, this.categories.size)
+        projects.clear()
+        notifyItemRangeRemoved(0, this.projects.size)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -66,7 +66,7 @@ class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHold
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (categories.size > 0) {
+        return if (projects.size > 0) {
             VIEW_TYPE_NORMAL
         } else {
             VIEW_TYPE_EMPTY
@@ -74,8 +74,8 @@ class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHold
     }
 
     override fun getItemCount(): Int {
-        return if (categories.size > 0) {
-            categories.size
+        return if (projects.size > 0) {
+            projects.size
         } else {
             1
         }
@@ -90,7 +90,7 @@ class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHold
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            with(categories[position]) {
+            with(projects[position]) {
                 categoryTextView.text = category
                 categoryNameTextView.text = name
                 categoryImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.spartan))

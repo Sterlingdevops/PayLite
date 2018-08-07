@@ -78,7 +78,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 2
-            filterBottomSheetFragment.title = "Category"
+            filterBottomSheetFragment.title = "Project"
             filterBottomSheetFragment.items = listOf("Data bundle", "Mobile Top-up")
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }

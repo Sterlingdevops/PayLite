@@ -66,7 +66,7 @@ class CharitiesFragment : BaseFragment(), CharitiesMvpView, CharitiesAdapter.OnR
     override fun onFilterClicked() {
         val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
         filterBottomSheetFragment.onFilterItemSelectedListener = this
-        filterBottomSheetFragment.title = "Category"
+        filterBottomSheetFragment.title = "Project"
         filterBottomSheetFragment.items = listOf("Health", "Education", "Agriculture", "Transportation")
         filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
     }

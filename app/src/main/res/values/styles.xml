@@ -55,7 +55,7 @@
         <!-- This would set the toolbar's background color,
               but setting this also changes the popup menu's background,
               even if we define popupTheme for our <Toolbar> -->
-        <item name="android:background">@color/slate_green</item>
+        <item name="android:background">@color/charcoal_grey</item>
     </style>
 
     <!--<style name="AppTheme.Launcher" parent="AppTheme.NoActionBar">-->

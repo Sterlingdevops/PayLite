@@ -1,9 +1,9 @@
-package com.sterlingng.paylite.utils
+package com.sterlingng.paylite.utils.widgets
 
 import android.content.Context
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.GridLayoutManager
 
-class NoScrollingLinearLayoutManager(val context: Context) : LinearLayoutManager(context) {
+class NoScrollingGridLayoutManager(val context: Context, spanCount: Int) : GridLayoutManager(context, spanCount) {
     var isScrollEnabled = true
 
     override fun canScrollVertically(): Boolean {

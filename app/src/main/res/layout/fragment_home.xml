@@ -5,193 +5,401 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitish_gray"
     tools:context=".ui.home.HomeFragment">
+
+    <android.support.v4.widget.NestedScrollView
+        layout="@layout/partial_home"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/whitish_gray"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backdrop">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/payments"
+                        android:textAppearance="@style/HelperTextAppearance"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="SmallSp"/>
+
+                    <ImageView
+                        android:id="@+id/cash_out_code"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="48dp"
+                        android:layout_marginRight="48dp"
+                        android:contentDescription="@string/cash_out_code"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/cashout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/request_money"
+                        app:layout_constraintTop_toTopOf="@+id/request_money"/>
+
+                    <ImageView
+                        android:id="@+id/request_money"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@string/request_money"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/request_money"
+                        app:layout_constraintEnd_toStartOf="@+id/cash_out_code"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/send_money"
+                        app:layout_constraintTop_toTopOf="@+id/send_money"/>
+
+                    <ImageView
+                        android:id="@+id/send_money"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="48dp"
+                        android:layout_marginStart="48dp"
+                        android:layout_marginTop="16dp"
+                        android:contentDescription="@string/send_money"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/send_money_black"
+                        app:layout_constraintEnd_toStartOf="@+id/request_money"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9"/>
+
+                    <TextView
+                        android:id="@+id/pay_bills_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/pay_bills"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/pay_bills"
+                        app:layout_constraintStart_toStartOf="@+id/pay_bills"
+                        app:layout_constraintTop_toBottomOf="@+id/pay_bills"/>
+
+                    <TextView
+                        android:id="@+id/cash_out_to_bank_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/cash_out_to_bank"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/cash_out_to_bank"
+                        app:layout_constraintStart_toStartOf="@+id/cash_out_to_bank"
+                        app:layout_constraintTop_toBottomOf="@+id/cash_out_to_bank"/>
+
+                    <ImageView
+                        android:id="@+id/pay_bills"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="56dp"
+                        android:contentDescription="@string/pay_bills"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/bills"
+                        app:layout_constraintEnd_toEndOf="@+id/request_money"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/request_money"
+                        app:layout_constraintTop_toBottomOf="@+id/request_money"/>
+
+                    <ImageView
+                        android:id="@+id/cash_out_to_bank"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="56dp"
+                        android:contentDescription="@string/cash_out_to_bank"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/cashout_bank"
+                        app:layout_constraintEnd_toEndOf="@+id/send_money"
+                        app:layout_constraintStart_toStartOf="@+id/send_money"
+                        app:layout_constraintTop_toBottomOf="@+id/send_money"/>
+
+                    <TextView
+                        android:id="@+id/cash_out_code_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/cash_out_code"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/cash_out_code"
+                        app:layout_constraintStart_toStartOf="@+id/cash_out_code"
+                        app:layout_constraintTop_toBottomOf="@+id/cash_out_code"/>
+
+                    <TextView
+                        android:id="@+id/request_money_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/request_money"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/request_money"
+                        app:layout_constraintStart_toStartOf="@+id/request_money"
+                        app:layout_constraintTop_toBottomOf="@+id/request_money"/>
+
+                    <TextView
+                        android:id="@+id/send_money_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/send_money"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/send_money"
+                        app:layout_constraintStart_toStartOf="@+id/send_money"
+                        app:layout_constraintTop_toBottomOf="@+id/send_money"/>
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardElevation="0dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/lifestyle"
+                        android:textAppearance="@style/HelperTextAppearance"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="SmallSp"/>
+
+                    <ImageView
+                        android:id="@+id/airtime_data"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="48dp"
+                        android:layout_marginRight="48dp"
+                        android:contentDescription="@string/cash_out_code"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/airtime_and_data"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/movie_tickets"
+                        app:layout_constraintTop_toTopOf="@+id/movie_tickets"/>
+
+                    <ImageView
+                        android:id="@+id/movie_tickets"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@string/request_money"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ticket"
+                        app:layout_constraintEnd_toStartOf="@+id/airtime_data"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/travels_and_hotels"
+                        app:layout_constraintTop_toTopOf="@+id/travels_and_hotels"/>
+
+                    <ImageView
+                        android:id="@+id/travels_and_hotels"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="48dp"
+                        android:layout_marginStart="48dp"
+                        android:layout_marginTop="16dp"
+                        android:contentDescription="@string/send_money"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/flights"
+                        app:layout_constraintEnd_toStartOf="@+id/movie_tickets"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView11"/>
+
+                    <TextView
+                        android:id="@+id/deals_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/deals"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/deals"
+                        app:layout_constraintStart_toStartOf="@+id/deals"
+                        app:layout_constraintTop_toBottomOf="@+id/deals"/>
+
+                    <ImageView
+                        android:id="@+id/deals"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="56dp"
+                        android:contentDescription="@string/cash_out_to_bank"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/cashout"
+                        app:layout_constraintEnd_toEndOf="@+id/travels_and_hotels"
+                        app:layout_constraintStart_toStartOf="@+id/travels_and_hotels"
+                        app:layout_constraintTop_toBottomOf="@+id/travels_and_hotels"/>
+
+                    <TextView
+                        android:id="@+id/airtime_data_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/airtime_data"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/airtime_data"
+                        app:layout_constraintStart_toStartOf="@+id/airtime_data"
+                        app:layout_constraintTop_toBottomOf="@+id/airtime_data"/>
+
+                    <TextView
+                        android:id="@+id/movie_tickets_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/movies_and_events"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/movie_tickets"
+                        app:layout_constraintStart_toStartOf="@+id/movie_tickets"
+                        app:layout_constraintTop_toBottomOf="@+id/movie_tickets"/>
+
+                    <TextView
+                        android:id="@+id/travels_and_hotels_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/travel_and_hotels"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/travels_and_hotels"
+                        app:layout_constraintStart_toStartOf="@+id/travels_and_hotels"
+                        app:layout_constraintTop_toBottomOf="@+id/travels_and_hotels"/>
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
     <ImageView
         android:id="@+id/backdrop"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/backdrop"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="2.5:1"
+        android:scaleType="fitXY"
+        app:layout_constraintDimensionRatio="1.7:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sub_main_bg"/>
+        app:srcCompat="@drawable/bg_main"/>
 
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+    <ImageView
+        android:id="@+id/notifications_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/backdrop"
-        android:src="@color/white"
+        android:tint="@color/white"
         app:layout_constraintEnd_toStartOf="@id/guidelineRight"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rt"
-        android:textColor="@color/scarlet"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_icon"
-        app:layout_constraintEnd_toEndOf="@+id/profile_icon"
-        app:layout_constraintStart_toStartOf="@+id/profile_icon"
-        app:layout_constraintTop_toTopOf="@+id/profile_icon"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/notification"/>
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/available_balance"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/white"
-        android:textSize="10sp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/main_amount"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
+        app:layout_constraintTop_toBottomOf="@id/guidelineTop"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:ignore="SmallSp"/>
 
     <TextView
         android:id="@+id/main_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/amount_naira"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/fund"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textView10"/>
 
     <Button
-        android:id="@+id/top_up"
+        android:id="@+id/fund"
         android:layout_width="120dp"
         android:layout_height="32dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:background="@drawable/button_white"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/background_blue_outline"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:stateListAnimator="@null"
-        android:text="@string/top_up"
+        android:text="@string/fund"
         android:textAllCaps="false"
-        android:textColor="@color/scarlet"
-        app:layout_constraintBottom_toBottomOf="@+id/backdrop"
-        app:layout_constraintEnd_toStartOf="@+id/view_history"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/backdrop"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/main_amount"
-        tools:targetApi="lollipop"/>
-
-    <Button
-        android:id="@+id/view_history"
-        android:layout_width="120dp"
-        android:layout_height="32dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:background="@drawable/button_white"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:stateListAnimator="@null"
-        android:text="@string/view_history"
-        android:textAllCaps="false"
-        android:textColor="@color/scarlet"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/backdrop"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/top_up"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/main_amount"
         tools:targetApi="lollipop"/>
-
-    <TextView
-        android:id="@+id/section_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_toLeftOf="@+id/btn_view_more"
-        android:layout_toStartOf="@+id/btn_view_more"
-        android:text="@string/section_title_ph"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop"/>
-
-    <TextView
-        android:id="@+id/btn_view_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:gravity="center"
-        android:text="@string/see_all"
-        android:textAllCaps="false"
-        android:textColor="@color/darkish_pink"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/section_title"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintTop_toTopOf="@+id/section_title"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="4dp"
-        android:background="@color/light_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/barrier2"/>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/deals_you_ll_love"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        tools:ignore="SmallSp"/>
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/flight_tickets_to_jamaica"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"/>
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/quick_actions"
-        android:textAppearance="@style/HelperTextAppearance"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/barrier2"
-        tools:ignore="SmallSp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="16dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/main_amount"
+        app:layout_constraintGuide_percent="0.028218694"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineLeft"
@@ -214,181 +422,21 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_end="56dp"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="horizontal"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/section_title"
-        tools:listitem="@layout/layout_deals_preview_item"/>
+        android:text="@string/hi_yinka"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/notifications_icon"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
 
     <android.support.constraint.Barrier
         android:id="@+id/barrier2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="backdrop,textView3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <ImageView
-        android:id="@+id/pay_bills"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:contentDescription="@string/pay_bills"
-        android:scaleType="centerInside"
-        android:src="@drawable/bills"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/airtime_data"
-        app:layout_constraintTop_toTopOf="@+id/airtime_data"/>
-
-    <ImageView
-        android:id="@+id/airtime_data"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:contentDescription="@string/airtime_data"
-        android:scaleType="centerInside"
-        android:src="@drawable/airtime_data"
-        app:layout_constraintEnd_toStartOf="@+id/pay_bills"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/send_money"
-        app:layout_constraintTop_toTopOf="@+id/send_money"/>
-
-    <ImageView
-        android:id="@+id/send_money"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="24dp"
-        android:contentDescription="@string/send_money"
-        android:scaleType="centerInside"
-        android:src="@drawable/send_money_black"
-        app:layout_constraintEnd_toStartOf="@+id/airtime_data"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"/>
-
-    <TextView
-        android:id="@+id/flights_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/flights"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/flights"
-        app:layout_constraintStart_toStartOf="@+id/flights"
-        app:layout_constraintTop_toBottomOf="@+id/flights"/>
-
-    <TextView
-        android:id="@+id/movie_tickets_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/movie_tickets"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/movie_tickets"
-        app:layout_constraintStart_toStartOf="@+id/movie_tickets"
-        app:layout_constraintTop_toBottomOf="@+id/movie_tickets"/>
-
-    <TextView
-        android:id="@+id/qr_payment_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/qr_pay"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/qr_payment"
-        app:layout_constraintStart_toStartOf="@+id/qr_payment"
-        app:layout_constraintTop_toBottomOf="@+id/qr_payment"/>
-
-    <ImageView
-        android:id="@+id/flights"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="32dp"
-        android:contentDescription="@string/flights"
-        android:scaleType="centerInside"
-        android:src="@drawable/flight"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/movie_tickets"
-        app:layout_constraintTop_toBottomOf="@+id/pay_bills_text"/>
-
-    <ImageView
-        android:id="@+id/movie_tickets"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:contentDescription="@string/movie_tickets"
-        android:scaleType="centerInside"
-        android:src="@drawable/ticket"
-        app:layout_constraintEnd_toStartOf="@+id/flights"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/qr_payment"
-        app:layout_constraintTop_toBottomOf="@+id/airtime_and_data_text"/>
-
-    <ImageView
-        android:id="@+id/qr_payment"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="32dp"
-        android:contentDescription="@string/qr_payment"
-        android:scaleType="centerInside"
-        android:src="@drawable/qr_code"
-        app:layout_constraintEnd_toStartOf="@+id/movie_tickets"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/send_money_text"/>
-
-    <TextView
-        android:id="@+id/pay_bills_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/pay_bills"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/pay_bills"
-        app:layout_constraintStart_toStartOf="@+id/pay_bills"
-        app:layout_constraintTop_toBottomOf="@+id/pay_bills"/>
-
-    <TextView
-        android:id="@+id/airtime_and_data_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/airtime_data"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/airtime_data"
-        app:layout_constraintStart_toStartOf="@+id/airtime_data"
-        app:layout_constraintTop_toBottomOf="@+id/airtime_data"/>
-
-    <TextView
-        android:id="@+id/send_money_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/send_money"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/send_money"
-        app:layout_constraintStart_toStartOf="@+id/send_money"
-        app:layout_constraintTop_toBottomOf="@+id/send_money"/>
-
+        app:barrierDirection="top"/>
 
 </android.support.constraint.ConstraintLayout>

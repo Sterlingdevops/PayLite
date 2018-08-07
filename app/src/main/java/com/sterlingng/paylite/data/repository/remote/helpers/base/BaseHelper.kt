@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 
 open class BaseHelper {
-    private val baseUrl: String = "http://api.football-data.org/"
+    private val baseUrl: String = "http://10.0.41.102:845/"
 
     private val okHttpCBuilder = OkHttpClient.Builder()
 

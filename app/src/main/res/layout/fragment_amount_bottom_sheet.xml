@@ -63,9 +63,7 @@
             android:hint="@string/amount"
             android:imeOptions="actionDone"
             android:inputType="number"
-            app:allow_negative_values="false"
-            app:layout_constraintStart_toStartOf="@id/amount"
-            app:layout_constraintTop_toBottomOf="@id/amount"/>
+            app:allow_negative_values="false"/>
 
     </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
 
@@ -74,7 +72,7 @@
         android:layout_width="128dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
-        android:background="@drawable/button_red"
+        android:background="@drawable/button_black"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"

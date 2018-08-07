@@ -3,11 +3,13 @@ package com.sterlingng.paylite.ui.home
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.rx.TestSchedulerProvider
+import com.sterlingng.paylite.util.RxSchedulersOverrideRule
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
@@ -27,6 +29,9 @@ class HomePresenterTest {
     private lateinit var mSchedulerProvider: SchedulerProvider
     private lateinit var mCompositeDisposable: CompositeDisposable
     private lateinit var mHomePresenter: HomePresenter<HomeMvpView>
+
+    @get:Rule
+    val rxSchedulersOverrideRule = RxSchedulersOverrideRule()
 
     @Before
     @Throws(Exception::class)

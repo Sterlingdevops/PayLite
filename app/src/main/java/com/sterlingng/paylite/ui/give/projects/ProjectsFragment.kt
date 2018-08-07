@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Category
+import com.sterlingng.paylite.data.model.Project
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.give.OnFilterClicked
@@ -17,7 +17,10 @@ import com.sterlingng.paylite.ui.project.ProjectActivity
 import com.sterlingng.paylite.utils.ItemOffsetDecoration
 import javax.inject.Inject
 
-class ProjectsFragment : BaseFragment(), ProjectsMvpView, ProjectsAdapter.OnRetryClicked, OnFilterClicked, FilterBottomSheetFragment.OnFilterItemSelected {
+class ProjectsFragment : BaseFragment(), ProjectsMvpView,
+        ProjectsAdapter.OnRetryClicked,
+        OnFilterClicked,
+        FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
     lateinit var mPresenter: ProjectsMvpContract<ProjectsMvpView>
@@ -52,7 +55,7 @@ class ProjectsFragment : BaseFragment(), ProjectsMvpView, ProjectsAdapter.OnRetr
         mRecyclerView.addItemDecoration(itemOffsetDecoration)
         mRecyclerView.scrollToPosition(0)
 
-        mPresenter.loadCategories()
+        mPresenter.loadProjects()
     }
 
     override fun onRetryClicked() {
@@ -62,7 +65,7 @@ class ProjectsFragment : BaseFragment(), ProjectsMvpView, ProjectsAdapter.OnRetr
     override fun onFilterClicked() {
         val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
         filterBottomSheetFragment.onFilterItemSelectedListener = this
-        filterBottomSheetFragment.title = "Category"
+        filterBottomSheetFragment.title = "Project"
         filterBottomSheetFragment.items = listOf("Health", "Education", "Agriculture", "Transportation")
         filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
     }
@@ -77,7 +80,7 @@ class ProjectsFragment : BaseFragment(), ProjectsMvpView, ProjectsAdapter.OnRetr
         startActivity(intent)
     }
 
-    override fun updateDeals(it: ArrayList<Category>) {
+    override fun updateProjects(it: ArrayList<Project>) {
         mProjectsAdapter.addCategories(it)
     }
 

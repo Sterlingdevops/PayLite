@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import javax.inject.Inject
 
 class CategoriesFragment : BaseFragment(), CategoriesMvpView {
@@ -25,7 +26,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     lateinit var mDividerItemDecoration: DividerItemDecoration
 
     @Inject
-    lateinit var mCategoriesAdapter: CategoriesAdapter
+    lateinit var mTransactionAdapter: TransactionAdapter
 
     lateinit var recyclerView: RecyclerView
 
@@ -38,17 +39,18 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     }
 
     override fun setUp(view: View) {
-        mCategoriesAdapter.mRecyclerViewClickListener = this
+        mTransactionAdapter.mRecyclerViewClickListener = this
 
-        recyclerView.adapter = mCategoriesAdapter
+        recyclerView.adapter = mTransactionAdapter
         recyclerView.layoutManager = mLinearLayoutManager
         recyclerView.addItemDecoration(mDividerItemDecoration)
+        recyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(mTransactionAdapter))
 
-        mPresenter.loadCreditCards()
+        mPresenter.loadMockTransactions()
     }
 
     override fun updateCategories(it: Collection<Transaction>) {
-        mCategoriesAdapter.addTransactions(it)
+        mTransactionAdapter.addTransactions(it)
         recyclerView.scrollToPosition(0)
     }
 

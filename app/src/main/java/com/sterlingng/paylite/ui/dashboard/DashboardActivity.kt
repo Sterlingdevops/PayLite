@@ -14,7 +14,7 @@ import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.give.GiveFragment
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
-import com.sterlingng.paylite.utils.Log
+import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
@@ -28,8 +28,9 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
     private lateinit var mCurrentFragment: Fragment
     private var mSelectedItem = 0
 
-    private lateinit var homeFragment: Fragment
+    private lateinit var transactionsFragment: Fragment
     private lateinit var paymentFragment: Fragment
+    private lateinit var homeFragment: Fragment
     private lateinit var giveFragment: Fragment
 
     override fun attachBaseContext(newBase: Context) {
@@ -41,33 +42,11 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
         setContentView(R.layout.activity_dashboard)
         activityComponent.inject(this)
         mPresenter.onAttach(this)
-        Log.d("onCreate() Called")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(SELECTED_ITEM, mSelectedItem)
         super.onSaveInstanceState(outState)
-        Log.d("onSaveInstanceState() Called")
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        Log.d("onRestoreInstanceState() Called")
-    }
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        Log.d("onPostCreate() Called")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("onResume() Called")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("onPause() Called")
     }
 
     override fun bindViews() {
@@ -75,8 +54,9 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
     }
 
     override fun setUp() {
-        homeFragment = HomeFragment.newInstance()
+        transactionsFragment = TransactionsFragment.newInstance()
         paymentFragment = PaymentFragment.newInstance()
+        homeFragment = HomeFragment.newInstance()
         giveFragment = GiveFragment.newInstance()
 
         createFragments()
@@ -84,7 +64,9 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
         mBottomNavigationView.onNavigationItemSelectedListener = this
         mBottomNavigationView.enableAnimation(true)
         mBottomNavigationView.enableShiftingMode(false)
-        mBottomNavigationView.enableItemShiftingMode(true)
+        mBottomNavigationView.enableItemShiftingMode(false)
+        mBottomNavigationView.setLargeTextSize(14f)
+        mBottomNavigationView.setSmallTextSize(10f)
 
         mSelectedItem = intent.getIntExtra(SELECTED_ITEM, 0)
 
@@ -129,9 +111,11 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
                 .remove(homeFragment)
                 .remove(giveFragment)
                 .remove(paymentFragment)
+                .remove(transactionsFragment)
                 .commit()
 
         addHideFragment(paymentFragment, payment)
+        addHideFragment(transactionsFragment, payment)
         addHideFragment(giveFragment, give)
 
         mFragmentManager.beginTransaction().add(R.id.container, homeFragment, home).commit()
@@ -147,8 +131,11 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
             R.id.nav_home -> {
                 mCurrentFragment = hideShowFragment(mCurrentFragment, homeFragment)
             }
-            R.id.nav_payments -> {
+            R.id.nav_settings -> {
                 mCurrentFragment = hideShowFragment(mCurrentFragment, paymentFragment)
+            }
+            R.id.nav_transactions -> {
+                mCurrentFragment = hideShowFragment(mCurrentFragment, transactionsFragment)
             }
             R.id.nav_give -> {
                 mCurrentFragment = hideShowFragment(mCurrentFragment, giveFragment)

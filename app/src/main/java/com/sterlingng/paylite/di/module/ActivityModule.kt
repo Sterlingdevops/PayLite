@@ -130,15 +130,20 @@ import com.sterlingng.paylite.ui.signup.password.PasswordPresenter
 import com.sterlingng.paylite.ui.signup.pin.PinMvpContract
 import com.sterlingng.paylite.ui.signup.pin.PinMvpView
 import com.sterlingng.paylite.ui.signup.pin.PinPresenter
+import com.sterlingng.paylite.ui.successful.CategoriesAdapter
+import com.sterlingng.paylite.ui.successful.SuccessfulMvpContract
+import com.sterlingng.paylite.ui.successful.SuccessfulMvpView
+import com.sterlingng.paylite.ui.successful.SuccessfulPresenter
 import com.sterlingng.paylite.ui.transactions.TransactionsMvpContract
 import com.sterlingng.paylite.ui.transactions.TransactionsMvpView
 import com.sterlingng.paylite.ui.transactions.TransactionsPresenter
-import com.sterlingng.paylite.ui.transactions.categories.CategoriesAdapter
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpContract
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpView
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesPresenter
+import com.sterlingng.paylite.ui.transactions.categories.TransactionAdapter
 import com.sterlingng.paylite.utils.CustomPagerAdapter
-import com.sterlingng.paylite.utils.NoScrollingLinearLayoutManager
+import com.sterlingng.paylite.utils.widgets.NoScrollingGridLayoutManager
+import com.sterlingng.paylite.utils.widgets.NoScrollingLinearLayoutManager
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -181,6 +186,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideCategoriesAdapter(activity: AppCompatActivity): CategoriesAdapter = CategoriesAdapter(activity)
 
     @Provides
+    internal fun provideTransactionAdapter(activity: AppCompatActivity): TransactionAdapter = TransactionAdapter(activity)
+
+    @Provides
     internal fun provideLinearLayoutManager(activity: AppCompatActivity): LinearLayoutManager = LinearLayoutManager(activity)
 
     @Provides
@@ -197,6 +205,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideDividerItemDecoration(activity: AppCompatActivity): DividerItemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+
+    @Provides
+    internal fun provideNoScrollingGridLayoutManager(activity: AppCompatActivity): NoScrollingGridLayoutManager = NoScrollingGridLayoutManager(activity, 3)
 
     //Provide Activity Contexts
 
@@ -259,6 +270,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     internal fun provideDashboardPresenter(presenter: DashboardPresenter<DashboardMvpView>): DashboardMvpContract<DashboardMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun provideSuccessfulPresenter(presenter: SuccessfulPresenter<SuccessfulMvpView>): SuccessfulMvpContract<SuccessfulMvpView> = presenter
 
     @Provides
     @PerActivity
