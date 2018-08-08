@@ -39,8 +39,8 @@ public final class CurrencyTextFormatter {
         }
 
         DecimalFormat currencyFormatter;
-        Locale[] locales = {Locale.UK, Locale.US};
-        String[] symbols = {"₦", "₦"};
+        Locale[] locales = {Locale.US};
+        String[] symbols = {"₦"};
 
         try {
             currencyFormatter = (DecimalFormat) DecimalFormat.getCurrencyInstance(locale);

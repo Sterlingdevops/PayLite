@@ -263,14 +263,14 @@ public class CurrencyEditText extends TextInputEditText {
 
     private String getDefaultHintValue() {
         try {
-            return Currency.getInstance(currentLocale).getSymbol();
+            return Currency.getInstance(currentLocale).getSymbol() + " (minimum amount of N100)";
         } catch (Exception e) {
             Log.w("CurrencyEditText", String.format("An error occurred while getting currency symbol for hint using locale '%s', falling back to defaultLocale", currentLocale));
             try {
-                return Currency.getInstance(defaultLocale).getSymbol();
+                return Currency.getInstance(defaultLocale).getSymbol()  + " (minimum amount of N100)";
             } catch (Exception e1) {
                 Log.w("CurrencyEditText", String.format("An error occurred while getting currency symbol for hint using default locale '%s', falling back to USD", defaultLocale));
-                return Currency.getInstance(Locale.US).getSymbol();
+                return Currency.getInstance(Locale.US).getSymbol() + " (minimum amount of N100)";
             }
 
         }

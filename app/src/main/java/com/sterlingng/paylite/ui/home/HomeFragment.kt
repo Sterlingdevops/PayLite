@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.airtime.AirTimeActivity
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.donate.DonateActivity
+import com.sterlingng.paylite.ui.fund.FundActivity
 import com.sterlingng.paylite.ui.profile.ProfileActivity
 import javax.inject.Inject
 
@@ -21,17 +23,17 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mNotificationsImageView: ImageView
     private lateinit var mMovieTicketsImageView: ImageView
     private lateinit var mAirTimeDataImageView: ImageView
-    private lateinit var mQrPaymentImageView: ImageView
     private lateinit var mSendMoneyImageView: ImageView
     private lateinit var mPayBillsImageView: ImageView
     private lateinit var mFlightsImageView: ImageView
 
     private lateinit var mMovieTicketsTextView: TextView
     private lateinit var mAirTimeDataTextView: TextView
-    private lateinit var mQrPaymentTextView: TextView
     private lateinit var mSendMoneyTextView: TextView
     private lateinit var mPayBillsTextView: TextView
     private lateinit var mFlightsTextView: TextView
+
+    private lateinit var mFundButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
@@ -42,7 +44,6 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     }
 
     override fun bindViews(view: View) {
-//        mTopUpButton = view.findViewById(R.id.top_up)
         mNotificationsImageView = view.findViewById(R.id.notifications_icon)
 
         mAirTimeDataImageView = view.findViewById(R.id.airtime_data)
@@ -59,6 +60,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mSendMoneyImageView = view.findViewById(R.id.send_money)
         mSendMoneyTextView = view.findViewById(R.id.send_money_text)
+
+        mFundButton = view.findViewById(R.id.fund)
     }
 
     override fun setUp(view: View) {
@@ -86,6 +89,10 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mNotificationsImageView.setOnClickListener {
             startActivity(ProfileActivity.getStartIntent(baseActivity))
+        }
+
+        mFundButton.setOnClickListener {
+            startActivity(FundActivity.getStartIntent(baseActivity))
         }
     }
 

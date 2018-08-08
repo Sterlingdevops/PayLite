@@ -4,7 +4,314 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.fund.FundActivity">
+
+    <View
+        android:id="@+id/view12"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/background_light_blue_outline"
+        android:clickable="false"
+        android:focusable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/bank_text"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/card_text"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/choose_a_funding_method"
+        android:textColor="@color/black_effective"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/fund_card"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/next"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/bank_text">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/please_input_your_card_details"
+                android:textColor="@color/black_effective"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <EditText
+                android:id="@+id/card_cvv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/cvv"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="3"
+                android:padding="16dp"
+                android:singleLine="true"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/card_expiry"
+                app:layout_constraintTop_toBottomOf="@+id/card_number"/>
+
+            <EditText
+                android:id="@+id/card_expiry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/expiry_mm_yy"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="5"
+                android:padding="16dp"
+                android:singleLine="true"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/card_cvv"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_number"/>
+
+            <mostafa.ma.saleh.gmail.com.editcredit.EditCredit
+                android:id="@+id/card_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/card_number"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:padding="16dp"
+                android:textSize="16sp"
+                app:disabledCards="discover|amex"
+                app:drawableGravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_name"
+                app:separator="spaces"/>
+
+            <com.blackcat.currencyedittext.CurrencyEditText
+                android:id="@+id/fund_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:padding="16dp"
+                android:textSize="16sp"
+                app:allow_negative_values="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_expiry"/>
+
+            <EditText
+                android:id="@+id/card_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/name_on_card"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                android:padding="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView22"/>
+
+            <TextView
+                android:id="@+id/save_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:text="@string/save_this_card"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fund_amount"/>
+
+            <Switch
+                android:id="@+id/save_card_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/save_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/save_card"/>
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/fund_bank"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/next"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/bank_text">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="320dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/please_input_your_bank_details"
+                android:textColor="@color/black_effective"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <EditText
+                android:id="@+id/account_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/account_number"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="10"
+                android:padding="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView23"/>
+
+            <TextView
+                android:id="@+id/bank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:drawableEnd="@drawable/chevron_down"
+                android:drawableRight="@drawable/chevron_down"
+                android:padding="16dp"
+                android:text="@string/bank"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/account_number"/>
+
+            <EditText
+                android:id="@+id/otp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/otp"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:padding="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bank"/>
+
+            <com.blackcat.currencyedittext.CurrencyEditText
+                android:id="@+id/fund_amount_bank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:padding="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/otp"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:contentDescription="@string/payment_methods"
+        app:layout_constraintBottom_toBottomOf="@+id/card_text"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="@+id/card_text"
+        app:layout_constraintTop_toTopOf="@+id/card_text"
+        app:srcCompat="@drawable/payment_methods"/>
+
+    <CheckBox
+        android:id="@+id/card_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:button="@drawable/custom_checkbox"
+        app:layout_constraintBottom_toBottomOf="@+id/card_text"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintTop_toTopOf="@+id/card_text"/>
+
+    <TextView
+        android:id="@+id/card_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="16dp"
+        android:paddingEnd="0dp"
+        android:paddingLeft="72dp"
+        android:paddingRight="0dp"
+        android:paddingStart="72dp"
+        android:text="@string/card"
+        android:textColor="@color/black_effective"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
@@ -18,14 +325,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"/>
+        app:layout_constraintGuide_begin="32dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp"/>
+        app:layout_constraintGuide_end="32dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineBottom"
@@ -38,65 +345,46 @@
         android:id="@+id/exit"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:clickable="true"
         android:contentDescription="@string/exit"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:tint="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/chevron_left"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fund_account"
+        android:text="@string/fund_wallet"
+        android:textAppearance="@style/MyAppearance"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/exit"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
-
-    <ImageView
-        android:id="@+id/card_logo"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@string/card_type"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="@+id/title"
-        app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:srcCompat="@drawable/creditcard"/>
-
-    <TextView
-        android:id="@+id/amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:padding="16dp"
-        android:text="@string/amount_0"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/card_logo"
-        app:layout_constraintStart_toStartOf="@+id/card_logo"
-        app:layout_constraintTop_toBottomOf="@+id/card_logo"/>
+        app:layout_constraintTop_toTopOf="@+id/exit"/>
 
     <Button
         android:id="@+id/next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/round_button"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/button_black"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:stateListAnimator="@null"
-        android:text="@string/next"
+        android:text="@string/_continue"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
@@ -104,5 +392,56 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         tools:targetApi="lollipop"/>
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/denim_light"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/imageView8"
+        app:layout_constraintTop_toBottomOf="@+id/card_text"/>
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:contentDescription="@string/payment_methods"
+        app:layout_constraintBottom_toBottomOf="@+id/bank_text"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="@+id/bank_text"
+        app:layout_constraintTop_toTopOf="@+id/bank_text"
+        app:srcCompat="@drawable/cashout_bank"/>
+
+    <CheckBox
+        android:id="@+id/bank_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:button="@drawable/custom_checkbox"
+        app:layout_constraintBottom_toBottomOf="@+id/bank_text"
+        app:layout_constraintEnd_toEndOf="@+id/bank_text"
+        app:layout_constraintTop_toTopOf="@+id/bank_text"/>
+
+    <TextView
+        android:id="@+id/bank_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:paddingEnd="0dp"
+        android:paddingLeft="72dp"
+        android:paddingRight="0dp"
+        android:paddingStart="72dp"
+        android:text="@string/bank"
+        android:textColor="@color/black_effective"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/view10"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/charcoal_grey</color>
-    <color name="colorPrimaryDark">@color/charcoal_grey</color>
-    <color name="colorAccent">@color/charcoal_grey</color>
+    <color name="colorPrimary">@color/denim_dark</color>
+    <color name="colorPrimaryDark">@color/denim_dark</color>
+    <color name="colorAccent">@color/denim_dark</color>
     <color name="light_gray">#dbdbdb</color>
     <color name="lighter_gray">#eeeeee</color>
     <color name="gray">#7e7e7e</color>
@@ -12,7 +12,7 @@
     <color name="bg_color">#f7f7f7</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
-    <color name="black_effective">#2a2a2a</color>
+    <color name="black_effective">#363636</color>
     <color name="shadow">#d0d8dc</color>
     <color name="transparent">#00000000</color>
     <color name="translucent_white">#80ffffff</color>
@@ -52,7 +52,8 @@
     <color name="light_red">#ff3851</color>
     <color name="bluish_grey">#829192</color>
     <color name="charcoal">#324636</color>
-    <color name="charcoal_grey">#416690</color>
+    <color name="denim_dark">#416690</color>
+    <color name="denim_light">#ced5e8</color>
     <color name="denim">#3a608c</color>
     <color name="white_12">#1effffff</color>
     <color name="reddish_purple">#8d0b6b</color>

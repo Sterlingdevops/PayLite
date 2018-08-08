@@ -40,7 +40,7 @@
     <string name="what_is_bvn">What is a Bank Verification Number?</string>
     <string name="dob">Date of Birth</string>
     <string name="enter_date_of_birth">Enter Date of Birth</string>
-    <string name="card">Card Details</string>
+    <string name="card">Card</string>
     <string name="card_number">Card number</string>
     <string name="mm_yy">MM/YY</string>
     <string name="cvv">CVV</string>
@@ -187,7 +187,6 @@
     <string name="now_enter_your_cards_expiration_date">Enter your card\'s expiration date.</string>
     <string name="enter_your_security_code">Enter your card\'s security code</string>
     <string name="enter_the_amount_to_fund_your_account_with">Enter the amount to fund\n your account with</string>
-    <string name="fund_account">Fund Account</string>
     <string name="ngn">NGN</string>
     <string name="choose_a_category_for_this_payment">Choose a category for this payment</string>
     <string name="this_is_used_to_provide">This is used to provide you with spending insights.\n Please fill appropriately for accurate results</string>
@@ -204,4 +203,14 @@
     <string name="give">Give</string>
     <string name="filter">filter</string>
     <string name="airtime_and_data">Airtime and Data</string>
+    <string name="choose_a_funding_method">Choose a funding method</string>
+    <string name="bank">Bank</string>
+    <string name="please_input_your_card_details">Please input your card details</string>
+    <string name="name_on_card">Name on card</string>
+    <string name="save_this_card">Save this card</string>
+    <string name="amount_minimum_amount">Amount (minimum amount of N100)</string>
+    <string name="expiry_mm_yy">Expiry (MM/YY)</string>
+    <string name="please_input_your_bank_details">Please input your bank details</string>
+    <string name="account_number">Account number</string>
+    <string name="otp">OTP</string>
 </resources>
