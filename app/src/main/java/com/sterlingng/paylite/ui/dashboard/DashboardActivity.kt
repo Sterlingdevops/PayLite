@@ -13,7 +13,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.give.GiveFragment
 import com.sterlingng.paylite.ui.home.HomeFragment
-import com.sterlingng.paylite.ui.payment.PaymentFragment
+import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
@@ -29,7 +29,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
     private var mSelectedItem = 0
 
     private lateinit var transactionsFragment: Fragment
-    private lateinit var paymentFragment: Fragment
+    private lateinit var settingsFragment: Fragment
     private lateinit var homeFragment: Fragment
     private lateinit var giveFragment: Fragment
 
@@ -55,7 +55,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
 
     override fun setUp() {
         transactionsFragment = TransactionsFragment.newInstance()
-        paymentFragment = PaymentFragment.newInstance()
+        settingsFragment = SettingsFragment.newInstance()
         homeFragment = HomeFragment.newInstance()
         giveFragment = GiveFragment.newInstance()
 
@@ -110,12 +110,12 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
                 .beginTransaction()
                 .remove(homeFragment)
                 .remove(giveFragment)
-                .remove(paymentFragment)
+                .remove(settingsFragment)
                 .remove(transactionsFragment)
                 .commit()
 
-        addHideFragment(paymentFragment, payment)
-        addHideFragment(transactionsFragment, payment)
+        addHideFragment(transactionsFragment, transactions)
+        addHideFragment(settingsFragment, settings)
         addHideFragment(giveFragment, give)
 
         mFragmentManager.beginTransaction().add(R.id.container, homeFragment, home).commit()
@@ -132,7 +132,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
                 mCurrentFragment = hideShowFragment(mCurrentFragment, homeFragment)
             }
             R.id.nav_settings -> {
-                mCurrentFragment = hideShowFragment(mCurrentFragment, paymentFragment)
+                mCurrentFragment = hideShowFragment(mCurrentFragment, settingsFragment)
             }
             R.id.nav_transactions -> {
                 mCurrentFragment = hideShowFragment(mCurrentFragment, transactionsFragment)
@@ -148,8 +148,9 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
 
     companion object {
         private const val home = "HomeFragment"
-        private const val payment = "PaymentFragment"
+        private const val settings = "SettingsFragment"
         private const val give = "GiveFragment"
+        private const val transactions = "TransactionsFragment"
         const val SELECTED_ITEM = "arg_selected_item"
 
         fun getStartIntent(context: Context): Intent {

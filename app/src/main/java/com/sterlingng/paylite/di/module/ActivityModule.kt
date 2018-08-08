@@ -109,6 +109,9 @@ import com.sterlingng.paylite.ui.profile.notifications.NotificationsAdapter
 import com.sterlingng.paylite.ui.project.ProjectMvpContract
 import com.sterlingng.paylite.ui.project.ProjectMvpView
 import com.sterlingng.paylite.ui.project.ProjectPresenter
+import com.sterlingng.paylite.ui.settings.SettingsMvpContract
+import com.sterlingng.paylite.ui.settings.SettingsMvpView
+import com.sterlingng.paylite.ui.settings.SettingsPresenter
 import com.sterlingng.paylite.ui.signup.SignUpMvpContract
 import com.sterlingng.paylite.ui.signup.SignUpMvpView
 import com.sterlingng.paylite.ui.signup.SignUpPresenter
@@ -335,6 +338,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideCompletePresenter(presenter: CompletePresenter<CompleteMvpView>): CompleteMvpContract<CompleteMvpView> = presenter
+
+    @Provides
+    internal fun provideSettingsPresenter(presenter: SettingsPresenter<SettingsMvpView>): SettingsMvpContract<SettingsMvpView> = presenter
 
     @Provides
     internal fun providePasswordPresenter(presenter: PasswordPresenter<PasswordMvpView>): PasswordMvpContract<PasswordMvpView> = presenter

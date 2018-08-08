@@ -10,61 +10,58 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/backdrop"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/onboarding_1"/>
+        app:srcCompat="@drawable/bg_splash"/>
 
     <TextView
         android:id="@+id/pay_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/roboto_bold"
         android:text="@string/pay"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/white"
         android:textSize="36sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/lite_text"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/backdrop"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
 
     <TextView
         android:id="@+id/lite_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/lite"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/white"
         android:textSize="36sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pay_text"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="@+id/pay_text"/>
 
     <TextView
         android:id="@+id/easy_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/easy_as_it_gets"
+        android:text="@string/payments_but_simpler"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/lite_text"
         app:layout_constraintStart_toStartOf="@+id/pay_text"
         app:layout_constraintTop_toBottomOf="@+id/pay_text"/>
@@ -77,6 +74,7 @@
         android:text="@string/send_money_to_anyone"
         android:textAlignment="center"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/title"/>
@@ -90,6 +88,7 @@
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/illustration"/>
@@ -100,6 +99,7 @@
         android:layout_height="128dp"
         android:layout_marginTop="63dp"
         android:src="@color/white"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>

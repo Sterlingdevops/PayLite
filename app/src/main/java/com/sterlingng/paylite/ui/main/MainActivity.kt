@@ -62,23 +62,23 @@ class MainActivity : BaseActivity(), MainMvpView {
             startActivity(intent)
         }
         mPagerAdapter.run {
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_1, true, R.color.scarlet, ScreenData("", "")), "")
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_2, false, R.color.dark_sage,
-                    ScreenData(
-                            title = "Send Money", info = "Send money to anyone with just\n their phone number,\n email or social handle."
-                    )), "")
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_3, false, R.color.blueberry,
-                    ScreenData(
-                            title = "Generate Paycodes", info = "Generate cash withdrawal codes\n that can be collected\n at ATMs, branches or agents."
-                    )), "")
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_4, false, R.color.sienna,
-                    ScreenData(
-                            title = "Give", info = "Donate to projects close\n to your heart or\n notifications you love"
-                    )), "")
-            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_5, false, R.color.reddish_purple,
-                    ScreenData(
-                            title = "Request Payment", info = "Ask family, friends or clients\n for money using\n our customised payment links"
-                    )), "")
+            addFragment(OnBoardingFragment.newInstance(R.drawable.bg_splash, true, R.color.black, ScreenData("", "")), "")
+//            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_2, false, R.color.dark_sage,
+//                    ScreenData(
+//                            title = "Send Money", info = "Send money to anyone with just\n their phone number,\n email or social handle."
+//                    )), "")
+//            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_3, false, R.color.blueberry,
+//                    ScreenData(
+//                            title = "Generate Paycodes", info = "Generate cash withdrawal codes\n that can be collected\n at ATMs, branches or agents."
+//                    )), "")
+//            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_4, false, R.color.sienna,
+//                    ScreenData(
+//                            title = "Give", info = "Donate to projects close\n to your heart or\n notifications you love"
+//                    )), "")
+//            addFragment(OnBoardingFragment.newInstance(R.drawable.onboarding_5, false, R.color.reddish_purple,
+//                    ScreenData(
+//                            title = "Request Payment", info = "Ask family, friends or clients\n for money using\n our customised payment links"
+//                    )), "")
         }
 
         mViewPager.adapter = mPagerAdapter

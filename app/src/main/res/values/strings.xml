@@ -50,7 +50,7 @@
     <string name="pin">Pin</string>
     <string name="account_setup_completed">Account Setup Completed!</string>
     <string name="fund_wallet_text">Fund wallet and start \ntrading in real time</string>
-    <string name="fund_wallet">Fund wallet</string>
+    <string name="fund_wallet">Fund Wallet</string>
     <string name="skip">Skip</string>
     <string name="backdrop">backdrop</string>
     <string name="profile_image">Profile Image</string>
@@ -137,7 +137,7 @@
     <string name="test_payment">Test Payment</string>
     <string name="repeat_status">Weekly from 22/06/2018 until 23/06/2018</string>
     <string name="new_to_paylite">New to Paylite</string>
-    <string name="already_using_paylite">Already using paylite</string>
+    <string name="already_using_paylite">Already have an account?</string>
     <string name="pay">Pay</string>
     <string name="lite">lite</string>
     <string name="send_money_to_anyone">Send money to anyone with just\n their phone number, email\n or social handle.</string>
@@ -213,4 +213,11 @@
     <string name="please_input_your_bank_details">Please input your bank details</string>
     <string name="account_number">Account number</string>
     <string name="otp">OTP</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="account_and_cards">Account &amp; Cards</string>
+    <string name="login_and_security">Login &amp; Security</string>
+    <string name="help_and_feedback">Help &amp; Feedback</string>
+    <string name="invite_a_friend">Invite a friend</string>
+    <string name="start">Start</string>
+    <string name="payments_but_simpler">Payments, but simpler</string>
 </resources>
