@@ -57,9 +57,6 @@ import com.sterlingng.paylite.ui.filter.FilterPresenter
 import com.sterlingng.paylite.ui.fund.FundMvpContract
 import com.sterlingng.paylite.ui.fund.FundMvpView
 import com.sterlingng.paylite.ui.fund.FundPresenter
-import com.sterlingng.paylite.ui.fund.amount.AmountMvpContract
-import com.sterlingng.paylite.ui.fund.amount.AmountMvpView
-import com.sterlingng.paylite.ui.fund.amount.AmountPresenter
 import com.sterlingng.paylite.ui.give.GiveMvpContract
 import com.sterlingng.paylite.ui.give.GiveMvpView
 import com.sterlingng.paylite.ui.give.GivePresenter
@@ -84,18 +81,12 @@ import com.sterlingng.paylite.ui.main.MainPresenter
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpContract
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpView
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingPresenter
+import com.sterlingng.paylite.ui.pay.PayMvpContract
+import com.sterlingng.paylite.ui.pay.PayMvpView
+import com.sterlingng.paylite.ui.pay.PayPresenter
 import com.sterlingng.paylite.ui.payment.PaymentMvpContract
 import com.sterlingng.paylite.ui.payment.PaymentMvpView
 import com.sterlingng.paylite.ui.payment.PaymentPresenter
-import com.sterlingng.paylite.ui.payment.pay.PayMvpContract
-import com.sterlingng.paylite.ui.payment.pay.PayMvpView
-import com.sterlingng.paylite.ui.payment.pay.PayPresenter
-import com.sterlingng.paylite.ui.payment.request.RequestMvpContract
-import com.sterlingng.paylite.ui.payment.request.RequestMvpView
-import com.sterlingng.paylite.ui.payment.request.RequestPresenter
-import com.sterlingng.paylite.ui.payment.scheduled.ScheduledMvpContract
-import com.sterlingng.paylite.ui.payment.scheduled.ScheduledMvpView
-import com.sterlingng.paylite.ui.payment.scheduled.ScheduledPresenter
 import com.sterlingng.paylite.ui.profile.ProfileMvpContract
 import com.sterlingng.paylite.ui.profile.ProfileMvpView
 import com.sterlingng.paylite.ui.profile.ProfilePresenter
@@ -109,6 +100,12 @@ import com.sterlingng.paylite.ui.profile.notifications.NotificationsAdapter
 import com.sterlingng.paylite.ui.project.ProjectMvpContract
 import com.sterlingng.paylite.ui.project.ProjectMvpView
 import com.sterlingng.paylite.ui.project.ProjectPresenter
+import com.sterlingng.paylite.ui.request.RequestMvpContract
+import com.sterlingng.paylite.ui.request.RequestMvpView
+import com.sterlingng.paylite.ui.request.RequestPresenter
+import com.sterlingng.paylite.ui.scheduled.ScheduledMvpContract
+import com.sterlingng.paylite.ui.scheduled.ScheduledMvpView
+import com.sterlingng.paylite.ui.scheduled.ScheduledPresenter
 import com.sterlingng.paylite.ui.settings.SettingsMvpContract
 import com.sterlingng.paylite.ui.settings.SettingsMvpView
 import com.sterlingng.paylite.ui.settings.SettingsPresenter
@@ -244,10 +241,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
-    internal fun provideAmountPresenter(presenter: AmountPresenter<AmountMvpView>): AmountMvpContract<AmountMvpView> = presenter
-
-    @Provides
-    @PerActivity
     internal fun provideSignUpPresenter(presenter: SignUpPresenter<SignUpMvpView>): SignUpMvpContract<SignUpMvpView> = presenter
 
     @Provides
@@ -257,6 +250,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     internal fun provideCharityPresenter(presenter: CharityPresenter<CharityMvpView>): CharityMvpContract<CharityMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun providePaymentPresenter(presenter: PaymentPresenter<PaymentMvpView>): PaymentMvpContract<PaymentMvpView> = presenter
 
     @Provides
     @PerActivity
@@ -326,9 +323,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideExpiryPresenter(presenter: ExpiryPresenter<ExpiryMvpView>): ExpiryMvpContract<ExpiryMvpView> = presenter
-
-    @Provides
-    internal fun providePaymentPresenter(presenter: PaymentPresenter<PaymentMvpView>): PaymentMvpContract<PaymentMvpView> = presenter
 
     @Provides
     internal fun provideProgramPresenter(presenter: ProgramPresenter<ProgramMvpView>): ProgramMvpContract<ProgramMvpView> = presenter

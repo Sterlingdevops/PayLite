@@ -9,4 +9,11 @@ import javax.inject.Inject
 class PaymentPresenter<V : PaymentMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), PaymentMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), PaymentMvpContract<V> {
+
+    override fun loadMockPaymentMethods() {
+        mvpView.showLoading()
+        mvpView.updatePaymentMethods(dataManager.mockPaymentMethods())
+        mvpView.hideLoading()
+    }
+}

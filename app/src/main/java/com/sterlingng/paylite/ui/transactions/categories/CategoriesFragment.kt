@@ -31,7 +31,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_categories, container, false)
+        val view = inflater.inflate(R.layout.fragment_transaction_type, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)

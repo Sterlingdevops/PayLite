@@ -35,7 +35,7 @@ class ProjectsFragment : BaseFragment(), ProjectsMvpView,
     private lateinit var itemOffsetDecoration: ItemOffsetDecoration
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_categories, container, false)
+        val view = inflater.inflate(R.layout.fragment_projects, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)

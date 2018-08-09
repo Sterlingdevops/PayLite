@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.payment.request
+package com.sterlingng.paylite.ui.request
 
 import com.sterlingng.paylite.ui.base.MvpView
 

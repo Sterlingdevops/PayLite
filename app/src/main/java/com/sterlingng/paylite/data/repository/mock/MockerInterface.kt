@@ -9,6 +9,7 @@ interface MockerInterface {
     fun mockProjects(): ArrayList<Project>
     fun mockDeals(): ArrayList<Deal>
     fun mockTransactions(): ArrayList<Transaction>
-    fun mockLogin(email: String, password: String) : Observable<User>
+    fun mockLogin(email: String, password: String): Observable<User>
     fun mockCategories(): ArrayList<PaymentCategory>
+    fun mockPaymentMethods(): ArrayList<PaymentMethod>
 }

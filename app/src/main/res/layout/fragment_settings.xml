@@ -85,10 +85,10 @@
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:contentDescription="@string/account_and_cards"
-        app:layout_constraintBottom_toBottomOf="@+id/account_and_cards"
-        app:layout_constraintStart_toStartOf="@+id/account_and_cards"
-        app:layout_constraintTop_toTopOf="@+id/account_and_cards"
+        android:contentDescription="@string/payment_methods"
+        app:layout_constraintBottom_toBottomOf="@+id/payment_methods"
+        app:layout_constraintStart_toStartOf="@+id/payment_methods"
+        app:layout_constraintTop_toTopOf="@+id/payment_methods"
         app:srcCompat="@drawable/payment_methods"/>
 
     <ImageView
@@ -101,7 +101,7 @@
         app:srcCompat="@drawable/security"/>
 
     <TextView
-        android:id="@+id/account_and_cards"
+        android:id="@+id/payment_methods"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -115,7 +115,7 @@
         android:paddingLeft="40dp"
         android:paddingRight="0dp"
         android:paddingStart="40dp"
-        android:text="@string/account_and_cards"
+        android:text="@string/payment_methods"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -170,7 +170,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@id/account_and_cards"/>
+        app:layout_constraintTop_toBottomOf="@id/payment_methods"/>
 
     <TextView
         android:id="@+id/login_and_security"
@@ -332,7 +332,6 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:contentDescription="@string/log_out"
-        android:tint="@color/scarlet"
         app:layout_constraintBottom_toBottomOf="@+id/log_out"
         app:layout_constraintStart_toStartOf="@+id/log_out"
         app:layout_constraintTop_toTopOf="@+id/log_out"
@@ -352,7 +351,7 @@
         android:paddingRight="0dp"
         android:paddingStart="32dp"
         android:text="@string/log_out"
-        android:textColor="@color/scarlet"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -388,9 +387,9 @@
         android:layout_marginTop="8dp"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@id/account_and_cards"
-        app:layout_constraintEnd_toEndOf="@id/account_and_cards"
-        app:layout_constraintTop_toTopOf="@id/account_and_cards"
+        app:layout_constraintBottom_toBottomOf="@id/payment_methods"
+        app:layout_constraintEnd_toEndOf="@id/payment_methods"
+        app:layout_constraintTop_toTopOf="@id/payment_methods"
         app:srcCompat="@drawable/chevron_right"/>
 
     <android.support.constraint.Guideline

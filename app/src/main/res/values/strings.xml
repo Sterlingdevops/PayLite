@@ -151,8 +151,8 @@
     <string name="passcode">Passcode</string>
     <string name="face_id">Face ID</string>
     <string name="notifications_settings">Notifications Settings</string>
-    <string name="payment_methods">PAYMENT METHODS</string>
-    <string name="mastercard_2334">MASTERCARD 2334</string>
+    <string name="payment_methods">Payment Methods</string>
+    <string name="mastercard_2334">MASTERCARD (2334)</string>
     <string name="add_new_payment_method">Add new payment method</string>
     <string name="notifications">Notifications</string>
     <string name="clear">Clear</string>
@@ -220,4 +220,9 @@
     <string name="invite_a_friend">Invite a friend</string>
     <string name="start">Start</string>
     <string name="payments_but_simpler">Payments, but simpler</string>
+    <string name="edit">Edit</string>
+    <string name="olayinka_oni">OLAYINKA ONI</string>
+    <string name="exp_04_22">Exp: 04/22</string>
+    <string name="default_payment_method">Default payment method</string>
+    <string name="set_default_payment_method">Set as default payment method</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.payment.scheduled
+package com.sterlingng.paylite.ui.scheduled
 
 import com.sterlingng.paylite.ui.base.MvpPresenter
 

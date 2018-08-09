@@ -17,7 +17,6 @@ import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.donate.DonateActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.fund.FundActivity
-import com.sterlingng.paylite.ui.fund.amount.AmountBottomSheetFragment
 import com.sterlingng.paylite.ui.give.GiveFragment
 import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
 import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
@@ -25,14 +24,14 @@ import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
-import com.sterlingng.paylite.ui.payment.PaymentFragment
-import com.sterlingng.paylite.ui.payment.pay.PayFragment
-import com.sterlingng.paylite.ui.payment.request.RequestFragment
-import com.sterlingng.paylite.ui.payment.scheduled.ScheduledFragment
+import com.sterlingng.paylite.ui.pay.PayFragment
+import com.sterlingng.paylite.ui.payment.PaymentActivity
 import com.sterlingng.paylite.ui.profile.ProfileActivity
 import com.sterlingng.paylite.ui.profile.edit.EditActivity
 import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
 import com.sterlingng.paylite.ui.project.ProjectActivity
+import com.sterlingng.paylite.ui.request.RequestFragment
+import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
@@ -112,7 +111,7 @@ interface ActivityComponent {
 
     fun inject(requestFragment: RequestFragment)
 
-    fun inject(paymentFragment: PaymentFragment)
+    fun inject(paymentActivity: PaymentActivity)
 
     fun inject(countryFragment: PasswordFragment)
 
@@ -139,8 +138,6 @@ interface ActivityComponent {
     fun inject(numberBottomSheetFragment: NumberBottomSheetFragment)
 
     fun inject(expiryBottomSheetFragment: ExpiryBottomSheetFragment)
-
-    fun inject(amountBottomSheetFragment: AmountBottomSheetFragment)
 
     fun inject(settingsFragment: SettingsFragment)
 }

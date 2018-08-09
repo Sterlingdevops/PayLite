@@ -5,9 +5,21 @@ import com.sterlingng.paylite.data.model.*
 import io.reactivex.Observable
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class MockHelper @Inject
 internal constructor() : MockerInterface {
+
+    override fun mockPaymentMethods(): ArrayList<PaymentMethod> {
+        val cards: ArrayList<PaymentMethod> = ArrayList()
+        cards += PaymentMethod("Visa (1029)", "Eleanor Ezimah", "12/22", R.drawable.visa)
+        cards += PaymentMethod("Mastercard (2322)", "Raymond Tukpe", "12/23", R.drawable.mastercard)
+        cards += PaymentMethod("Savings Account (0247966933)", "Shomala Ismail", null, R.drawable.cashout_bank)
+        cards += PaymentMethod("Mastercard (2792)", "Pierre-Emerick Aubameyang", "02/19", R.drawable.mastercard)
+        cards += PaymentMethod("Visa (9899)", "Daivd Luis", "11/20", R.drawable.visa)
+        cards += PaymentMethod("Savings Account (123384844)", "Deigo Costa", null, R.drawable.cashout_bank)
+        return cards
+    }
 
     override fun mockLogin(email: String, password: String): Observable<User> {
         return Observable.just(User("email", password, null))

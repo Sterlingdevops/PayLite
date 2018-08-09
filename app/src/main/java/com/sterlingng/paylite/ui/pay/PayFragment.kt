@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.payment.pay
+package com.sterlingng.paylite.ui.pay
 
 
 import android.os.Bundle

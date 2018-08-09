@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.payment.scheduled
+package com.sterlingng.paylite.ui.request
 
 
 import android.os.Bundle
@@ -9,13 +9,13 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import javax.inject.Inject
 
-class ScheduledFragment : BaseFragment(), ScheduledMvpView {
+class RequestFragment : BaseFragment(), RequestMvpView {
 
     @Inject
-    lateinit var mPresenter: ScheduledMvpContract<ScheduledMvpView>
+    lateinit var mPresenter: RequestMvpContract<RequestMvpView>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_scheduled, container, false)
+        val view = inflater.inflate(R.layout.fragment_request, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)
@@ -36,8 +36,8 @@ class ScheduledFragment : BaseFragment(), ScheduledMvpView {
 
     companion object {
 
-        fun newInstance(): ScheduledFragment {
-            val fragment = ScheduledFragment()
+        fun newInstance(): RequestFragment {
+            val fragment = RequestFragment()
             val args = Bundle()
 
             fragment.arguments = args

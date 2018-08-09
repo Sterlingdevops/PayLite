@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.main.MainActivity
+import com.sterlingng.paylite.ui.payment.PaymentActivity
 import javax.inject.Inject
 
 class SettingsFragment : BaseFragment(), SettingsMvpView {
@@ -16,6 +17,7 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
     @Inject
     lateinit var mPresenter: SettingsMvpContract<SettingsMvpView>
 
+    private lateinit var mPaymentMethodsTextView: TextView
     private lateinit var mLogOutTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -27,10 +29,15 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
     }
 
     override fun bindViews(view: View) {
+        mPaymentMethodsTextView = view.findViewById(R.id.payment_methods)
         mLogOutTextView = view.findViewById(R.id.log_out)
     }
 
     override fun setUp(view: View) {
+        mPaymentMethodsTextView.setOnClickListener {
+            startActivity(PaymentActivity.getStartIntent(baseActivity))
+        }
+
         mLogOutTextView.setOnClickListener {
             mPresenter.logOut()
         }

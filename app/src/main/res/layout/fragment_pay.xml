@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.payment.pay.PayFragment">
+    tools:context=".ui.pay.PayFragment">
 
     <com.sterlingng.paylite.utils.widgets.SquareImageView
         android:id="@+id/squareImageView2"
