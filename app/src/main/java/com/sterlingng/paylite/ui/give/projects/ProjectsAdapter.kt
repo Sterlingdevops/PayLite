@@ -38,27 +38,29 @@ class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHold
         }
     }
 
-    fun getCategoryAtPosition(position: Int): Project = projects[position]
+    fun get(position: Int): Project = projects[position]
 
-    fun addCategory(Project: Project) {
+    fun add(Project: Project) {
         projects.add(Project)
         notifyItemInserted(this.projects.size - 1)
     }
 
-    fun addCategories(projects: Collection<Project>) {
+    fun add(projects: Collection<Project>) {
         val index = this.projects.size - 1
         this.projects.addAll(projects)
         notifyItemRangeInserted(index, projects.size - 1)
     }
 
-    fun removeCategory(index: Int) {
+    fun remove(index: Int) {
         this.projects.removeAt(index)
         notifyItemRemoved(index)
     }
 
     fun clear() {
-        projects.clear()
-        notifyItemRangeRemoved(0, this.projects.size)
+        for (index in 0 until projects.size) {
+            projects.removeAt(0)
+            notifyItemRemoved(0)
+        }
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -81,7 +83,7 @@ class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHold
         }
     }
 
-    inner class ViewHolder(itemView: View, var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
 
         private val categoryTextView: TextView = itemView.findViewById(R.id.category)
         private val categoryNameTextView: TextView = itemView.findViewById(R.id.category_name)
@@ -93,7 +95,7 @@ class ProjectsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHold
             with(projects[position]) {
                 categoryTextView.text = category
                 categoryNameTextView.text = name
-                categoryImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.spartan))
+                categoryImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.color.gray))
             }
             itemView.setOnClickListener {
                 recyclerViewClickListener.recyclerViewListClicked(it, position)

@@ -11,7 +11,6 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Charity
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
-import java.util.*
 
 class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
@@ -37,27 +36,29 @@ class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHol
         }
     }
 
-    fun getCharityAtPosition(position: Int): Charity = charities[position]
+    fun get(position: Int): Charity = charities[position]
 
-    fun addCharity(charity: Charity) {
+    fun add(charity: Charity) {
         charities.add(charity)
         notifyItemInserted(this.charities.size - 1)
     }
 
-    fun addCharities(charitys: Collection<Charity>) {
+    fun add(charities: ArrayList<Charity>) {
         val index = this.charities.size - 1
-        this.charities.addAll(charitys)
-        notifyItemRangeInserted(index, charitys.size - 1)
+        this.charities.addAll(charities)
+        notifyItemRangeInserted(index, charities.size - 1)
     }
 
-    fun removeCharity(index: Int) {
+    fun remove(index: Int) {
         this.charities.removeAt(index)
         notifyItemRemoved(index)
     }
 
     fun clear() {
-        charities.clear()
-        notifyItemRangeRemoved(0, this.charities.size)
+        for (index in 0 until charities.size) {
+            charities.removeAt(0)
+            notifyItemRemoved(0)
+        }
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -82,9 +83,9 @@ class CharitiesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHol
 
     inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
 
-        val charityNameTextView: TextView = itemView.findViewById(R.id.charity_name)
-        val charityTypeTextView: TextView = itemView.findViewById(R.id.charity_type)
-        val charityLogoImageView: ImageView = itemView.findViewById(R.id.charity_logo)
+        private val charityNameTextView: TextView = itemView.findViewById(R.id.charity_name)
+        private val charityTypeTextView: TextView = itemView.findViewById(R.id.charity_type)
+        private val charityLogoImageView: ImageView = itemView.findViewById(R.id.charity_logo)
 
         override fun onBind(position: Int) {
             super.onBind(position)

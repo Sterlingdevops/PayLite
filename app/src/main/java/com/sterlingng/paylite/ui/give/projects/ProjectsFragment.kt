@@ -8,9 +8,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arlib.floatingsearchview.FloatingSearchView
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Project
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.charity.CharityActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.give.OnFilterClicked
 import com.sterlingng.paylite.ui.project.ProjectActivity
@@ -28,8 +31,12 @@ class ProjectsFragment : BaseFragment(), ProjectsMvpView,
     @Inject
     lateinit var mGridLayoutManager: GridLayoutManager
 
+    private lateinit var mSearchView: FloatingSearchView
+
     @Inject
     lateinit var mProjectsAdapter: ProjectsAdapter
+
+    private var projects = ArrayList<Project>()
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var itemOffsetDecoration: ItemOffsetDecoration
@@ -44,6 +51,7 @@ class ProjectsFragment : BaseFragment(), ProjectsMvpView,
 
     override fun bindViews(view: View) {
         mRecyclerView = view.findViewById(R.id.recyclerView)
+        mSearchView = view.findViewById(R.id.floating_search_view)
     }
 
     override fun setUp(view: View) {
@@ -56,10 +64,68 @@ class ProjectsFragment : BaseFragment(), ProjectsMvpView,
         mRecyclerView.scrollToPosition(0)
 
         mPresenter.loadProjects()
+        initSearchView()
     }
 
     override fun onRetryClicked() {
 
+    }
+
+    private fun initSearchView() {
+        mSearchView.setShowSearchKey(true)
+        mSearchView.setOnQueryChangeListener { oldQuery, newQuery ->
+            if (oldQuery != "" && newQuery == "") {
+                mSearchView.clearSuggestions()
+                mProjectsAdapter.clear()
+                mProjectsAdapter.add(projects)
+            } else {
+                val clone = ArrayList<Project>()
+                for (i in projects.indices) {
+                    if (projects[i].name.toLowerCase().contains(newQuery.toLowerCase())) {
+                        clone.add(projects[i])
+                    }
+                    if (projects[i].category.toLowerCase().contains(newQuery.toLowerCase())) {
+                        clone.add(projects[i])
+                    }
+                }
+                mSearchView.swapSuggestions(clone)
+                mProjectsAdapter.clear()
+                mProjectsAdapter.add(clone)
+            }
+        }
+
+        mSearchView.setOnSearchListener(object : FloatingSearchView.OnSearchListener {
+            override fun onSearchAction(currentQuery: String) {
+                val clone = ArrayList<Project>()
+                for (i in projects.indices) {
+                    if (projects[i].name.toLowerCase().contains(currentQuery.toLowerCase())) {
+                        clone.add(projects[i])
+                    }
+                    if (projects[i].category.toLowerCase().contains(currentQuery.toLowerCase())) {
+                        clone.add(projects[i])
+                    }
+                }
+                mSearchView.swapSuggestions(clone)
+                mProjectsAdapter.clear()
+                mProjectsAdapter.add(clone)
+            }
+
+            override fun onSuggestionClicked(searchSuggestion: SearchSuggestion) {
+                hideKeyboard()
+                val intent = CharityActivity.getStartIntent(baseActivity)
+                startActivity(intent)
+            }
+        })
+
+        mSearchView.setOnClearSearchActionListener {
+            mSearchView.clearSuggestions()
+            mProjectsAdapter.clear()
+            mProjectsAdapter.add(projects)
+        }
+
+        //listen for when suggestion list expands/shrinks in order to move down/up the
+        //search results list
+        mSearchView.setOnSuggestionsListHeightChanged { newHeight -> mRecyclerView.translationY = newHeight }
     }
 
     override fun onFilterClicked() {
@@ -81,7 +147,8 @@ class ProjectsFragment : BaseFragment(), ProjectsMvpView,
     }
 
     override fun updateProjects(it: ArrayList<Project>) {
-        mProjectsAdapter.addCategories(it)
+        projects = it
+        mProjectsAdapter.add(it)
     }
 
     companion object {

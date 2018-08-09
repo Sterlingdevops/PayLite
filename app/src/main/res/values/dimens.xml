@@ -8,4 +8,5 @@
     <dimen name="item_offset">4dp</dimen>
     <dimen name="item_offset_2">8dp</dimen>
     <dimen name="icon_size">32dp</dimen>
+    <dimen name="search_view_inset">4dp</dimen>
 </resources>
