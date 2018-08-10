@@ -68,7 +68,6 @@ import com.sterlingng.paylite.ui.give.projects.ProjectsAdapter
 import com.sterlingng.paylite.ui.give.projects.ProjectsMvpContract
 import com.sterlingng.paylite.ui.give.projects.ProjectsMvpView
 import com.sterlingng.paylite.ui.give.projects.ProjectsPresenter
-import com.sterlingng.paylite.ui.home.DealsAdapter
 import com.sterlingng.paylite.ui.home.HomeMvpContract
 import com.sterlingng.paylite.ui.home.HomeMvpView
 import com.sterlingng.paylite.ui.home.HomePresenter
@@ -141,6 +140,9 @@ import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpContract
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpView
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesPresenter
 import com.sterlingng.paylite.ui.transactions.categories.TransactionAdapter
+import com.sterlingng.paylite.ui.transfer.TransferMvpContract
+import com.sterlingng.paylite.ui.transfer.TransferMvpView
+import com.sterlingng.paylite.ui.transfer.TransferPresenter
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.paylite.utils.widgets.NoScrollingGridLayoutManager
 import com.sterlingng.paylite.utils.widgets.NoScrollingLinearLayoutManager
@@ -172,9 +174,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
-
-    @Provides
-    internal fun provideDealsAdapter(activity: AppCompatActivity): DealsAdapter = DealsAdapter(activity)
 
     @Provides
     internal fun provideProjectsAdapter(activity: AppCompatActivity): ProjectsAdapter = ProjectsAdapter(activity)
@@ -269,6 +268,14 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun provideTransferPresenter(presenter: TransferPresenter<TransferMvpView>): TransferMvpContract<TransferMvpView> = presenter
+
+    @Provides
+    @PerActivity
     internal fun provideDashboardPresenter(presenter: DashboardPresenter<DashboardMvpView>): DashboardMvpContract<DashboardMvpView> = presenter
 
     @Provides
@@ -326,9 +333,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideProgramPresenter(presenter: ProgramPresenter<ProgramMvpView>): ProgramMvpContract<ProgramMvpView> = presenter
-
-    @Provides
-    internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
 
     @Provides
     internal fun provideCompletePresenter(presenter: CompletePresenter<CompleteMvpView>): CompleteMvpContract<CompleteMvpView> = presenter

@@ -49,13 +49,14 @@
 
                     <ImageView
                         android:id="@+id/cash_out_code"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:layout_marginEnd="48dp"
                         android:layout_marginRight="48dp"
                         android:contentDescription="@string/cash_out_code"
                         android:scaleType="centerInside"
                         android:src="@drawable/cashout"
+                        app:layout_constraintBottom_toBottomOf="@+id/request_money"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/request_money"
@@ -63,11 +64,12 @@
 
                     <ImageView
                         android:id="@+id/request_money"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:contentDescription="@string/request_money"
                         android:scaleType="centerInside"
                         android:src="@drawable/request_money"
+                        app:layout_constraintBottom_toBottomOf="@+id/send_money"
                         app:layout_constraintEnd_toStartOf="@+id/cash_out_code"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/send_money"
@@ -93,12 +95,11 @@
                         android:id="@+id/pay_bills_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="@string/pay_bills"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@+id/pay_bills"
                         app:layout_constraintStart_toStartOf="@+id/pay_bills"
-                        app:layout_constraintTop_toBottomOf="@+id/pay_bills"/>
+                        app:layout_constraintTop_toTopOf="@+id/cash_out_to_bank_text"/>
 
                     <TextView
                         android:id="@+id/cash_out_to_bank_text"
@@ -116,16 +117,16 @@
 
                     <ImageView
                         android:id="@+id/pay_bills"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="56dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:contentDescription="@string/pay_bills"
                         android:scaleType="centerInside"
                         android:src="@drawable/bills"
+                        app:layout_constraintBottom_toBottomOf="@+id/cash_out_to_bank"
                         app:layout_constraintEnd_toEndOf="@+id/request_money"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/request_money"
-                        app:layout_constraintTop_toBottomOf="@+id/request_money"/>
+                        app:layout_constraintTop_toTopOf="@+id/cash_out_to_bank"/>
 
                     <ImageView
                         android:id="@+id/cash_out_to_bank"
@@ -143,24 +144,23 @@
                         android:id="@+id/cash_out_code_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="@string/cash_out_code"
                         android:textAlignment="center"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@+id/cash_out_code"
                         app:layout_constraintStart_toStartOf="@+id/cash_out_code"
-                        app:layout_constraintTop_toBottomOf="@+id/cash_out_code"/>
+                        app:layout_constraintTop_toTopOf="@+id/request_money_text"/>
 
                     <TextView
                         android:id="@+id/request_money_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="@string/request_money"
                         android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/send_money_text"
                         app:layout_constraintEnd_toEndOf="@+id/request_money"
                         app:layout_constraintStart_toStartOf="@+id/request_money"
-                        app:layout_constraintTop_toBottomOf="@+id/request_money"/>
+                        app:layout_constraintTop_toTopOf="@+id/send_money_text"/>
 
                     <TextView
                         android:id="@+id/send_money_text"
@@ -204,13 +204,14 @@
 
                     <ImageView
                         android:id="@+id/airtime_data"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:layout_marginEnd="48dp"
                         android:layout_marginRight="48dp"
                         android:contentDescription="@string/cash_out_code"
                         android:scaleType="centerInside"
                         android:src="@drawable/airtime_and_data"
+                        app:layout_constraintBottom_toBottomOf="@+id/movie_tickets"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/movie_tickets"
@@ -218,11 +219,12 @@
 
                     <ImageView
                         android:id="@+id/movie_tickets"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
                         android:contentDescription="@string/request_money"
                         android:scaleType="centerInside"
                         android:src="@drawable/ticket"
+                        app:layout_constraintBottom_toBottomOf="@+id/travels_and_hotels"
                         app:layout_constraintEnd_toStartOf="@+id/airtime_data"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/travels_and_hotels"
@@ -260,8 +262,8 @@
 
                     <ImageView
                         android:id="@+id/deals"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:layout_marginTop="56dp"
                         android:contentDescription="@string/cash_out_to_bank"
                         android:scaleType="centerInside"
@@ -274,25 +276,23 @@
                         android:id="@+id/airtime_data_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="@string/airtime_data"
                         android:textAlignment="center"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@+id/airtime_data"
                         app:layout_constraintStart_toStartOf="@+id/airtime_data"
-                        app:layout_constraintTop_toBottomOf="@+id/airtime_data"/>
+                        app:layout_constraintTop_toTopOf="@+id/movie_tickets_text"/>
 
                     <TextView
                         android:id="@+id/movie_tickets_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="@string/movies_and_events"
                         android:textAlignment="center"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@+id/movie_tickets"
                         app:layout_constraintStart_toStartOf="@+id/movie_tickets"
-                        app:layout_constraintTop_toBottomOf="@+id/movie_tickets"/>
+                        app:layout_constraintTop_toTopOf="@+id/travels_and_hotels_text"/>
 
                     <TextView
                         android:id="@+id/travels_and_hotels_text"
@@ -397,7 +397,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/main_amount"
-        app:layout_constraintGuide_percent="0.028218694"
+        app:layout_constraintGuide_begin="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside"/>
 

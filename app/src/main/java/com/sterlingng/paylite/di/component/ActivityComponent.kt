@@ -30,7 +30,7 @@ import com.sterlingng.paylite.ui.profile.ProfileActivity
 import com.sterlingng.paylite.ui.profile.edit.EditActivity
 import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
 import com.sterlingng.paylite.ui.project.ProjectActivity
-import com.sterlingng.paylite.ui.request.RequestFragment
+import com.sterlingng.paylite.ui.request.RequestActivity
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
@@ -43,6 +43,7 @@ import com.sterlingng.paylite.ui.signup.pin.PinFragment
 import com.sterlingng.paylite.ui.successful.SuccessfulActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
+import com.sterlingng.paylite.ui.transfer.TransferActivity
 import dagger.Component
 
 /**
@@ -109,7 +110,7 @@ interface ActivityComponent {
 
     fun inject(programFragment: ProgramFragment)
 
-    fun inject(requestFragment: RequestFragment)
+    fun inject(requestActivity: RequestActivity)
 
     fun inject(paymentActivity: PaymentActivity)
 
@@ -140,4 +141,6 @@ interface ActivityComponent {
     fun inject(expiryBottomSheetFragment: ExpiryBottomSheetFragment)
 
     fun inject(settingsFragment: SettingsFragment)
+
+    fun inject(transferActivity: TransferActivity)
 }

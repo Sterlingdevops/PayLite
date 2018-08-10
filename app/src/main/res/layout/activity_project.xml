@@ -384,7 +384,7 @@
         android:id="@+id/give2"
         android:layout_width="64dp"
         android:layout_height="24dp"
-        android:background="@drawable/button_black"
+        android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"

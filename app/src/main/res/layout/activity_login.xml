@@ -70,7 +70,7 @@
         android:id="@+id/sign_in"
         android:layout_width="0dp"
         android:layout_height="51dp"
-        android:background="@drawable/round_button"
+        android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"

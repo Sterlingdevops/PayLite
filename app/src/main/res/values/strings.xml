@@ -79,7 +79,7 @@
     <string name="send_money">Send Money</string>
     <string name="qr_payment">QR Payment</string>
     <string name="invite_friends">Invite Friends</string>
-    <string name="your_payment_link">Your payment link allows anyone with\nyou share with pay you directly</string>
+    <string name="your_payment_link">Share your payment link with friends, clients or\n family members to request money from them</string>
     <string name="yinka_oni">Yinka Oni</string>
     <string name="paylite_xyz_yinkaoni">paylite.xyz/yinkaoni</string>
     <string name="share_paylite_link">Share Paylite Link</string>
@@ -225,4 +225,7 @@
     <string name="exp_04_22">Exp: 04/22</string>
     <string name="default_payment_method">Default payment method</string>
     <string name="set_default_payment_method">Set as default payment method</string>
+    <string name="choose_an_account_to_transfer_to">Choose an account to transfer to</string>
+    <string name="set_default">Set as default</string>
+    <string name="amount_minimum_amount_of_n100">Amount (minimum amount of N100)</string>
 </resources>

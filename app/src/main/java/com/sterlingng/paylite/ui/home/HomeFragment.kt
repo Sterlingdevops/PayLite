@@ -13,6 +13,8 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.donate.DonateActivity
 import com.sterlingng.paylite.ui.fund.FundActivity
 import com.sterlingng.paylite.ui.profile.ProfileActivity
+import com.sterlingng.paylite.ui.request.RequestActivity
+import com.sterlingng.paylite.ui.transfer.TransferActivity
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment(), HomeMvpView {
@@ -21,16 +23,22 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     lateinit var mPresenter: HomeMvpContract<HomeMvpView>
 
     private lateinit var mNotificationsImageView: ImageView
+    private lateinit var mRequestMoneyImageView: ImageView
     private lateinit var mMovieTicketsImageView: ImageView
     private lateinit var mAirTimeDataImageView: ImageView
     private lateinit var mSendMoneyImageView: ImageView
     private lateinit var mPayBillsImageView: ImageView
     private lateinit var mFlightsImageView: ImageView
+    private lateinit var mPayCodeImageView: ImageView
+    private lateinit var mCashOutImageView: ImageView
 
     private lateinit var mMovieTicketsTextView: TextView
+    private lateinit var mRequestMoneyTextView: TextView
     private lateinit var mAirTimeDataTextView: TextView
     private lateinit var mSendMoneyTextView: TextView
     private lateinit var mPayBillsTextView: TextView
+    private lateinit var mCashOutTextView: TextView
+    private lateinit var mPayCodeTextView: TextView
     private lateinit var mFlightsTextView: TextView
 
     private lateinit var mFundButton: Button
@@ -61,6 +69,15 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mSendMoneyImageView = view.findViewById(R.id.send_money)
         mSendMoneyTextView = view.findViewById(R.id.send_money_text)
 
+        mRequestMoneyImageView = view.findViewById(R.id.request_money)
+        mRequestMoneyTextView = view.findViewById(R.id.request_money_text)
+
+        mPayCodeImageView = view.findViewById(R.id.cash_out_code)
+        mPayCodeTextView = view.findViewById(R.id.cash_out_code_text)
+
+        mCashOutImageView = view.findViewById(R.id.cash_out_to_bank)
+        mCashOutTextView = view.findViewById(R.id.cash_out_to_bank_text)
+
         mFundButton = view.findViewById(R.id.fund)
     }
 
@@ -71,6 +88,14 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mAirTimeDataTextView.setOnClickListener {
             startActivity(AirTimeActivity.getStartIntent(baseActivity))
+        }
+
+        mRequestMoneyImageView.setOnClickListener {
+            startActivity(RequestActivity.getStartIntent(baseActivity))
+        }
+
+        mRequestMoneyTextView.setOnClickListener {
+            startActivity(RequestActivity.getStartIntent(baseActivity))
         }
 
         mSendMoneyImageView.setOnClickListener {
@@ -93,6 +118,28 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mFundButton.setOnClickListener {
             startActivity(FundActivity.getStartIntent(baseActivity))
+        }
+
+        mPayCodeTextView.setOnClickListener {
+            val intent = DonateActivity.getStartIntent(baseActivity)
+                    .putExtra(DonateActivity.donateTitle, "Send Money")
+                    .putExtra(DonateActivity.donateType, 2)
+            startActivity(intent)
+        }
+
+        mPayCodeImageView.setOnClickListener {
+            val intent = DonateActivity.getStartIntent(baseActivity)
+                    .putExtra(DonateActivity.donateTitle, "Send Money")
+                    .putExtra(DonateActivity.donateType, 2)
+            startActivity(intent)
+        }
+
+        mCashOutImageView.setOnClickListener {
+            startActivity(TransferActivity.getStartIntent(baseActivity))
+        }
+
+        mCashOutTextView.setOnClickListener {
+            startActivity(TransferActivity.getStartIntent(baseActivity))
         }
     }
 

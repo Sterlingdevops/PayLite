@@ -67,6 +67,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView, BottomNavigationView
         mBottomNavigationView.enableItemShiftingMode(false)
         mBottomNavigationView.setLargeTextSize(14f)
         mBottomNavigationView.setSmallTextSize(10f)
+        mBottomNavigationView.setTextVisibility(false)
 
         mSelectedItem = intent.getIntExtra(SELECTED_ITEM, 0)
 

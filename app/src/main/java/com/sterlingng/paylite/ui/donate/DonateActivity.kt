@@ -87,7 +87,7 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
                 mRecipientNameTextInputLayout.visibility = View.VISIBLE
                 mBeneficiaryTextInputLayout.visibility = View.VISIBLE
                 mPasswordTextInputLayout.visibility = View.VISIBLE
-                mBeneficiaryTextInputLayout.hint = "Recipients Phone number"
+                mBeneficiaryTextInputLayout.hint = "Recipient's Phone number"
                 mBeneficiaryTextInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
 
                 mTitleTextView.text = intent.getStringExtra(donateTitle)
