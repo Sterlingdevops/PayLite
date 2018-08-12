@@ -110,6 +110,7 @@ dependencies {
     implementation project(':editcredit')
     implementation project(':currencyedittext')
     implementation project(':expandabletextview')
+    implementation project(':largelabeledittext')
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     implementation 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'

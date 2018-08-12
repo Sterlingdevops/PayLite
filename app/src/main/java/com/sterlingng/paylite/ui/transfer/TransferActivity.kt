@@ -49,11 +49,12 @@ class TransferActivity : BaseActivity(), TransferMvpView, FilterBottomSheetFragm
         exit.setOnClickListener {
             onBackPressed()
         }
+
         mCardEditText.setOnClickListener {
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 1
-            filterBottomSheetFragment.title = "Choose an Account to Transfer to"
+            filterBottomSheetFragment.title = "Choose an Account"
             filterBottomSheetFragment.items = listOf("Savings Account - 0123456789", "Savings Account - 0247966933", "Savings Account - 0121702158 ", "Other Banks")
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
