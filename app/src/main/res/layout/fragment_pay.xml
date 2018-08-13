@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.pay.PayFragment">
 
-    <com.sterlingng.paylite.utils.widgets.SquareImageView
+    <com.sterlingng.views.SquareImageView
         android:id="@+id/squareImageView2"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -81,7 +81,7 @@
         app:layout_constraintStart_toStartOf="@id/send_money"
         app:layout_constraintTop_toBottomOf="@+id/ref1"/>
 
-    <com.sterlingng.paylite.utils.widgets.SquareImageView
+    <com.sterlingng.views.SquareImageView
         android:id="@+id/squareImageView4"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -155,7 +155,7 @@
         app:layout_constraintStart_toStartOf="@id/qr_payment"
         app:layout_constraintTop_toBottomOf="@+id/ref3"/>
 
-    <com.sterlingng.paylite.utils.widgets.SquareImageView
+    <com.sterlingng.views.SquareImageView
         android:id="@+id/squareImageView3"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -231,7 +231,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ref2"/>
 
-    <com.sterlingng.paylite.utils.widgets.SquareImageView
+    <com.sterlingng.views.SquareImageView
         android:id="@+id/squareImageView"
         android:layout_width="192dp"
         android:layout_height="192dp"

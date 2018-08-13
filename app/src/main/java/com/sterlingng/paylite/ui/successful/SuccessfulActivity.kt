@@ -10,7 +10,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PaymentCategory
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.utils.ItemOffsetDecoration
-import com.sterlingng.paylite.utils.widgets.NoScrollingGridLayoutManager
+import com.sterlingng.views.NoScrollingGridLayoutManager
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 

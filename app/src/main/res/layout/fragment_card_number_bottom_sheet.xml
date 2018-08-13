@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/close"/>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             app:drawableGravity="start"
             app:separator="spaces"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
     <Button
         android:id="@+id/add"

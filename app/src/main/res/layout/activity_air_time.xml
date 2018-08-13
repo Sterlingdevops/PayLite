@@ -104,134 +104,89 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         tools:targetApi="lollipop"/>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
-        android:id="@+id/textInputLayout"
+    <com.sterlingng.views.LargeLabelClickToSelectEditText
+        android:id="@+id/category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:drawableTint="@color/light_gray"
+        android:gravity="center_vertical"
+        android:text="@string/mobile_top_up"
+        android:textColor="@color/blue_black_dark"
+        android:textSize="16sp"
+        app:drawable="@drawable/chevron_down"
+        app:hint="Data bundle"
+        app:label="@string/category"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/backdrop"
+        tools:targetApi="m"/>
+
+    <com.sterlingng.views.LargeLabelClickToSelectEditText
+        android:id="@+id/provider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawableTint="@color/light_gray"
+        android:gravity="center_vertical"
+        android:hint="@string/network_provider"
+        android:textColor="@color/blue_black_dark"
+        android:textSize="16sp"
+        app:drawable="@drawable/chevron_down"
+        app:label="@string/network_provider"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/category"
+        tools:targetApi="m"/>
+
+    <com.sterlingng.views.LargeLabelClickToSelectEditText
+        android:id="@+id/bundles"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawableTint="@color/light_gray"
+        android:gravity="center_vertical"
+        android:textColor="@color/blue_black_dark"
+        android:textSize="16sp"
+        app:drawable="@drawable/chevron_down"
+        app:label="@string/bundles"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop">
+        app:layout_constraintTop_toBottomOf="@+id/provider"
+        tools:targetApi="m"/>
 
-        <com.sterlingng.paylite.utils.ClickToSelectEditText
-            android:id="@+id/category"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:clickable="false"
-            android:drawableEnd="@drawable/chevron_down"
-            android:drawableRight="@drawable/chevron_down"
-            android:editable="false"
-            android:focusable="false"
-            android:gravity="center_vertical"
-            android:hint="@string/category"
-            android:inputType="none"
-            android:text="@string/mobile_top_up"
-            android:textColor="@color/blue_black_dark"
-            android:textSize="16sp"/>
-
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout2"
+    <com.sterlingng.views.LargeLabelEditText
+        android:id="@+id/amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        android:layout_marginTop="8dp"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        app:label="@string/amount"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/bundles"/>
 
-        <com.sterlingng.paylite.utils.ClickToSelectEditText
-            android:id="@+id/provider"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:drawableEnd="@drawable/chevron_down"
-            android:drawableRight="@drawable/chevron_down"
-            android:gravity="center_vertical"
-            android:hint="@string/network_provider"
-            android:inputType="textPersonName"
-            android:textColor="@color/blue_black_dark"
-            android:textSize="16sp"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout5"
+    <com.sterlingng.views.LargeLabelEditText
+        android:id="@+id/phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        android:layout_marginTop="8dp"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        app:drawable="@drawable/phone_book"
+        app:hint="@string/_9075755888"
+        app:label="@string/phone"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
-
-        <com.sterlingng.paylite.utils.ClickToSelectEditText
-            android:id="@+id/bundles"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:drawableEnd="@drawable/chevron_down"
-            android:drawableRight="@drawable/chevron_down"
-            android:gravity="center_vertical"
-            android:hint="@string/available_bundles"
-            android:inputType="textPersonName"
-            android:textColor="@color/blue_black_dark"
-            android:textSize="16sp"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
-        android:id="@+id/textInputLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
-
-        <com.blackcat.currencyedittext.CurrencyEditText
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:gravity="center_vertical"
-            android:hint="@string/amount"
-            android:inputType="number"
-            android:textColor="@color/blue_black_dark"
-            android:textSize="16sp"/>
-
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
-
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
-        android:id="@+id/textInputLayout4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/contacts"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/phone"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:gravity="center_vertical"
-            android:hint="@string/mobile_number"
-            android:inputType="number"
-            android:textColor="@color/blue_black_dark"
-            android:textSize="16sp"/>
-
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
-
-    <ImageView
-        android:id="@+id/contacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:contentDescription="@string/contact_details"
-        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout4"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-        app:srcCompat="@drawable/phone_book"/>
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/amount"
+        app:maxLength="16"/>
 
 
 </android.support.constraint.ConstraintLayout>

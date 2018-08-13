@@ -13,7 +13,7 @@ import com.sterlingng.paylite.ui.charity.about.AboutFragment
 import com.sterlingng.paylite.ui.charity.program.ProgramFragment
 import com.sterlingng.paylite.ui.donate.DonateActivity
 import com.sterlingng.paylite.utils.CustomPagerAdapter
-import com.sterlingng.paylite.utils.widgets.CustomViewPager
+import com.sterlingng.views.CustomViewPager
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 

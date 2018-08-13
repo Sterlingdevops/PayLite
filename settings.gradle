@@ -1,1 +1,1 @@
-include ':app', ':pinview', ':expandabletextview', ':largelabeledittext', ":editcredit", ":currencyedittext"
+include ':app', ':pinview', ':expandabletextview', ':views', ":editcredit", ":currencyedittext"

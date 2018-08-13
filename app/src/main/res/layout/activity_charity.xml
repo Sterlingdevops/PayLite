@@ -56,7 +56,7 @@
                 app:stl_underlineColor="#4D000000"
                 app:stl_underlineThickness="0dp"/>
 
-            <com.sterlingng.paylite.utils.widgets.CustomViewPager
+            <com.sterlingng.views.CustomViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="0dp"
                 android:layout_height="480dp"

@@ -9,7 +9,7 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.utils.CustomPagerAdapter
-import com.sterlingng.paylite.utils.widgets.CustomViewPager
+import com.sterlingng.views.CustomViewPager
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 

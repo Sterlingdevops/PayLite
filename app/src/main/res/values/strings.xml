@@ -29,7 +29,7 @@
     <string name="nigerian"> Nigerian</string>
     <string name="what_is_your_phone_number">What is your Phone Number?</string>
     <string name="country_information_ph">Your country information helps \n us verify you.</string>
-    <string name="phone">Phone Number</string>
+    <string name="phone">Phone</string>
     <string name="invalid_phone_number">Invalid Phone Number</string>
     <string name="otp_ph">Please enter the 5 digit code we just  sent you by text.</string>
     <string name="confirm_number_ph">An OTP is a verification code that helps us confirm your number</string>
@@ -167,9 +167,9 @@
     <string name="mar">MAR</string>
     <string name="feb">FEB</string>
     <string name="balance_201_00">Balance ₦2,000.00</string>
-    <string name="network_provider">Network provider</string>
+    <string name="network_provider">Provider</string>
     <string name="mobile_top_up">Mobile Top-up</string>
-    <string name="category">Project</string>
+    <string name="project">Project</string>
     <string name="mobile_number">Mobile number</string>
     <string name="available_bundles">Available bundles</string>
     <string name="select_a_bundle">Select A Bundle</string>
@@ -228,4 +228,6 @@
     <string name="choose_an_account_to_transfer_to">Choose an account to transfer to</string>
     <string name="set_default">Set as default</string>
     <string name="amount_minimum_amount_of_n100">Amount (minimum amount of N100)</string>
+    <string name="category">Category</string>
+    <string name="bundles">Bundles</string>
 </resources>

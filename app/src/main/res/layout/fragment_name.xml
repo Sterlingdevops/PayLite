@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/usernameTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -50,9 +50,9 @@
             android:textColor="@color/blue_black_dark"
             android:textSize="16sp"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/passwordTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             android:textColor="@color/blue_black_dark"
             android:textSize="16sp"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
     <Button
         android:id="@+id/next_name"

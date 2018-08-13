@@ -144,8 +144,8 @@ import com.sterlingng.paylite.ui.transfer.TransferMvpContract
 import com.sterlingng.paylite.ui.transfer.TransferMvpView
 import com.sterlingng.paylite.ui.transfer.TransferPresenter
 import com.sterlingng.paylite.utils.CustomPagerAdapter
-import com.sterlingng.paylite.utils.widgets.NoScrollingGridLayoutManager
-import com.sterlingng.paylite.utils.widgets.NoScrollingLinearLayoutManager
+import com.sterlingng.views.NoScrollingGridLayoutManager
+import com.sterlingng.views.NoScrollingLinearLayoutManager
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable

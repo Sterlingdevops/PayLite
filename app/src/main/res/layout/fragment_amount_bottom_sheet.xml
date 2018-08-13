@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/close"/>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             android:inputType="number"
             app:allow_negative_values="false"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
     <Button
         android:id="@+id/add"

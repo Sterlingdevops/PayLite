@@ -2,18 +2,19 @@ package com.sterlingng.paylite.ui.airtime
 
 import android.Manifest
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.support.design.widget.TextInputEditText
-import android.support.design.widget.TextInputLayout
 import android.text.TextUtils
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -25,7 +26,9 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
-import com.sterlingng.paylite.utils.ClickToSelectEditText
+import com.sterlingng.paylite.utils.Log
+import com.sterlingng.views.LargeLabelClickToSelectEditText
+import com.sterlingng.views.LargeLabelEditText
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
@@ -34,14 +37,15 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
     @Inject
     lateinit var mPresenter: AirTimeMvpContract<AirTimeMvpView>
 
+    val labels = ArrayList<TextView>()
+
     private lateinit var next: Button
     private lateinit var exit: ImageView
-    private lateinit var contactPicker: ImageView
-    private lateinit var bundleHolder: TextInputLayout
-    private lateinit var phoneEditText: TextInputEditText
-    private lateinit var bundle: ClickToSelectEditText<String>
-    private lateinit var category: ClickToSelectEditText<String>
-    private lateinit var provider: ClickToSelectEditText<String>
+    private lateinit var phone: LargeLabelEditText
+    private lateinit var amount: LargeLabelEditText
+    private lateinit var bundle: LargeLabelClickToSelectEditText<String>
+    private lateinit var provider: LargeLabelClickToSelectEditText<String>
+    private lateinit var category: LargeLabelClickToSelectEditText<String>
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -54,7 +58,25 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
         mPresenter.onAttach(this)
     }
 
+    private fun addOffSets() {
+        labels.add(phone.mLabelTextView)
+        labels.add(amount.mLabelTextView)
+        labels.add(bundle.mLabelTextView)
+        labels.add(provider.mLabelTextView)
+        labels.add(category.mLabelTextView)
+
+        val largest = labels.maxBy { it.text.toString() }?.length()
+        labels.forEach {
+            for (i in 0 until ((largest!! - it.length()) * 1.5).toInt()) {
+                it.append(" ")
+            }
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun setUp() {
+        addOffSets()
+
         exit.setOnClickListener {
             onBackPressed()
         }
@@ -63,8 +85,8 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             startActivity(ConfirmActivity.getStartIntent(this))
         }
 
-        bundle.isClickable = true
-        bundle.setOnClickListener {
+        bundle.mTextEditText.isClickable = true
+        bundle.mTextEditText.setOnClickListener {
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 1
@@ -73,8 +95,8 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
 
-        category.isClickable = true
-        category.setOnClickListener {
+        category.mTextEditText.isClickable = true
+        category.mTextEditText.setOnClickListener {
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 2
@@ -83,8 +105,8 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
 
-        provider.isClickable = true
-        provider.setOnClickListener {
+        provider.mTextEditText.isClickable = true
+        provider.mTextEditText.setOnClickListener {
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 0
@@ -93,29 +115,38 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
 
-        contactPicker.setOnClickListener {
-            Dexter.withActivity(this)
-                    .withPermission(Manifest.permission.READ_CONTACTS)
-                    .withListener(object : PermissionListener {
-                        override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
-                            token?.continuePermissionRequest()
-                        }
+        phone.mTextEditText.setOnTouchListener { _, event ->
+            val DRAWABLE_RIGHT = 2
 
-                        override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                            show("Permission Denied", true)
-                        }
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (phone.mTextEditText.right - phone.mTextEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
+                    Log.d("phone.mTextEditText.setDrawableClickListener")
+                    Dexter.withActivity(this@AirTimeActivity)
+                            .withPermission(Manifest.permission.READ_CONTACTS)
+                            .withListener(object : PermissionListener {
+                                override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+                                    token?.continuePermissionRequest()
+                                }
 
-                        override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                            val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-                            if (intent.resolveActivity(packageManager) != null) {
-                                startActivityForResult(intent, REQUEST_SELECT_CONTACT)
-                            }
-                        }
+                                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                                    show("Permission Denied", true)
+                                }
 
-                    })
-                    .check()
+                                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                                    val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+                                    if (intent.resolveActivity(packageManager) != null) {
+                                        startActivityForResult(intent, REQUEST_SELECT_CONTACT)
+                                    }
+                                }
+
+                            }).check()
+                    return@setOnTouchListener true
+                }
+            }
+            return@setOnTouchListener false
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -129,12 +160,12 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
 
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
         when (selector) {
-            1 -> bundle.setText(s)
-            0 -> provider.setText(s)
+            1 -> bundle.mTextEditText.setText(s)
+            0 -> provider.mTextEditText.setText(s)
             2 -> {
                 when (s) {
                     "Mobile Top-up" -> {
-                        bundleHolder.animate()
+                        bundle.animate()
                                 .scaleX(0f)
                                 .scaleY(0f)
                                 .setListener(object : Animator.AnimatorListener {
@@ -151,12 +182,12 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
                                     }
 
                                     override fun onAnimationEnd(animation: Animator?) {
-                                        bundleHolder.visibility = View.GONE
+                                        bundle.visibility = View.GONE
                                     }
                                 }).start()
                     }
                     "Data bundle" -> {
-                        bundleHolder.animate()
+                        bundle.animate()
                                 .scaleX(1f)
                                 .scaleY(1f)
                                 .setListener(object : Animator.AnimatorListener {
@@ -173,12 +204,12 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
                                     }
 
                                     override fun onAnimationEnd(animation: Animator?) {
-                                        bundleHolder.visibility = View.VISIBLE
+                                        bundle.visibility = View.VISIBLE
                                     }
                                 }).start()
                     }
                 }
-                category.setText(s)
+                category.mTextEditText.setText(s)
             }
         }
         dialog.dismiss()
@@ -206,18 +237,17 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             Toast.makeText(this, "Invalid contact", Toast.LENGTH_LONG).show()
             return
         }
-        phoneEditText.setText(phone)
+        this.phone.mTextEditText.setText(phone)
     }
 
     override fun bindViews() {
         exit = findViewById(R.id.exit)
         next = findViewById(R.id.next)
+        phone = findViewById(R.id.phone)
+        amount = findViewById(R.id.amount)
         bundle = findViewById(R.id.bundles)
         category = findViewById(R.id.category)
         provider = findViewById(R.id.provider)
-        phoneEditText = findViewById(R.id.phone)
-        contactPicker = findViewById(R.id.contacts)
-        bundleHolder = findViewById(R.id.textInputLayout5)
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

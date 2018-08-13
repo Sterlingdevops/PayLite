@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textView4"/>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/usernameTextInputLayout"
         style="@style/EditText"
         android:layout_width="0dp"
@@ -65,9 +65,9 @@
             android:textColor="@color/blue_black_dark"
             android:textSize="16sp"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/inputBvnTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/welcome"
             app:layout_constraintTop_toBottomOf="@+id/welcome"/>
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
     <Button
         android:id="@+id/next_email"

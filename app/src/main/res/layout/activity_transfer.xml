@@ -63,7 +63,7 @@
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/card"/>
 
-    <com.sterlingng.largelabeledittext.LargeLabelEditText
+    <com.sterlingng.views.LargeLabelEditText
         android:id="@+id/amount2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -71,15 +71,15 @@
         android:imeOptions="actionNext"
         android:inputType="number"
         app:drawable="@drawable/phone_book"
-        app:hint="@string/ng_234"
+        app:hint="@string/_9075755888"
+        app:label="@string/ng_234"
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/save_card"
-        app:maxLength="10"
-        app:text="@string/_9075755888"/>
+        app:maxLength="10"/>
 
-    <com.sterlingng.paylite.utils.ClickToSelectEditText
+    <com.sterlingng.views.ClickToSelectEditText
         android:id="@+id/card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

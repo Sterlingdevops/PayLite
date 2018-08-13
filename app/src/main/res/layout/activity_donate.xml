@@ -72,7 +72,7 @@
         app:layout_constraintTop_toTopOf="@+id/title"
         app:srcCompat="@drawable/chevron_left"/>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -92,9 +92,9 @@
             android:textColor="@color/blue_black_dark"
             android:textSize="16sp"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/textInputLayout5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -114,10 +114,10 @@
             android:textColor="@color/blue_black_dark"
             android:textSize="16sp"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/textInputLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -137,9 +137,9 @@
             android:textColor="@color/blue_black_dark"
             android:textSize="16sp"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/textInputLayout3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -159,9 +159,9 @@
             android:textColor="@color/blue_black_dark"
             android:textSize="16sp"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
-    <com.sterlingng.paylite.utils.widgets.CustomTextInputLayout
+    <com.sterlingng.views.CustomTextInputLayout
         android:id="@+id/textInputLayout4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
             android:textColor="@color/blue_black_dark"
             android:textSize="16sp"/>
 
-    </com.sterlingng.paylite.utils.widgets.CustomTextInputLayout>
+    </com.sterlingng.views.CustomTextInputLayout>
 
     <android.support.constraint.Group
         android:id="@+id/schedule_group"

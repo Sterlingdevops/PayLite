@@ -14,7 +14,7 @@ import com.sterlingng.paylite.ui.signup.password.PasswordFragment
 import com.sterlingng.paylite.ui.signup.pin.PinFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.paylite.utils.OnChildDidClickNext
-import com.sterlingng.paylite.utils.widgets.CustomViewPager
+import com.sterlingng.views.CustomViewPager
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 

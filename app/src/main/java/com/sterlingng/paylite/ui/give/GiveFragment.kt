@@ -11,7 +11,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
 import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
-import com.sterlingng.paylite.utils.widgets.CustomViewPager
+import com.sterlingng.views.CustomViewPager
 import javax.inject.Inject
 
 class GiveFragment : BaseFragment(), GiveMvpView {

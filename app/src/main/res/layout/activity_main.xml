@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
-    <com.sterlingng.paylite.utils.widgets.CustomViewPager
+    <com.sterlingng.views.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="0dp"
         android:layout_height="0dp"

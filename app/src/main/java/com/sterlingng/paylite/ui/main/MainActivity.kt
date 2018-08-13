@@ -15,7 +15,7 @@ import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
 import com.sterlingng.paylite.ui.main.onboarding.ScreenData
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.utils.CustomPagerAdapter
-import com.sterlingng.paylite.utils.widgets.CustomViewPager
+import com.sterlingng.views.CustomViewPager
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 

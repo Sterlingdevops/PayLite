@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.signup.SignUpActivity">
 
-    <com.sterlingng.paylite.utils.widgets.CustomViewPager
+    <com.sterlingng.views.CustomViewPager
         android:id="@+id/view_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
