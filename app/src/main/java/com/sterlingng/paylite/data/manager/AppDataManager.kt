@@ -20,6 +20,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val remoteServiceHelper: RemoteServiceHelper,
                      private val mockHelper: MockHelper) : DataManager {
 
+    override fun mockContacts(): ArrayList<Contact> = mockHelper.mockContacts()
+
     override fun mockPaymentMethods(): ArrayList<PaymentMethod> = mockHelper.mockPaymentMethods()
 
     override fun mockCategories(): ArrayList<PaymentCategory> = mockHelper.mockCategories()

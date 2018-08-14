@@ -4,12 +4,13 @@ import com.sterlingng.paylite.data.model.*
 import io.reactivex.Observable
 
 interface MockerInterface {
-    fun mockNotifications(): ArrayList<Notification>
-    fun mockCharities(): ArrayList<Charity>
-    fun mockProjects(): ArrayList<Project>
     fun mockDeals(): ArrayList<Deal>
+    fun mockProjects(): ArrayList<Project>
+    fun mockContacts(): ArrayList<Contact>
+    fun mockCharities(): ArrayList<Charity>
     fun mockTransactions(): ArrayList<Transaction>
-    fun mockLogin(email: String, password: String): Observable<User>
+    fun mockNotifications(): ArrayList<Notification>
     fun mockCategories(): ArrayList<PaymentCategory>
     fun mockPaymentMethods(): ArrayList<PaymentMethod>
+    fun mockLogin(email: String, password: String): Observable<User>
 }

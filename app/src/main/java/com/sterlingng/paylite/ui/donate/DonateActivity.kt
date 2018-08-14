@@ -83,7 +83,7 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
                 mBeneficiaryTextView.visibility = View.GONE
                 mScheduleGroup.visibility = View.VISIBLE
             }
-            2 -> {
+            2 -> { // pay code
                 mRecipientNameTextInputLayout.visibility = View.VISIBLE
                 mBeneficiaryTextInputLayout.visibility = View.VISIBLE
                 mPasswordTextInputLayout.visibility = View.VISIBLE

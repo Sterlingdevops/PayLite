@@ -420,16 +420,4 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_end="56dp"/>
 
-    <android.support.constraint.Barrier
-        android:id="@+id/backdrop_barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="backdrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.418"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
 </android.support.constraint.ConstraintLayout>

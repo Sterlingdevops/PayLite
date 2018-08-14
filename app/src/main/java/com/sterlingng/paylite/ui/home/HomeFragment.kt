@@ -14,6 +14,7 @@ import com.sterlingng.paylite.ui.donate.DonateActivity
 import com.sterlingng.paylite.ui.fund.FundActivity
 import com.sterlingng.paylite.ui.profile.ProfileActivity
 import com.sterlingng.paylite.ui.request.RequestActivity
+import com.sterlingng.paylite.ui.send.SendMoneyActivity
 import com.sterlingng.paylite.ui.transfer.TransferActivity
 import javax.inject.Inject
 
@@ -99,16 +100,12 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         }
 
         mSendMoneyImageView.setOnClickListener {
-            val intent = DonateActivity.getStartIntent(baseActivity)
-                    .putExtra(DonateActivity.donateTitle, "Send Money")
-                    .putExtra(DonateActivity.donateType, 1)
+            val intent = SendMoneyActivity.getStartIntent(baseActivity)
             startActivity(intent)
         }
 
         mSendMoneyTextView.setOnClickListener {
-            val intent = DonateActivity.getStartIntent(baseActivity)
-                    .putExtra(DonateActivity.donateTitle, "Send Money")
-                    .putExtra(DonateActivity.donateType, 1)
+            val intent = SendMoneyActivity.getStartIntent(baseActivity)
             startActivity(intent)
         }
 

@@ -2,7 +2,6 @@ package com.sterlingng.paylite.ui.transactions.categories
 
 
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -23,9 +22,6 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     lateinit var mLinearLayoutManager: LinearLayoutManager
 
     @Inject
-    lateinit var mDividerItemDecoration: DividerItemDecoration
-
-    @Inject
     lateinit var mTransactionAdapter: TransactionAdapter
 
     lateinit var recyclerView: RecyclerView
@@ -43,14 +39,13 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
 
         recyclerView.adapter = mTransactionAdapter
         recyclerView.layoutManager = mLinearLayoutManager
-        recyclerView.addItemDecoration(mDividerItemDecoration)
         recyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(mTransactionAdapter))
 
         mPresenter.loadMockTransactions()
     }
 
     override fun updateCategories(it: Collection<Transaction>) {
-        mTransactionAdapter.addTransactions(it)
+        mTransactionAdapter.add(it)
         recyclerView.scrollToPosition(0)
     }
 

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="com.sterlingng.paylite">
@@ -59,5 +60,8 @@
         <activity android:name=".ui.payment.PaymentActivity"/>
         <activity android:name=".ui.request.RequestActivity"/>
         <activity android:name=".ui.transfer.TransferActivity"/>
+        <activity android:name=".ui.send.SendMoneyActivity">
+        </activity>
     </application>
+
 </manifest>

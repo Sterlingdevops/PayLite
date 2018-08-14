@@ -14,7 +14,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -37,7 +36,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
     @Inject
     lateinit var mPresenter: AirTimeMvpContract<AirTimeMvpView>
 
-    val labels = ArrayList<TextView>()
+//    val labels = ArrayList<TextView>()
 
     private lateinit var next: Button
     private lateinit var exit: ImageView
@@ -58,25 +57,23 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
         mPresenter.onAttach(this)
     }
 
-    private fun addOffSets() {
-        labels.add(phone.mLabelTextView)
-        labels.add(amount.mLabelTextView)
-        labels.add(bundle.mLabelTextView)
-        labels.add(provider.mLabelTextView)
-        labels.add(category.mLabelTextView)
-
-        val largest = labels.maxBy { it.text.toString() }?.length()
-        labels.forEach {
-            for (i in 0 until ((largest!! - it.length()) * 1.5).toInt()) {
-                it.append(" ")
-            }
-        }
-    }
+//    private fun addOffSets() {
+//        labels.add(phone.mLabelTextView)
+//        labels.add(amount.mLabelTextView)
+//        labels.add(bundle.mLabelTextView)
+//        labels.add(provider.mLabelTextView)
+//        labels.add(category.mLabelTextView)
+//
+//        val largest = labels.maxBy { it.text.toString() }?.length()
+//        labels.forEach {
+//            for (i in 0 until ((largest!! - it.length()) * 1.5).toInt()) {
+//                it.append(" ")
+//            }
+//        }
+//    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setUp() {
-        addOffSets()
-
         exit.setOnClickListener {
             onBackPressed()
         }

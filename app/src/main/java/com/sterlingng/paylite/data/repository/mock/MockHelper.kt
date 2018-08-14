@@ -10,6 +10,14 @@ import kotlin.collections.ArrayList
 class MockHelper @Inject
 internal constructor() : MockerInterface {
 
+    override fun mockContacts(): ArrayList<Contact> {
+        val contacts = ArrayList<Contact>()
+        contacts += Contact("Tukpe", "Raymond", R.color.light_green, R.color.blue_black_dark)
+        contacts += Contact("Oluyebi", "Dara", R.color.light_blue, R.color.dark_sage)
+        contacts += Contact("See", "all", R.drawable.phone_book, R.color.dark_sage)
+        return contacts
+    }
+
     override fun mockPaymentMethods(): ArrayList<PaymentMethod> {
         val cards: ArrayList<PaymentMethod> = ArrayList()
         cards += PaymentMethod("Visa (1029)", "Eleanor Ezimah", "12/22", R.drawable.visa)

@@ -32,6 +32,7 @@ import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
 import com.sterlingng.paylite.ui.project.ProjectActivity
 import com.sterlingng.paylite.ui.request.RequestActivity
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
+import com.sterlingng.paylite.ui.send.SendMoneyActivity
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
@@ -143,4 +144,6 @@ interface ActivityComponent {
     fun inject(settingsFragment: SettingsFragment)
 
     fun inject(transferActivity: TransferActivity)
+
+    fun inject(sendMoneyActivity: SendMoneyActivity)
 }

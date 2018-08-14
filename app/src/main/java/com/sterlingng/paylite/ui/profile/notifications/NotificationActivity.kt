@@ -60,7 +60,7 @@ class NotificationActivity : BaseActivity(), NotificationMvpView, NotificationsA
     }
 
     override fun updateNotifications(it: ArrayList<Notification>) {
-        mNotificationsAdapter.addNotifications(it)
+        mNotificationsAdapter.add(it)
         mRecyclerView.scrollToPosition(0)
     }
 

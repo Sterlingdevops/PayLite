@@ -41,20 +41,20 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
         }
     }
 
-    fun getCreditTransactionAtPosition(position: Int): Transaction = transactions[position]
+    fun get(position: Int): Transaction = transactions[position]
 
-    fun addCreditTransaction(transaction: Transaction) {
+    fun add(transaction: Transaction) {
         transactions.add(transaction)
         notifyItemInserted(this.transactions.size - 1)
     }
 
-    fun addTransactions(transactions: Collection<Transaction>) {
+    fun add(transactions: Collection<Transaction>) {
         val index = this.transactions.size - 1
         this.transactions.addAll(transactions)
         notifyItemRangeInserted(index, transactions.size - 1)
     }
 
-    fun removeFixture(index: Int) {
+    fun remove(index: Int) {
         this.transactions.removeAt(index)
         notifyItemRemoved(index)
     }

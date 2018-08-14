@@ -105,6 +105,9 @@ import com.sterlingng.paylite.ui.request.RequestPresenter
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpContract
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpView
 import com.sterlingng.paylite.ui.scheduled.ScheduledPresenter
+import com.sterlingng.paylite.ui.send.SendMoneyMvpContract
+import com.sterlingng.paylite.ui.send.SendMoneyMvpView
+import com.sterlingng.paylite.ui.send.SendMoneyPresenter
 import com.sterlingng.paylite.ui.settings.SettingsMvpContract
 import com.sterlingng.paylite.ui.settings.SettingsMvpView
 import com.sterlingng.paylite.ui.settings.SettingsPresenter
@@ -273,6 +276,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     internal fun provideTransferPresenter(presenter: TransferPresenter<TransferMvpView>): TransferMvpContract<TransferMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun provideSendMoneyPresenter(presenter: SendMoneyPresenter<SendMoneyMvpView>): SendMoneyMvpContract<SendMoneyMvpView> = presenter
 
     @Provides
     @PerActivity
