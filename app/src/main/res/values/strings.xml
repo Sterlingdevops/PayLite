@@ -175,7 +175,7 @@
     <string name="select_a_bundle">Select A Bundle</string>
     <string name="close">Close</string>
     <string name="account_number_email_or_phone">Account number, email or phone</string>
-    <string name="recipient_name">Recipient name</string>
+    <string name="recipient_name">Recipient\'s name</string>
     <string name="mastercard">Mastercard</string>
     <string name="card_details">Card Details</string>
     <string name="_0000">0000</string>
@@ -236,4 +236,9 @@
     <string name="paylite_contacts">PAYLITE CONTACTS</string>
     <string name="recent">RECENT</string>
     <string name="some_header">Some Header</string>
+    <string name="save_recipient">Save recipient</string>
+    <string name="phone_or_email">Phone or email</string>
+    <string name="frequent">FREQUENT</string>
+    <string name="stop">Stop</string>
+    <string name="cancel">Cancel</string>
 </resources>

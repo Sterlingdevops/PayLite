@@ -17,11 +17,14 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.tsongkha.spinnerdatepicker.DatePicker
+import com.tsongkha.spinnerdatepicker.DatePickerDialog
+import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+
 
 class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSetListener, FilterBottomSheetFragment.OnFilterItemSelected {
 
@@ -209,20 +212,23 @@ class DonateActivity : BaseActivity(), DonateMvpView, DatePickerDialog.OnDateSet
     }
 
     private fun showDatePicker(date: String) {
-        val dpd = DatePickerDialog.newInstance(this,
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
-        )
-        dpd.minDate = now
-        dpd.showYearPickerFirst(true)
-        dpd.setTitle(date)
-        dpd.isCancelable = true
-        dpd.version = DatePickerDialog.Version.VERSION_2
-        dpd.show(fragmentManager, "Date Picker Dialog")
+        SpinnerDatePickerDialogBuilder()
+                .context(this@DonateActivity)
+                .callback(this@DonateActivity)
+                .spinnerTheme(R.style.NumberPickerStyle)
+                .showTitle(true)
+                .defaultDate(now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH))
+                .minDate(now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH))
+                .showDaySpinner(true)
+                .build()
+                .show()
     }
 
-    override fun onDateSet(view: DatePickerDialog, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+    override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         val date = "$year/${monthOfYear + 1}/$dayOfMonth"
         val df = SimpleDateFormat("yyyy/MM/dd", Locale.US)
         val today = df.parse(date)

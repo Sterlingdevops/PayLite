@@ -4,108 +4,111 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/lighter_gray">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/backdrop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/backdrop"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_small"
+        app:layout_constraintDimensionRatio="w,1:5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/balance_201_00"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/title2"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/title2"
+        app:layout_constraintTop_toBottomOf="@+id/title2"/>
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_money"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
+
+    <ImageView
         android:id="@+id/exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:contentDescription="@string/exit"
-        android:text="@string/cancel"
-        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/textView26"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
+        app:layout_constraintTop_toTopOf="@+id/title2"
+        app:srcCompat="@drawable/chevron_left"/>
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/yemi_odubiyi"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
-
-    <TextView
-        android:id="@+id/amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/amount_naira"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/name"/>
-
-    <TextView
-        android:id="@+id/payment_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/test_payment"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/amount"/>
-
-    <TextView
-        android:id="@+id/repeat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/repeat_status"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/payment_type"/>
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="@string/confirm_payment"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/repeat"/>
-
-    <com.goodiebag.pinview.PinView
-        android:id="@+id/pin_view"
+    <EditText
+        android:id="@+id/phone_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:cursorVisible="true"
-        app:forceKeyboard="true"
-        app:hint="0"
-        app:inputType="number"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_light_blue_outline"
+        android:hint="@string/phone_or_email"
+        android:inputType="phone|textEmailAddress"
+        android:padding="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/backdrop"/>
+
+    <EditText
+        android:id="@+id/recipient_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_light_blue_outline"
+        android:hint="@string/recipient_name"
+        android:inputType="textPersonName"
+        android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:password="true"
-        app:pinBackground="@drawable/background_round_pin_view"
-        app:pinHeight="48dp"
-        app:pinLength="4"
-        app:pinWidth="48dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/phone_email"/>
+
+    <TextView
+        android:id="@+id/save_recipient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        android:text="@string/save_recipient"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/recipient_name"/>
+
+    <Switch
+        android:id="@+id/save_card_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/save_recipient"
+        app:layout_constraintEnd_toEndOf="@+id/save_recipient"
+        app:layout_constraintTop_toTopOf="@+id/save_recipient"/>
 
     <Button
         android:id="@+id/next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"

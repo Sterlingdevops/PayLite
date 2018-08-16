@@ -15,7 +15,9 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.lamudi.phonefield.PhoneInputLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.tsongkha.spinnerdatepicker.DatePicker
+import com.tsongkha.spinnerdatepicker.DatePickerDialog
+import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,7 +30,7 @@ class EditActivity : BaseActivity(), EditMvpView, DatePickerDialog.OnDateSetList
 
     private lateinit var exit: ImageView
     private lateinit var dob: EditText
-    internal var now = Calendar.getInstance()
+    private var now = Calendar.getInstance()
     private lateinit var doneTextView: TextView
     private lateinit var phoneInputLayout: PhoneInputLayout
 
@@ -71,21 +73,23 @@ class EditActivity : BaseActivity(), EditMvpView, DatePickerDialog.OnDateSetList
     }
 
     private fun showDatePicker(date: String) {
-        val dpd = DatePickerDialog.newInstance(this,
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
-        )
-        dpd.maxDate = now
-        dpd.showYearPickerFirst(true)
-        dpd.setYearRange(1900, 2018)
-        dpd.setTitle(date)
-        dpd.isCancelable = true
-        dpd.version = DatePickerDialog.Version.VERSION_2
-        dpd.show(fragmentManager, "Date Picker Dialog")
+        SpinnerDatePickerDialogBuilder()
+                .context(this@EditActivity)
+                .callback(this@EditActivity)
+                .spinnerTheme(R.style.NumberPickerStyle)
+                .showTitle(true)
+                .defaultDate(now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH))
+                .minDate(now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH))
+                .showDaySpinner(true)
+                .build()
+                .show()
     }
 
-    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+    override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         val date = "$year/${monthOfYear + 1}/$dayOfMonth"
         val df = SimpleDateFormat("yyyy/MM/dd", Locale.US)
         val today = df.parse(date)

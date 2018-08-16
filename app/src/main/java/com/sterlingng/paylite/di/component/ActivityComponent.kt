@@ -24,6 +24,8 @@ import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
+import com.sterlingng.paylite.ui.newpayment.NewPaymentActivity
+import com.sterlingng.paylite.ui.newpayment.NewPaymentAmountActivity
 import com.sterlingng.paylite.ui.pay.PayFragment
 import com.sterlingng.paylite.ui.payment.PaymentActivity
 import com.sterlingng.paylite.ui.profile.ProfileActivity
@@ -146,4 +148,8 @@ interface ActivityComponent {
     fun inject(transferActivity: TransferActivity)
 
     fun inject(sendMoneyActivity: SendMoneyActivity)
+
+    fun inject(newPaymentActivity: NewPaymentActivity)
+
+    fun inject(newPaymentAmountActivity: NewPaymentAmountActivity)
 }

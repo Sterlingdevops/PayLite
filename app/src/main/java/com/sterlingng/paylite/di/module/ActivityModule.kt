@@ -80,6 +80,7 @@ import com.sterlingng.paylite.ui.main.MainPresenter
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpContract
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpView
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingPresenter
+import com.sterlingng.paylite.ui.newpayment.*
 import com.sterlingng.paylite.ui.pay.PayMvpContract
 import com.sterlingng.paylite.ui.pay.PayMvpView
 import com.sterlingng.paylite.ui.pay.PayPresenter
@@ -287,6 +288,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    internal fun provideNewPaymentPresenter(presenter: NewPaymentPresenter<NewPaymentMvpView>): NewPaymentMvpContract<NewPaymentMvpView> = presenter
+
+    @Provides
+    @PerActivity
     internal fun provideSuccessfulPresenter(presenter: SuccessfulPresenter<SuccessfulMvpView>): SuccessfulMvpContract<SuccessfulMvpView> = presenter
 
     @Provides
@@ -296,6 +301,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     internal fun provideTransactionsPresenter(presenter: TransactionsPresenter<TransactionsMvpView>): TransactionsMvpContract<TransactionsMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun provideNewPaymentAmountPresenter(presenter: NewPaymentAmountPresenter<NewPaymentAmountMvpView>): NewPaymentAmountMvpContract<NewPaymentAmountMvpView> = presenter
 
     // Provide Fragment Contexts
 

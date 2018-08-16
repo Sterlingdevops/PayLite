@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Contact
@@ -14,6 +15,7 @@ import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
+import com.sterlingng.paylite.ui.newpayment.NewPaymentActivity
 import com.sterlingng.views.NoScrollingLinearLayoutManager
 import io.reactivex.disposables.CompositeDisposable
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -43,14 +45,20 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
 
     private lateinit var exit: ImageView
 
+    private lateinit var mNewPaymentTextView: TextView
+    private lateinit var mNewPaymentRefTextView: TextView
+
+    private lateinit var mScheduledTextView: TextView
+    private lateinit var mScheduledRefTextView: TextView
+
     private lateinit var mContactsAdapter: ContactsAdapter
     private lateinit var mRecentAdapter: ContactsAdapter
 
     private lateinit var mContactsRecyclerView: RecyclerView
     private lateinit var mRecentRecyclerView: RecyclerView
 
-    lateinit var mContactsLinearLayoutManager: NoScrollingLinearLayoutManager
-    lateinit var mRecentLinearLayoutManager: NoScrollingLinearLayoutManager
+    private lateinit var mContactsLinearLayoutManager: NoScrollingLinearLayoutManager
+    private lateinit var mRecentLinearLayoutManager: NoScrollingLinearLayoutManager
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -87,9 +95,9 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
 
         // Recent
 
-        mRecentAdapter = ContactsAdapter(this, 1)
+        mRecentAdapter = ContactsAdapter(this, 0)
         mRecentLinearLayoutManager = NoScrollingLinearLayoutManager(this)
-        mRecentLinearLayoutManager.orientation = RecyclerView.VERTICAL
+        mRecentLinearLayoutManager.orientation = RecyclerView.HORIZONTAL
 
         mRecentRecyclerView.adapter = mRecentAdapter
         mRecentAdapter.onRetryClickedListener = this
@@ -98,12 +106,34 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
         mRecentRecyclerView.scrollToPosition(0)
 
         mPresenter.loadContacts()
+
+        mNewPaymentTextView.setOnClickListener {
+            startActivity(NewPaymentActivity.getStartIntent(this))
+        }
+
+        mNewPaymentRefTextView.setOnClickListener {
+            startActivity(NewPaymentActivity.getStartIntent(this))
+        }
+
+        mScheduledRefTextView.setOnClickListener {
+
+        }
+
+        mScheduledTextView.setOnClickListener {
+
+        }
     }
 
     override fun bindViews() {
         exit = findViewById(R.id.exit)
         mContactsRecyclerView = findViewById(R.id.recyclerView)
         mRecentRecyclerView = findViewById(R.id.recyclerView2)
+
+        mNewPaymentTextView = findViewById(R.id.new_payment)
+        mNewPaymentRefTextView = findViewById(R.id.new_payment_ref)
+
+        mScheduledTextView = findViewById(R.id.scheduled_payments)
+        mScheduledRefTextView = findViewById(R.id.scheduled_payments_ref)
     }
 
     override fun onRetryClicked() {
