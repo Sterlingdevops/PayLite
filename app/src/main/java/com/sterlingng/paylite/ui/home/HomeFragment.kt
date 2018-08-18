@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.airtime.AirTimeActivity
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.donate.DonateActivity
@@ -16,6 +18,8 @@ import com.sterlingng.paylite.ui.profile.ProfileActivity
 import com.sterlingng.paylite.ui.request.RequestActivity
 import com.sterlingng.paylite.ui.send.SendMoneyActivity
 import com.sterlingng.paylite.ui.transfer.TransferActivity
+import com.sterlingng.paylite.utils.AppUtils.gson
+import com.sterlingng.paylite.utils.Log
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment(), HomeMvpView {
@@ -42,6 +46,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mPayCodeTextView: TextView
     private lateinit var mFlightsTextView: TextView
 
+    private lateinit var mMainAmountTextView: TextView
     private lateinit var mFundButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -79,10 +84,13 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mCashOutImageView = view.findViewById(R.id.cash_out_to_bank)
         mCashOutTextView = view.findViewById(R.id.cash_out_to_bank_text)
 
+        mMainAmountTextView = view.findViewById(R.id.main_amount)
         mFundButton = view.findViewById(R.id.fund)
     }
 
     override fun setUp(view: View) {
+        mPresenter.loadWallet()
+
         mAirTimeDataImageView.setOnClickListener {
             startActivity(AirTimeActivity.getStartIntent(baseActivity))
         }
@@ -138,6 +146,16 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mCashOutTextView.setOnClickListener {
             startActivity(TransferActivity.getStartIntent(baseActivity))
         }
+    }
+
+    override fun onGetWalletFailed(it: Throwable) {
+        show(it.localizedMessage, true)
+        Log.e(it, "HomeFragment->onGetWalletFailed")
+    }
+
+    override fun onGetWalletSuccessful(it: Response) {
+        val wallet = gson.fromJson(gson.toJson(it.data), Wallet::class.java)
+        mMainAmountTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

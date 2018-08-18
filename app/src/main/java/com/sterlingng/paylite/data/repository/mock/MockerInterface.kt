@@ -1,7 +1,6 @@
 package com.sterlingng.paylite.data.repository.mock
 
 import com.sterlingng.paylite.data.model.*
-import io.reactivex.Observable
 
 interface MockerInterface {
     fun mockDeals(): ArrayList<Deal>
@@ -12,5 +11,4 @@ interface MockerInterface {
     fun mockNotifications(): ArrayList<Notification>
     fun mockCategories(): ArrayList<PaymentCategory>
     fun mockPaymentMethods(): ArrayList<PaymentMethod>
-    fun mockLogin(email: String, password: String): Observable<User>
 }

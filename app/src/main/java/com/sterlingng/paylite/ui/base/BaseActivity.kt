@@ -72,6 +72,7 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
     override fun showLoading() {
         mProgressDialog = CommonUtils.showLoadingDialog(this)
         hideLoading()
+        mProgressDialog.show()
     }
 
     override fun hideLoading() {

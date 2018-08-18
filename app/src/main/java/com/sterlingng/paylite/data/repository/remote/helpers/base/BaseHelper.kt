@@ -12,10 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 
 open class BaseHelper {
-    private val baseUrl: String = "http://10.0.41.102:845/"
-
+    private val baseUrl: String = "https://paylite-node.herokuapp.com/api/"
     private val okHttpCBuilder = OkHttpClient.Builder()
-
     private val builder = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

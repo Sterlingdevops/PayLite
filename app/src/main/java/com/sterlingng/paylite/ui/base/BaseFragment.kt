@@ -1,13 +1,11 @@
 package com.sterlingng.paylite.ui.base
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.view.View
 import com.sterlingng.paylite.di.component.ActivityComponent
-import com.sterlingng.paylite.utils.CommonUtils
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 
 /**
@@ -17,8 +15,6 @@ import com.sterlingng.paylite.utils.RecyclerViewClickListener
 abstract class BaseFragment : Fragment(), MvpView, RecyclerViewClickListener {
 
     lateinit var baseActivity: BaseActivity private set
-    private lateinit var mProgressDialog: ProgressDialog
-
     override val isNetworkConnected: Boolean
         get() = baseActivity.isNetworkConnected
 
@@ -41,14 +37,11 @@ abstract class BaseFragment : Fragment(), MvpView, RecyclerViewClickListener {
     }
 
     override fun showLoading() {
-        mProgressDialog = CommonUtils.showLoadingDialog(baseActivity)
-        hideLoading()
+        baseActivity.showLoading()
     }
 
     override fun hideLoading() {
-        if (mProgressDialog.isShowing) {
-            mProgressDialog.cancel()
-        }
+        baseActivity.hideLoading()
     }
 
     override fun onError(message: String) {

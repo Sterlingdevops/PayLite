@@ -9,6 +9,7 @@ import com.sterlingng.paylite.di.component.ApplicationComponent
 import com.sterlingng.paylite.di.component.DaggerApplicationComponent
 import com.sterlingng.paylite.di.module.ApplicationModule
 import com.sterlingng.paylite.utils.Log
+import io.realm.Realm
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 class MvpApp : Application() {
@@ -25,6 +26,8 @@ class MvpApp : Application() {
         super.onCreate()
         component = DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build()
         component!!.inject(this)
+
+        Realm.init(this)
 
         //App logger
         Log.init()

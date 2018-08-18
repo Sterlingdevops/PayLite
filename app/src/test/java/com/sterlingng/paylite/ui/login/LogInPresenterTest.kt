@@ -1,7 +1,7 @@
 package com.sterlingng.paylite.ui.login
 
 import com.sterlingng.paylite.data.manager.DataManager
-import com.sterlingng.paylite.data.model.User
+import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.rx.TestSchedulerProvider
 import io.reactivex.Observable
@@ -49,17 +49,19 @@ class LogInPresenterTest {
     @Test
     fun doLogIn() {
         //provide mock data
-        val email = "mail@email.com"
-        val password = "00000"
-        `when`(mDataManager.mockLogin(email, password)).thenReturn(Observable.just(User(email, password, null)))
+        val data = HashMap<String, Any>()
+        val response = Response()
+
+        `when`(mDataManager.signin(data)).thenReturn(Observable.just(response))
+
 
         //trigger presenter
-        mLogInPresenter.doLogIn(email, password)
+        mLogInPresenter.doLogIn(data)
         mTestScheduler.triggerActions()
 
         //show progress bar, load data
         verify(mMockLogInMvpView).showLoading()
-        verify(mDataManager).mockLogin(email, password)
+        verify(mDataManager).signin(data)
 
         verify(mMockLogInMvpView).hideLoading()
     }

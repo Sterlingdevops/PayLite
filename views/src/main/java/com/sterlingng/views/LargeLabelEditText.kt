@@ -19,7 +19,7 @@ class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayo
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.LargeLabelEditText, 0, 0)
-        val color = a.getColor(R.styleable.LargeLabelEditText_textColor, ContextCompat.getColor(context, R.color.dark_sky_blue))
+        val color = a.getColor(R.styleable.LargeLabelEditText_textColor, ContextCompat.getColor(context, R.color.black))
         val type = a.getInt(R.styleable.LargeLabelEditText_android_inputType, EditorInfo.TYPE_TEXT_VARIATION_NORMAL)
         val textLength = a.getInt(R.styleable.LargeLabelEditText_maxLength, Int.MAX_VALUE)
         val drawable = a.getDrawable(R.styleable.LargeLabelEditText_drawable)
@@ -43,7 +43,8 @@ class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayo
         a.recycle()
     }
 
-    fun label(): String = mLabelTextView.text.toString()
+    val text = mTextEditText.text.toString()
+    val label = mLabelTextView.text.toString()
 
     operator fun ViewGroup.get(position: Int): View = getChildAt(position)
 }

@@ -122,51 +122,64 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/backdrop"
+        app:textColor="@color/blue_black_dark"
         tools:targetApi="m"/>
 
-    <com.sterlingng.views.LargeLabelClickToSelectEditText
+    <EditText
         android:id="@+id/provider"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="53dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/background_light_blue_outline"
+        android:clickable="false"
+        android:drawableEnd="@drawable/chevron_down"
+        android:drawableRight="@drawable/chevron_down"
         android:drawableTint="@color/light_gray"
         android:gravity="center_vertical"
         android:hint="@string/network_provider"
+        android:inputType="none"
+        android:padding="16dp"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
-        app:drawable="@drawable/chevron_down"
-        app:label="@string/network_provider"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/category"
         tools:targetApi="m"/>
 
-    <com.sterlingng.views.LargeLabelClickToSelectEditText
+    <EditText
         android:id="@+id/bundles"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@drawable/background_light_blue_outline"
+        android:clickable="false"
+        android:drawableEnd="@drawable/chevron_down"
+        android:drawableRight="@drawable/chevron_down"
         android:drawableTint="@color/light_gray"
         android:gravity="center_vertical"
+        android:hint="@string/bundles"
+        android:inputType="none"
+        android:padding="16dp"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
-        app:drawable="@drawable/chevron_down"
-        app:label="@string/bundles"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/provider"
         tools:targetApi="m"/>
 
-    <com.sterlingng.views.LargeLabelEditText
+    <EditText
         android:id="@+id/amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@drawable/background_light_blue_outline"
+        android:hint="@string/amount"
         android:imeOptions="actionNext"
         android:inputType="number"
-        app:label="@string/amount"
+        android:padding="16dp"
+        android:textColor="@color/blue_black_dark"
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
@@ -181,12 +194,13 @@
         android:inputType="number"
         app:drawable="@drawable/phone_book"
         app:hint="@string/_9075755888"
-        app:label="@string/phone"
+        app:label="Phone     "
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/amount"
-        app:maxLength="16"/>
+        app:maxLength="16"
+        app:textColor="@color/blue_black_dark"/>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -13,6 +13,7 @@ import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.karumi.dexter.Dexter
@@ -36,14 +37,12 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
     @Inject
     lateinit var mPresenter: AirTimeMvpContract<AirTimeMvpView>
 
-//    val labels = ArrayList<TextView>()
-
     private lateinit var next: Button
     private lateinit var exit: ImageView
     private lateinit var phone: LargeLabelEditText
-    private lateinit var amount: LargeLabelEditText
-    private lateinit var bundle: LargeLabelClickToSelectEditText<String>
-    private lateinit var provider: LargeLabelClickToSelectEditText<String>
+    private lateinit var amount: EditText
+    private lateinit var bundle: EditText
+    private lateinit var provider: EditText
     private lateinit var category: LargeLabelClickToSelectEditText<String>
 
     override fun attachBaseContext(newBase: Context) {
@@ -57,21 +56,6 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
         mPresenter.onAttach(this)
     }
 
-//    private fun addOffSets() {
-//        labels.add(phone.mLabelTextView)
-//        labels.add(amount.mLabelTextView)
-//        labels.add(bundle.mLabelTextView)
-//        labels.add(provider.mLabelTextView)
-//        labels.add(category.mLabelTextView)
-//
-//        val largest = labels.maxBy { it.text.toString() }?.length()
-//        labels.forEach {
-//            for (i in 0 until ((largest!! - it.length()) * 1.5).toInt()) {
-//                it.append(" ")
-//            }
-//        }
-//    }
-
     @SuppressLint("ClickableViewAccessibility")
     override fun setUp() {
         exit.setOnClickListener {
@@ -82,8 +66,8 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             startActivity(ConfirmActivity.getStartIntent(this))
         }
 
-        bundle.mTextEditText.isClickable = true
-        bundle.mTextEditText.setOnClickListener {
+        bundle.isClickable = true
+        bundle.setOnClickListener {
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 1
@@ -102,8 +86,8 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             filterBottomSheetFragment.show(supportFragmentManager, "filter")
         }
 
-        provider.mTextEditText.isClickable = true
-        provider.mTextEditText.setOnClickListener {
+        provider.isClickable = true
+        provider.setOnClickListener {
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 0
@@ -144,7 +128,6 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
         }
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
@@ -157,8 +140,8 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
 
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
         when (selector) {
-            1 -> bundle.mTextEditText.setText(s)
-            0 -> provider.mTextEditText.setText(s)
+            1 -> bundle.setText(s)
+            0 -> provider.setText(s)
             2 -> {
                 when (s) {
                     "Mobile Top-up" -> {

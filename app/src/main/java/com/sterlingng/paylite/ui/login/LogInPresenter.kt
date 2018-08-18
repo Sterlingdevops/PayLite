@@ -1,13 +1,11 @@
 package com.sterlingng.paylite.ui.login
 
 import com.sterlingng.paylite.data.manager.DataManager
+import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
-import io.reactivex.Observable
+import com.sterlingng.paylite.utils.AppUtils.gson
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.zipWith
-import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
 import javax.inject.Inject
 
 class LogInPresenter<V : LogInMvpView>
@@ -15,25 +13,20 @@ class LogInPresenter<V : LogInMvpView>
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), LogInMvpContract<V> {
 
-    override fun doForgotPassword() {
-
-    }
-
-    override fun doLogIn(email: String, password: String) {
-        val retrySubject = PublishSubject.create<Any>()
+    override fun doLogIn(data: HashMap<String, Any>) {
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.mockLogin(email, password)
+                dataManager.signin(data)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .doOnError { throwable ->
-                            Timber.e(throwable)
-                            retrySubject.onNext(Any())
-                        }
-                        .retryWhen { observable: Observable<Throwable> ->
-                            observable.zipWith(retrySubject) { o: Throwable?, _: Any? -> o }
-                        }.subscribe {
+                        .subscribe({
                             mvpView.hideLoading()
+                            val user = gson.fromJson(gson.toJson(it.data), User::class.java)
+                            dataManager.saveUser(user)
+                            mvpView.onDoSignInSuccessful(it)
+                        }) {
+                            mvpView.hideLoading()
+                            mvpView.onDoSignInFailed(it)
                         }
         )
     }
