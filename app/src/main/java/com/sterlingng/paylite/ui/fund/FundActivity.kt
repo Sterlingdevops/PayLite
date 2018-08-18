@@ -9,16 +9,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.*
+import com.blackcat.currencyedittext.CurrencyEditText
 import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.AccountDetails
 import com.sterlingng.paylite.data.model.Bank
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseActivity
-import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.CardExpiryTextWatcher
+import mostafa.ma.saleh.gmail.com.editcredit.EditCredit
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
@@ -30,6 +31,7 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
     private lateinit var exit: ImageView
     private lateinit var next: Button
 
+    private lateinit var mCardNumberEditCredit: EditCredit
     private lateinit var mCardExpiryTextView: EditText
     private lateinit var mCardCvvTextView: EditText
 
@@ -47,10 +49,13 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
 
     private var chosenBank: Bank? = null
     private var banks = ArrayList<Bank>()
+    private var isCard = true
 
     private lateinit var mBankNameTextView: TextView
     private lateinit var mAccountNameTextView: TextView
     private lateinit var mAccountNumberTextView: TextView
+    private lateinit var mFundAmountCardEditText: CurrencyEditText
+    private lateinit var mFundAmountBankEditText: CurrencyEditText
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -69,13 +74,16 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
         }
 
         next.setOnClickListener {
-            startActivity(ConfirmActivity.getStartIntent(this))
+            if (isCard && mCardNumberEditCredit.isCardValid) {
+                mPresenter.resolveCardNumber(mCardNumberEditCredit.textWithoutSeparator.substring(0, 5))
+            }
         }
 
         mFundBankNestedScrollView.visibility = View.GONE
         mFundCardNestedScrollView.visibility = View.GONE
 
         mCardTextView.setOnClickListener {
+            isCard = true
             mBankCheckBox.isChecked = false
             mCardCheckBox.isChecked = true
             mFundBankNestedScrollView.visibility = View.GONE
@@ -83,6 +91,7 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
         }
 
         mBankTextView.setOnClickListener {
+            isCard = false
             mBankCheckBox.isChecked = true
             mCardCheckBox.isChecked = false
             mFundBankNestedScrollView.visibility = View.VISIBLE
@@ -113,6 +122,7 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
         exit = findViewById(R.id.exit)
         next = findViewById(R.id.next)
 
+        mCardNumberEditCredit = findViewById(R.id.card_number)
         mCardTextView = findViewById(R.id.card_text)
         mBankTextView = findViewById(R.id.bank_text)
 
@@ -122,6 +132,8 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
         mBankNameTextView = findViewById(R.id.bank)
         mAccountNameTextView = findViewById(R.id.name)
         mAccountNumberTextView = findViewById(R.id.account_number)
+        mFundAmountBankEditText = findViewById(R.id.fund_amount_bank)
+        mFundAmountCardEditText = findViewById(R.id.fund_amount_card)
 
         mCardCvvTextView = findViewById(R.id.card_cvv)
         mCardExpiryTextView = findViewById(R.id.card_expiry)
@@ -138,7 +150,7 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
     }
 
     override fun onLoadBanksSuccessful(it: Response) {
-        val type = object : TypeToken<java.util.ArrayList<Bank>>() {}.type
+        val type = object : TypeToken<ArrayList<Bank>>() {}.type
         banks = gson.fromJson(gson.toJson(it.data), type)
     }
 
@@ -162,11 +174,41 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
         mAccountNameTextView.text = data.name
     }
 
+    override fun onResolveCardNumberFailed(it: Throwable) {
+        show(gson.toJson(it.localizedMessage), true)
+    }
+
+    override fun onResolveCardNumberSuccessful(it: Response) {
+        show(gson.toJson(it.data), true)
+        val data = HashMap<String, Any>()
+        data["amount"] = mFundAmountCardEditText.rawValue.toInt()
+        data["card_number"] = mCardNumberEditCredit.textWithoutSeparator.substring(0 until 4)
+        data["card_type"] = when (mCardNumberEditCredit.mCurrentDrawableResId) {
+            R.drawable.visa -> "Visa"
+            R.drawable.amex -> "American Express"
+            R.drawable.mastercard -> "MasterCard"
+            else -> {
+                "Card Type"
+            }
+        }
+        data["comments"] = "Funded Wallet Via Credit Card"
+        data["channel"] = "Android Application"
+        mPresenter.fundWallet(data)
+    }
+
     override fun recyclerViewListClicked(v: View, position: Int) {
 
     }
 
-    inner class AccountNumberTextWatcher : TextWatcher {
+    override fun onFundWalletFailed(it: Throwable) {
+
+    }
+
+    override fun onFundWalletSuccessful(it: Response) {
+
+    }
+
+    private inner class AccountNumberTextWatcher : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             if (s?.length == 10 && chosenBank != null) {
                 mPresenter.resolveAccountNumber(mAccountNumberTextView.text.toString(), chosenBank?.code!!)
@@ -183,6 +225,8 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
     }
 
     companion object {
+
+        //startActivity(ConfirmActivity.getStartIntent(this))
 
         const val CARD_TYPE = "FundActivity.CARD_TYPE"
 

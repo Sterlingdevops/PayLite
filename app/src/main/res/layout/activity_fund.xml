@@ -143,7 +143,7 @@
                 app:separator="spaces"/>
 
             <com.blackcat.currencyedittext.CurrencyEditText
-                android:id="@+id/fund_amount"
+                android:id="@+id/fund_amount_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -186,7 +186,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fund_amount"/>
+                app:layout_constraintTop_toBottomOf="@+id/fund_amount_card"/>
 
             <Switch
                 android:id="@+id/save_card_switch"

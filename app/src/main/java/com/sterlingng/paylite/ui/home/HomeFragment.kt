@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.airtime.AirTimeActivity
 import com.sterlingng.paylite.ui.base.BaseFragment
@@ -18,7 +17,6 @@ import com.sterlingng.paylite.ui.profile.ProfileActivity
 import com.sterlingng.paylite.ui.request.RequestActivity
 import com.sterlingng.paylite.ui.send.SendMoneyActivity
 import com.sterlingng.paylite.ui.transfer.TransferActivity
-import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.Log
 import javax.inject.Inject
 
@@ -153,8 +151,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         Log.e(it, "HomeFragment->onGetWalletFailed")
     }
 
-    override fun onGetWalletSuccessful(it: Response) {
-        val wallet = gson.fromJson(gson.toJson(it.data), Wallet::class.java)
+    override fun onGetWalletSuccessful(wallet: Wallet) {
         mMainAmountTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
     }
 

@@ -6,6 +6,7 @@ import android.net.NetworkInfo
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.LongSerializationPolicy
 import java.util.*
 
 object AppUtils {
@@ -17,7 +18,10 @@ object AppUtils {
     }
 
     private fun gson(): Gson {
-        return GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
+        return GsonBuilder()
+                .setLongSerializationPolicy(LongSerializationPolicy.STRING)
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create()
     }
 
     fun hasInternetConnection(context: Context): Boolean {

@@ -3,6 +3,7 @@ package com.sterlingng.paylite.data.manager
 import android.content.Context
 import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.data.model.realms.UserRealm
+import com.sterlingng.paylite.data.model.realms.WalletRealm
 import com.sterlingng.paylite.data.repository.local.helper.LocalDataHelper
 import com.sterlingng.paylite.data.repository.mock.MockHelper
 import com.sterlingng.paylite.data.repository.remote.helpers.PayStackServiceHelper
@@ -24,6 +25,14 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val remoteServiceHelper: RemoteServiceHelper,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mockHelper: MockHelper) : DataManager {
+
+    override fun deleteAllWallets() = mLocalDataHelper.deleteAllWallets()
+
+    override fun getWallet(): Wallet? = mLocalDataHelper.getWallet()
+
+    override fun saveWallet(wallet: Wallet) = mLocalDataHelper.saveWallet(wallet)
+
+    override fun getWalletRealm(): WalletRealm? = mLocalDataHelper.getWalletRealm()
 
     override fun resolveBankAccount(accountNumber: String, bankCode: String): Observable<Response> = mPayStackServiceHelper.resolveBankAccount(accountNumber, bankCode)
 

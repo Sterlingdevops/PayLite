@@ -1,7 +1,9 @@
 package com.sterlingng.paylite.data.repository.local.helper
 
 import com.sterlingng.paylite.data.model.User
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.data.model.realms.UserRealm
+import com.sterlingng.paylite.data.model.realms.WalletRealm
 import com.sterlingng.paylite.data.repository.local.Migrations
 import com.sterlingng.paylite.data.repository.local.interfaces.LocalDataInterface
 import com.sterlingng.paylite.utils.Log
@@ -16,7 +18,7 @@ import javax.inject.Inject
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
 
-    private val config: RealmConfiguration = RealmConfiguration.Builder().schemaVersion(2).migration(Migrations()).build()
+    private val config: RealmConfiguration = RealmConfiguration.Builder().schemaVersion(3).migration(Migrations()).build()
     private val realm: Realm
 
     init {
@@ -72,5 +74,35 @@ constructor() : LocalDataInterface {
         } finally {
             getRealm().commitTransaction()
         }
+    }
+
+    override fun deleteAllWallets() {
+        getRealm().beginTransaction()
+        try {
+            getRealm().delete(WalletRealm::class.java)
+        } catch (e: IllegalStateException) {
+            Log.e(e, "LocalDataHelper->deleteAllWallets")
+        } finally {
+            getRealm().commitTransaction()
+        }
+    }
+
+    override fun getWallet(): Wallet? {
+        return getWalletRealm()?.asWallet()
+    }
+
+    override fun saveWallet(wallet: Wallet) {
+        getRealm().beginTransaction()
+        try {
+            getRealm().copyToRealmOrUpdate(wallet.asWalletRealm())
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->saveWallet")
+        } finally {
+            getRealm().commitTransaction()
+        }
+    }
+
+    override fun getWalletRealm(): WalletRealm? {
+        return getRealm().where(WalletRealm::class.java).findFirst()
     }
 }

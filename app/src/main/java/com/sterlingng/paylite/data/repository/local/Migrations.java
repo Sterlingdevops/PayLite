@@ -20,5 +20,19 @@ public class Migrations implements RealmMigration {
                     .setRequired("token", true);
             ++oldVersion;
         }
+
+        //version 3
+        if (oldVersion == 2) {
+            schema.create("WalletRealm")
+                    .addField("balance", Integer.class)
+                    .addField("name", String.class)
+                    .addField("walletid", String.class)
+                    .setRequired("balance", true)
+                    .setRequired("name", true)
+                    .setRequired("walletid", true)
+                    .addPrimaryKey("walletid")
+            ;
+            ++oldVersion;
+        }
     }
 }
