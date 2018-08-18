@@ -6,6 +6,8 @@ import android.content.Context
 import com.sterlingng.paylite.data.manager.AppDataManager
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.di.annotations.ApplicationContext
+import com.sterlingng.paylite.rx.EventBus
+import com.sterlingng.paylite.rx.RxBus
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -23,6 +25,10 @@ class ApplicationModule(private val application: Application) {
 
     @Provides
     fun provideApplication(): Application = application
+
+    @Provides
+    @Singleton
+    internal fun provideEventBus(): EventBus = RxBus()
 
     @Provides
     @Singleton

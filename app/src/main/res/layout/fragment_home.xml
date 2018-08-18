@@ -423,7 +423,7 @@
         app:layout_constraintGuide_end="56dp"/>
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/user_greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hi_yinka"

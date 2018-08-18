@@ -12,9 +12,8 @@ import android.widget.*
 import com.blackcat.currencyedittext.CurrencyEditText
 import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.AccountDetails
-import com.sterlingng.paylite.data.model.Bank
-import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.*
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.utils.AppUtils.gson
@@ -27,6 +26,9 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
 
     @Inject
     lateinit var mPresenter: FundMvpContract<FundMvpView>
+
+    @Inject
+    lateinit var eventBus: EventBus
 
     private lateinit var exit: ImageView
     private lateinit var next: Button
@@ -204,8 +206,9 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
 
     }
 
-    override fun onFundWalletSuccessful(it: Response) {
-
+    override fun onFundWalletSuccessful(wallet: Wallet) {
+        eventBus.post(UpdateWallet())
+        onBackPressed()
     }
 
     private inner class AccountNumberTextWatcher : TextWatcher {

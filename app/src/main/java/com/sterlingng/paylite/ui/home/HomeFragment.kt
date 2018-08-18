@@ -8,7 +8,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.UpdateWallet
+import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.data.model.Wallet
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.airtime.AirTimeActivity
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.donate.DonateActivity
@@ -18,12 +21,18 @@ import com.sterlingng.paylite.ui.request.RequestActivity
 import com.sterlingng.paylite.ui.send.SendMoneyActivity
 import com.sterlingng.paylite.ui.transfer.TransferActivity
 import com.sterlingng.paylite.utils.Log
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment(), HomeMvpView {
 
     @Inject
     lateinit var mPresenter: HomeMvpContract<HomeMvpView>
+
+    @Inject
+    lateinit var eventBus: EventBus
 
     private lateinit var mNotificationsImageView: ImageView
     private lateinit var mRequestMoneyImageView: ImageView
@@ -44,6 +53,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mPayCodeTextView: TextView
     private lateinit var mFlightsTextView: TextView
 
+    private lateinit var mUserGreetingTextView: TextView
     private lateinit var mMainAmountTextView: TextView
     private lateinit var mFundButton: Button
 
@@ -84,10 +94,21 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mMainAmountTextView = view.findViewById(R.id.main_amount)
         mFundButton = view.findViewById(R.id.fund)
+
+        mUserGreetingTextView = view.findViewById(R.id.user_greeting)
     }
 
     override fun setUp(view: View) {
+        mPresenter.onViewInitialized()
         mPresenter.loadWallet()
+
+        eventBus.observe(UpdateWallet::class.java)
+                .delay(1L, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mPresenter.loadCachedWallet()
+                }
 
         mAirTimeDataImageView.setOnClickListener {
             startActivity(AirTimeActivity.getStartIntent(baseActivity))
@@ -144,6 +165,10 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mCashOutTextView.setOnClickListener {
             startActivity(TransferActivity.getStartIntent(baseActivity))
         }
+    }
+
+    override fun initView(currentUser: User?) {
+        mUserGreetingTextView.text = "Hi ${currentUser?.username!!}"
     }
 
     override fun onGetWalletFailed(it: Throwable) {

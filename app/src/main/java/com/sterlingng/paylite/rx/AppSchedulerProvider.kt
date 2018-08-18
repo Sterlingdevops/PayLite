@@ -21,5 +21,4 @@ class AppSchedulerProvider : SchedulerProvider {
     override fun io(): Scheduler {
         return Schedulers.io()
     }
-
 }

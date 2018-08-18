@@ -1,8 +1,11 @@
 package com.sterlingng.paylite.ui.fund
 
 import com.sterlingng.paylite.data.manager.DataManager
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
+import com.sterlingng.paylite.utils.AppUtils
+import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.Log
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -22,8 +25,10 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({
+                            val wallet = gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
+                            dataManager.saveWallet(wallet)
                             mvpView.hideLoading()
-                            mvpView.onFundWalletSuccessful(it)
+                            mvpView.onFundWalletSuccessful(wallet)
                         }) {
                             Log.e(it, "FundPresenter->fundWallet")
                             mvpView.hideLoading()
