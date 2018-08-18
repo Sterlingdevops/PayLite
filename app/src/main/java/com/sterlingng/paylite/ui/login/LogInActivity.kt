@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.utils.Log
@@ -41,13 +42,20 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     }
 
     override fun setUp() {
+        mPresenter.onViewInitialized()
+
         loginButton.setOnClickListener {
             val data = HashMap<String, Any>()
             data["username"] = mUsernameEditText.mTextEditText.text.toString()
             data["password"] = mPasswordEditText.mTextEditText.text.toString()
-            Log.d(data.toString())
             mPresenter.doLogIn(data)
         }
+    }
+
+    override fun initView(currentUser: User) {
+        mUsernameEditText.mTextEditText.setText(currentUser.username)
+        mPasswordEditText.mTextEditText.requestFocus()
+        showKeyboard()
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

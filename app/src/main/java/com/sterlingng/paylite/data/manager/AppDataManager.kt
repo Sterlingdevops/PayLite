@@ -5,6 +5,7 @@ import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.data.model.realms.UserRealm
 import com.sterlingng.paylite.data.repository.local.helper.LocalDataHelper
 import com.sterlingng.paylite.data.repository.mock.MockHelper
+import com.sterlingng.paylite.data.repository.remote.helpers.PayStackServiceHelper
 import com.sterlingng.paylite.data.repository.remote.helpers.RemoteServiceHelper
 import com.sterlingng.paylite.di.annotations.ApplicationContext
 import io.reactivex.Observable
@@ -21,7 +22,14 @@ class AppDataManager
 internal constructor(@param:ApplicationContext val context: Context,
                      private val mLocalDataHelper: LocalDataHelper,
                      private val remoteServiceHelper: RemoteServiceHelper,
+                     private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mockHelper: MockHelper) : DataManager {
+
+    override fun resolveBankAccount(accountNumber: String, bankCode: String): Observable<Response> = mPayStackServiceHelper.resolveBankAccount(accountNumber, bankCode)
+
+    override fun resolveCardNumber(bin: String): Observable<Response> = mPayStackServiceHelper.resolveCardNumber(bin)
+
+    override fun getBanks(): Observable<Response> = mPayStackServiceHelper.getBanks()
 
     override fun signup(data: HashMap<String, Any>): Observable<Response> = remoteServiceHelper.signup(data)
 

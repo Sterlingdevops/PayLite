@@ -30,4 +30,6 @@ interface MvpView {
     fun showMessage(@StringRes resId: Int)
 
     fun hideKeyboard()
+
+    fun showKeyboard()
 }

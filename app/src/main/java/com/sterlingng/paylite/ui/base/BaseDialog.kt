@@ -62,6 +62,11 @@ abstract class BaseDialog : AppCompatDialogFragment(), DialogMvpView {
         baseActivity.hideKeyboard()
     }
 
+    override fun showKeyboard() {
+        baseActivity.showKeyboard()
+    }
+
+
     abstract fun bindViews(view: View)
 
     protected abstract fun setUp(view: View)

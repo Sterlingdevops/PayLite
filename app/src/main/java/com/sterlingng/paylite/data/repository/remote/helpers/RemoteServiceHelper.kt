@@ -33,5 +33,4 @@ internal constructor() : BaseHelper(), RemoteServiceApi {
     }
 
     private var mRemoteServiceApi: RemoteServiceApi = createService(RemoteServiceApi::class.java)
-
 }

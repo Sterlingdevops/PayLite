@@ -4,4 +4,7 @@ import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.ui.base.MvpPresenter
 
 @PerActivity
-interface FundMvpContract<V : FundMvpView> : MvpPresenter<V>
+interface FundMvpContract<V : FundMvpView> : MvpPresenter<V> {
+    fun loadBanks()
+    fun resolveAccountNumber(accountNumber: String, bankCode: String)
+}

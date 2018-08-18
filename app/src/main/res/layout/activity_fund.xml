@@ -177,11 +177,13 @@
                 android:id="@+id/save_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:layout_marginTop="8dp"
                 android:paddingBottom="16dp"
                 android:paddingTop="16dp"
                 android:text="@string/save_this_card"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fund_amount"/>
@@ -202,7 +204,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -257,17 +258,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/account_number"/>
 
-            <EditText
-                android:id="@+id/otp"
+            <TextView
+                android:id="@+id/name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/background_light_blue_outline"
-                android:hint="@string/otp"
-                android:imeOptions="actionNext"
-                android:inputType="number"
+                android:hint="@string/account_name"
                 android:padding="16dp"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -361,7 +362,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="32dp"/>
+        app:layout_constraintGuide_end="16dp"/>
 
     <ImageView
         android:id="@+id/exit"

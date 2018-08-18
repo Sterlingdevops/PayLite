@@ -68,6 +68,10 @@ abstract class BaseFragment : Fragment(), MvpView, RecyclerViewClickListener {
         baseActivity.hideKeyboard()
     }
 
+    override fun showKeyboard() {
+        baseActivity.showKeyboard()
+    }
+
     abstract fun bindViews(view: View)
 
     protected abstract fun setUp(view: View)
