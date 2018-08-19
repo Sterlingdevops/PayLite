@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/balance_201_00"
@@ -47,7 +47,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:contentDescription="@string/exit"
-        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+        app:layout_constraintBottom_toBottomOf="@+id/balance"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/title2"
         app:srcCompat="@drawable/chevron_left"/>
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/background_light_blue_outline"
-        android:hint="@string/amount"
+        android:hint="@string/amount_minimum_amount_of_n100"
         android:inputType="number"
         android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -119,6 +119,7 @@
         android:id="@+id/schedule_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@+id/schedule_payment_ref"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintTop_toTopOf="@+id/schedule_payment"/>
@@ -226,7 +227,7 @@
 
     <TextView
         android:id="@+id/set_repeat"
-        android:layout_width="328dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_settings_item"
         android:clickable="true"
@@ -241,10 +242,9 @@
         android:text="@string/repeat"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/set_start_date"
-        tools:layout_editor_absoluteX="16dp"/>
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/set_start_date"/>
 
     <TextView
         android:id="@+id/repeat"

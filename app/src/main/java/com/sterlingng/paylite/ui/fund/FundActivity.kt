@@ -9,7 +9,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.*
-import com.blackcat.currencyedittext.CurrencyEditText
 import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.*
@@ -35,6 +34,7 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
 
     private lateinit var mCardNumberEditCredit: EditCredit
     private lateinit var mCardExpiryTextView: EditText
+    private lateinit var mCardNameEditText: EditText
     private lateinit var mCardCvvTextView: EditText
 
     private lateinit var mSaveCardTextView: TextView
@@ -56,8 +56,8 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
     private lateinit var mBankNameTextView: TextView
     private lateinit var mAccountNameTextView: TextView
     private lateinit var mAccountNumberTextView: TextView
-    private lateinit var mFundAmountCardEditText: CurrencyEditText
-    private lateinit var mFundAmountBankEditText: CurrencyEditText
+    private lateinit var mFundAmountCardEditText: EditText
+    private lateinit var mFundAmountBankEditText: EditText
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -76,13 +76,48 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
         }
 
         next.setOnClickListener {
+            if (isCard && (mCardNameEditText.text.isEmpty() || mCardExpiryTextView.text.isEmpty() || mCardCvvTextView.text.isEmpty() || mCardNumberEditCredit.text.isEmpty())) {
+                show("Please fill in the required fields", true)
+                return@setOnClickListener
+            }
+
+            if (isCard && mFundAmountCardEditText.text.toString().toInt() < 100) {
+                show("Amount should be greater than 100", true)
+                return@setOnClickListener
+            }
+
             if (isCard && mCardNumberEditCredit.isCardValid) {
                 mPresenter.resolveCardNumber(mCardNumberEditCredit.textWithoutSeparator.substring(0, 5))
+                return@setOnClickListener
+            }
+
+            if (!isCard && (mAccountNumberTextView.length() == 0 || chosenBank == null || mAccountNameTextView.length() == 0 || mFundAmountBankEditText.text.isEmpty())) {
+                show("Please fill in the required fields", true)
+                return@setOnClickListener
+            }
+
+            if (!isCard && mFundAmountBankEditText.text.toString().toInt() < 100) {
+                show("Amount should be greater than 100", true)
+                return@setOnClickListener
+            }
+
+            if (!isCard) {
+                val data = HashMap<String, Any>()
+                data["amount"] = mFundAmountBankEditText.text.toString().toInt()
+                data["account_number"] = mAccountNumberTextView.text.toString().substring(0 until 4)
+                data["bank"] = chosenBank?.name!!
+                data["comments"] = "Funded Wallet Via Bank Account"
+                data["channel"] = "Android Application"
+                mPresenter.fundWallet(data)
+                return@setOnClickListener
             }
         }
 
+        isCard = true
+        mBankCheckBox.isChecked = false
+        mCardCheckBox.isChecked = true
         mFundBankNestedScrollView.visibility = View.GONE
-        mFundCardNestedScrollView.visibility = View.GONE
+        mFundCardNestedScrollView.visibility = View.VISIBLE
 
         mCardTextView.setOnClickListener {
             isCard = true
@@ -125,6 +160,7 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
         next = findViewById(R.id.next)
 
         mCardNumberEditCredit = findViewById(R.id.card_number)
+        mCardNameEditText = findViewById(R.id.card_name)
         mCardTextView = findViewById(R.id.card_text)
         mBankTextView = findViewById(R.id.bank_text)
 
@@ -169,11 +205,13 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
     override fun onResolveAccountNumberFailed(it: Throwable) {
         show("Could not resolve account name.", true)
         mAccountNameTextView.text = ""
+        hideKeyboard()
     }
 
     override fun onResolveAccountNumberSuccessful(it: Response) {
         val data = gson.fromJson(gson.toJson(it.data), AccountDetails::class.java)
         mAccountNameTextView.text = data.name
+        hideKeyboard()
     }
 
     override fun onResolveCardNumberFailed(it: Throwable) {
@@ -181,9 +219,8 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
     }
 
     override fun onResolveCardNumberSuccessful(it: Response) {
-        show(gson.toJson(it.data), true)
         val data = HashMap<String, Any>()
-        data["amount"] = mFundAmountCardEditText.rawValue.toInt()
+        data["amount"] = mFundAmountCardEditText.text.toString().toInt()
         data["card_number"] = mCardNumberEditCredit.textWithoutSeparator.substring(0 until 4)
         data["card_type"] = when (mCardNumberEditCredit.mCurrentDrawableResId) {
             R.drawable.visa -> "Visa"
@@ -203,7 +240,7 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
     }
 
     override fun onFundWalletFailed(it: Throwable) {
-
+        show("An error occurred while processing the transaction", false)
     }
 
     override fun onFundWalletSuccessful(wallet: Wallet) {

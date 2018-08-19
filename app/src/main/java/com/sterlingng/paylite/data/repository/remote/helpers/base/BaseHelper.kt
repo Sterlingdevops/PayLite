@@ -1,5 +1,6 @@
 package com.sterlingng.paylite.data.repository.remote.helpers.base
 
+import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.utils.AppUtils.gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,6 +29,7 @@ open class BaseHelper {
 
         builder.client(client)
         val retrofit = builder.build()
+        retrofit.responseBodyConverter<Response>(Response::class.java, arrayOfNulls<Annotation>(0))
         return retrofit.create(serviceClass)
     }
 }

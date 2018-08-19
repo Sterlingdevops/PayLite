@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Contact
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.base.BasePresenter
@@ -23,15 +24,21 @@ import javax.inject.Inject
 
 interface SendMoneyMvpContract<V : SendMoneyMvpView> : MvpPresenter<V> {
     fun loadContacts()
+    fun loadCachedWallet()
 }
 
 interface SendMoneyMvpView : MvpView {
     fun updateContacts(it: ArrayList<Contact>)
+    fun initView(wallet: Wallet?)
 }
 
 class SendMoneyPresenter<V : SendMoneyMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SendMoneyMvpContract<V> {
+
+    override fun loadCachedWallet() {
+        mvpView.initView(dataManager.getWallet())
+    }
 
     override fun loadContacts() {
         mvpView.updateContacts(dataManager.mockContacts())
@@ -60,6 +67,8 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
     private lateinit var mContactsLinearLayoutManager: NoScrollingLinearLayoutManager
     private lateinit var mRecentLinearLayoutManager: NoScrollingLinearLayoutManager
 
+    private lateinit var mBalanceTextView: TextView
+
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
@@ -77,6 +86,7 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
     }
 
     override fun setUp() {
+
         exit.setOnClickListener {
             onBackPressed()
         }
@@ -105,8 +115,6 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
         mRecentRecyclerView.layoutManager = mRecentLinearLayoutManager
         mRecentRecyclerView.scrollToPosition(0)
 
-        mPresenter.loadContacts()
-
         mNewPaymentTextView.setOnClickListener {
             startActivity(NewPaymentActivity.getStartIntent(this))
         }
@@ -122,6 +130,9 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
         mScheduledTextView.setOnClickListener {
 
         }
+
+        mPresenter.loadCachedWallet()
+        mPresenter.loadContacts()
     }
 
     override fun bindViews() {
@@ -134,6 +145,12 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
 
         mScheduledTextView = findViewById(R.id.scheduled_payments)
         mScheduledRefTextView = findViewById(R.id.scheduled_payments_ref)
+
+        mBalanceTextView = findViewById(R.id.balance)
+    }
+
+    override fun initView(wallet: Wallet?) {
+        mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet?.balance?.toFloat())
     }
 
     override fun onRetryClicked() {

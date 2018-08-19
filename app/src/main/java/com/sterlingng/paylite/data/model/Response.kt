@@ -3,9 +3,9 @@ package com.sterlingng.paylite.data.model
 import com.sterlingng.paylite.utils.AppUtils.gson
 
 class Response {
-    val status: String?
-    val message: String?
-    val data: Any?
+    var status: String?
+    var message: String?
+    var data: Any?
 
     constructor () {
         this.status = ""

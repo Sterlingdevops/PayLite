@@ -237,7 +237,7 @@
     <string name="recent">RECENT</string>
     <string name="some_header">Some Header</string>
     <string name="save_recipient">Save recipient</string>
-    <string name="phone_or_email">Phone or email</string>
+    <string name="phone_or_email">Phone/Email/Username</string>
     <string name="frequent">FREQUENT</string>
     <string name="stop">Stop</string>
     <string name="cancel">Cancel</string>

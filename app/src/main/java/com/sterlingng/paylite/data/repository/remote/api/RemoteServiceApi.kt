@@ -23,4 +23,7 @@ interface RemoteServiceApi {
 
     @GET("wallets/{username}")
     fun getWallet(@Header("token") token: String, @Path("username") username: String): Observable<Response>
+
+    @POST("wallets/send")
+    fun sendMoney(@Header("token") token: String, @Body data: HashMap<String, Any>): Observable<Response>
 }

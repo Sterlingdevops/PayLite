@@ -11,33 +11,85 @@ import android.widget.Switch
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.manager.DataManager
+import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.SendMoneyRequest
+import com.sterlingng.paylite.data.model.UpdateWallet
+import com.sterlingng.paylite.data.model.Wallet
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
+import com.sterlingng.paylite.utils.AppUtils
+import com.sterlingng.paylite.utils.AppUtils.gson
 import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import io.reactivex.disposables.CompositeDisposable
+import retrofit2.HttpException
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-interface NewPaymentAmountMvpContract<V : NewPaymentAmountMvpView> : MvpPresenter<V>
 
-interface NewPaymentAmountMvpView : MvpView
+interface NewPaymentAmountMvpContract<V : NewPaymentAmountMvpView> : MvpPresenter<V> {
+    fun loadCachedWallet()
+    fun sendMoney(data: HashMap<String, Any>)
+}
+
+interface NewPaymentAmountMvpView : MvpView {
+    fun initView(wallet: Wallet?)
+    fun onSendMoneySuccessful(wallet: Wallet)
+    fun onSendMoneyFailed(it: Throwable)
+}
 
 class NewPaymentAmountPresenter<V : NewPaymentAmountMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), NewPaymentAmountMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), NewPaymentAmountMvpContract<V> {
 
-class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener, FilterBottomSheetFragment.OnFilterItemSelected {
+    override fun sendMoney(data: HashMap<String, Any>) {
+        val user = dataManager.getCurrentUser()
+        data["user"] = user?.username!!
+
+        mvpView.showLoading()
+        compositeDisposable.add(
+                dataManager.sendMoney(user.token, data)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .doOnError {
+
+                        }
+                        .subscribe({
+                            val wallet = gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
+                            dataManager.saveWallet(wallet)
+                            mvpView.hideLoading()
+                            mvpView.onSendMoneySuccessful(wallet)
+                        }) {
+                            mvpView.hideLoading()
+                            mvpView.onSendMoneyFailed(it)
+                        }
+        )
+    }
+
+    override fun loadCachedWallet() {
+        mvpView.initView(dataManager.getWallet())
+    }
+
+
+}
+
+class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,
+        FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
     lateinit var mPresenter: NewPaymentAmountMvpContract<NewPaymentAmountMvpView>
+
+    @Inject
+    lateinit var eventBus: EventBus
 
     private var now = Calendar.getInstance()
     private var type: Int = -1
@@ -59,8 +111,10 @@ class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePi
     private lateinit var exit: ImageView
     private lateinit var next: Button
 
-    private lateinit var mAmountReferenceTextView: TextView
-    private lateinit var mAmountTextView: TextView
+    private lateinit var mAmountReferenceEditText: TextView
+    private lateinit var mAmountEditText: TextView
+
+    private lateinit var mBalanceTextView: TextView
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -77,8 +131,8 @@ class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePi
         exit = findViewById(R.id.exit)
         next = findViewById(R.id.next)
 
-        mAmountReferenceTextView = findViewById(R.id.reference)
-        mAmountTextView = findViewById(R.id.amount)
+        mAmountReferenceEditText = findViewById(R.id.reference)
+        mAmountEditText = findViewById(R.id.amount)
 
         mScheduleReferenceTextView = findViewById(R.id.schedule_payment_ref)
         mScheduleRepeatSwitch = findViewById(R.id.schedule_switch)
@@ -92,15 +146,26 @@ class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePi
 
         mSetRepeatTextView = findViewById(R.id.set_repeat)
         mRepeatTextView = findViewById(R.id.repeat)
+
+        mBalanceTextView = findViewById(R.id.balance)
     }
 
     override fun setUp() {
+        val request = intent.getParcelableExtra<SendMoneyRequest>(NewPaymentActivity.REQUEST)
+
         exit.setOnClickListener {
             onBackPressed()
         }
 
         next.setOnClickListener {
+            request.comments = mAmountReferenceEditText.text.toString()
+            request.amount = mAmountEditText.text.toString().toInt()
 
+            if (request.amount > 100) {
+                mPresenter.sendMoney(request.toHashMap())
+            } else {
+                show("Amount should be more than NGN100", true)
+            }
         }
 
         mSetStartDateTextView.visibility = View.GONE
@@ -186,6 +251,24 @@ class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePi
             }
         }
     }
+
+    override fun initView(wallet: Wallet?) {
+        mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet?.balance?.toFloat())
+    }
+
+    override fun onSendMoneySuccessful(wallet: Wallet) {
+        eventBus.post(UpdateWallet())
+        val intent = DashboardActivity.getStartIntent(this)
+                .putExtra(DashboardActivity.SELECTED_ITEM, 0)
+        startActivity(intent)
+    }
+
+    override fun onSendMoneyFailed(it: Throwable) {
+        val raw = (it as HttpException).response().errorBody()?.string()!!
+        val response = gson.fromJson(raw, Response::class.java)
+        show(response.message!!, true)
+    }
+
 
     private fun showDatePicker(date: String, type: Int) {
         this.type = type

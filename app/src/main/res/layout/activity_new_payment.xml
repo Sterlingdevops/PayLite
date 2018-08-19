@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/balance_201_00"
@@ -47,7 +47,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:contentDescription="@string/exit"
-        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+        app:layout_constraintBottom_toBottomOf="@+id/balance"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/title2"
         app:srcCompat="@drawable/chevron_left"/>
@@ -59,11 +59,12 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/background_light_blue_outline"
         android:hint="@string/phone_or_email"
-        android:inputType="phone|textEmailAddress"
+        android:inputType="text"
         android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop"/>
+        app:layout_constraintTop_toBottomOf="@+id/backdrop"
+        tools:ignore="TextFields"/>
 
     <EditText
         android:id="@+id/recipient_name"

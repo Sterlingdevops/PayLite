@@ -142,17 +142,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/card_name"
                 app:separator="spaces"/>
 
-            <com.blackcat.currencyedittext.CurrencyEditText
+            <EditText
                 android:id="@+id/fund_amount_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/amount_minimum_amount_of_n100"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:padding="16dp"
                 android:textSize="16sp"
-                app:allow_negative_values="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -204,6 +204,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -274,12 +275,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bank"/>
 
-            <com.blackcat.currencyedittext.CurrencyEditText
+            <EditText
                 android:id="@+id/fund_amount_bank"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/amount_minimum_amount_of_n100"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:padding="16dp"

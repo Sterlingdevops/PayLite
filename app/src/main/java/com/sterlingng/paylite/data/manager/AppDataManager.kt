@@ -22,9 +22,9 @@ class AppDataManager
 @Inject
 internal constructor(@param:ApplicationContext val context: Context,
                      private val mLocalDataHelper: LocalDataHelper,
-                     private val remoteServiceHelper: RemoteServiceHelper,
+                     private val mRemoteServiceHelper: RemoteServiceHelper,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
-                     private val mockHelper: MockHelper) : DataManager {
+                     private val mMockHelper: MockHelper) : DataManager {
 
     override fun deleteAllWallets() = mLocalDataHelper.deleteAllWallets()
 
@@ -34,21 +34,23 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun getWalletRealm(): WalletRealm? = mLocalDataHelper.getWalletRealm()
 
+    override fun sendMoney(token: String, data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendMoney(token, data)
+
     override fun resolveBankAccount(accountNumber: String, bankCode: String): Observable<Response> = mPayStackServiceHelper.resolveBankAccount(accountNumber, bankCode)
 
     override fun resolveCardNumber(bin: String): Observable<Response> = mPayStackServiceHelper.resolveCardNumber(bin)
 
     override fun getBanks(): Observable<Response> = mPayStackServiceHelper.getBanks()
 
-    override fun signup(data: HashMap<String, Any>): Observable<Response> = remoteServiceHelper.signup(data)
+    override fun signup(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.signup(data)
 
-    override fun signin(data: HashMap<String, Any>): Observable<Response> = remoteServiceHelper.signin(data)
+    override fun signin(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.signin(data)
 
-    override fun getUser(username: String): Observable<Response> = remoteServiceHelper.getUser(username)
+    override fun getUser(username: String): Observable<Response> = mRemoteServiceHelper.getUser(username)
 
-    override fun fundWallet(token: String, data: HashMap<String, Any>): Observable<Response> = remoteServiceHelper.fundWallet(token, data)
+    override fun fundWallet(token: String, data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.fundWallet(token, data)
 
-    override fun getWallet(token: String, username: String): Observable<Response> = remoteServiceHelper.getWallet(token, username)
+    override fun getWallet(token: String, username: String): Observable<Response> = mRemoteServiceHelper.getWallet(token, username)
 
     override fun deleteAll() = mLocalDataHelper.deleteAll()
 
@@ -62,19 +64,19 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun getUserRealm(): UserRealm? = mLocalDataHelper.getUserRealm()
 
-    override fun mockContacts(): ArrayList<Contact> = mockHelper.mockContacts()
+    override fun mockContacts(): ArrayList<Contact> = mMockHelper.mockContacts()
 
-    override fun mockPaymentMethods(): ArrayList<PaymentMethod> = mockHelper.mockPaymentMethods()
+    override fun mockPaymentMethods(): ArrayList<PaymentMethod> = mMockHelper.mockPaymentMethods()
 
-    override fun mockCategories(): ArrayList<PaymentCategory> = mockHelper.mockCategories()
+    override fun mockCategories(): ArrayList<PaymentCategory> = mMockHelper.mockCategories()
 
-    override fun mockTransactions(): ArrayList<Transaction> = mockHelper.mockTransactions()
+    override fun mockTransactions(): ArrayList<Transaction> = mMockHelper.mockTransactions()
 
-    override fun mockNotifications(): ArrayList<Notification> = mockHelper.mockNotifications()
+    override fun mockNotifications(): ArrayList<Notification> = mMockHelper.mockNotifications()
 
-    override fun mockCharities(): ArrayList<Charity> = mockHelper.mockCharities()
+    override fun mockCharities(): ArrayList<Charity> = mMockHelper.mockCharities()
 
-    override fun mockProjects(): ArrayList<Project> = mockHelper.mockProjects()
+    override fun mockProjects(): ArrayList<Project> = mMockHelper.mockProjects()
 
-    override fun mockDeals(): ArrayList<Deal> = mockHelper.mockDeals()
+    override fun mockDeals(): ArrayList<Deal> = mMockHelper.mockDeals()
 }

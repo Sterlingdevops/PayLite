@@ -12,25 +12,17 @@ import javax.inject.Inject
 
 class RemoteServiceHelper @Inject
 internal constructor() : BaseHelper(), RemoteServiceApi {
-    override fun signup(data: HashMap<String, Any>): Observable<Response> {
-        return mRemoteServiceApi.signup(data)
-    }
+    override fun sendMoney(token: String, data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.sendMoney(token, data)
 
-    override fun signin(data: HashMap<String, Any>): Observable<Response> {
-        return mRemoteServiceApi.signin(data)
-    }
+    override fun signup(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.signup(data)
 
-    override fun getUser(username: String): Observable<Response> {
-        return mRemoteServiceApi.getUser(username)
-    }
+    override fun signin(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.signin(data)
 
-    override fun fundWallet(token: String, data: HashMap<String, Any>): Observable<Response> {
-        return mRemoteServiceApi.fundWallet(token, data)
-    }
+    override fun getUser(username: String): Observable<Response> = mRemoteServiceApi.getUser(username)
 
-    override fun getWallet(token: String, username: String): Observable<Response> {
-        return mRemoteServiceApi.getWallet(token, username)
-    }
+    override fun fundWallet(token: String, data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.fundWallet(token, data)
+
+    override fun getWallet(token: String, username: String): Observable<Response> = mRemoteServiceApi.getWallet(token, username)
 
     private var mRemoteServiceApi: RemoteServiceApi = createService(RemoteServiceApi::class.java)
 }
