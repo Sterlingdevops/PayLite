@@ -20,8 +20,8 @@ class SendMoneyRequest() : Parcelable {
 
     fun toHashMap(): HashMap<String, Any> {
         val data = HashMap<String, Any>()
-        data["user"] = user
-        data["rcpt"] = rcpt
+        data["user"] = user.toLowerCase()
+        data["rcpt"] = rcpt.toLowerCase()
         data["amount"] = amount
         data["channel"] = channel
         data["comments"] = comments

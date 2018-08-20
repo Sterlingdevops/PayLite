@@ -55,7 +55,7 @@ class OtpFragment : BaseFragment(), OtpMvpView {
                 }
 
         pinView.setPinViewEventListener { _, _ ->
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!)
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
             disposable.dispose()
             hideKeyboard()
         }
@@ -65,7 +65,7 @@ class OtpFragment : BaseFragment(), OtpMvpView {
             hideKeyboard()
         }
         next.setOnClickListener {
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!)
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
             disposable.dispose()
             hideKeyboard()
         }

@@ -26,7 +26,6 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.views.LargeLabelClickToSelectEditText
 import com.sterlingng.views.LargeLabelEditText
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -97,11 +96,9 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
         }
 
         phone.mTextEditText.setOnTouchListener { _, event ->
-            val DRAWABLE_RIGHT = 2
 
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (phone.mTextEditText.right - phone.mTextEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
-                    Log.d("phone.mTextEditText.setDrawableClickListener")
                     Dexter.withActivity(this@AirTimeActivity)
                             .withPermission(Manifest.permission.READ_CONTACTS)
                             .withListener(object : PermissionListener {
@@ -236,6 +233,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
 
     companion object {
 
+        const val DRAWABLE_RIGHT = 2
         const val REQUEST_SELECT_CONTACT = 1001
 
         fun getStartIntent(context: Context): Intent {

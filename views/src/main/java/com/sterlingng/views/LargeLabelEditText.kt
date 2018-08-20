@@ -43,8 +43,8 @@ class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayo
         a.recycle()
     }
 
-    val text = mTextEditText.text.toString()
-    val label = mLabelTextView.text.toString()
+    fun text() = mTextEditText.text.toString()
+    fun label() = mLabelTextView.text.toString()
 
     operator fun ViewGroup.get(position: Int): View = getChildAt(position)
 }

@@ -10,7 +10,6 @@ import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.views.LargeLabelEditText
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
@@ -70,9 +69,8 @@ class LogInActivity : BaseActivity(), LogInMvpView {
         }
     }
 
-    override fun onDoSignInFailed(throwable: Throwable) {
-        show("An error occurred, please try again", true)
-        Log.e(throwable, "LogInActivity->onDoSignInFailed")
+    override fun onDoSignInFailed(response: Response) {
+        show(response.message!!, true)
     }
 
     companion object {

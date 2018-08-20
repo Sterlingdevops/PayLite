@@ -9,4 +9,9 @@ import javax.inject.Inject
 class CompletePresenter<V : CompleteMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CompleteMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CompleteMvpContract<V> {
+
+    override fun initView() {
+        mvpView.setUsername(dataManager.getCurrentUser()?.firstName!!)
+    }
+}

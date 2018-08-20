@@ -47,7 +47,7 @@
     <string name="enter_card_details">Enter Card Details</string>
     <string name="set_pin">Create a transaction PIN</string>
     <string name="pin_info">To protect your account.</string>
-    <string name="pin">Pin</string>
+    <!--<string name="pin">Pin</string>-->
     <string name="account_setup_completed">Account Setup Completed!</string>
     <string name="fund_wallet_text">Fund wallet and start \ntrading in real time</string>
     <string name="fund_wallet">Fund Wallet</string>
@@ -242,4 +242,6 @@
     <string name="stop">Stop</string>
     <string name="cancel">Cancel</string>
     <string name="account_name">Account Name</string>
+    <string name="welcome_to_paylite">Welcome to Paylite</string>
+    <string name="you_can_change_your_username_at_anytime_in_settings">You can change your username at anytime in settings.</string>
 </resources>

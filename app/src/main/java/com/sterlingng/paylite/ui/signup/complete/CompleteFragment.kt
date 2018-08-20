@@ -1,12 +1,14 @@
 package com.sterlingng.paylite.ui.signup.complete
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
@@ -17,7 +19,8 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
     @Inject
     lateinit var mPresenter: CompleteMvpContract<CompleteMvpView>
 
-    lateinit var next: Button
+    private lateinit var next: Button
+    private lateinit var mWelcomeTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_complete, container, false)
@@ -29,6 +32,12 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
 
     override fun bindViews(view: View) {
         next = view.findViewById(R.id.next_complete)
+        mWelcomeTextView = view.findViewById(R.id.welcome_text)
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun setUsername(firstName: String) {
+        mWelcomeTextView.text = "Welcome to Paylite"
     }
 
     override fun setUp(view: View) {
@@ -46,8 +55,6 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
     }
 
     companion object {
-
-        private const val INDEX = "CompleteFragment.INDEX"
 
         fun newInstance(): CompleteFragment {
             val fragment = CompleteFragment()

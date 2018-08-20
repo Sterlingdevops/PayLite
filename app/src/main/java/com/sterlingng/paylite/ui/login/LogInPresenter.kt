@@ -1,11 +1,14 @@
 package com.sterlingng.paylite.ui.login
 
 import com.sterlingng.paylite.data.manager.DataManager
+import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils.gson
+import com.sterlingng.paylite.utils.Log
 import io.reactivex.disposables.CompositeDisposable
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class LogInPresenter<V : LogInMvpView>
@@ -32,8 +35,11 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             dataManager.saveUser(user)
                             mvpView.onDoSignInSuccessful(it)
                         }) {
+                            Log.e(it, "LogInPresenter->onDoSignInFailed")
+                            val raw = (it as HttpException).response().errorBody()?.string()!!
+                            val response = gson.fromJson(raw, Response::class.java)
                             mvpView.hideLoading()
-                            mvpView.onDoSignInFailed(it)
+                            mvpView.onDoSignInFailed(response)
                         }
         )
     }

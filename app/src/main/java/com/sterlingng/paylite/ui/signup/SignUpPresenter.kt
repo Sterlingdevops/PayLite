@@ -13,4 +13,14 @@ import javax.inject.Inject
 class SignUpPresenter<V : SignUpMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SignUpMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SignUpMvpContract<V> {
+
+    override fun prepServer() {
+        compositeDisposable.add(
+                dataManager.getWallet("", "")
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribe()
+        )
+    }
+}

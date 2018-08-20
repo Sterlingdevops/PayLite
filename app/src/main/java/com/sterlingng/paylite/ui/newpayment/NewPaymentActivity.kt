@@ -1,13 +1,22 @@
 package com.sterlingng.paylite.ui.newpayment
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.text.TextUtils
+import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.SendMoneyRequest
@@ -70,6 +79,7 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
         mBalanceTextView = findViewById(R.id.balance)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun setUp() {
         mPresenter.loadCachedWallet()
 
@@ -92,6 +102,70 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
             intent.putExtra(REQUEST, request)
             startActivity(intent)
         }
+
+        mPhoneEmailEditText.setOnTouchListener { _, event ->
+
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
+                    Dexter.withActivity(this@NewPaymentActivity)
+                            .withPermission(Manifest.permission.READ_CONTACTS)
+                            .withListener(object : PermissionListener {
+                                override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+                                    token?.continuePermissionRequest()
+                                }
+
+                                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                                    show("Permission Denied", true)
+                                }
+
+                                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                                    val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+                                    if (intent.resolveActivity(packageManager) != null) {
+                                        startActivityForResult(intent, REQUEST_SELECT_CONTACT)
+                                    }
+                                }
+
+                            }).check()
+                    return@setOnTouchListener true
+                }
+            }
+            return@setOnTouchListener false
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_SELECT_CONTACT -> {
+                if (data != null)
+                    handleContactPickerResult(data.data)
+            }
+        }
+    }
+
+    private fun handleContactPickerResult(contactUri: Uri) {
+        val lookUpKey = contactUri.lastPathSegment
+        val mSelectionArgs = arrayOf(lookUpKey)
+
+        val phoneSelection = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?"
+        val phoneCursor = this.contentResolver.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, /*Projection*/
+                phoneSelection, /*Selection*/
+                mSelectionArgs, null/*Sort order*/)/*Uri*//*Selection args*/
+
+        // If the cursor returned is valid, get the phone number
+        var phone = ""
+        if (phoneCursor != null && phoneCursor.moveToFirst()) {
+            val numberIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER)
+            phone = phoneCursor.getString(numberIndex)
+        }
+        phoneCursor?.close()
+
+        if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(this, "Invalid contact", Toast.LENGTH_LONG).show()
+            return
+        }
+        mPhoneEmailEditText.setText(phone)
     }
 
     override fun initView(wallet: Wallet?) {
@@ -104,7 +178,9 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
 
     companion object {
 
+        const val DRAWABLE_RIGHT = 2
         const val REQUEST = "NewPaymentActivity.REQUEST"
+        const val REQUEST_SELECT_CONTACT = 1001
 
         fun getStartIntent(context: Context): Intent {
             return Intent(context, NewPaymentActivity::class.java)

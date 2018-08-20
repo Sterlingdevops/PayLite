@@ -78,8 +78,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun loadCachedWallet() {
         mvpView.initView(dataManager.getWallet())
     }
-
-
 }
 
 class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,

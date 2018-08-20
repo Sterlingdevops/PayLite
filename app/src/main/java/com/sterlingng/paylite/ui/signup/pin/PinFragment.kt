@@ -32,11 +32,11 @@ class PinFragment : BaseFragment(), PinMvpView {
 
     override fun setUp(view: View) {
         pin_view.setPinViewEventListener { _, _ ->
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!)
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
             hideKeyboard()
         }
         next.setOnClickListener {
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!)
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
             hideKeyboard()
         }
     }

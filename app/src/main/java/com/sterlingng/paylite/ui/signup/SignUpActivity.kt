@@ -5,13 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.SignUpRequest
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
 import com.sterlingng.paylite.ui.signup.email.EmailFragment
 import com.sterlingng.paylite.ui.signup.name.NameFragment
-import com.sterlingng.paylite.ui.signup.otp.OtpFragment
 import com.sterlingng.paylite.ui.signup.password.PasswordFragment
-import com.sterlingng.paylite.ui.signup.pin.PinFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.views.CustomViewPager
@@ -27,6 +26,7 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
     lateinit var mPagerAdapter: CustomPagerAdapter
 
     private lateinit var mViewPager: CustomViewPager
+    val signUpRequest = SignUpRequest()
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -50,29 +50,30 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
         val emailFragment = EmailFragment.newInstance(2)
         emailFragment.mDidClickNext = this
 
-        val otpFragment = OtpFragment.newInstance(3)
-        otpFragment.mDidClickNext = this
+//        val otpFragment = OtpFragment.newInstance(3)
+//        otpFragment.mDidClickNext = this
 
-        val passwordFragment = PasswordFragment.newInstance(4)
+        val passwordFragment = PasswordFragment.newInstance(3)
         passwordFragment.mDidClickNext = this
 
-        val pinFragment = PinFragment.newInstance(5)
-        pinFragment.mDidClickNext = this
+//        val pinFragment = PinFragment.newInstance(4)
+//        pinFragment.mDidClickNext = this
 
         val completeFragment = CompleteFragment.newInstance()
 
         mPagerAdapter.run {
             addFragment(nameFragment, getString(R.string.personal_details))
             addFragment(emailFragment, getString(R.string.email))
-            addFragment(otpFragment, getString(R.string.otp_ph))
+//            addFragment(otpFragment, getString(R.string.otp_ph))
             addFragment(passwordFragment, getString(R.string.password))
-            addFragment(pinFragment, getString(R.string.pin))
+//            addFragment(pinFragment, getString(R.string.pin))
             addFragment(completeFragment, getString(R.string.account_setup_completed))
         }
 
         mViewPager.adapter = mPagerAdapter
         mViewPager.isPagingEnabled = false
-        mViewPager.offscreenPageLimit = 1
+
+        mPresenter.prepServer()
     }
 
     override fun onBackPressed() {
@@ -90,7 +91,24 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
         mViewPager.currentItem = index % mPagerAdapter.count
     }
 
-    override fun onNextClick(index: Int) {
+    override fun onNextClick(index: Int, data: Any) {
+        when (index) {
+            1 -> {
+                with(data as List<String>) {
+                    signUpRequest.firstName = get(0)
+                    signUpRequest.lastName = get(1)
+                    signUpRequest.username = get(2)
+                }
+            }
+            2 -> {
+                with(data as List<String>) {
+                    signUpRequest.phoneNumber = get(0)
+                    signUpRequest.email = get(1)
+                    signUpRequest.bvn = get(2)
+                }
+            }
+        }
+
         mViewPager.currentItem = index % mPagerAdapter.count
     }
 
