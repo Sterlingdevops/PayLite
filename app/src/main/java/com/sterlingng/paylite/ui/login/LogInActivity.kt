@@ -10,6 +10,7 @@ import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.utils.AppUtils.hasInternetConnection
 import com.sterlingng.views.LargeLabelEditText
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
@@ -44,10 +45,14 @@ class LogInActivity : BaseActivity(), LogInMvpView {
         mPresenter.onViewInitialized()
 
         loginButton.setOnClickListener {
-            val data = HashMap<String, Any>()
-            data["username"] = mUsernameEditText.mTextEditText.text.toString()
-            data["password"] = mPasswordEditText.mTextEditText.text.toString()
-            mPresenter.doLogIn(data)
+            if (hasInternetConnection(this@LogInActivity)) {
+                val data = HashMap<String, Any>()
+                data["username"] = mUsernameEditText.mTextEditText.text.toString()
+                data["password"] = mPasswordEditText.mTextEditText.text.toString()
+                mPresenter.doLogIn(data)
+            } else {
+                show("Please check you internet connection", true)
+            }
         }
     }
 

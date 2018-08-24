@@ -10,6 +10,7 @@ import android.widget.EditText
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.utils.OnChildDidClickNext
+import java.util.regex.Pattern
 import javax.inject.Inject
 
 class NameFragment : BaseFragment(), NameMvpView {
@@ -48,6 +49,13 @@ class NameFragment : BaseFragment(), NameMvpView {
 
             if (mUsernameEditText.text.length < 6) {
                 show("Username should be at least 6 characters long", true)
+                return@setOnClickListener
+            }
+
+            val pattern = Pattern.compile("^[A-z0-9_]{1,15}$")
+            val matcher = pattern.matcher(mUsernameEditText.text.toString())
+            if (!matcher.matches()) {
+                show("Invalid username, please choose another username", true)
                 return@setOnClickListener
             }
 

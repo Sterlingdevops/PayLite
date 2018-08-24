@@ -27,7 +27,7 @@ object AppUtils {
     fun hasInternetConnection(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
         val activeNetwork: NetworkInfo? = cm?.activeNetworkInfo
-        return activeNetwork?.isConnectedOrConnecting!!
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting
     }
 
     /**

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
+apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 android {
     compileSdkVersion 27
@@ -68,6 +69,10 @@ android {
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
+    }
+
+    configurations {
+        ktlint
     }
 
 //    splits {
@@ -153,6 +158,7 @@ dependencies {
     implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
     implementation 'com.budiyev.android:circular-progress-bar:1.2.0'
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+    implementation 'com.ncapdevi:frag-nav:3.0.0-RC3'
 
     kapt 'com.github.bumptech.glide:compiler:4.7.1'
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"

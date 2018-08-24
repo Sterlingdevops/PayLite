@@ -3,6 +3,7 @@ package com.sterlingng.paylite.ui.signup
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
+import com.sterlingng.paylite.utils.Log
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -20,7 +21,11 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                 dataManager.getWallet("", "")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .subscribe()
+                        .subscribe({
+
+                        }) {
+                            Log.e(it, "SignUpPresenter->prepServer")
+                        }
         )
     }
 }
