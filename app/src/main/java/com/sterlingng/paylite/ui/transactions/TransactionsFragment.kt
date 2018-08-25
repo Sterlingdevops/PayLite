@@ -37,8 +37,8 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
         mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "OUT")
         mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "All")
 
-        mViewPager.adapter = mPagerAdapter
         mViewPager.isPagingEnabled = true
+        mViewPager.adapter = mPagerAdapter
 
         mSmartTabLayout.setViewPager(mViewPager)
     }

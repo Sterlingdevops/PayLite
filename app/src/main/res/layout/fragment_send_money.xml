@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.send.SendMoneyActivity">
+    tools:context=".ui.send.SendMoneyFragment">
 
     <ImageView
         android:id="@+id/backdrop"
@@ -79,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="16dp"/>
+        app:layout_constraintGuide_end="56dp"/>
 
     <ImageView
         android:layout_width="24dp"
@@ -290,6 +290,7 @@
         android:id="@+id/textView31"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/background_settings_item"
         android:padding="16dp"
         android:text="@string/invite_friends"

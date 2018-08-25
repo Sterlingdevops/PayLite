@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by rtukpe on 14/03/2018.
@@ -22,8 +23,10 @@ open class BaseHelper {
 
     protected fun <S> createService(serviceClass: Class<S>): S {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        okHttpCBuilder.readTimeout(30, TimeUnit.SECONDS)
+        okHttpCBuilder.connectTimeout(30, TimeUnit.SECONDS)
         okHttpCBuilder.networkInterceptors().add(httpLoggingInterceptor)
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         okHttpCBuilder.retryOnConnectionFailure(true)
         val client: OkHttpClient = okHttpCBuilder.build()
 

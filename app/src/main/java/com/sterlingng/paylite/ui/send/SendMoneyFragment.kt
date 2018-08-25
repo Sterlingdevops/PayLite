@@ -1,10 +1,10 @@
 package com.sterlingng.paylite.ui.send
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
@@ -12,14 +12,14 @@ import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Contact
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
-import com.sterlingng.paylite.ui.base.BaseActivity
+import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
-import com.sterlingng.paylite.ui.newpayment.NewPaymentActivity
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.views.NoScrollingLinearLayoutManager
 import io.reactivex.disposables.CompositeDisposable
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
 interface SendMoneyMvpContract<V : SendMoneyMvpView> : MvpPresenter<V> {
@@ -45,7 +45,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     }
 }
 
-class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRetryClicked {
+class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRetryClicked {
 
     @Inject
     lateinit var mPresenter: SendMoneyMvpContract<SendMoneyMvpView>
@@ -69,15 +69,12 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
 
     private lateinit var mBalanceTextView: TextView
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_send_money)
-        activityComponent.inject(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_send_money, container, false)
+        val component = activityComponent
+        component.inject(this)
         mPresenter.onAttach(this)
+        return view
     }
 
     override fun updateContacts(it: ArrayList<Contact>) {
@@ -85,16 +82,16 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
         mRecentAdapter.add(it)
     }
 
-    override fun setUp() {
+    override fun setUp(view: View) {
 
         exit.setOnClickListener {
-            onBackPressed()
+            baseActivity.onBackPressed()
         }
 
         // Contact
 
-        mContactsAdapter = ContactsAdapter(this, 0)
-        mContactsLinearLayoutManager = NoScrollingLinearLayoutManager(this)
+        mContactsAdapter = ContactsAdapter(baseActivity, 0)
+        mContactsLinearLayoutManager = NoScrollingLinearLayoutManager(baseActivity)
         mContactsLinearLayoutManager.orientation = RecyclerView.HORIZONTAL
 
         mContactsAdapter.onRetryClickedListener = this
@@ -105,8 +102,8 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
 
         // Recent
 
-        mRecentAdapter = ContactsAdapter(this, 0)
-        mRecentLinearLayoutManager = NoScrollingLinearLayoutManager(this)
+        mRecentAdapter = ContactsAdapter(baseActivity, 0)
+        mRecentLinearLayoutManager = NoScrollingLinearLayoutManager(baseActivity)
         mRecentLinearLayoutManager.orientation = RecyclerView.HORIZONTAL
 
         mRecentRecyclerView.adapter = mRecentAdapter
@@ -116,11 +113,11 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
         mRecentRecyclerView.scrollToPosition(0)
 
         mNewPaymentTextView.setOnClickListener {
-            startActivity(NewPaymentActivity.getStartIntent(this))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(NewPaymentFragment.newInstance())
         }
 
         mNewPaymentRefTextView.setOnClickListener {
-            startActivity(NewPaymentActivity.getStartIntent(this))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(NewPaymentFragment.newInstance())
         }
 
         mScheduledRefTextView.setOnClickListener {
@@ -135,18 +132,18 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
         mPresenter.loadContacts()
     }
 
-    override fun bindViews() {
-        exit = findViewById(R.id.exit)
-        mContactsRecyclerView = findViewById(R.id.recyclerView)
-        mRecentRecyclerView = findViewById(R.id.recyclerView2)
+    override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
+        mContactsRecyclerView = view.findViewById(R.id.recyclerView)
+        mRecentRecyclerView = view.findViewById(R.id.recyclerView2)
 
-        mNewPaymentTextView = findViewById(R.id.new_payment)
-        mNewPaymentRefTextView = findViewById(R.id.new_payment_ref)
+        mNewPaymentTextView = view.findViewById(R.id.new_payment)
+        mNewPaymentRefTextView = view.findViewById(R.id.new_payment_ref)
 
-        mScheduledTextView = findViewById(R.id.scheduled_payments)
-        mScheduledRefTextView = findViewById(R.id.scheduled_payments_ref)
+        mScheduledTextView = view.findViewById(R.id.scheduled_payments)
+        mScheduledRefTextView = view.findViewById(R.id.scheduled_payments_ref)
 
-        mBalanceTextView = findViewById(R.id.balance)
+        mBalanceTextView = view.findViewById(R.id.balance)
     }
 
     override fun initView(wallet: Wallet?) {
@@ -163,8 +160,11 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView, ContactsAdapter.OnRe
 
     companion object {
 
-        fun getStartIntent(context: Context): Intent {
-            return Intent(context, SendMoneyActivity::class.java)
+        fun newInstance(): SendMoneyFragment {
+            val fragment = SendMoneyFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

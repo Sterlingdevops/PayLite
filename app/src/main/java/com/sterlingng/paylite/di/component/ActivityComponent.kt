@@ -2,12 +2,7 @@ package com.sterlingng.paylite.di.component
 
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
-import com.sterlingng.paylite.ui.add.AddActivity
-import com.sterlingng.paylite.ui.add.choose.ChooseBottomSheetFragment
-import com.sterlingng.paylite.ui.add.cvv.CvvBottomSheetFragment
-import com.sterlingng.paylite.ui.add.expiry.ExpiryBottomSheetFragment
-import com.sterlingng.paylite.ui.add.number.NumberBottomSheetFragment
-import com.sterlingng.paylite.ui.airtime.AirTimeActivity
+import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.charity.CharityActivity
 import com.sterlingng.paylite.ui.charity.about.AboutFragment
@@ -16,7 +11,7 @@ import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.donate.DonateActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
-import com.sterlingng.paylite.ui.fund.FundActivity
+import com.sterlingng.paylite.ui.fund.FundFragment
 import com.sterlingng.paylite.ui.give.GiveFragment
 import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
 import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
@@ -24,17 +19,17 @@ import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
-import com.sterlingng.paylite.ui.newpayment.NewPaymentActivity
-import com.sterlingng.paylite.ui.newpayment.NewPaymentAmountActivity
+import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
+import com.sterlingng.paylite.ui.newpayment.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.pay.PayFragment
 import com.sterlingng.paylite.ui.payment.PaymentActivity
 import com.sterlingng.paylite.ui.profile.ProfileActivity
 import com.sterlingng.paylite.ui.profile.edit.EditActivity
 import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
 import com.sterlingng.paylite.ui.project.ProjectActivity
-import com.sterlingng.paylite.ui.request.RequestActivity
+import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
-import com.sterlingng.paylite.ui.send.SendMoneyActivity
+import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
@@ -59,11 +54,9 @@ interface ActivityComponent {
 
     // Activities
 
-    fun inject(fundActivity: AddActivity)
-
     fun inject(editActivity: EditActivity)
 
-    fun inject(fundActivity: FundActivity)
+    fun inject(fundFragment: FundFragment)
 
     fun inject(mainActivity: MainActivity)
 
@@ -77,7 +70,7 @@ interface ActivityComponent {
 
     fun inject(confirmActivity: ConfirmActivity)
 
-    fun inject(airTimeActivity: AirTimeActivity)
+    fun inject(airTimeFragment: AirTimeFragment)
 
     fun inject(projectActivity: ProjectActivity)
 
@@ -113,7 +106,7 @@ interface ActivityComponent {
 
     fun inject(programFragment: ProgramFragment)
 
-    fun inject(requestActivity: RequestActivity)
+    fun inject(requestFragment: RequestFragment)
 
     fun inject(paymentActivity: PaymentActivity)
 
@@ -133,23 +126,15 @@ interface ActivityComponent {
 
     // Dialogs
 
-    fun inject(cvvBottomSheetFragment: CvvBottomSheetFragment)
-
     fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
-
-    fun inject(chooseBottomSheetFragment: ChooseBottomSheetFragment)
-
-    fun inject(numberBottomSheetFragment: NumberBottomSheetFragment)
-
-    fun inject(expiryBottomSheetFragment: ExpiryBottomSheetFragment)
 
     fun inject(settingsFragment: SettingsFragment)
 
     fun inject(transferActivity: TransferActivity)
 
-    fun inject(sendMoneyActivity: SendMoneyActivity)
+    fun inject(sendMoneyFragment: SendMoneyFragment)
 
-    fun inject(newPaymentActivity: NewPaymentActivity)
+    fun inject(newPaymentFragment: NewPaymentFragment)
 
-    fun inject(newPaymentAmountActivity: NewPaymentAmountActivity)
+    fun inject(newPaymentAmountFragment: NewPaymentAmountFragment)
 }

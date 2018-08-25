@@ -53,16 +53,16 @@
         <activity android:name=".ui.profile.notifications.NotificationActivity"/>
         <activity android:name=".ui.charity.CharityActivity"/>
         <activity android:name=".ui.bills.BillsActivity"/>
-        <activity android:name=".ui.airtime.AirTimeActivity"/>
+        <activity android:name=".ui.airtime.AirTimeFragment"/>
         <activity android:name=".ui.add.AddActivity"/>
-        <activity android:name=".ui.fund.FundActivity"/>
+        <activity android:name=".ui.fund.FundFragment"/>
         <activity android:name=".ui.successful.SuccessfulActivity"/>
         <activity android:name=".ui.payment.PaymentActivity"/>
-        <activity android:name=".ui.request.RequestActivity"/>
+        <activity android:name=".ui.request.RequestFragment"/>
         <activity android:name=".ui.transfer.TransferActivity"/>
-        <activity android:name=".ui.send.SendMoneyActivity"/>
-        <activity android:name=".ui.newpayment.NewPaymentActivity"/>
-        <activity android:name=".ui.newpayment.NewPaymentAmountActivity"/>
+        <activity android:name=".ui.send.SendMoneyFragment"/>
+        <activity android:name=".ui.newpayment.NewPaymentFragment"/>
+        <activity android:name=".ui.newpayment.NewPaymentAmountFragment"/>
     </application>
 
 </manifest>

@@ -2,15 +2,19 @@ package com.sterlingng.paylite.ui.newpayment
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.widget.*
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -22,12 +26,12 @@ import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.SendMoneyRequest
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
-import com.sterlingng.paylite.ui.base.BaseActivity
+import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import io.reactivex.disposables.CompositeDisposable
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
 interface NewPaymentMvpContract<V : NewPaymentMvpView> : MvpPresenter<V> {
@@ -47,7 +51,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     }
 }
 
-class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
+class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
 
     @Inject
     lateinit var mPresenter: NewPaymentMvpContract<NewPaymentMvpView>
@@ -59,32 +63,29 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
     private lateinit var mPhoneEmailEditText: EditText
     private lateinit var mBalanceTextView: TextView
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_payment)
-        activityComponent.inject(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_new_payment, container, false)
+        val component = activityComponent
+        component.inject(this)
         mPresenter.onAttach(this)
+        return view
     }
 
-    override fun bindViews() {
-        exit = findViewById(R.id.exit)
-        next = findViewById(R.id.next)
+    override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
+        next = view.findViewById(R.id.next)
 
-        mRecipientNameEditText = findViewById(R.id.recipient_name)
-        mPhoneEmailEditText = findViewById(R.id.phone_email)
-        mBalanceTextView = findViewById(R.id.balance)
+        mRecipientNameEditText = view.findViewById(R.id.recipient_name)
+        mPhoneEmailEditText = view.findViewById(R.id.phone_email)
+        mBalanceTextView = view.findViewById(R.id.balance)
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun setUp() {
+    override fun setUp(view: View) {
         mPresenter.loadCachedWallet()
 
         exit.setOnClickListener {
-            onBackPressed()
+            baseActivity.onBackPressed()
         }
 
         next.setOnClickListener {
@@ -93,21 +94,18 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
                 return@setOnClickListener
             }
 
-            val intent = NewPaymentAmountActivity.getStartIntent(this)
-
             val request = SendMoneyRequest()
             request.rcpt = mPhoneEmailEditText.text.toString()
             request.channel = "Android Application"
 
-            intent.putExtra(REQUEST, request)
-            startActivity(intent)
+            (baseActivity as DashboardActivity).mNavController.pushFragment(NewPaymentAmountFragment.newInstance(request))
         }
 
         mPhoneEmailEditText.setOnTouchListener { _, event ->
 
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
-                    Dexter.withActivity(this@NewPaymentActivity)
+                    Dexter.withActivity(baseActivity)
                             .withPermission(Manifest.permission.READ_CONTACTS)
                             .withListener(object : PermissionListener {
                                 override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
@@ -120,7 +118,7 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
 
                                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                                     val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-                                    if (intent.resolveActivity(packageManager) != null) {
+                                    if (intent.resolveActivity(baseActivity.packageManager) != null) {
                                         startActivityForResult(intent, REQUEST_SELECT_CONTACT)
                                     }
                                 }
@@ -137,8 +135,7 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_SELECT_CONTACT -> {
-                if (data != null)
-                    handleContactPickerResult(data.data)
+                if (data != null) handleContactPickerResult(data.data)
             }
         }
     }
@@ -148,7 +145,7 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
         val mSelectionArgs = arrayOf(lookUpKey)
 
         val phoneSelection = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?"
-        val phoneCursor = this.contentResolver.query(
+        val phoneCursor = baseActivity.contentResolver.query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, /*Projection*/
                 phoneSelection, /*Selection*/
                 mSelectionArgs, null/*Sort order*/)/*Uri*//*Selection args*/
@@ -163,7 +160,7 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
         phoneCursor?.close()
 
         if (TextUtils.isEmpty(phone)) {
-            Toast.makeText(this, "Invalid contact", Toast.LENGTH_LONG).show()
+            show("Invalid contact", true)
             return
         }
         mPhoneEmailEditText.setText(phone)
@@ -180,11 +177,13 @@ class NewPaymentActivity : BaseActivity(), NewPaymentMvpView {
     companion object {
 
         const val DRAWABLE_RIGHT = 2
-        const val REQUEST = "NewPaymentActivity.REQUEST"
         const val REQUEST_SELECT_CONTACT = 1001
 
-        fun getStartIntent(context: Context): Intent {
-            return Intent(context, NewPaymentActivity::class.java)
+        fun newInstance(): NewPaymentFragment {
+            val fragment = NewPaymentFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

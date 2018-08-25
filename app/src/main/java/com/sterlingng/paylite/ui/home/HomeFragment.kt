@@ -1,5 +1,6 @@
 package com.sterlingng.paylite.ui.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +13,14 @@ import com.sterlingng.paylite.data.model.UpdateWallet
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
-import com.sterlingng.paylite.ui.airtime.AirTimeActivity
+import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.donate.DonateActivity
-import com.sterlingng.paylite.ui.fund.FundActivity
+import com.sterlingng.paylite.ui.fund.FundFragment
 import com.sterlingng.paylite.ui.profile.ProfileActivity
-import com.sterlingng.paylite.ui.request.RequestActivity
-import com.sterlingng.paylite.ui.send.SendMoneyActivity
+import com.sterlingng.paylite.ui.request.RequestFragment
+import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.transfer.TransferActivity
 import com.sterlingng.paylite.utils.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -111,29 +113,27 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 }
 
         mAirTimeDataImageView.setOnClickListener {
-            startActivity(AirTimeActivity.getStartIntent(baseActivity))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(AirTimeFragment.newInstance())
         }
 
         mAirTimeDataTextView.setOnClickListener {
-            startActivity(AirTimeActivity.getStartIntent(baseActivity))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(AirTimeFragment.newInstance())
         }
 
         mRequestMoneyImageView.setOnClickListener {
-            startActivity(RequestActivity.getStartIntent(baseActivity))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(RequestFragment.newInstance())
         }
 
         mRequestMoneyTextView.setOnClickListener {
-            startActivity(RequestActivity.getStartIntent(baseActivity))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(RequestFragment.newInstance())
         }
 
         mSendMoneyImageView.setOnClickListener {
-            val intent = SendMoneyActivity.getStartIntent(baseActivity)
-            startActivity(intent)
+            (baseActivity as DashboardActivity).mNavController.pushFragment(SendMoneyFragment.newInstance())
         }
 
         mSendMoneyTextView.setOnClickListener {
-            val intent = SendMoneyActivity.getStartIntent(baseActivity)
-            startActivity(intent)
+            (baseActivity as DashboardActivity).mNavController.pushFragment(SendMoneyFragment.newInstance())
         }
 
         mNotificationsImageView.setOnClickListener {
@@ -141,7 +141,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         }
 
         mFundButton.setOnClickListener {
-            startActivity(FundActivity.getStartIntent(baseActivity))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(FundFragment.newInstance())
         }
 
         mPayCodeTextView.setOnClickListener {
@@ -167,6 +167,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun initView(currentUser: User?) {
         mUserGreetingTextView.text = "Hi ${currentUser?.username!!}"
     }

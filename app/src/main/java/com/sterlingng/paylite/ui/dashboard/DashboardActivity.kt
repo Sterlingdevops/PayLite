@@ -27,7 +27,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
     lateinit var mPresenter: DashboardMvpContract<DashboardMvpView>
     private var mSelectedItem = 0
 
-    private lateinit var mNavController: FragNavController
+    lateinit var mNavController: FragNavController
     override val numberOfRootFragments: Int
         get() = 3
 
@@ -46,6 +46,13 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
             createEager = true
             fragmentHideStrategy = FragNavController.DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
             rootFragmentListener = this@DashboardActivity
+//            defaultTransactionOptions = FragNavTransactionOptions.newBuilder()
+//                    .customAnimations(
+//                            R.anim.slide_in_from_right,
+//                            R.anim.slide_out_to_left,
+//                            R.anim.slide_in_from_left,
+//                            R.anim.slide_out_to_right
+//                    ).build()
             initialize(savedInstanceState = savedInstanceState)
         }
     }

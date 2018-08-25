@@ -4,18 +4,18 @@ import android.Manifest
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -23,15 +23,14 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.ui.base.BaseActivity
+import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.views.LargeLabelClickToSelectEditText
 import com.sterlingng.views.LargeLabelEditText
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
-class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
+class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
     lateinit var mPresenter: AirTimeMvpContract<AirTimeMvpView>
@@ -44,25 +43,22 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
     private lateinit var provider: EditText
     private lateinit var category: LargeLabelClickToSelectEditText<String>
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_air_time)
-        activityComponent.inject(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_air_time, container, false)
+        val component = activityComponent
+        component.inject(this)
         mPresenter.onAttach(this)
+        return view
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun setUp() {
+    override fun setUp(view: View) {
         exit.setOnClickListener {
-            onBackPressed()
+            baseActivity.onBackPressed()
         }
 
         next.setOnClickListener {
-            startActivity(ConfirmActivity.getStartIntent(this))
+            startActivity(ConfirmActivity.getStartIntent(baseActivity))
         }
 
         bundle.isClickable = true
@@ -72,7 +68,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             filterBottomSheetFragment.selector = 1
             filterBottomSheetFragment.title = "Select a bundle"
             filterBottomSheetFragment.items = listOf("30MB - 24hrs", "300MB - 48hrs", "3000MB - 72hrs", "Unlimted - 1 month")
-            filterBottomSheetFragment.show(supportFragmentManager, "filter")
+            filterBottomSheetFragment.show(childFragmentManager, "filter")
         }
 
         category.mTextEditText.isClickable = true
@@ -82,7 +78,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             filterBottomSheetFragment.selector = 2
             filterBottomSheetFragment.title = "Project"
             filterBottomSheetFragment.items = listOf("Data bundle", "Mobile Top-up")
-            filterBottomSheetFragment.show(supportFragmentManager, "filter")
+            filterBottomSheetFragment.show(childFragmentManager, "filter")
         }
 
         provider.isClickable = true
@@ -92,14 +88,14 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
             filterBottomSheetFragment.selector = 0
             filterBottomSheetFragment.title = "Network provider"
             filterBottomSheetFragment.items = listOf("Airtel", "Glo", "MTN", "9 Mobile", "nTel")
-            filterBottomSheetFragment.show(supportFragmentManager, "filter")
+            filterBottomSheetFragment.show(childFragmentManager, "filter")
         }
 
         phone.mTextEditText.setOnTouchListener { _, event ->
 
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (phone.mTextEditText.right - phone.mTextEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
-                    Dexter.withActivity(this@AirTimeActivity)
+                    Dexter.withActivity(baseActivity)
                             .withPermission(Manifest.permission.READ_CONTACTS)
                             .withListener(object : PermissionListener {
                                 override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
@@ -112,7 +108,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
 
                                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                                     val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-                                    if (intent.resolveActivity(packageManager) != null) {
+                                    if (intent.resolveActivity(baseActivity.packageManager) != null) {
                                         startActivityForResult(intent, REQUEST_SELECT_CONTACT)
                                     }
                                 }
@@ -197,7 +193,7 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
         val mSelectionArgs = arrayOf(lookUpKey)
 
         val phoneSelection = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?"
-        val phoneCursor = this.contentResolver.query(
+        val phoneCursor = baseActivity.contentResolver.query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, /*Projection*/
                 phoneSelection, /*Selection*/
                 mSelectionArgs, null/*Sort order*/)/*Uri*//*Selection args*/
@@ -211,20 +207,20 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
         phoneCursor?.close()
 
         if (TextUtils.isEmpty(phone)) {
-            Toast.makeText(this, "Invalid contact", Toast.LENGTH_LONG).show()
+            show("Invalid contact", true)
             return
         }
         this.phone.mTextEditText.setText(phone)
     }
 
-    override fun bindViews() {
-        exit = findViewById(R.id.exit)
-        next = findViewById(R.id.next)
-        phone = findViewById(R.id.phone)
-        amount = findViewById(R.id.amount)
-        bundle = findViewById(R.id.bundles)
-        category = findViewById(R.id.category)
-        provider = findViewById(R.id.provider)
+    override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
+        next = view.findViewById(R.id.next)
+        phone = view.findViewById(R.id.phone)
+        amount = view.findViewById(R.id.amount)
+        bundle = view.findViewById(R.id.bundles)
+        category = view.findViewById(R.id.category)
+        provider = view.findViewById(R.id.provider)
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
@@ -236,8 +232,11 @@ class AirTimeActivity : BaseActivity(), AirTimeMvpView, FilterBottomSheetFragmen
         const val DRAWABLE_RIGHT = 2
         const val REQUEST_SELECT_CONTACT = 1001
 
-        fun getStartIntent(context: Context): Intent {
-            return Intent(context, AirTimeActivity::class.java)
+        fun newInstance(): AirTimeFragment {
+            val fragment = AirTimeFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

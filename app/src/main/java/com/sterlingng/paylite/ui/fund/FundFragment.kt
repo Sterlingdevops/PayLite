@@ -1,27 +1,26 @@
 package com.sterlingng.paylite.ui.fund
 
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.NestedScrollView
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
-import com.sterlingng.paylite.ui.base.BaseActivity
+import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.CardExpiryTextWatcher
 import mostafa.ma.saleh.gmail.com.editcredit.EditCredit
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
-class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
+class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
     lateinit var mPresenter: FundMvpContract<FundMvpView>
@@ -59,20 +58,17 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
     private lateinit var mFundAmountCardEditText: EditText
     private lateinit var mFundAmountBankEditText: EditText
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_fund)
-        activityComponent.inject(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_fund, container, false)
+        val component = activityComponent
+        component.inject(this)
         mPresenter.onAttach(this)
+        return view
     }
 
-    override fun setUp() {
+    override fun setUp(view: View) {
         exit.setOnClickListener {
-            onBackPressed()
+            baseActivity.onBackPressed()
         }
 
         next.setOnClickListener {
@@ -143,7 +139,7 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
             filterBottomSheetFragment.selector = 1
             filterBottomSheetFragment.title = "Select Bank"
             filterBottomSheetFragment.items = banks.map { it.name }
-            filterBottomSheetFragment.show(supportFragmentManager, "filter")
+            filterBottomSheetFragment.show(childFragmentManager, "filter")
         }
 
         mSaveCardTextView.setOnClickListener {
@@ -155,32 +151,32 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
         mPresenter.loadBanks()
     }
 
-    override fun bindViews() {
-        exit = findViewById(R.id.exit)
-        next = findViewById(R.id.next)
+    override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
+        next = view.findViewById(R.id.next)
 
-        mCardNumberEditCredit = findViewById(R.id.card_number)
-        mCardNameEditText = findViewById(R.id.card_name)
-        mCardTextView = findViewById(R.id.card_text)
-        mBankTextView = findViewById(R.id.bank_text)
+        mCardNumberEditCredit = view.findViewById(R.id.card_number)
+        mCardNameEditText = view.findViewById(R.id.card_name)
+        mCardTextView = view.findViewById(R.id.card_text)
+        mBankTextView = view.findViewById(R.id.bank_text)
 
-        mCardCheckBox = findViewById(R.id.card_checkBox)
-        mBankCheckBox = findViewById(R.id.bank_checkBox)
+        mCardCheckBox = view.findViewById(R.id.card_checkBox)
+        mBankCheckBox = view.findViewById(R.id.bank_checkBox)
 
-        mBankNameTextView = findViewById(R.id.bank)
-        mAccountNameTextView = findViewById(R.id.name)
-        mAccountNumberTextView = findViewById(R.id.account_number)
-        mFundAmountBankEditText = findViewById(R.id.fund_amount_bank)
-        mFundAmountCardEditText = findViewById(R.id.fund_amount_card)
+        mBankNameTextView = view.findViewById(R.id.bank)
+        mAccountNameTextView = view.findViewById(R.id.name)
+        mAccountNumberTextView = view.findViewById(R.id.account_number)
+        mFundAmountBankEditText = view.findViewById(R.id.fund_amount_bank)
+        mFundAmountCardEditText = view.findViewById(R.id.fund_amount_card)
 
-        mCardCvvTextView = findViewById(R.id.card_cvv)
-        mCardExpiryTextView = findViewById(R.id.card_expiry)
+        mCardCvvTextView = view.findViewById(R.id.card_cvv)
+        mCardExpiryTextView = view.findViewById(R.id.card_expiry)
 
-        mSaveCardTextView = findViewById(R.id.save_card)
-        mSaveCardSwitch = findViewById(R.id.save_card_switch)
+        mSaveCardTextView = view.findViewById(R.id.save_card)
+        mSaveCardSwitch = view.findViewById(R.id.save_card_switch)
 
-        mFundBankNestedScrollView = findViewById(R.id.fund_bank)
-        mFundCardNestedScrollView = findViewById(R.id.fund_card)
+        mFundBankNestedScrollView = view.findViewById(R.id.fund_bank)
+        mFundCardNestedScrollView = view.findViewById(R.id.fund_card)
     }
 
     override fun onLoadBanksFailed(it: Throwable) {
@@ -245,7 +241,7 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
 
     override fun onFundWalletSuccessful(wallet: Wallet) {
         eventBus.post(UpdateWallet())
-        onBackPressed()
+        baseActivity.onBackPressed()
     }
 
     private inner class AccountNumberTextWatcher : TextWatcher {
@@ -266,12 +262,11 @@ class FundActivity : BaseActivity(), FundMvpView, FilterBottomSheetFragment.OnFi
 
     companion object {
 
-        //startActivity(ConfirmActivity.getStartIntent(this))
-
-        const val CARD_TYPE = "FundActivity.CARD_TYPE"
-
-        fun getStartIntent(context: Context): Intent {
-            return Intent(context, FundActivity::class.java)
+        fun newInstance(): FundFragment {
+            val fragment = FundFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

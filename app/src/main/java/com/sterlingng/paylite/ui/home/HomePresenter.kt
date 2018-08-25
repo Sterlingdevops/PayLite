@@ -19,13 +19,12 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
 
     override fun onViewInitialized() {
         super.onViewInitialized()
+        mvpView.onGetWalletSuccessful(dataManager.getWallet()!!)
         mvpView.initView(dataManager.getCurrentUser())
     }
 
     override fun loadWallet() {
         val user = dataManager.getCurrentUser()
-
-        mvpView.showLoading()
         compositeDisposable.add(
                 dataManager.getWallet(user?.token!!, user.username)
                         .subscribeOn(schedulerProvider.io())
@@ -33,10 +32,8 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         .subscribe({
                             val wallet = gson.fromJson(gson.toJson(it.data), Wallet::class.java)
                             dataManager.saveWallet(wallet)
-                            mvpView.hideLoading()
                             mvpView.onGetWalletSuccessful(wallet)
                         }) {
-                            mvpView.hideLoading()
                             mvpView.onGetWalletFailed(it)
                         }
         )

@@ -59,7 +59,11 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     override fun initView(currentUser: User) {
         mUsernameEditText.mTextEditText.setText(currentUser.username)
         mPasswordEditText.mTextEditText.requestFocus()
-        showKeyboard()
+//        showKeyboard()
+
+        val intent = DashboardActivity.getStartIntent(this)
+                .putExtra(DashboardActivity.SELECTED_ITEM, 0)
+        startActivity(intent)
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

@@ -1,10 +1,10 @@
 package com.sterlingng.paylite.ui.newpayment
 
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Switch
@@ -17,7 +17,7 @@ import com.sterlingng.paylite.data.model.UpdateWallet
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.rx.SchedulerProvider
-import com.sterlingng.paylite.ui.base.BaseActivity
+import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
@@ -30,7 +30,6 @@ import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import io.reactivex.disposables.CompositeDisposable
 import retrofit2.HttpException
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -80,7 +79,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     }
 }
 
-class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,
+class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,
         FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
@@ -114,48 +113,50 @@ class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePi
 
     private lateinit var mBalanceTextView: TextView
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_payment_amount)
-        activityComponent.inject(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_new_payment_amount, container, false)
+        val component = activityComponent
+        component.inject(this)
         mPresenter.onAttach(this)
+        return view
     }
 
-    override fun bindViews() {
-        exit = findViewById(R.id.exit)
-        next = findViewById(R.id.next)
+    override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
+        next = view.findViewById(R.id.next)
 
-        mAmountReferenceEditText = findViewById(R.id.reference)
-        mAmountEditText = findViewById(R.id.amount)
+        mAmountReferenceEditText = view.findViewById(R.id.reference)
+        mAmountEditText = view.findViewById(R.id.amount)
 
-        mScheduleReferenceTextView = findViewById(R.id.schedule_payment_ref)
-        mScheduleRepeatSwitch = findViewById(R.id.schedule_switch)
-        mScheduleTextView = findViewById(R.id.schedule_payment)
+        mScheduleReferenceTextView = view.findViewById(R.id.schedule_payment_ref)
+        mScheduleRepeatSwitch = view.findViewById(R.id.schedule_switch)
+        mScheduleTextView = view.findViewById(R.id.schedule_payment)
 
-        mSetStartDateTextView = findViewById(R.id.set_start_date)
-        mStartDateTextView = findViewById(R.id.start_date)
+        mSetStartDateTextView = view.findViewById(R.id.set_start_date)
+        mStartDateTextView = view.findViewById(R.id.start_date)
 
-        mSetEndDateTextView = findViewById(R.id.set_end_date)
-        mEndDateTextView = findViewById(R.id.end_date)
+        mSetEndDateTextView = view.findViewById(R.id.set_end_date)
+        mEndDateTextView = view.findViewById(R.id.end_date)
 
-        mSetRepeatTextView = findViewById(R.id.set_repeat)
-        mRepeatTextView = findViewById(R.id.repeat)
+        mSetRepeatTextView = view.findViewById(R.id.set_repeat)
+        mRepeatTextView = view.findViewById(R.id.repeat)
 
-        mBalanceTextView = findViewById(R.id.balance)
+        mBalanceTextView = view.findViewById(R.id.balance)
     }
 
-    override fun setUp() {
-        val request = intent.getParcelableExtra<SendMoneyRequest>(NewPaymentActivity.REQUEST)
+    override fun setUp(view: View) {
+        val request = arguments?.getParcelable<SendMoneyRequest>(REQUEST)
 
         exit.setOnClickListener {
-            onBackPressed()
+            baseActivity.onBackPressed()
         }
 
         next.setOnClickListener {
+            if (request == null) {
+                show("Request object is null", true)
+                return@setOnClickListener
+            }
+
             request.comments = mAmountReferenceEditText.text.toString()
             request.amount = mAmountEditText.text.toString().toInt()
 
@@ -218,7 +219,7 @@ class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePi
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.title = "Repeat Payment"
             filterBottomSheetFragment.items = listOf("Never", "Daily", "Weekly", "Monthly", "Yearly")
-            filterBottomSheetFragment.show(supportFragmentManager, "filter")
+            filterBottomSheetFragment.show(childFragmentManager, "filter")
         }
 
         mSetStartDateTextView.setOnClickListener {
@@ -256,7 +257,7 @@ class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePi
 
     override fun onSendMoneySuccessful(wallet: Wallet) {
         eventBus.post(UpdateWallet())
-        val intent = DashboardActivity.getStartIntent(this)
+        val intent = DashboardActivity.getStartIntent(baseActivity)
                 .putExtra(DashboardActivity.SELECTED_ITEM, 0)
         startActivity(intent)
     }
@@ -271,8 +272,8 @@ class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePi
     private fun showDatePicker(date: String, type: Int) {
         this.type = type
         SpinnerDatePickerDialogBuilder()
-                .context(this@NewPaymentAmountActivity)
-                .callback(this@NewPaymentAmountActivity)
+                .context(baseActivity)
+                .callback(this@NewPaymentAmountFragment)
                 .spinnerTheme(R.style.NumberPickerStyle)
                 .showTitle(true)
                 .defaultDate(now.get(Calendar.YEAR),
@@ -312,8 +313,14 @@ class NewPaymentAmountActivity : BaseActivity(), NewPaymentAmountMvpView, DatePi
 
     companion object {
 
-        fun getStartIntent(context: Context): Intent {
-            return Intent(context, NewPaymentAmountActivity::class.java)
+        const val REQUEST = "NewPaymentAmountFragment.REQUEST"
+
+        fun newInstance(request: SendMoneyRequest): NewPaymentAmountFragment {
+            val fragment = NewPaymentAmountFragment()
+            val args = Bundle()
+            args.putParcelable(REQUEST, request)
+            fragment.arguments = args
+            return fragment
         }
     }
 }
