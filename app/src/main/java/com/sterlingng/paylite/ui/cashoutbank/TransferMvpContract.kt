@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.transfer
+package com.sterlingng.paylite.ui.cashoutbank
 
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.ui.base.MvpPresenter

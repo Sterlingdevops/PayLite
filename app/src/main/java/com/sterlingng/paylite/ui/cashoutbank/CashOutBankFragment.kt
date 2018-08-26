@@ -1,21 +1,20 @@
-package com.sterlingng.paylite.ui.transfer
+package com.sterlingng.paylite.ui.cashoutbank
 
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.ui.base.BaseActivity
+import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.views.ClickToSelectEditText
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
-class TransferActivity : BaseActivity(), TransferMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
+class CashOutBankFragment : BaseFragment(), TransferMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
     lateinit var mPresenter: TransferMvpContract<TransferMvpView>
@@ -26,28 +25,25 @@ class TransferActivity : BaseActivity(), TransferMvpView, FilterBottomSheetFragm
     private lateinit var mCardEditText: ClickToSelectEditText<String>
     private lateinit var mAmountEditText: EditText
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_transfer)
-        activityComponent.inject(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_cash_out_bank, container, false)
+        val component = activityComponent
+        component.inject(this)
         mPresenter.onAttach(this)
+        return view
     }
 
-    override fun bindViews() {
-        exit = findViewById(R.id.exit)
-        next = findViewById(R.id.next)
+    override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
+        next = view.findViewById(R.id.next)
 
-        mCardEditText = findViewById(R.id.card)
-        mAmountEditText = findViewById(R.id.amount)
+        mCardEditText = view.findViewById(R.id.card)
+        mAmountEditText = view.findViewById(R.id.amount)
     }
 
-    override fun setUp() {
+    override fun setUp(view: View) {
         exit.setOnClickListener {
-            onBackPressed()
+            baseActivity.onBackPressed()
         }
 
         mCardEditText.setOnClickListener {
@@ -56,7 +52,7 @@ class TransferActivity : BaseActivity(), TransferMvpView, FilterBottomSheetFragm
             filterBottomSheetFragment.selector = 1
             filterBottomSheetFragment.title = "Choose an Account"
             filterBottomSheetFragment.items = listOf("Savings Account - 0123456789", "Savings Account - 0247966933", "Savings Account - 0121702158 ", "Other Banks")
-            filterBottomSheetFragment.show(supportFragmentManager, "filter")
+            filterBottomSheetFragment.show(childFragmentManager, "filter")
         }
     }
 
@@ -75,8 +71,11 @@ class TransferActivity : BaseActivity(), TransferMvpView, FilterBottomSheetFragm
 
     companion object {
 
-        fun getStartIntent(context: Context): Intent {
-            return Intent(context, TransferActivity::class.java)
+        fun newInstance(): CashOutBankFragment {
+            val fragment = CashOutBankFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

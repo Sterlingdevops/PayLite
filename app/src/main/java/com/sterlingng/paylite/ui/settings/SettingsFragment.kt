@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.main.MainActivity
-import com.sterlingng.paylite.ui.payment.PaymentActivity
+import com.sterlingng.paylite.ui.payment.PaymentFragment
 import javax.inject.Inject
 
 class SettingsFragment : BaseFragment(), SettingsMvpView {
@@ -35,7 +36,7 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
 
     override fun setUp(view: View) {
         mPaymentMethodsTextView.setOnClickListener {
-            startActivity(PaymentActivity.getStartIntent(baseActivity))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
         }
 
         mLogOutTextView.setOnClickListener {

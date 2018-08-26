@@ -75,7 +75,6 @@
                 android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="@string/please_input_your_card_details"
                 android:textColor="@color/black_effective"
                 android:textSize="14sp"
@@ -177,7 +176,6 @@
                 android:id="@+id/save_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="8dp"
                 android:paddingBottom="16dp"
                 android:paddingTop="16dp"
@@ -219,7 +217,6 @@
                 android:id="@+id/textView23"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
-                android:layout_marginTop="8dp"
                 android:text="@string/please_input_your_bank_details"
                 android:textColor="@color/black_effective"
                 android:textSize="14sp"
@@ -350,14 +347,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="32dp"/>
+        app:layout_constraintGuide_begin="16dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="32dp"/>
+        app:layout_constraintGuide_end="16dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineBottom"

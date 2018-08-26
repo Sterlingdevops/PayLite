@@ -24,7 +24,8 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.confirm.ConfirmActivity
+import com.sterlingng.paylite.ui.confirm.ConfirmFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.views.LargeLabelClickToSelectEditText
 import com.sterlingng.views.LargeLabelEditText
@@ -58,7 +59,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
         }
 
         next.setOnClickListener {
-            startActivity(ConfirmActivity.getStartIntent(baseActivity))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(ConfirmFragment.newInstance())
         }
 
         bundle.isClickable = true
@@ -202,7 +203,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
         var phone = ""
         if (phoneCursor != null && phoneCursor.moveToFirst()) {
             val numberIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER)
-            phone = phoneCursor.getString(numberIndex)
+            phone = phoneCursor.getString(numberIndex).replace("+234", "")
         }
         phoneCursor?.close()
 

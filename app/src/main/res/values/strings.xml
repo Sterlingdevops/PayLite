@@ -244,4 +244,5 @@
     <string name="account_name">Account Name</string>
     <string name="welcome_to_paylite">Welcome to Paylite</string>
     <string name="you_can_change_your_username_at_anytime_in_settings">You can change your username at anytime in settings.</string>
+    <string name="cash_out_code_2">Cash out Code</string>
 </resources>

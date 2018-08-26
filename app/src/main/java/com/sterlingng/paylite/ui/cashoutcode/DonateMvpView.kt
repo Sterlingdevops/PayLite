@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.transfer
+package com.sterlingng.paylite.ui.cashoutcode
 
 import com.sterlingng.paylite.ui.base.MvpView
 
@@ -6,4 +6,4 @@ import com.sterlingng.paylite.ui.base.MvpView
  * Created by rtukpe on 21/03/2018.
  */
 
-interface TransferMvpView : MvpView
+interface DonateMvpView : MvpView

@@ -154,8 +154,7 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
         var phone = ""
         if (phoneCursor != null && phoneCursor.moveToFirst()) {
             val numberIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER)
-            phone = phoneCursor.getString(numberIndex)
-            phone.replace("+234", "0")
+            phone = phoneCursor.getString(numberIndex).replace("+234", "")
         }
         phoneCursor?.close()
 

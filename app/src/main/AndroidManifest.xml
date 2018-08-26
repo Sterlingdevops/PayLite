@@ -39,10 +39,10 @@
             android:name=".ui.project.ProjectActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".ui.donate.DonateActivity"
+            android:name=".ui.cashoutcode.CashOutCodeFragment"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".ui.confirm.ConfirmActivity"
+            android:name=".ui.confirm.ConfirmFragment"
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.profile.ProfileActivity"
@@ -57,9 +57,9 @@
         <activity android:name=".ui.add.AddActivity"/>
         <activity android:name=".ui.fund.FundFragment"/>
         <activity android:name=".ui.successful.SuccessfulActivity"/>
-        <activity android:name=".ui.payment.PaymentActivity"/>
+        <activity android:name=".ui.payment.PaymentFragment"/>
         <activity android:name=".ui.request.RequestFragment"/>
-        <activity android:name=".ui.transfer.TransferActivity"/>
+        <activity android:name=".ui.cashoutbank.CashOutBankFragment"/>
         <activity android:name=".ui.send.SendMoneyFragment"/>
         <activity android:name=".ui.newpayment.NewPaymentFragment"/>
         <activity android:name=".ui.newpayment.NewPaymentAmountFragment"/>

@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.donate
+package com.sterlingng.paylite.ui.cashoutcode
 
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.ui.base.MvpPresenter

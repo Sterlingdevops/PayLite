@@ -33,9 +33,9 @@ import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
-import com.sterlingng.paylite.ui.donate.DonateMvpContract
-import com.sterlingng.paylite.ui.donate.DonateMvpView
-import com.sterlingng.paylite.ui.donate.DonatePresenter
+import com.sterlingng.paylite.ui.cashoutcode.DonateMvpContract
+import com.sterlingng.paylite.ui.cashoutcode.DonateMvpView
+import com.sterlingng.paylite.ui.cashoutcode.DonatePresenter
 import com.sterlingng.paylite.ui.filter.FilterMvpContract
 import com.sterlingng.paylite.ui.filter.FilterMvpView
 import com.sterlingng.paylite.ui.filter.FilterPresenter
@@ -66,9 +66,6 @@ import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpContract
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpView
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingPresenter
 import com.sterlingng.paylite.ui.newpayment.*
-import com.sterlingng.paylite.ui.pay.PayMvpContract
-import com.sterlingng.paylite.ui.pay.PayMvpView
-import com.sterlingng.paylite.ui.pay.PayPresenter
 import com.sterlingng.paylite.ui.payment.PaymentMvpContract
 import com.sterlingng.paylite.ui.payment.PaymentMvpView
 import com.sterlingng.paylite.ui.payment.PaymentPresenter
@@ -129,9 +126,9 @@ import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpContract
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpView
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesPresenter
 import com.sterlingng.paylite.ui.transactions.categories.TransactionAdapter
-import com.sterlingng.paylite.ui.transfer.TransferMvpContract
-import com.sterlingng.paylite.ui.transfer.TransferMvpView
-import com.sterlingng.paylite.ui.transfer.TransferPresenter
+import com.sterlingng.paylite.ui.cashoutbank.TransferMvpContract
+import com.sterlingng.paylite.ui.cashoutbank.TransferMvpView
+import com.sterlingng.paylite.ui.cashoutbank.TransferPresenter
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.views.NoScrollingGridLayoutManager
 import com.sterlingng.views.NoScrollingLinearLayoutManager
@@ -286,9 +283,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideNewPaymentAmountPresenter(presenter: NewPaymentAmountPresenter<NewPaymentAmountMvpView>): NewPaymentAmountMvpContract<NewPaymentAmountMvpView> = presenter
 
     // Provide Fragment Contexts
-
-    @Provides
-    internal fun providePayPresenter(presenter: PayPresenter<PayMvpView>): PayMvpContract<PayMvpView> = presenter
 
     @Provides
     internal fun provideOtpPresenter(presenter: OtpPresenter<OtpMvpView>): OtpMvpContract<OtpMvpView> = presenter

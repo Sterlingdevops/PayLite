@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.donate
+package com.sterlingng.paylite.ui.cashoutbank
 
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.rx.SchedulerProvider
@@ -10,7 +10,7 @@ import javax.inject.Inject
  * Created by rtukpe on 21/03/2018.
  */
 
-class DonatePresenter<V : DonateMvpView>
+class TransferPresenter<V : TransferMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), DonateMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), TransferMvpContract<V>
