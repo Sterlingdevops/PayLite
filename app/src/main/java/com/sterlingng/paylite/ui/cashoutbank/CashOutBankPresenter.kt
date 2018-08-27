@@ -10,7 +10,7 @@ import javax.inject.Inject
  * Created by rtukpe on 21/03/2018.
  */
 
-class TransferPresenter<V : TransferMvpView>
+class CashOutBankPresenter<V : CashOutBankMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), TransferMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CashOutBankMvpContract<V>

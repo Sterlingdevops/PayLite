@@ -59,7 +59,7 @@
         <activity android:name=".ui.successful.SuccessfulActivity"/>
         <activity android:name=".ui.payment.PaymentFragment"/>
         <activity android:name=".ui.request.RequestFragment"/>
-        <activity android:name=".ui.cashoutbank.CashOutBankFragment"/>
+        <activity android:name=".ui.cashoutbank.CashOutFragment"/>
         <activity android:name=".ui.send.SendMoneyFragment"/>
         <activity android:name=".ui.newpayment.NewPaymentFragment"/>
         <activity android:name=".ui.newpayment.NewPaymentAmountFragment"/>

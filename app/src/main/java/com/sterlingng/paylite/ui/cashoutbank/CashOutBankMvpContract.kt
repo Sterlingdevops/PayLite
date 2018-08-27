@@ -8,4 +8,4 @@ import com.sterlingng.paylite.ui.base.MvpPresenter
  */
 
 @PerActivity
-interface TransferMvpContract<V : TransferMvpView> : MvpPresenter<V>
+interface CashOutBankMvpContract<V : CashOutBankMvpView> : MvpPresenter<V>

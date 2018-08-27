@@ -4,17 +4,12 @@ import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
-import com.sterlingng.paylite.ui.charity.CharityActivity
-import com.sterlingng.paylite.ui.charity.about.AboutFragment
-import com.sterlingng.paylite.ui.charity.program.ProgramFragment
+import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
+import com.sterlingng.paylite.ui.cashoutcode.CashOutCodeFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.cashoutcode.CashOutCodeFragment
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.fund.FundFragment
-import com.sterlingng.paylite.ui.give.GiveFragment
-import com.sterlingng.paylite.ui.give.charities.CharitiesFragment
-import com.sterlingng.paylite.ui.give.projects.ProjectsFragment
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.main.MainActivity
@@ -25,7 +20,6 @@ import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.profile.ProfileActivity
 import com.sterlingng.paylite.ui.profile.edit.EditActivity
 import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
-import com.sterlingng.paylite.ui.project.ProjectActivity
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
@@ -40,7 +34,6 @@ import com.sterlingng.paylite.ui.signup.pin.PinFragment
 import com.sterlingng.paylite.ui.successful.SuccessfulActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
-import com.sterlingng.paylite.ui.cashoutbank.CashOutBankFragment
 import dagger.Component
 
 /**
@@ -65,13 +58,9 @@ interface ActivityComponent {
 
     fun inject(cashOutCodeFragment: CashOutCodeFragment)
 
-    fun inject(charityActivity: CharityActivity)
-
     fun inject(confirmFragment: ConfirmFragment)
 
     fun inject(airTimeFragment: AirTimeFragment)
-
-    fun inject(projectActivity: ProjectActivity)
 
     fun inject(profileActivity: ProfileActivity)
 
@@ -91,17 +80,11 @@ interface ActivityComponent {
 
     fun inject(pinFragment: PinFragment)
 
-    fun inject(giveFragment: GiveFragment)
-
     fun inject(nameFragment: NameFragment)
 
     fun inject(homeFragment: HomeFragment)
 
-    fun inject(aboutFragment: AboutFragment)
-
     fun inject(emailFragment: EmailFragment)
-
-    fun inject(programFragment: ProgramFragment)
 
     fun inject(requestFragment: RequestFragment)
 
@@ -111,11 +94,7 @@ interface ActivityComponent {
 
     fun inject(completeFragment: CompleteFragment)
 
-    fun inject(charitiesFragment: CharitiesFragment)
-
     fun inject(scheduledFragment: ScheduledFragment)
-
-    fun inject(categoriesFragment: ProjectsFragment)
 
     fun inject(categoriesFragment: CategoriesFragment)
 
@@ -127,7 +106,7 @@ interface ActivityComponent {
 
     fun inject(settingsFragment: SettingsFragment)
 
-    fun inject(cashOutBankFragment: CashOutBankFragment)
+    fun inject(cashOutFragment: CashOutFragment)
 
     fun inject(sendMoneyFragment: SendMoneyFragment)
 

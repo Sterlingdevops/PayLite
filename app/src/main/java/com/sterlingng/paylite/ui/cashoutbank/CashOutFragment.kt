@@ -14,10 +14,10 @@ import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.views.ClickToSelectEditText
 import javax.inject.Inject
 
-class CashOutBankFragment : BaseFragment(), TransferMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
+class CashOutFragment : BaseFragment(), CashOutBankMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
-    lateinit var mPresenter: TransferMvpContract<TransferMvpView>
+    lateinit var mPresenter: CashOutBankMvpContract<CashOutBankMvpView>
 
     private lateinit var exit: ImageView
     private lateinit var next: Button
@@ -71,8 +71,8 @@ class CashOutBankFragment : BaseFragment(), TransferMvpView, FilterBottomSheetFr
 
     companion object {
 
-        fun newInstance(): CashOutBankFragment {
-            val fragment = CashOutBankFragment()
+        fun newInstance(): CashOutFragment {
+            val fragment = CashOutFragment()
             val args = Bundle()
             fragment.arguments = args
             return fragment

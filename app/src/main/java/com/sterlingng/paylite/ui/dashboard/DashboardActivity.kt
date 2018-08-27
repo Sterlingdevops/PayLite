@@ -46,13 +46,6 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
             createEager = true
             fragmentHideStrategy = FragNavController.DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
             rootFragmentListener = this@DashboardActivity
-//            defaultTransactionOptions = FragNavTransactionOptions.newBuilder()
-//                    .customAnimations(
-//                            R.anim.slide_in_from_right,
-//                            R.anim.slide_out_to_left,
-//                            R.anim.slide_in_from_left,
-//                            R.anim.slide_out_to_right
-//                    ).build()
             initialize(savedInstanceState = savedInstanceState)
         }
     }

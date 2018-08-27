@@ -26,6 +26,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun mockBanks(): ArrayList<Bank> = mMockHelper.mockBanks()
+
     override fun deleteAllWallets() = mLocalDataHelper.deleteAllWallets()
 
     override fun getWallet(): Wallet? = mLocalDataHelper.getWallet()

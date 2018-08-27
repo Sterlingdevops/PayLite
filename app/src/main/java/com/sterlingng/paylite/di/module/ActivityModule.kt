@@ -18,41 +18,24 @@ import com.sterlingng.paylite.ui.airtime.AirTimePresenter
 import com.sterlingng.paylite.ui.bills.BillsMvpContract
 import com.sterlingng.paylite.ui.bills.BillsMvpView
 import com.sterlingng.paylite.ui.bills.BillsPresenter
-import com.sterlingng.paylite.ui.charity.CharityMvpContract
-import com.sterlingng.paylite.ui.charity.CharityMvpView
-import com.sterlingng.paylite.ui.charity.CharityPresenter
-import com.sterlingng.paylite.ui.charity.about.AboutMvpContract
-import com.sterlingng.paylite.ui.charity.about.AboutMvpView
-import com.sterlingng.paylite.ui.charity.about.AboutPresenter
-import com.sterlingng.paylite.ui.charity.program.ProgramMvpContract
-import com.sterlingng.paylite.ui.charity.program.ProgramMvpView
-import com.sterlingng.paylite.ui.charity.program.ProgramPresenter
+import com.sterlingng.paylite.ui.cashoutbank.CashOutBankMvpContract
+import com.sterlingng.paylite.ui.cashoutbank.CashOutBankMvpView
+import com.sterlingng.paylite.ui.cashoutbank.CashOutBankPresenter
+import com.sterlingng.paylite.ui.cashoutcode.DonateMvpContract
+import com.sterlingng.paylite.ui.cashoutcode.DonateMvpView
+import com.sterlingng.paylite.ui.cashoutcode.DonatePresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
-import com.sterlingng.paylite.ui.cashoutcode.DonateMvpContract
-import com.sterlingng.paylite.ui.cashoutcode.DonateMvpView
-import com.sterlingng.paylite.ui.cashoutcode.DonatePresenter
 import com.sterlingng.paylite.ui.filter.FilterMvpContract
 import com.sterlingng.paylite.ui.filter.FilterMvpView
 import com.sterlingng.paylite.ui.filter.FilterPresenter
 import com.sterlingng.paylite.ui.fund.FundMvpContract
 import com.sterlingng.paylite.ui.fund.FundMvpView
 import com.sterlingng.paylite.ui.fund.FundPresenter
-import com.sterlingng.paylite.ui.give.GiveMvpContract
-import com.sterlingng.paylite.ui.give.GiveMvpView
-import com.sterlingng.paylite.ui.give.GivePresenter
-import com.sterlingng.paylite.ui.give.charities.CharitiesAdapter
-import com.sterlingng.paylite.ui.give.charities.CharitiesMvpContract
-import com.sterlingng.paylite.ui.give.charities.CharitiesMvpView
-import com.sterlingng.paylite.ui.give.charities.CharitiesPresenter
-import com.sterlingng.paylite.ui.give.projects.ProjectsAdapter
-import com.sterlingng.paylite.ui.give.projects.ProjectsMvpContract
-import com.sterlingng.paylite.ui.give.projects.ProjectsMvpView
-import com.sterlingng.paylite.ui.give.projects.ProjectsPresenter
 import com.sterlingng.paylite.ui.home.HomeMvpContract
 import com.sterlingng.paylite.ui.home.HomeMvpView
 import com.sterlingng.paylite.ui.home.HomePresenter
@@ -79,9 +62,6 @@ import com.sterlingng.paylite.ui.profile.notifications.NotificationMvpContract
 import com.sterlingng.paylite.ui.profile.notifications.NotificationMvpView
 import com.sterlingng.paylite.ui.profile.notifications.NotificationPresenter
 import com.sterlingng.paylite.ui.profile.notifications.NotificationsAdapter
-import com.sterlingng.paylite.ui.project.ProjectMvpContract
-import com.sterlingng.paylite.ui.project.ProjectMvpView
-import com.sterlingng.paylite.ui.project.ProjectPresenter
 import com.sterlingng.paylite.ui.request.RequestMvpContract
 import com.sterlingng.paylite.ui.request.RequestMvpView
 import com.sterlingng.paylite.ui.request.RequestPresenter
@@ -126,9 +106,6 @@ import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpContract
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpView
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesPresenter
 import com.sterlingng.paylite.ui.transactions.categories.TransactionAdapter
-import com.sterlingng.paylite.ui.cashoutbank.TransferMvpContract
-import com.sterlingng.paylite.ui.cashoutbank.TransferMvpView
-import com.sterlingng.paylite.ui.cashoutbank.TransferPresenter
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.views.NoScrollingGridLayoutManager
 import com.sterlingng.views.NoScrollingLinearLayoutManager
@@ -160,12 +137,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
-
-    @Provides
-    internal fun provideProjectsAdapter(activity: AppCompatActivity): ProjectsAdapter = ProjectsAdapter(activity)
-
-    @Provides
-    internal fun provideCharitiesAdapter(activity: AppCompatActivity): CharitiesAdapter = CharitiesAdapter(activity)
 
     @Provides
     internal fun provideCategoriesAdapter(activity: AppCompatActivity): CategoriesAdapter = CategoriesAdapter(activity)
@@ -224,36 +195,23 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideSignUpPresenter(presenter: SignUpPresenter<SignUpMvpView>): SignUpMvpContract<SignUpMvpView> = presenter
 
     @Provides
-    @PerActivity
     internal fun provideConfirmPresenter(presenter: ConfirmPresenter<ConfirmMvpView>): ConfirmMvpContract<ConfirmMvpView> = presenter
 
     @Provides
-    @PerActivity
-    internal fun provideCharityPresenter(presenter: CharityPresenter<CharityMvpView>): CharityMvpContract<CharityMvpView> = presenter
-
-    @Provides
-    @PerActivity
     internal fun providePaymentPresenter(presenter: PaymentPresenter<PaymentMvpView>): PaymentMvpContract<PaymentMvpView> = presenter
 
     @Provides
-    @PerActivity
     internal fun provideAirTimePresenter(presenter: AirTimePresenter<AirTimeMvpView>): AirTimeMvpContract<AirTimeMvpView> = presenter
-
-    @Provides
-    @PerActivity
-    internal fun provideProjectPresenter(presenter: ProjectPresenter<ProjectMvpView>): ProjectMvpContract<ProjectMvpView> = presenter
 
     @Provides
     @PerActivity
     internal fun provideProfilePresenter(presenter: ProfilePresenter<ProfileMvpView>): ProfileMvpContract<ProfileMvpView> = presenter
 
     @Provides
-    @PerActivity
     internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
 
     @Provides
-    @PerActivity
-    internal fun provideTransferPresenter(presenter: TransferPresenter<TransferMvpView>): TransferMvpContract<TransferMvpView> = presenter
+    internal fun provideTransferPresenter(presenter: CashOutBankPresenter<CashOutBankMvpView>): CashOutBankMvpContract<CashOutBankMvpView> = presenter
 
     @Provides
     internal fun provideSendMoneyPresenter(presenter: SendMoneyPresenter<SendMoneyMvpView>): SendMoneyMvpContract<SendMoneyMvpView> = presenter
@@ -294,22 +252,13 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideNamePresenter(presenter: NamePresenter<NameMvpView>): NameMvpContract<NameMvpView> = presenter
 
     @Provides
-    internal fun provideGivePresenter(presenter: GivePresenter<GiveMvpView>): GiveMvpContract<GiveMvpView> = presenter
-
-    @Provides
     internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter
-
-    @Provides
-    internal fun provideAboutPresenter(presenter: AboutPresenter<AboutMvpView>): AboutMvpContract<AboutMvpView> = presenter
 
     @Provides
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
 
     @Provides
     internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter
-
-    @Provides
-    internal fun provideProgramPresenter(presenter: ProgramPresenter<ProgramMvpView>): ProgramMvpContract<ProgramMvpView> = presenter
 
     @Provides
     internal fun provideCompletePresenter(presenter: CompletePresenter<CompleteMvpView>): CompleteMvpContract<CompleteMvpView> = presenter
@@ -321,13 +270,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun providePasswordPresenter(presenter: PasswordPresenter<PasswordMvpView>): PasswordMvpContract<PasswordMvpView> = presenter
 
     @Provides
-    internal fun provideProjectsPresenter(presenter: ProjectsPresenter<ProjectsMvpView>): ProjectsMvpContract<ProjectsMvpView> = presenter
-
-    @Provides
     internal fun provideScheduledPresenter(presenter: ScheduledPresenter<ScheduledMvpView>): ScheduledMvpContract<ScheduledMvpView> = presenter
-
-    @Provides
-    internal fun provideCharitiesPresenter(presenter: CharitiesPresenter<CharitiesMvpView>): CharitiesMvpContract<CharitiesMvpView> = presenter
 
     @Provides
     internal fun provideOnBoardingPresenter(presenter: OnBoardingPresenter<OnBoardingMvpView>): OnBoardingMvpContract<OnBoardingMvpView> = presenter

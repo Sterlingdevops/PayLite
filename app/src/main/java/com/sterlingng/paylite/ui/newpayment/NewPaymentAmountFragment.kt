@@ -30,6 +30,7 @@ import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import io.reactivex.disposables.CompositeDisposable
 import retrofit2.HttpException
+import java.net.SocketTimeoutException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -43,7 +44,7 @@ interface NewPaymentAmountMvpContract<V : NewPaymentAmountMvpView> : MvpPresente
 interface NewPaymentAmountMvpView : MvpView {
     fun initView(wallet: Wallet?)
     fun onSendMoneySuccessful(wallet: Wallet)
-    fun onSendMoneyFailed(it: Throwable)
+    fun onSendMoneyFailed(response: Response)
 }
 
 class NewPaymentAmountPresenter<V : NewPaymentAmountMvpView> @Inject
@@ -59,17 +60,23 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                 dataManager.sendMoney(user.token, data)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .doOnError {
-
+                        .onErrorReturn {
+                            if (it is java.net.SocketTimeoutException) {
+                                val response = Response()
+                                response.data = SocketTimeoutException()
+                                response.message = "Error server didn't respond fast enough and the request timed out"
+                                response.status = "failed"
+                                return@onErrorReturn response
+                            } else {
+                                val raw = (it as HttpException).response().errorBody()?.string()
+                                return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                            }
                         }
-                        .subscribe({
+                        .subscribe {
                             val wallet = gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
                             dataManager.saveWallet(wallet)
                             mvpView.hideLoading()
                             mvpView.onSendMoneySuccessful(wallet)
-                        }) {
-                            mvpView.hideLoading()
-                            mvpView.onSendMoneyFailed(it)
                         }
         )
     }
@@ -262,9 +269,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         startActivity(intent)
     }
 
-    override fun onSendMoneyFailed(it: Throwable) {
-        val raw = (it as HttpException).response().errorBody()?.string()!!
-        val response = gson.fromJson(raw, Response::class.java)
+    override fun onSendMoneyFailed(response: Response) {
         show(response.message!!, true)
     }
 

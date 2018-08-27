@@ -19,7 +19,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
 
     override fun onViewInitialized() {
         super.onViewInitialized()
-        mvpView.onGetWalletSuccessful(dataManager.getWallet()!!)
+        dataManager.getWallet()?.let { mvpView.onGetWalletSuccessful(it) }
         mvpView.initView(dataManager.getCurrentUser())
     }
 

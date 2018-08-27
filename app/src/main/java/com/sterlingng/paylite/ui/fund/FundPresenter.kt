@@ -74,20 +74,6 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
     }
 
     override fun loadBanks() {
-        mvpView.showLoading()
-        compositeDisposable.add(
-                dataManager
-                        .getBanks()
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .subscribe({
-                            mvpView.hideLoading()
-                            mvpView.onLoadBanksSuccessful(it)
-                        }) {
-                            Log.e(it, "FundPresenter->loadBanks")
-                            mvpView.hideLoading()
-                            mvpView.onLoadBanksFailed(it)
-                        }
-        )
+        mvpView.onLoadBanksSuccessful(dataManager.mockBanks())
     }
 }

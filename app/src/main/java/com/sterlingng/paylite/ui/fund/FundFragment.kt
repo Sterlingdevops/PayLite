@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
@@ -183,9 +182,8 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
         show(it.localizedMessage, true)
     }
 
-    override fun onLoadBanksSuccessful(it: Response) {
-        val type = object : TypeToken<ArrayList<Bank>>() {}.type
-        banks = gson.fromJson(gson.toJson(it.data), type)
+    override fun onLoadBanksSuccessful(it: ArrayList<Bank>) {
+        banks = it
     }
 
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
