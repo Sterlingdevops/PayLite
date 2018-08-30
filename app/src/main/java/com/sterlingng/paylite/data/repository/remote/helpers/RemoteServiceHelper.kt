@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class RemoteServiceHelper @Inject
 internal constructor() : BaseHelper(), RemoteServiceApi {
-    override fun sendMoney(token: String, data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.sendMoney(token, data)
+    override fun sendMoney(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.sendMoney(data)
 
     override fun signup(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.signup(data)
 
@@ -20,9 +20,9 @@ internal constructor() : BaseHelper(), RemoteServiceApi {
 
     override fun getUser(username: String): Observable<Response> = mRemoteServiceApi.getUser(username)
 
-    override fun fundWallet(token: String, data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.fundWallet(token, data)
+    override fun fundWallet(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.fundWallet(data)
 
-    override fun getWallet(token: String, username: String): Observable<Response> = mRemoteServiceApi.getWallet(token, username)
+    override fun getWallet(bvn: String): Observable<Response> = mRemoteServiceApi.getWallet(bvn)
 
     private var mRemoteServiceApi: RemoteServiceApi = createService(RemoteServiceApi::class.java)
 }

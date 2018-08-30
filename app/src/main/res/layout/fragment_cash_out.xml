@@ -54,7 +54,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/background_light_blue_outline"
         android:hint="@string/amount_minimum_amount_of_n100"
-        android:imeOptions="actionNext"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
         android:padding="16dp"
         android:textSize="16sp"
@@ -95,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/backdrop"/>
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/balance_201_00"
@@ -115,7 +115,7 @@
         android:contentDescription="@string/exit"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:layout_constraintBottom_toBottomOf="@+id/textView24"
+        app:layout_constraintBottom_toBottomOf="@+id/balance"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/title"
         app:srcCompat="@drawable/chevron_left"/>

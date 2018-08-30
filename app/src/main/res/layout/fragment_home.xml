@@ -8,21 +8,6 @@
     android:background="@color/whitish_gray"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/payments"
-        android:textAppearance="@style/HelperTextAppearance"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SmallSp"/>
-
     <ImageView
         android:id="@+id/payment_request"
         android:layout_width="38dp"
@@ -52,12 +37,79 @@
         app:layout_constraintTop_toTopOf="@+id/airtime_data"/>
 
     <ImageView
+        android:id="@+id/get_cash"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/get_cash"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_cash"
+        app:layout_constraintEnd_toStartOf="@+id/split_bill"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/pay_bills_text"/>
+
+    <TextView
+        android:id="@+id/get_cash_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/get_cash"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/get_cash"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/get_cash"
+        app:layout_constraintTop_toBottomOf="@+id/get_cash"/>
+
+    <ImageView
+        android:id="@+id/split_bill"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:contentDescription="@string/split_cost"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_split_bill"
+        app:layout_constraintEnd_toStartOf="@+id/nothing"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/get_cash"
+        app:layout_constraintTop_toTopOf="@id/get_cash"/>
+
+    <TextView
+        android:id="@+id/split_bill_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/split_cost"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/split_bill"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/split_bill"
+        app:layout_constraintTop_toBottomOf="@+id/split_bill"/>
+
+    <ImageView
+        android:id="@+id/nothing"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:src="@color/transparent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/split_bill"
+        app:layout_constraintTop_toTopOf="@+id/split_bill"/>
+
+    <ImageView
         android:id="@+id/send_money"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:contentDescription="@string/send_money"
         android:scaleType="centerInside"
         android:src="@drawable/icon_send_money"
@@ -72,11 +124,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/bill_payment"
+        android:text="@string/pay_bills"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/bill_payment"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/bill_payment"
         app:layout_constraintTop_toBottomOf="@+id/bill_payment"/>
 
@@ -99,7 +151,7 @@
         android:layout_height="38dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:contentDescription="@string/pay_bills"
         android:scaleType="centerInside"
         android:src="@drawable/icon_bills"
@@ -125,7 +177,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/payment_request"
+        android:text="@string/request_money"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="12sp"
@@ -138,7 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/scheduled"
+        android:text="@string/upcoming"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/scheduled"

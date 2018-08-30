@@ -18,12 +18,9 @@ import com.sterlingng.paylite.ui.airtime.AirTimePresenter
 import com.sterlingng.paylite.ui.bills.BillsMvpContract
 import com.sterlingng.paylite.ui.bills.BillsMvpView
 import com.sterlingng.paylite.ui.bills.BillsPresenter
-import com.sterlingng.paylite.ui.cashoutbank.CashOutBankMvpContract
-import com.sterlingng.paylite.ui.cashoutbank.CashOutBankMvpView
-import com.sterlingng.paylite.ui.cashoutbank.CashOutBankPresenter
-import com.sterlingng.paylite.ui.cashoutcode.DonateMvpContract
-import com.sterlingng.paylite.ui.cashoutcode.DonateMvpView
-import com.sterlingng.paylite.ui.cashoutcode.DonatePresenter
+import com.sterlingng.paylite.ui.cashoutbank.CashOutMvpContract
+import com.sterlingng.paylite.ui.cashoutbank.CashOutMvpView
+import com.sterlingng.paylite.ui.cashoutbank.CashOutPresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
@@ -188,10 +185,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
-    internal fun provideDonatePresenter(presenter: DonatePresenter<DonateMvpView>): DonateMvpContract<DonateMvpView> = presenter
-
-    @Provides
-    @PerActivity
     internal fun provideSignUpPresenter(presenter: SignUpPresenter<SignUpMvpView>): SignUpMvpContract<SignUpMvpView> = presenter
 
     @Provides
@@ -211,7 +204,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
 
     @Provides
-    internal fun provideTransferPresenter(presenter: CashOutBankPresenter<CashOutBankMvpView>): CashOutBankMvpContract<CashOutBankMvpView> = presenter
+    internal fun provideTransferPresenter(presenter: CashOutPresenter<CashOutMvpView>): CashOutMvpContract<CashOutMvpView> = presenter
 
     @Provides
     internal fun provideSendMoneyPresenter(presenter: SendMoneyPresenter<SendMoneyMvpView>): SendMoneyMvpContract<SendMoneyMvpView> = presenter

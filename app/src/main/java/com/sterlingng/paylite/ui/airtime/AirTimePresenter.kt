@@ -8,4 +8,8 @@ import javax.inject.Inject
 
 class AirTimePresenter<V : AirTimeMvpView> @Inject
 internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), AirTimeMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), AirTimeMvpContract<V> {
+    override fun loadCachedWallet() {
+        mvpView.initView(dataManager.getWallet())
+    }
+}

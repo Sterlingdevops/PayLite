@@ -162,7 +162,7 @@
     <string name="transactions">Transactions</string>
     <string name="jan">JAN</string>
     <string name="total_for_this_month">Total for this month</string>
-    <string name="upcoming">UPCOMING</string>
+    <string name="upcoming">Upcoming</string>
     <string name="apr">APR</string>
     <string name="mar">MAR</string>
     <string name="feb">FEB</string>
@@ -248,4 +248,7 @@
     <string name="bill_payment">Bill payment</string>
     <string name="payment_request">Payment request</string>
     <string name="scheduled">Scheduled</string>
+    <string name="login">Login</string>
+    <string name="get_cash">Get Cash</string>
+    <string name="split_cost">Split Cost</string>
 </resources>

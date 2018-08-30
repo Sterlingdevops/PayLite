@@ -233,8 +233,8 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
 
     }
 
-    override fun onFundWalletFailed(it: Throwable) {
-        show("An error occurred while processing the transaction", false)
+    override fun onFundWalletFailed(it: Response) {
+        show(it.message!!, false)
     }
 
     override fun onFundWalletSuccessful(wallet: Wallet) {

@@ -7,7 +7,7 @@ import com.sterlingng.paylite.ui.base.MvpView
 
 interface FundMvpView : MvpView {
     fun onLoadBanksFailed(it: Throwable)
-    fun onFundWalletFailed(it: Throwable)
+    fun onFundWalletFailed(it: Response)
     fun onFundWalletSuccessful(wallet: Wallet)
     fun onResolveCardNumberFailed(it: Throwable)
     fun onLoadBanksSuccessful(it: ArrayList<Bank>)

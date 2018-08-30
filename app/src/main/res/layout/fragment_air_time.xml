@@ -57,7 +57,7 @@
         android:contentDescription="@string/exit"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:layout_constraintBottom_toBottomOf="@+id/textView25"
+        app:layout_constraintBottom_toBottomOf="@+id/balance"
         app:layout_constraintStart_toStartOf="@+id/backdrop"
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:srcCompat="@drawable/chevron_left"/>
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/balance_201_00"

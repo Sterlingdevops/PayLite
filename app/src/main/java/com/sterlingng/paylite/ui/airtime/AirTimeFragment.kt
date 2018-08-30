@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -23,6 +24,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
@@ -38,10 +40,11 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
 
     private lateinit var next: Button
     private lateinit var exit: ImageView
-    private lateinit var phone: LargeLabelEditText
     private lateinit var amount: EditText
     private lateinit var bundle: EditText
     private lateinit var provider: EditText
+    private lateinit var phone: LargeLabelEditText
+    private lateinit var mBalanceTextView: TextView
     private lateinit var category: LargeLabelClickToSelectEditText<String>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,6 +53,10 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
         component.inject(this)
         mPresenter.onAttach(this)
         return view
+    }
+
+    override fun initView(wallet: Wallet?) {
+        mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet?.balance?.toFloat())
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -222,6 +229,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
         bundle = view.findViewById(R.id.bundles)
         category = view.findViewById(R.id.category)
         provider = view.findViewById(R.id.provider)
+        mBalanceTextView = view.findViewById(R.id.balance)
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

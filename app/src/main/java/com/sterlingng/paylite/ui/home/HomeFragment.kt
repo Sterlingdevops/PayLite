@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.UpdateWallet
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.data.model.Wallet
@@ -18,10 +19,9 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.fund.FundFragment
-import com.sterlingng.paylite.ui.profile.ProfileActivity
+import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
-import com.sterlingng.paylite.utils.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -126,7 +126,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         }
 
         mNotificationsImageView.setOnClickListener {
-            startActivity(ProfileActivity.getStartIntent(baseActivity))
+            (baseActivity as DashboardActivity).mNavController.pushFragment(ProfileFragment.newInstance())
         }
 
         mFundButton.setOnClickListener {
@@ -147,9 +147,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mUserGreetingTextView.text = "Hi ${currentUser?.username!!}"
     }
 
-    override fun onGetWalletFailed(it: Throwable) {
-        show(it.localizedMessage, true)
-        Log.e(it, "HomeFragment->onGetWalletFailed")
+    override fun onGetWalletFailed(response: Response?) {
+        show(response?.message!!, true)
     }
 
     override fun onGetWalletSuccessful(wallet: Wallet) {

@@ -8,4 +8,6 @@ import com.sterlingng.paylite.ui.base.MvpPresenter
  */
 
 @PerActivity
-interface CashOutBankMvpContract<V : CashOutBankMvpView> : MvpPresenter<V>
+interface CashOutMvpContract<V : CashOutMvpView> : MvpPresenter<V> {
+    fun loadCachedWallet()
+}

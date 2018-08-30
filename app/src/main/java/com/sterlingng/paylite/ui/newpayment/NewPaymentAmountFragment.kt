@@ -25,10 +25,13 @@ import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.AppUtils.gson
+import com.sterlingng.paylite.utils.AppUtils.isJSONValid
 import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import io.reactivex.disposables.CompositeDisposable
+import okhttp3.MediaType
+import okhttp3.ResponseBody
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.text.SimpleDateFormat
@@ -57,26 +60,39 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
 
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.sendMoney(user.token, data)
+                dataManager.sendMoney(data)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
                             if (it is java.net.SocketTimeoutException) {
                                 val response = Response()
                                 response.data = SocketTimeoutException()
-                                response.message = "Error server didn't respond fast enough and the request timed out"
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
                                 response.status = "failed"
                                 return@onErrorReturn response
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
-                                return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                                if (isJSONValid(raw!!)) {
+                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                                }
+                                val response = Response()
+                                response.data = HttpException(retrofit2.Response.error<String>(500,
+                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                response.status = "failed"
+                                return@onErrorReturn response
                             }
                         }
                         .subscribe {
-                            val wallet = gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
-                            dataManager.saveWallet(wallet)
-                            mvpView.hideLoading()
-                            mvpView.onSendMoneySuccessful(wallet)
+                            if (it.message == "successful") {
+                                val wallet = gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
+                                dataManager.saveWallet(wallet)
+                                mvpView.hideLoading()
+                                mvpView.onSendMoneySuccessful(wallet)
+                            } else {
+                                mvpView.hideLoading()
+                                mvpView.onSendMoneyFailed(it)
+                            }
                         }
         )
     }
@@ -159,13 +175,23 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         }
 
         next.setOnClickListener {
+            if (mAmountEditText.text.toString().isEmpty()) {
+                show("Amount should be more than NGN100", true)
+                return@setOnClickListener
+            }
+
+            try {
+                request?.amount = mAmountEditText.text.toString().toInt()
+            } catch (e: NumberFormatException) {
+                show("Amount should be more than NGN100", true)
+            }
+
             if (request == null) {
                 show("Request object is null", true)
                 return@setOnClickListener
             }
 
             request.comments = mAmountReferenceEditText.text.toString()
-            request.amount = mAmountEditText.text.toString().toInt()
 
             if (request.amount > 100) {
                 mPresenter.sendMoney(request.toHashMap())
@@ -230,12 +256,12 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         }
 
         mSetStartDateTextView.setOnClickListener {
-            showDatePicker("Payment Date", 0)
+            showDatePicker(0)
             hideKeyboard()
         }
 
         mSetEndDateTextView.setOnClickListener {
-            showDatePicker("End Date", 1)
+            showDatePicker(1)
             hideKeyboard()
         }
 
@@ -273,8 +299,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         show(response.message!!, true)
     }
 
-
-    private fun showDatePicker(date: String, type: Int) {
+    private fun showDatePicker(type: Int) {
         this.type = type
         SpinnerDatePickerDialogBuilder()
                 .context(baseActivity)

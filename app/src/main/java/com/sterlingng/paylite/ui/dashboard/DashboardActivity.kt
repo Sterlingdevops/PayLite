@@ -64,7 +64,6 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         mBottomNavigationView.apply {
             setLargeTextSize(14f)
             setSmallTextSize(10f)
-            setTextVisibility(false)
             enableAnimation(true)
             enableShiftingMode(false)
             enableItemShiftingMode(false)

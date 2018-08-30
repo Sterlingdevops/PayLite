@@ -36,7 +36,7 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun getWalletRealm(): WalletRealm? = mLocalDataHelper.getWalletRealm()
 
-    override fun sendMoney(token: String, data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendMoney(token, data)
+    override fun sendMoney(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendMoney(data)
 
     override fun resolveBankAccount(accountNumber: String, bankCode: String): Observable<Response> = mPayStackServiceHelper.resolveBankAccount(accountNumber, bankCode)
 
@@ -48,11 +48,11 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun signin(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.signin(data)
 
-    override fun getUser(username: String): Observable<Response> = mRemoteServiceHelper.getUser(username)
+    override fun getUser(bvn: String): Observable<Response> = mRemoteServiceHelper.getUser(bvn)
 
-    override fun fundWallet(token: String, data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.fundWallet(token, data)
+    override fun fundWallet(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.fundWallet(data)
 
-    override fun getWallet(token: String, username: String): Observable<Response> = mRemoteServiceHelper.getWallet(token, username)
+    override fun getWallet(bvn: String): Observable<Response> = mRemoteServiceHelper.getWallet(bvn)
 
     override fun deleteAll() = mLocalDataHelper.deleteAll()
 

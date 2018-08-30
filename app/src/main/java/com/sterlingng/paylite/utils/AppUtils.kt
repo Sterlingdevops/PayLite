@@ -7,7 +7,11 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.LongSerializationPolicy
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
+
 
 object AppUtils {
 
@@ -15,6 +19,24 @@ object AppUtils {
 
     fun createMessageID(): String {
         return UUID.randomUUID().toString().replace("-", "")
+    }
+
+    /**
+     * ref https://stackoverflow.com/questions/10174898/how-to-check-whether-a-given-string-is-valid-json-in-java
+     */
+    fun isJSONValid(test: String): Boolean {
+        try {
+            JSONObject(test)
+        } catch (ex: JSONException) {
+            // edited, to include @Arthur's comment
+            // e.g. in case JSONArray is valid as well...
+            try {
+                JSONArray(test)
+            } catch (ex1: JSONException) {
+                return false
+            }
+        }
+        return true
     }
 
     private fun gson(): Gson {

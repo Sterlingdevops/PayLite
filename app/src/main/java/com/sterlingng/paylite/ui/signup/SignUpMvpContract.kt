@@ -8,6 +8,4 @@ import com.sterlingng.paylite.ui.base.MvpPresenter
  */
 
 @PerActivity
-interface SignUpMvpContract<V : SignUpMvpView> : MvpPresenter<V>{
-    fun prepServer()
-}
+interface SignUpMvpContract<V : SignUpMvpView> : MvpPresenter<V>

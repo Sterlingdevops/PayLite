@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/wallpaper"/>
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/balance_201_00"
@@ -46,7 +46,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/backdrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView25"
+        app:layout_constraintTop_toBottomOf="@+id/balance"
         app:stl_clickable="true"
         app:stl_defaultTabBackground="?android:attr/selectableItemBackground"
         app:stl_defaultTabTextAllCaps="true"

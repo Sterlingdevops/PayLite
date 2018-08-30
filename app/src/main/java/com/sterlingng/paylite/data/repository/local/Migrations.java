@@ -17,7 +17,8 @@ public class Migrations implements RealmMigration {
         if (oldVersion == 1) {
             schema.get("UserRealm")
                     .addField("token", String.class)
-                    .setRequired("token", true);
+                    .setRequired("token", true)
+            ;
             ++oldVersion;
         }
 
@@ -31,6 +32,17 @@ public class Migrations implements RealmMigration {
                     .setRequired("name", true)
                     .setRequired("walletid", true)
                     .addPrimaryKey("walletid")
+            ;
+            ++oldVersion;
+        }
+
+        //version 4
+        if (oldVersion == 3) {
+            schema.get("UserRealm")
+                    .removeField("token")
+                    .removeField("userid")
+                    .removeField("wallet")
+                    .addPrimaryKey("bvn")
             ;
             ++oldVersion;
         }

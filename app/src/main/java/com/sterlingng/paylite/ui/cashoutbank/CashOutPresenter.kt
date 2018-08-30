@@ -10,7 +10,11 @@ import javax.inject.Inject
  * Created by rtukpe on 21/03/2018.
  */
 
-class CashOutBankPresenter<V : CashOutBankMvpView>
+class CashOutPresenter<V : CashOutMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CashOutBankMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CashOutMvpContract<V> {
+    override fun loadCachedWallet() {
+        mvpView.initView(dataManager.getWallet())
+    }
+}

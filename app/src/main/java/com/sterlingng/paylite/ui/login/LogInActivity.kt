@@ -22,7 +22,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
 
     private lateinit var loginButton: Button
     private lateinit var mPasswordEditText: LargeLabelEditText
-    private lateinit var mUsernameEditText: LargeLabelEditText
+    private lateinit var mEmailEditText: LargeLabelEditText
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -37,8 +37,8 @@ class LogInActivity : BaseActivity(), LogInMvpView {
 
     override fun bindViews() {
         loginButton = findViewById(R.id.sign_in)
+        mEmailEditText = findViewById(R.id.email)
         mPasswordEditText = findViewById(R.id.password)
-        mUsernameEditText = findViewById(R.id.username)
     }
 
     override fun setUp() {
@@ -47,7 +47,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
         loginButton.setOnClickListener {
             if (hasInternetConnection(this@LogInActivity)) {
                 val data = HashMap<String, Any>()
-                data["username"] = mUsernameEditText.mTextEditText.text.toString()
+                data["email"] = mEmailEditText.mTextEditText.text.toString()
                 data["password"] = mPasswordEditText.mTextEditText.text.toString()
                 mPresenter.doLogIn(data)
             } else {
@@ -57,9 +57,8 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     }
 
     override fun initView(currentUser: User) {
-        mUsernameEditText.mTextEditText.setText(currentUser.username)
+        mEmailEditText.mTextEditText.setText(currentUser.username)
         mPasswordEditText.mTextEditText.requestFocus()
-//        showKeyboard()
 
         val intent = DashboardActivity.getStartIntent(this)
                 .putExtra(DashboardActivity.SELECTED_ITEM, 0)
@@ -71,7 +70,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     }
 
     override fun onDoSignInSuccessful(response: Response) {
-        if (response.status == "success") {
+        if (response.message == "successful") {
             val intent = DashboardActivity.getStartIntent(this)
                     .putExtra(DashboardActivity.SELECTED_ITEM, 0)
             startActivity(intent)

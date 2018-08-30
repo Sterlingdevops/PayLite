@@ -45,7 +45,7 @@
             android:name=".ui.confirm.ConfirmFragment"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name=".ui.profile.ProfileFragment"
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.profile.edit.EditActivity"

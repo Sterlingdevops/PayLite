@@ -5,7 +5,6 @@ import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
-import com.sterlingng.paylite.ui.cashoutcode.CashOutCodeFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
@@ -17,7 +16,7 @@ import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
 import com.sterlingng.paylite.ui.newpayment.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
-import com.sterlingng.paylite.ui.profile.ProfileActivity
+import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.profile.edit.EditActivity
 import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
 import com.sterlingng.paylite.ui.request.RequestFragment
@@ -56,13 +55,11 @@ interface ActivityComponent {
 
     fun inject(billsActivity: BillsActivity)
 
-    fun inject(cashOutCodeFragment: CashOutCodeFragment)
-
     fun inject(confirmFragment: ConfirmFragment)
 
     fun inject(airTimeFragment: AirTimeFragment)
 
-    fun inject(profileActivity: ProfileActivity)
+    fun inject(profileFragment: ProfileFragment)
 
     fun inject(onBoardingActivity: SignUpActivity)
 

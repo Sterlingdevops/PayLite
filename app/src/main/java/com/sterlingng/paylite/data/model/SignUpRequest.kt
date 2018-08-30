@@ -19,11 +19,15 @@ class SignUpRequest {
         val data = HashMap<String, Any>()
         data["bvn"] = bvn
         data["email"] = email
-        data["username"] = username
-        data["password"] = password
-        data["last_name"] = lastName
-        data["first_name"] = firstName
-        data["phone_number"] = phoneNumber
+        data["Password"] = password
+        data["lastname"] = lastName
+        data["mobile"] = phoneNumber
+        data["firstname"] = firstName
+        data["HandleUsername"] = username
+
+        data["latitude"] = "0"
+        data["longitude"] = "0"
+
         return data
     }
 }

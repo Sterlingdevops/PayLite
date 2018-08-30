@@ -72,8 +72,6 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
 
         mViewPager.adapter = mPagerAdapter
         mViewPager.isPagingEnabled = false
-
-        mPresenter.prepServer()
     }
 
     override fun onBackPressed() {

@@ -8,7 +8,7 @@ import android.view.ViewGroup
  */
 
 internal object AppConstants {
-    val TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss"
+    const val TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss"
 }
 
 operator fun ViewGroup.get(view: View): Int {
