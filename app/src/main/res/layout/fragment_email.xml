@@ -11,9 +11,10 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/contact_details"
+        android:text="Input your email address"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineTop"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -21,58 +22,49 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="@string/to_enable_us_verify_your_account"
+        android:text="We need this to send you important updates and help with account recovery."
+        android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
     <com.sterlingng.views.LargeLabelEditText
-        android:id="@+id/phone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        app:hint="@string/_9075755888"
-        app:label="@string/ng_234"
-        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:maxLength="10"/>
-
-    <com.sterlingng.views.LargeLabelEditText
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="64dp"
         android:imeOptions="actionNext"
         android:inputType="textEmailAddress"
         android:textColor="@color/blue_black_dark"
-        app:label="Email      "
-        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/phone"/>
-
-    <com.sterlingng.views.LargeLabelEditText
-        android:id="@+id/bvn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        android:textColor="@color/blue_black_dark"
-        app:label="BVN        "
+        app:label="@string/email"
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:maxLength="11"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+
+    <ImageView
+        android:id="@+id/exit"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/exit"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:tint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/chevron_left"/>
 
     <Button
         android:id="@+id/next_email"
@@ -101,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="64dp"/>
+        app:layout_constraintGuide_begin="32dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineLeft"

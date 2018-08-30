@@ -45,7 +45,7 @@
     <string name="mm_yy">MM/YY</string>
     <string name="cvv">CVV</string>
     <string name="enter_card_details">Enter Card Details</string>
-    <string name="set_pin">Create a transaction PIN</string>
+    <string name="set_pin">Create a PIN</string>
     <string name="pin_info">To protect your account.</string>
     <!--<string name="pin">Pin</string>-->
     <string name="account_setup_completed">Account Setup Completed!</string>

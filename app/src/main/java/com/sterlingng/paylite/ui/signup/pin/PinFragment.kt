@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.utils.OnChildDidClickNext
-import kotlinx.android.synthetic.main.fragment_token.*
 import javax.inject.Inject
 
 class PinFragment : BaseFragment(), PinMvpView {
@@ -18,9 +18,9 @@ class PinFragment : BaseFragment(), PinMvpView {
     lateinit var mPresenter: PinMvpContract<PinMvpView>
 
     lateinit var mDidClickNext: OnChildDidClickNext
-
-    lateinit var next: Button
-    lateinit var pinView: PinView
+    private lateinit var pinView: PinView
+    private lateinit var exit: ImageView
+    private lateinit var next: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_token, container, false)
@@ -31,17 +31,22 @@ class PinFragment : BaseFragment(), PinMvpView {
     }
 
     override fun setUp(view: View) {
-        pin_view.setPinViewEventListener { _, _ ->
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
+        exit.setOnClickListener {
+            baseActivity.onBackPressed()
+        }
+
+        pinView.setPinViewEventListener { _, _ ->
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
             hideKeyboard()
         }
         next.setOnClickListener {
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
             hideKeyboard()
         }
     }
 
     override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next_pin)
         pinView = view.findViewById(R.id.pin_view)
     }

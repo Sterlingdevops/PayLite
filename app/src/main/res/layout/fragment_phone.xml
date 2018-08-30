@@ -6,6 +6,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="32dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="32dp"/>
+
     <ImageView
         android:id="@+id/exit"
         android:layout_width="32dp"
@@ -26,33 +54,49 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set_pin"
-        android:textAlignment="center"
+        android:text="Input your phone number"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineTop"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/pin_info"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:text="A verification code will be sent to this number"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
-    <Button
-        android:id="@+id/next_pin"
+    <com.sterlingng.views.LargeLabelEditText
+        android:id="@+id/phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        app:hint="@string/_9075755888"
+        app:label="@string/ng_234"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:maxLength="10"/>
+
+    <Button
+        android:id="@+id/next_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"
@@ -61,55 +105,22 @@
         android:text="@string/next"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintBottom_toTopOf="@+id/sign_in"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         tools:targetApi="lollipop"/>
 
-    <com.goodiebag.pinview.PinView
-        android:id="@+id/pin_view"
-        android:layout_width="0dp"
+
+    <TextView
+        android:id="@+id/sign_in"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        app:cursorVisible="true"
-        app:hint="0"
-        app:inputType="number"
+        android:padding="16dp"
+        android:text="Already have an account? Sign In"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:password="false"
-        app:pinBackground="@drawable/background_round_pin_view"
-        app:pinHeight="48dp"
-        app:pinLength="4"
-        app:pinWidth="48dp"/>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guidelineTop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="32dp"/>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guidelineLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="32dp"/>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guidelineRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="32dp"/>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guidelineBottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="32dp"/>
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"/>
 
 </android.support.constraint.ConstraintLayout>

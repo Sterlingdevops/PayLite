@@ -40,7 +40,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 val response = Response()
                                 response.data = SocketTimeoutException()
                                 response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.status = "failed"
+                                response.response = "failed"
                                 return@onErrorReturn response
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
@@ -51,7 +51,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 response.data = HttpException(retrofit2.Response.error<String>(500,
                                         ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
                                 response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.status = "failed"
+                                response.response = "failed"
                                 return@onErrorReturn response
                             }
                         }

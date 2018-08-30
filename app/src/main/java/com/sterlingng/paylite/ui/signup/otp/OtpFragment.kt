@@ -1,22 +1,17 @@
 package com.sterlingng.paylite.ui.signup.otp
 
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.utils.Log
+import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.utils.OnChildDidClickNext
-import com.sterlingng.paylite.utils.get
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class OtpFragment : BaseFragment(), OtpMvpView {
@@ -25,10 +20,9 @@ class OtpFragment : BaseFragment(), OtpMvpView {
     lateinit var mPresenter: OtpMvpContract<OtpMvpView>
 
     lateinit var mDidClickNext: OnChildDidClickNext
-    lateinit var next: Button
-    lateinit var resend: Button
     private lateinit var pinView: PinView
-    lateinit var disposable: Disposable
+    private lateinit var exit: ImageView
+    private lateinit var next: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_otp, container, false)
@@ -39,41 +33,38 @@ class OtpFragment : BaseFragment(), OtpMvpView {
     }
 
     override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next_otp)
-        resend = view.findViewById(R.id.resend)
         pinView = view.findViewById(R.id.pin_view)
     }
 
     override fun setUp(view: View) {
-        Log.d((next.parent as ConstraintLayout)[next].toString())
-
-        disposable = Flowable.interval(1, TimeUnit.SECONDS, Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    if (it > 0)
-                        resend.text = "Resend code in ${(20 - it) % 20}"
-                }
+        exit.setOnClickListener {
+            baseActivity.onBackPressed()
+        }
 
         pinView.setPinViewEventListener { _, _ ->
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
-            disposable.dispose()
+            val data = HashMap<String, Any>()
+            with((baseActivity as SignUpActivity).signUpRequest) {
+                data["mobile"] = phoneNumber
+                data["email"] = email
+                data["Otp"] = pinView.value
+            }
+            mPresenter.validateOtp(data)
             hideKeyboard()
         }
-        resend.setOnClickListener {
-            show("Resending token", true)
-            disposable.dispose()
-            hideKeyboard()
-        }
+
         next.setOnClickListener {
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
-            disposable.dispose()
             hideKeyboard()
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        disposable.dispose()
+    override fun onValidateOtpFailed(it: Response) {
+        show(it.message!!, true)
+    }
+
+    override fun onValidateOtpSuccessful(it: Response) {
+        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

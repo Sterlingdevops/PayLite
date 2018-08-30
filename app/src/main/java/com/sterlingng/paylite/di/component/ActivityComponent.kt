@@ -24,11 +24,13 @@ import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
+import com.sterlingng.paylite.ui.signup.bvn.BvnFragment
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
 import com.sterlingng.paylite.ui.signup.email.EmailFragment
 import com.sterlingng.paylite.ui.signup.name.NameFragment
 import com.sterlingng.paylite.ui.signup.otp.OtpFragment
 import com.sterlingng.paylite.ui.signup.password.PasswordFragment
+import com.sterlingng.paylite.ui.signup.phone.PhoneFragment
 import com.sterlingng.paylite.ui.signup.pin.PinFragment
 import com.sterlingng.paylite.ui.successful.SuccessfulActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
@@ -99,15 +101,19 @@ interface ActivityComponent {
 
     // Dialogs
 
-    fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
+    fun inject(bvnFragment: BvnFragment)
 
-    fun inject(settingsFragment: SettingsFragment)
+    fun inject(phoneFragment: PhoneFragment)
 
     fun inject(cashOutFragment: CashOutFragment)
+
+    fun inject(settingsFragment: SettingsFragment)
 
     fun inject(sendMoneyFragment: SendMoneyFragment)
 
     fun inject(newPaymentFragment: NewPaymentFragment)
 
     fun inject(newPaymentAmountFragment: NewPaymentAmountFragment)
+
+    fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
 }

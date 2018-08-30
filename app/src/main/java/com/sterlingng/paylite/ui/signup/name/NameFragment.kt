@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.utils.OnChildDidClickNext
@@ -21,7 +22,8 @@ class NameFragment : BaseFragment(), NameMvpView {
     private lateinit var mFirstNameEditText: EditText
     private lateinit var mLastNameEditText: EditText
     private lateinit var mUsernameEditText: EditText
-    lateinit var next: Button
+    private lateinit var exit: ImageView
+    private lateinit var next: Button
 
     lateinit var mDidClickNext: OnChildDidClickNext
 
@@ -34,6 +36,7 @@ class NameFragment : BaseFragment(), NameMvpView {
     }
 
     override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next_name)
         mUsernameEditText = view.findViewById(R.id.username)
         mLastNameEditText = view.findViewById(R.id.last_name)
@@ -43,7 +46,7 @@ class NameFragment : BaseFragment(), NameMvpView {
     override fun setUp(view: View) {
         next.setOnClickListener {
             if (mFirstNameEditText.text.isEmpty() || mLastNameEditText.text.isEmpty() || mUsernameEditText.text.isEmpty()) {
-                show("ALl the fields are required", true)
+                show("All the fields are required", true)
                 return@setOnClickListener
             }
 

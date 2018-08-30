@@ -74,6 +74,9 @@ import com.sterlingng.paylite.ui.settings.SettingsPresenter
 import com.sterlingng.paylite.ui.signup.SignUpMvpContract
 import com.sterlingng.paylite.ui.signup.SignUpMvpView
 import com.sterlingng.paylite.ui.signup.SignUpPresenter
+import com.sterlingng.paylite.ui.signup.bvn.BvnMvpContract
+import com.sterlingng.paylite.ui.signup.bvn.BvnMvpView
+import com.sterlingng.paylite.ui.signup.bvn.BvnPresenter
 import com.sterlingng.paylite.ui.signup.complete.CompleteMvpContract
 import com.sterlingng.paylite.ui.signup.complete.CompleteMvpView
 import com.sterlingng.paylite.ui.signup.complete.CompletePresenter
@@ -89,6 +92,9 @@ import com.sterlingng.paylite.ui.signup.otp.OtpPresenter
 import com.sterlingng.paylite.ui.signup.password.PasswordMvpContract
 import com.sterlingng.paylite.ui.signup.password.PasswordMvpView
 import com.sterlingng.paylite.ui.signup.password.PasswordPresenter
+import com.sterlingng.paylite.ui.signup.phone.PhoneMvpContract
+import com.sterlingng.paylite.ui.signup.phone.PhoneMvpView
+import com.sterlingng.paylite.ui.signup.phone.PhonePresenter
 import com.sterlingng.paylite.ui.signup.pin.PinMvpContract
 import com.sterlingng.paylite.ui.signup.pin.PinMvpView
 import com.sterlingng.paylite.ui.signup.pin.PinPresenter
@@ -242,10 +248,16 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun providePinPresenter(presenter: PinPresenter<PinMvpView>): PinMvpContract<PinMvpView> = presenter
 
     @Provides
+    internal fun provideBvnPresenter(presenter: BvnPresenter<BvnMvpView>): BvnMvpContract<BvnMvpView> = presenter
+
+    @Provides
     internal fun provideNamePresenter(presenter: NamePresenter<NameMvpView>): NameMvpContract<NameMvpView> = presenter
 
     @Provides
     internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter
+
+    @Provides
+    internal fun providePhonePresenter(presenter: PhonePresenter<PhoneMvpView>): PhoneMvpContract<PhoneMvpView> = presenter
 
     @Provides
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter

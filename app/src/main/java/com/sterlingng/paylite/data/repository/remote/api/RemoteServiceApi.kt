@@ -18,6 +18,9 @@ interface RemoteServiceApi {
     @POST("RegisterUser")
     fun signup(@Body data: HashMap<String, Any>): Observable<Response>
 
+    @POST("SendOtp")
+    fun sendOtp(@Body data: HashMap<String, Any>): Observable<Response>
+
     @GET("GetUserDetails")
     fun getUser(@Query("bvn") bvn: String): Observable<Response>
 
@@ -29,4 +32,7 @@ interface RemoteServiceApi {
 
     @POST("wallets/fund")
     fun fundWallet(@Body data: HashMap<String, Any>): Observable<Response>
+
+    @POST("ValidateOtp")
+    fun validateOtp(@Body data: HashMap<String, Any>): Observable<Response>
 }
