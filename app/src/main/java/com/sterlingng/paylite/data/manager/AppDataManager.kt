@@ -28,6 +28,8 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun validateOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.validateOtp(data)
 
+    override fun buyAirtime(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.buyAirtime(data)
+
     override fun sendOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendOtp(data)
 
     override fun mockBanks(): ArrayList<Bank> = mMockHelper.mockBanks()

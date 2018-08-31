@@ -98,6 +98,9 @@ import com.sterlingng.paylite.ui.signup.phone.PhonePresenter
 import com.sterlingng.paylite.ui.signup.pin.PinMvpContract
 import com.sterlingng.paylite.ui.signup.pin.PinMvpView
 import com.sterlingng.paylite.ui.signup.pin.PinPresenter
+import com.sterlingng.paylite.ui.splitamount.SplitAmountMvpContract
+import com.sterlingng.paylite.ui.splitamount.SplitAmountMvpView
+import com.sterlingng.paylite.ui.splitamount.SplitAmountPresenter
 import com.sterlingng.paylite.ui.successful.CategoriesAdapter
 import com.sterlingng.paylite.ui.successful.SuccessfulMvpContract
 import com.sterlingng.paylite.ui.successful.SuccessfulMvpView
@@ -282,4 +285,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideCategoriesPresenter(presenter: CategoriesPresenter<CategoriesMvpView>): CategoriesMvpContract<CategoriesMvpView> = presenter
+
+    @Provides
+    internal fun provideSplitAmountPresenter(presenter: SplitAmountPresenter<SplitAmountMvpView>): SplitAmountMvpContract<SplitAmountMvpView> = presenter
 }

@@ -35,4 +35,7 @@ interface RemoteServiceApi {
 
     @POST("ValidateOtp")
     fun validateOtp(@Body data: HashMap<String, Any>): Observable<Response>
+
+    @POST("BuyAirtimeFromWallet")
+    fun buyAirtime(@Body data: HashMap<String, Any>): Observable<Response>
 }

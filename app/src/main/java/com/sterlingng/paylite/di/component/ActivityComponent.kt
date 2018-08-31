@@ -32,6 +32,7 @@ import com.sterlingng.paylite.ui.signup.otp.OtpFragment
 import com.sterlingng.paylite.ui.signup.password.PasswordFragment
 import com.sterlingng.paylite.ui.signup.phone.PhoneFragment
 import com.sterlingng.paylite.ui.signup.pin.PinFragment
+import com.sterlingng.paylite.ui.splitamount.SplitAmountFragment
 import com.sterlingng.paylite.ui.successful.SuccessfulActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
@@ -116,4 +117,6 @@ interface ActivityComponent {
     fun inject(newPaymentAmountFragment: NewPaymentAmountFragment)
 
     fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
+
+    fun inject(splitAmountFragment: SplitAmountFragment)
 }

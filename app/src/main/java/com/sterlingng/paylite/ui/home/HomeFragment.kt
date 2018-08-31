@@ -22,6 +22,7 @@ import com.sterlingng.paylite.ui.fund.FundFragment
 import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
+import com.sterlingng.paylite.ui.splitamount.SplitAmountFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -39,16 +40,18 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mRequestMoneyImageView: ImageView
     private lateinit var mAirTimeDataImageView: ImageView
     private lateinit var mSendMoneyImageView: ImageView
-    private lateinit var mPayBillsImageView: ImageView
     private lateinit var mScheduledImageView: ImageView
+    private lateinit var mSplitCostImageView: ImageView
+    private lateinit var mPayBillsImageView: ImageView
     private lateinit var mCashOutImageView: ImageView
 
     private lateinit var mRequestMoneyTextView: TextView
     private lateinit var mAirTimeDataTextView: TextView
     private lateinit var mSendMoneyTextView: TextView
+    private lateinit var mScheduledTextView: TextView
+    private lateinit var mSplitCostTextView: TextView
     private lateinit var mPayBillsTextView: TextView
     private lateinit var mCashOutTextView: TextView
-    private lateinit var mScheduledTextView: TextView
 
     private lateinit var mUserGreetingTextView: TextView
     private lateinit var mMainAmountTextView: TextView
@@ -85,6 +88,9 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mMainAmountTextView = view.findViewById(R.id.main_amount)
         mFundButton = view.findViewById(R.id.fund)
+
+        mSplitCostImageView = view.findViewById(R.id.split_bill)
+        mSplitCostTextView = view.findViewById(R.id.split_bill_text)
 
         mUserGreetingTextView = view.findViewById(R.id.user_greeting)
     }
@@ -139,6 +145,14 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mCashOutTextView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(CashOutFragment.newInstance())
+        }
+
+        mSplitCostImageView.setOnClickListener {
+            (baseActivity as DashboardActivity).mNavController.pushFragment(SplitAmountFragment.newInstance())
+        }
+
+        mSplitCostTextView.setOnClickListener {
+            (baseActivity as DashboardActivity).mNavController.pushFragment(SplitAmountFragment.newInstance())
         }
     }
 
