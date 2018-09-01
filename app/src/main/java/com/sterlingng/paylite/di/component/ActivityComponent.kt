@@ -6,6 +6,7 @@ import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
+import com.sterlingng.paylite.ui.contacts.SelectContactsBottomSheetFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.fund.FundFragment
@@ -115,11 +116,13 @@ interface ActivityComponent {
 
     fun inject(newPaymentFragment: NewPaymentFragment)
 
+    fun inject(splitAmountFragment: SplitAmountFragment)
+
+    fun inject(splitContactFragment: SplitContactFragment)
+
     fun inject(newPaymentAmountFragment: NewPaymentAmountFragment)
 
     fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
 
-    fun inject(splitAmountFragment: SplitAmountFragment)
-
-    fun inject(splitContactFragment: SplitContactFragment)
+    fun inject(selectContactsBottomSheetFragment: SelectContactsBottomSheetFragment)
 }

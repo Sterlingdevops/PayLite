@@ -1,23 +1,22 @@
-package com.sterlingng.paylite.ui.send
+package com.sterlingng.paylite.ui.contacts
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.PayliteContact
+import com.sterlingng.paylite.data.model.Contact
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
-import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapter<BaseViewHolder>() {
+class SelectContactsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    val payliteContacts: ArrayList<PayliteContact> = ArrayList()
+    private val contacts: ArrayList<Contact> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
     lateinit var onRetryClickedListener: OnRetryClicked
 
@@ -25,16 +24,8 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
         val view: View?
         return when (viewType) {
             VIEW_TYPE_NORMAL -> {
-                when (type) {
-                    0 -> {
-                        view = LayoutInflater.from(mContext).inflate(R.layout.layout_contact_item, parent, false)
-                        ViewHolder(view, mRecyclerViewClickListener)
-                    }
-                    else -> {
-                        view = LayoutInflater.from(mContext).inflate(R.layout.layout_recent_contact_item, parent, false)
-                        ViewHolder(view, mRecyclerViewClickListener)
-                    }
-                }
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_filter_item, parent, false)
+                ViewHolder(view, mRecyclerViewClickListener)
             }
             VIEW_TYPE_EMPTY -> {
                 view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
@@ -47,27 +38,31 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
         }
     }
 
-    fun get(position: Int): PayliteContact = payliteContacts[position]
+    fun get(position: Int): Contact = contacts[position]
 
-    fun add(payliteContact: PayliteContact) {
-        payliteContacts.add(payliteContact)
-        notifyItemInserted(this.payliteContacts.size - 1)
+    fun add(item: Contact) {
+        contacts.add(item)
+        notifyItemInserted(this.contacts.size - 1)
     }
 
-    fun add(payliteContacts: Collection<PayliteContact>) {
-        val index = this.payliteContacts.size - 1
-        this.payliteContacts.addAll(payliteContacts.filterNot { it.firstname == "See" })
-        notifyItemRangeInserted(index, payliteContacts.size - 1)
+    fun add(contacts: Collection<Contact>) {
+        val index = this.contacts.size - 1
+        this.contacts.addAll(contacts)
+        notifyItemRangeInserted(index, contacts.size - 1)
     }
 
     fun remove(index: Int) {
-        this.payliteContacts.removeAt(index)
+        if (contacts.size <= 2) {
+            Toast.makeText(mContext, "Split action needs at least people", LENGTH_SHORT).show()
+            return
+        }
+        contacts.removeAt(index)
         notifyItemRemoved(index)
     }
 
     fun clear() {
-        for (index in 0 until payliteContacts.size) {
-            this.payliteContacts.removeAt(0)
+        for (index in 0 until contacts.size - 2) {
+            this.contacts.removeAt(0)
             notifyItemRemoved(0)
         }
     }
@@ -77,7 +72,7 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (payliteContacts.size > 0) {
+        return if (contacts.size > 0) {
             VIEW_TYPE_NORMAL
         } else {
             VIEW_TYPE_EMPTY
@@ -85,29 +80,22 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
     }
 
     override fun getItemCount(): Int {
-        return if (payliteContacts.size > 0) {
-            payliteContacts.size
+        return if (contacts.size > 0) {
+            contacts.size
         } else {
             1
         }
     }
 
-    inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
 
-        private val contactNameTextView: TextView = itemView.findViewById(R.id.name)
-        private val contactInitialsTextView: TextView? = itemView.findViewById(R.id.initials)
-        private val contactLogoImageView: CircleImageView = itemView.findViewById(R.id.image)
+        private val filterItemTextView: TextView = itemView.findViewById(R.id.filter_item)
 
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            with(payliteContacts[position]) {
-                if (type == 1)
-                    contactInitialsTextView?.text = "${firstname[0]}${lastname[0]}".toUpperCase()
-                contactNameTextView.text = "$firstname $lastname"
-                contactLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, image))
-                if (firstname == "See")
-                    contactLogoImageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            with(contacts[position]) {
+                filterItemTextView.text = name
             }
             itemView.setOnClickListener {
                 recyclerViewClickListener.recyclerViewListClicked(it, position)

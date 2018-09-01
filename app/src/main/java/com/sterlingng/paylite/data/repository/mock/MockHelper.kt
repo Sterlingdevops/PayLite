@@ -123,11 +123,11 @@ internal constructor() : MockerInterface {
         return gson.fromJson(banks, type)
     }
 
-    override fun mockContacts(): ArrayList<Contact> {
-        val contacts = ArrayList<Contact>()
-        contacts += Contact("Tukpe", "Raymond", R.color.light_green, R.color.blue_black_dark)
-        contacts += Contact("Oluyebi", "Dara", R.color.light_blue, R.color.dark_sage)
-        contacts += Contact("See", "all", R.drawable.phone_book, R.color.dark_sage)
+    override fun mockContacts(): ArrayList<PayliteContact> {
+        val contacts = ArrayList<PayliteContact>()
+        contacts += PayliteContact("Tukpe", "Raymond", R.color.light_green, R.color.blue_black_dark)
+        contacts += PayliteContact("Oluyebi", "Dara", R.color.light_blue, R.color.dark_sage)
+        contacts += PayliteContact("See", "all", R.drawable.phone_book, R.color.dark_sage)
         return contacts
     }
 

@@ -53,7 +53,7 @@ class MainActivityTest {
         onView(withId(R.id.last_name)).perform(typeText("Tukpe"), closeSoftKeyboard())
         onView(allOf(withId(R.id.next_name), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.textView3), withText("Contact details"), isDisplayed()))
+        onView(allOf(withId(R.id.textView3), withText("PayliteContact details"), isDisplayed()))
         onView(allOf(
                 childAtPosition(
                         childAtPosition(

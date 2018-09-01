@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -18,9 +19,6 @@
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
         <activity
-            android:name=".ui.dashboard.DashboardActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
             android:name=".ui.main.MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -29,40 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.login.LogInActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".ui.signup.SignUpActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".ui.project.ProjectActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".ui.cashoutcode.CashOutCodeFragment"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".ui.confirm.ConfirmFragment"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".ui.profile.ProfileFragment"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".ui.profile.edit.EditActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".ui.profile.notifications.NotificationActivity"/>
-        <activity android:name=".ui.charity.CharityActivity"/>
+        <activity android:name=".ui.dashboard.DashboardActivity"/>
+        <activity android:name=".ui.login.LogInActivity"/>
+        <activity android:name=".ui.signup.SignUpActivity"/>
+        <activity android:name=".ui.profile.edit.EditActivity"/>
         <activity android:name=".ui.bills.BillsActivity"/>
-        <activity android:name=".ui.airtime.AirTimeFragment"/>
-        <activity android:name=".ui.add.AddActivity"/>
-        <activity android:name=".ui.fund.FundFragment"/>
-        <activity android:name=".ui.successful.SuccessfulActivity"/>
-        <activity android:name=".ui.payment.PaymentFragment"/>
-        <activity android:name=".ui.request.RequestFragment"/>
-        <activity android:name=".ui.cashoutbank.CashOutFragment"/>
-        <activity android:name=".ui.send.SendMoneyFragment"/>
-        <activity android:name=".ui.newpayment.NewPaymentFragment"/>
-        <activity android:name=".ui.newpayment.NewPaymentAmountFragment"/>
+        <activity android:name=".ui.profile.notifications.NotificationActivity"/>
     </application>
 
 </manifest>

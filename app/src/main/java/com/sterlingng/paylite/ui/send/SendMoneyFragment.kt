@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.manager.DataManager
-import com.sterlingng.paylite.data.model.Contact
+import com.sterlingng.paylite.data.model.PayliteContact
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BaseFragment
@@ -28,7 +28,7 @@ interface SendMoneyMvpContract<V : SendMoneyMvpView> : MvpPresenter<V> {
 }
 
 interface SendMoneyMvpView : MvpView {
-    fun updateContacts(it: ArrayList<Contact>)
+    fun updateContacts(it: ArrayList<PayliteContact>)
     fun initView(wallet: Wallet?)
 }
 
@@ -77,7 +77,7 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRe
         return view
     }
 
-    override fun updateContacts(it: ArrayList<Contact>) {
+    override fun updateContacts(it: ArrayList<PayliteContact>) {
         mContactsAdapter.add(it)
         mRecentAdapter.add(it)
     }
@@ -88,7 +88,7 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRe
             baseActivity.onBackPressed()
         }
 
-        // Contact
+        // PayliteContact
 
         mContactsAdapter = ContactsAdapter(baseActivity, 0)
         mContactsLinearLayoutManager = NoScrollingLinearLayoutManager(baseActivity)

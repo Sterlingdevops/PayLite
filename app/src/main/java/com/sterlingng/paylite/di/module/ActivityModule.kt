@@ -24,6 +24,9 @@ import com.sterlingng.paylite.ui.cashoutbank.CashOutPresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
+import com.sterlingng.paylite.ui.contacts.SelectContactPresenter
+import com.sterlingng.paylite.ui.contacts.SelectContactsMvpContract
+import com.sterlingng.paylite.ui.contacts.SelectContactsMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
@@ -294,4 +297,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideSplitContactPresenter(presenter: SplitContactPresenter<SplitContactMvpView>): SplitContactMvpContract<SplitContactMvpView> = presenter
+
+    @Provides
+    internal fun provideSelectContactPresenter(presenter: SelectContactPresenter<SelectContactsMvpView>): SelectContactsMvpContract<SelectContactsMvpView> = presenter
 }

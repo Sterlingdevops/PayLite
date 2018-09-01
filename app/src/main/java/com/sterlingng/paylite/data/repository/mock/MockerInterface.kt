@@ -6,7 +6,7 @@ interface MockerInterface {
     fun mockBanks(): ArrayList<Bank>
     fun mockDeals(): ArrayList<Deal>
     fun mockProjects(): ArrayList<Project>
-    fun mockContacts(): ArrayList<Contact>
+    fun mockContacts(): ArrayList<PayliteContact>
     fun mockCharities(): ArrayList<Charity>
     fun mockTransactions(): ArrayList<Transaction>
     fun mockNotifications(): ArrayList<Notification>

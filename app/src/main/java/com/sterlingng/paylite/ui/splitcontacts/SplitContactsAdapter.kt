@@ -1,6 +1,9 @@
 package com.sterlingng.paylite.ui.splitcontacts
 
 import android.content.Context
+import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,47 +15,34 @@ import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.ContactItem
-import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
-class SplitContactsAdapter(val mContext: Context) : RecyclerSwipeAdapter<BaseViewHolder>() {
+class SplitContactsAdapter(val mContext: Context) : RecyclerSwipeAdapter<SplitContactsAdapter.ViewHolder>() {
 
-    private val contacts: ArrayList<ContactItem> = ArrayList()
+    val contacts: ArrayList<ContactItem> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
-    lateinit var onRetryClickedListener: OnRetryClicked
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val view: View?
-        return when (viewType) {
-            VIEW_TYPE_NORMAL -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_add_contact_item, parent, false)
-                ViewHolder(view, mRecyclerViewClickListener)
-            }
-            VIEW_TYPE_EMPTY -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
-                EmptyViewHolder(view)
-            }
-            else -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
-                EmptyViewHolder(view)
-            }
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view: View = LayoutInflater.from(mContext).inflate(R.layout.layout_add_contact_item, parent, false)
+        return ViewHolder(view, mRecyclerViewClickListener, ContactAmountTextWatcher())
     }
 
-    override fun getSwipeLayoutResourceId(position: Int): Int = R.id.swipe
+    override fun getSwipeLayoutResourceId(adapterPosition: Int): Int = R.id.swipe
 
     fun get(position: Int): ContactItem = contacts[position]
 
-    fun add(ContactItem: ContactItem) {
-        contacts.add(ContactItem)
-        notifyItemInserted(this.contacts.size - 1)
+    fun add(item: ContactItem) {
+        contacts.add(item)
+//        notifyItemInserted(this.contacts.size - 1)
+        notifyDataSetChanged()
     }
 
     fun add(contacts: Collection<ContactItem>) {
         val index = this.contacts.size - 1
         this.contacts.addAll(contacts)
-        notifyItemRangeInserted(index, contacts.size - 1)
+//        notifyItemRangeInserted(index, contacts.size - 1)
+        notifyDataSetChanged()
     }
 
     fun remove(index: Int) {
@@ -60,8 +50,9 @@ class SplitContactsAdapter(val mContext: Context) : RecyclerSwipeAdapter<BaseVie
             Toast.makeText(mContext, "Split action needs at least people", LENGTH_SHORT).show()
             return
         }
-        this.contacts.removeAt(index)
-        notifyItemRemoved(index)
+        contacts.removeAt(index)
+//        notifyItemRemoved(index)
+        notifyDataSetChanged()
     }
 
     fun clear() {
@@ -69,78 +60,58 @@ class SplitContactsAdapter(val mContext: Context) : RecyclerSwipeAdapter<BaseVie
             this.contacts.removeAt(0)
             notifyItemRemoved(0)
         }
+        notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        holder.onBind(position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.mContactAmountTextWatcher.updatePosition(holder.adapterPosition)
+        holder.chooseContactTextView.text = contacts[holder.adapterPosition].contact
+        holder.contactAmountEditText.setText(contacts[holder.adapterPosition].amount)
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (contacts.size > 0) {
-            VIEW_TYPE_NORMAL
-        } else {
-            VIEW_TYPE_EMPTY
-        }
-    }
+    override fun getItemCount(): Int = contacts.size
 
-    override fun getItemCount(): Int {
-        return if (contacts.size > 0) {
-            contacts.size
-        } else {
-            1
-        }
-    }
-
-    inner class ViewHolder(itemView: View, var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View,
+                           recyclerViewClickListener: RecyclerViewClickListener,
+                           contactAmountTextWatcher: ContactAmountTextWatcher) : RecyclerView.ViewHolder(itemView) {
 
         private val swipeLayout: SwipeLayout = itemView.findViewById(R.id.swipe)
-        private val chooseContactTextView: TextView = itemView.findViewById(R.id.choose_contact)
         private val deleteContactTextView: TextView = itemView.findViewById(R.id.delete)
-        private val contactAmountEditText: EditText = itemView.findViewById(R.id.contact_amount)
+        val chooseContactTextView: TextView = itemView.findViewById(R.id.choose_contact)
+        val contactAmountEditText: EditText = itemView.findViewById(R.id.contact_amount)
+        val mContactAmountTextWatcher: ContactAmountTextWatcher = contactAmountTextWatcher
 
-        override fun onBind(position: Int) {
-            super.onBind(position)
-
+        init {
+            contactAmountEditText.addTextChangedListener(contactAmountTextWatcher)
             swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
 
             deleteContactTextView.setOnClickListener {
-                remove(position)
+                remove(adapterPosition)
             }
 
             chooseContactTextView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, position)
+                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
             }
         }
     }
 
-    inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView) {
+    inner class ContactAmountTextWatcher : TextWatcher {
+        var index: Int = -1
 
-        private var errorText: TextView = itemView.findViewById(R.id.error_text)
-        private var retry: TextView = itemView.findViewById(R.id.retry)
-
-        override fun onBind(position: Int) {
-            super.onBind(position)
-            checkConnection()
-            retry.setOnClickListener { retryClicked() }
+        fun updatePosition(position: Int) {
+            this.index = position
         }
 
-        private fun checkConnection() {
-            errorText.text = mContext.resources.getString(R.string.offline)
+        override fun afterTextChanged(s: Editable?) {
+            contacts[index].amount = s?.toString()!!
         }
 
-        private fun retryClicked() {
-            checkConnection()
-            onRetryClickedListener.onRetryClicked()
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
         }
-    }
 
-    interface OnRetryClicked {
-        fun onRetryClicked()
-    }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-    companion object {
-
-        private const val VIEW_TYPE_NORMAL = 1
-        private const val VIEW_TYPE_EMPTY = 0
+        }
     }
 }

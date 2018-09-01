@@ -72,7 +72,7 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun getUserRealm(): UserRealm? = mLocalDataHelper.getUserRealm()
 
-    override fun mockContacts(): ArrayList<Contact> = mMockHelper.mockContacts()
+    override fun mockContacts(): ArrayList<PayliteContact> = mMockHelper.mockContacts()
 
     override fun mockPaymentMethods(): ArrayList<PaymentMethod> = mMockHelper.mockPaymentMethods()
 
