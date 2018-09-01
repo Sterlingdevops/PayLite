@@ -12,6 +12,8 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.splitcontacts.SplitContactFragment
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -56,6 +58,9 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
                 show("SplitAmount number is required", true)
                 return@setOnClickListener
             }
+
+            (baseActivity as DashboardActivity).mNavController
+                    .pushFragment(SplitContactFragment.newInstance(mSplitAmountEditText.text.toString()))
         }
 
         exit.setOnClickListener {

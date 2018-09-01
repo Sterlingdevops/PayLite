@@ -159,6 +159,7 @@ dependencies {
     implementation 'com.budiyev.android:circular-progress-bar:1.2.0'
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
     implementation 'com.ncapdevi:frag-nav:3.0.0-RC3'
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
 
     kapt 'com.github.bumptech.glide:compiler:4.7.1'
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
