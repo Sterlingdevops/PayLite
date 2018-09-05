@@ -7,10 +7,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PaymentMethod
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.fund.FundFragment
 import javax.inject.Inject
 
 class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.OnRetryClicked {
@@ -18,6 +21,7 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
     @Inject
     lateinit var mPresenter: PaymentMvpContract<PaymentMvpView>
 
+    private lateinit var add: Button
     private lateinit var exit: ImageView
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mPaymentMethodsAdapter: PaymentMethodsAdapter
@@ -37,6 +41,7 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
     }
 
     override fun bindViews(view: View) {
+        add = view.findViewById(R.id.add)
         exit = view.findViewById(R.id.exit)
         mRecyclerView = view.findViewById(R.id.recyclerView)
     }
@@ -44,6 +49,10 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
     override fun setUp(view: View) {
         exit.setOnClickListener {
             baseActivity.onBackPressed()
+        }
+
+        add.setOnClickListener {
+            (baseActivity as DashboardActivity).mNavController.pushFragment(FundFragment.newInstance())
         }
 
         mPaymentMethodsAdapter = PaymentMethodsAdapter(baseActivity)
@@ -65,7 +74,10 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
-        mPaymentMethodsAdapter.toggleSelection(position)
+        when (v.id) {
+            R.id.default_payment_method -> mPaymentMethodsAdapter.toggleSelection(position)
+            R.id.payment_method -> (baseActivity as DashboardActivity).mNavController.pushFragment(FundFragment.newInstance())
+        }
     }
 
     companion object {

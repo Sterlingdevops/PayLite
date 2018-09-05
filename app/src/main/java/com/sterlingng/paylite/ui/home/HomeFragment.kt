@@ -18,8 +18,8 @@ import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.fund.FundFragment
 import com.sterlingng.paylite.ui.getcash.GetCashFragment
+import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
@@ -103,7 +103,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
-//        mPresenter.loadWallet()
+        mPresenter.loadWallet()
 
         eventBus.observe(UpdateWallet::class.java)
                 .delay(1L, TimeUnit.SECONDS)
@@ -142,7 +142,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         }
 
         mFundButton.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(FundFragment.newInstance())
+            (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
+//            (baseActivity as DashboardActivity).mNavController.pushFragment(FundFragment.newInstance())
         }
 
         mCashOutImageView.setOnClickListener {

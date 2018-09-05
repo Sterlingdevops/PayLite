@@ -1,6 +1,5 @@
 package com.sterlingng.paylite.ui.home
 
-import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Wallet
@@ -58,10 +57,9 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         }
                         .subscribe {
                             if (it.response != null && it.response == "00") {
-                                val type = object : TypeToken<ArrayList<Wallet>>() {}.type
-                                val wallet = gson.fromJson<ArrayList<Wallet>>(gson.toJson(it.data), type)
-                                dataManager.saveWallet(wallet[0])
-                                mvpView.onGetWalletSuccessful(wallet[0])
+                                val wallet = gson.fromJson(gson.toJson(it.data), Wallet::class.java)
+                                dataManager.saveWallet(wallet)
+                                mvpView.onGetWalletSuccessful(wallet)
                             } else {
                                 mvpView.onGetWalletFailed(it)
                             }

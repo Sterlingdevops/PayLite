@@ -125,6 +125,10 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
                 defaultTextView.setTextColor(ContextCompat.getColor(mContext, R.color.dark_sky_blue))
             }
 
+            defaultTextView.setOnClickListener {
+                recyclerViewClickListener.recyclerViewListClicked(it, position)
+            }
+
             itemView.setOnClickListener {
                 recyclerViewClickListener.recyclerViewListClicked(it, position)
             }
