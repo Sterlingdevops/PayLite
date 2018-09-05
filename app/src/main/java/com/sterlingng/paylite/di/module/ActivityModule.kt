@@ -24,9 +24,9 @@ import com.sterlingng.paylite.ui.cashoutbank.CashOutPresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
+import com.sterlingng.paylite.ui.contacts.ContactsMvpContract
+import com.sterlingng.paylite.ui.contacts.ContactsMvpView
 import com.sterlingng.paylite.ui.contacts.SelectContactPresenter
-import com.sterlingng.paylite.ui.contacts.SelectContactsMvpContract
-import com.sterlingng.paylite.ui.contacts.SelectContactsMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
@@ -36,6 +36,9 @@ import com.sterlingng.paylite.ui.filter.FilterPresenter
 import com.sterlingng.paylite.ui.fund.FundMvpContract
 import com.sterlingng.paylite.ui.fund.FundMvpView
 import com.sterlingng.paylite.ui.fund.FundPresenter
+import com.sterlingng.paylite.ui.getcash.GetCashMvpContract
+import com.sterlingng.paylite.ui.getcash.GetCashMvpView
+import com.sterlingng.paylite.ui.getcash.GetCashPresenter
 import com.sterlingng.paylite.ui.home.HomeMvpContract
 import com.sterlingng.paylite.ui.home.HomeMvpView
 import com.sterlingng.paylite.ui.home.HomePresenter
@@ -275,6 +278,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter
 
     @Provides
+    internal fun provideGetCashPresenter(presenter: GetCashPresenter<GetCashMvpView>): GetCashMvpContract<GetCashMvpView> = presenter
+
+    @Provides
     internal fun provideCompletePresenter(presenter: CompletePresenter<CompleteMvpView>): CompleteMvpContract<CompleteMvpView> = presenter
 
     @Provides
@@ -299,5 +305,5 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideSplitContactPresenter(presenter: SplitContactPresenter<SplitContactMvpView>): SplitContactMvpContract<SplitContactMvpView> = presenter
 
     @Provides
-    internal fun provideSelectContactPresenter(presenter: SelectContactPresenter<SelectContactsMvpView>): SelectContactsMvpContract<SelectContactsMvpView> = presenter
+    internal fun provideSelectContactPresenter(presenter: SelectContactPresenter<ContactsMvpView>): ContactsMvpContract<ContactsMvpView> = presenter
 }

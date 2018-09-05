@@ -4,15 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
+import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Response
-import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.utils.AppUtils.hasInternetConnection
-import com.sterlingng.views.LargeLabelEditText
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
 class LogInActivity : BaseActivity(), LogInMvpView {
@@ -20,13 +17,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     @Inject
     lateinit var mPresenter: LogInMvpContract<LogInMvpView>
 
-    private lateinit var loginButton: Button
-    private lateinit var mPasswordEditText: LargeLabelEditText
-    private lateinit var mEmailEditText: LargeLabelEditText
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
+    private lateinit var mPinView: PinView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,33 +27,26 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     }
 
     override fun bindViews() {
-        loginButton = findViewById(R.id.sign_in)
-        mEmailEditText = findViewById(R.id.email)
-        mPasswordEditText = findViewById(R.id.password)
+        mPinView = findViewById(R.id.pin_view)
     }
 
     override fun setUp() {
         mPresenter.onViewInitialized()
 
-        loginButton.setOnClickListener {
+        mPinView.setOnClickListener {
+            showKeyboard()
+            mPinView.requestPinEntryFocus()
+        }
+
+        mPinView.setPinViewEventListener { _, _ ->
             if (hasInternetConnection(this@LogInActivity)) {
                 val data = HashMap<String, Any>()
-                data["email"] = mEmailEditText.mTextEditText.text.toString()
-                data["password"] = mPasswordEditText.mTextEditText.text.toString()
+                data["password"] = mPinView.value
                 mPresenter.doLogIn(data)
             } else {
-                show("Please check you internet connection", true)
+                show("Internet connection required", true)
             }
         }
-    }
-
-    override fun initView(currentUser: User) {
-        mEmailEditText.mTextEditText.setText(currentUser.username)
-        mPasswordEditText.mTextEditText.requestFocus()
-
-        val intent = DashboardActivity.getStartIntent(this)
-                .putExtra(DashboardActivity.SELECTED_ITEM, 0)
-        startActivity(intent)
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
@@ -70,15 +54,15 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     }
 
     override fun onDoSignInSuccessful(response: Response) {
-        if (response.message == "successful") {
-            val intent = DashboardActivity.getStartIntent(this)
-                    .putExtra(DashboardActivity.SELECTED_ITEM, 0)
-            startActivity(intent)
-        }
+        hideKeyboard()
+        val intent = DashboardActivity.getStartIntent(this)
+                .putExtra(DashboardActivity.SELECTED_ITEM, 0)
+        startActivity(intent)
     }
 
     override fun onDoSignInFailed(response: Response) {
-        show(response.message!!, true)
+        show("Error logging in. Please check the email and password", true)
+        mPinView.clearValue()
     }
 
     companion object {

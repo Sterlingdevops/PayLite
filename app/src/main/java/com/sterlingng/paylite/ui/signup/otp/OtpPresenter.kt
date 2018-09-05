@@ -43,7 +43,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             }
                         }
                         .subscribe {
-                            if (it.response == "00") {
+                            if (it.response != null && it.response == "00") {
                                 mvpView.onValidateOtpSuccessful(it)
                             } else {
                                 mvpView.onValidateOtpFailed(it)

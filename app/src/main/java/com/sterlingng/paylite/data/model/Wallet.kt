@@ -5,13 +5,13 @@ import com.sterlingng.paylite.data.model.realms.WalletRealm
 import com.sterlingng.paylite.utils.AppUtils.gson
 
 class Wallet {
-    @SerializedName("balance")
+    @SerializedName("availablebalance")
     var balance: Int = 0
 
-    @SerializedName("_id")
+    @SerializedName("customerid")
     var walletId: String = ""
 
-    @SerializedName("name")
+    @SerializedName("nuban")
     var name: String = ""
 
     fun asWalletRealm(): WalletRealm {
@@ -27,7 +27,7 @@ class Wallet {
     }
 
     override fun equals(other: Any?): Boolean {
-        return if (other is Wallet) other.walletId == walletId else false
+        return if (other is Wallet) other.name == name else false
     }
 
     override fun hashCode(): Int {

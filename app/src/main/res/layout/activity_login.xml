@@ -4,65 +4,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.main.MainActivity">
+
+    <ImageView
+        android:id="@+id/backdrop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/backdrop"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/bg_splash"/>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/pay_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.504"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/pay"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/lite_text"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/backdrop"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
 
-    <com.sterlingng.views.LargeLabelEditText
-        android:id="@+id/email"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/lite_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:imeOptions="actionNext"
-        android:inputType="textEmailAddress"
-        app:label="Email        "
-        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:textColor="@color/black"/>
-
-    <com.sterlingng.views.LargeLabelEditText
-        android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        app:label="@string/password"
-        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:textColor="@color/black"/>
-
-    <Button
-        android:id="@+id/sign_in"
-        android:layout_width="0dp"
-        android:layout_height="51dp"
-        android:background="@drawable/button"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:stateListAnimator="@null"
-        android:text="@string/sign_in"
-        android:textAllCaps="false"
+        android:text="@string/lite"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        android:textSize="36sp"
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        tools:targetApi="lollipop"/>
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pay_text"
+        app:layout_constraintTop_toTopOf="@+id/pay_text"/>
+
+    <TextView
+        android:id="@+id/easy_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/payments_but_simpler"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/lite_text"
+        app:layout_constraintStart_toStartOf="@+id/pay_text"
+        app:layout_constraintTop_toBottomOf="@+id/pay_text"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="32dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="32dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
@@ -72,23 +88,58 @@
         app:layout_constraintGuide_begin="64dp"/>
 
     <android.support.constraint.Guideline
-        android:id="@+id/guidelineLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"/>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guidelineRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp"/>
-
-    <android.support.constraint.Guideline
         android:id="@+id/guidelineBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="32dp"/>
+        app:layout_constraintGuide_end="64dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/enter_your_pin"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/pin_view"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"/>
+
+    <com.goodiebag.pinview.PinView
+        android:id="@+id/pin_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:forceKeyboard="true"
+        app:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="parent"
+        app:password="true"
+        app:pinBackground="@drawable/background_blue_outline"
+        app:pinHeight="16dp"
+        app:pinLength="6"
+        app:pinTextBackground="@drawable/background_light_blue_outline"
+        app:pinWidth="16dp"/>
+
+    <TextView
+        android:id="@+id/forgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/forgot_password"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/pin_view"/>
+
 </android.support.constraint.ConstraintLayout>

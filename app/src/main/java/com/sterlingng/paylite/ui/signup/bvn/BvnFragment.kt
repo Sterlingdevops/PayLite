@@ -140,7 +140,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             }
                         }
                         .subscribe {
-                            if (it.response == "00") {
+                            if (it.response != null && it.response == "00") {
                                 val user = AppUtils.gson.fromJson(AppUtils.gson.toJson(it.data), User::class.java)
                                 dataManager.saveUser(user)
                                 mvpView.onDoSignUpSuccessful(it)

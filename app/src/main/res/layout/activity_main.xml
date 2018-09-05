@@ -7,15 +7,65 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
-    <com.sterlingng.views.CustomViewPager
-        android:id="@+id/viewpager"
+    <ImageView
+        android:id="@+id/backdrop"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/backdrop"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/bg_splash"/>
+
+    <TextView
+        android:id="@+id/pay_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/pay"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/lite_text"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/backdrop"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
+
+    <TextView
+        android:id="@+id/lite_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lite"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pay_text"
+        app:layout_constraintTop_toTopOf="@+id/pay_text"/>
+
+    <TextView
+        android:id="@+id/easy_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/payments_but_simpler"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/lite_text"
+        app:layout_constraintStart_toStartOf="@+id/pay_text"
+        app:layout_constraintTop_toBottomOf="@+id/pay_text"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineLeft"
@@ -62,28 +112,6 @@
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         tools:targetApi="lollipop"/>
-
-    <com.ogaclejapan.smarttablayout.SmartTabLayout
-        android:id="@+id/viewpagertab"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="16dp"
-        android:clipToPadding="false"
-        app:layout_constraintBottom_toTopOf="@+id/sign_in"
-        app:layout_constraintEnd_toEndOf="@+id/sign_in"
-        app:layout_constraintStart_toStartOf="@+id/sign_in"
-        app:stl_clickable="false"
-        app:stl_customTabTextLayoutId="@layout/custom_tab_circle"
-        app:stl_dividerColor="@color/transparent"
-        app:stl_dividerThickness="0dp"
-        app:stl_indicatorColor="@color/white"
-        app:stl_indicatorCornerRadius="4dp"
-        app:stl_indicatorGravity="center"
-        app:stl_indicatorInterpolation="smart"
-        app:stl_indicatorThickness="8dp"
-        app:stl_underlineColor="@color/transparent"
-        app:stl_underlineThickness="0dp"/>
 
     <Button
         android:id="@+id/log_in"

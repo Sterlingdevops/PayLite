@@ -13,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.arlib.floatingsearchview.FloatingSearchView
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Contact
@@ -21,30 +23,32 @@ import com.sterlingng.paylite.ui.base.BaseDialog
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
+import com.sterlingng.paylite.ui.send.ContactsAdapter
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-interface SelectContactsMvpView : MvpView
+interface ContactsMvpView : MvpView
 
-interface SelectContactsMvpContract<V : SelectContactsMvpView> : MvpPresenter<V>
+interface ContactsMvpContract<V : ContactsMvpView> : MvpPresenter<V>
 
-class SelectContactPresenter<V : SelectContactsMvpView>
+class SelectContactPresenter<V : ContactsMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SelectContactsMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ContactsMvpContract<V>
 
-class SelectContactsBottomSheetFragment : BaseDialog(), SelectContactsMvpView, RecyclerViewClickListener, SelectContactsAdapter.OnRetryClicked {
+class ContactsBottomSheetFragment : BaseDialog(), ContactsMvpView, RecyclerViewClickListener, ContactsAdapter.OnRetryClicked {
 
     @Inject
-    lateinit var mPresenter: SelectContactsMvpContract<SelectContactsMvpView>
+    lateinit var mPresenter: ContactsMvpContract<ContactsMvpView>
 
-    lateinit var onSelectContactsItemSelectedListener: OnSelectContactsItemSelected
+    lateinit var onContactsItemSelectedListener: OnContactsItemSelected
 
+    private lateinit var mSearchView: FloatingSearchView
     private lateinit var titleTextView: TextView
     private lateinit var closeImageView: ImageView
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mSelectContactsAdapter: SelectContactsAdapter
+    private lateinit var mContactsAdapter: SelectContactAdapter
 
     @Inject
     lateinit var mLinearLayoutManager: LinearLayoutManager
@@ -52,7 +56,7 @@ class SelectContactsBottomSheetFragment : BaseDialog(), SelectContactsMvpView, R
     @Inject
     lateinit var mDividerItemDecoration: DividerItemDecoration
 
-    lateinit var items: List<Contact>
+    lateinit var contacts: List<Contact>
     lateinit var title: String
     var selector: Int = -1
 
@@ -77,7 +81,7 @@ class SelectContactsBottomSheetFragment : BaseDialog(), SelectContactsMvpView, R
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
 
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_filter_bottom_sheet, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.fragment_select_contact_bottom_sheet, null)
 
         val component = activityComponent
         dialog.setContentView(view)
@@ -99,14 +103,14 @@ class SelectContactsBottomSheetFragment : BaseDialog(), SelectContactsMvpView, R
         titleTextView = view.findViewById(R.id.title)
         closeImageView = view.findViewById(R.id.close)
         mRecyclerView = view.findViewById(R.id.recyclerView)
+        mSearchView = view.findViewById(R.id.floating_search_view)
     }
 
     override fun setUp(view: View) {
-        mSelectContactsAdapter = SelectContactsAdapter(baseActivity)
-        mSelectContactsAdapter.mRecyclerViewClickListener = this
-        mSelectContactsAdapter.onRetryClickedListener = this
-        mSelectContactsAdapter.add(items)
-        mRecyclerView.adapter = mSelectContactsAdapter
+        mContactsAdapter = SelectContactAdapter(baseActivity)
+        mContactsAdapter.mRecyclerViewClickListener = this
+        mContactsAdapter.add(contacts)
+        mRecyclerView.adapter = mContactsAdapter
         mRecyclerView.layoutManager = mLinearLayoutManager
         mRecyclerView.addItemDecoration(mDividerItemDecoration)
 
@@ -114,6 +118,64 @@ class SelectContactsBottomSheetFragment : BaseDialog(), SelectContactsMvpView, R
         closeImageView.setOnClickListener {
             dialog.dismiss()
         }
+
+        initSearchView()
+    }
+
+
+    private fun initSearchView() {
+        mSearchView.setShowSearchKey(true)
+        mSearchView.setOnQueryChangeListener { oldQuery, newQuery ->
+            if (oldQuery != "" && newQuery == "") {
+                mSearchView.clearSuggestions()
+                mContactsAdapter.clear()
+                mContactsAdapter.add(contacts)
+            } else {
+                val clone = ArrayList<Contact>()
+                for (i in contacts.indices) {
+                    if (contacts[i].name.toLowerCase().contains(newQuery.toLowerCase())) {
+                        clone.add(contacts[i])
+                    }
+                    if (contacts[i].name.toLowerCase().contains(newQuery.toLowerCase())) {
+                        clone.add(contacts[i])
+                    }
+                }
+                mSearchView.swapSuggestions(clone)
+                mContactsAdapter.clear()
+                mContactsAdapter.add(clone)
+            }
+        }
+
+        mSearchView.setOnSearchListener(object : FloatingSearchView.OnSearchListener {
+            override fun onSearchAction(currentQuery: String) {
+                val clone = ArrayList<Contact>()
+                for (i in contacts.indices) {
+                    if (contacts[i].name.toLowerCase().contains(currentQuery.toLowerCase())) {
+                        clone.add(contacts[i])
+                    }
+                    if (contacts[i].name.toLowerCase().contains(currentQuery.toLowerCase())) {
+                        clone.add(contacts[i])
+                    }
+                }
+                mSearchView.swapSuggestions(clone)
+                mContactsAdapter.clear()
+                mContactsAdapter.add(clone)
+            }
+
+            override fun onSuggestionClicked(searchSuggestion: SearchSuggestion) {
+                hideKeyboard()
+            }
+        })
+
+        mSearchView.setOnClearSearchActionListener {
+            mSearchView.clearSuggestions()
+            mContactsAdapter.clear()
+            mContactsAdapter.add(contacts)
+        }
+
+        //listen for when suggestion list expands/shrinks in order to move down/up the
+        //search results list
+        mSearchView.setOnSuggestionsListHeightChanged { newHeight -> mRecyclerView.translationY = newHeight }
     }
 
     override fun show(message: String, useToast: Boolean) {
@@ -121,21 +183,21 @@ class SelectContactsBottomSheetFragment : BaseDialog(), SelectContactsMvpView, R
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
-        onSelectContactsItemSelectedListener.onSelectContactsItemSelected(dialog, selector, items[position])
+        onContactsItemSelectedListener.onContactsItemSelected(dialog, selector, mContactsAdapter.get(position))
     }
 
     override fun onRetryClicked() {
 
     }
 
-    interface OnSelectContactsItemSelected {
-        fun onSelectContactsItemSelected(dialog: Dialog, selector: Int, contact: Contact)
+    interface OnContactsItemSelected {
+        fun onContactsItemSelected(dialog: Dialog, selector: Int, contact: Contact)
     }
 
     companion object {
 
-        fun newInstance(): SelectContactsBottomSheetFragment {
-            val dialog = SelectContactsBottomSheetFragment()
+        fun newInstance(): ContactsBottomSheetFragment {
+            val dialog = ContactsBottomSheetFragment()
             val args = Bundle()
             dialog.arguments = args
             return dialog

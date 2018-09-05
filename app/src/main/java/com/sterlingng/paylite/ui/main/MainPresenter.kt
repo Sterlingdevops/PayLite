@@ -13,4 +13,10 @@ import javax.inject.Inject
 class MainPresenter<V : MainMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), MainMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), MainMvpContract<V> {
+
+    override fun onViewInitialized() {
+        super.onViewInitialized()
+        dataManager.getCurrentUser()?.let { mvpView.initView(it) }
+    }
+}

@@ -19,6 +19,7 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.fund.FundFragment
+import com.sterlingng.paylite.ui.getcash.GetCashFragment
 import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
@@ -44,6 +45,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mSplitCostImageView: ImageView
     private lateinit var mPayBillsImageView: ImageView
     private lateinit var mCashOutImageView: ImageView
+    private lateinit var mGetCashImageView: ImageView
 
     private lateinit var mRequestMoneyTextView: TextView
     private lateinit var mAirTimeDataTextView: TextView
@@ -51,6 +53,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mScheduledTextView: TextView
     private lateinit var mSplitCostTextView: TextView
     private lateinit var mPayBillsTextView: TextView
+    private lateinit var mGetCashTextView: TextView
     private lateinit var mCashOutTextView: TextView
 
     private lateinit var mUserGreetingTextView: TextView
@@ -89,6 +92,9 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mMainAmountTextView = view.findViewById(R.id.main_amount)
         mFundButton = view.findViewById(R.id.fund)
 
+        mGetCashImageView = view.findViewById(R.id.get_cash)
+        mGetCashTextView = view.findViewById(R.id.get_cash_text)
+
         mSplitCostImageView = view.findViewById(R.id.split_bill)
         mSplitCostTextView = view.findViewById(R.id.split_bill_text)
 
@@ -97,7 +103,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
-        mPresenter.loadWallet()
+//        mPresenter.loadWallet()
 
         eventBus.observe(UpdateWallet::class.java)
                 .delay(1L, TimeUnit.SECONDS)
@@ -153,6 +159,14 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mSplitCostTextView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(SplitAmountFragment.newInstance())
+        }
+
+        mGetCashImageView.setOnClickListener {
+            (baseActivity as DashboardActivity).mNavController.pushFragment(GetCashFragment.newInstance())
+        }
+
+        mGetCashTextView.setOnClickListener {
+            (baseActivity as DashboardActivity).mNavController.pushFragment(GetCashFragment.newInstance())
         }
     }
 

@@ -4,7 +4,8 @@ import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.utils.AppUtils
+import com.sterlingng.paylite.utils.AppUtils.gson
+import com.sterlingng.paylite.utils.AppUtils.isJSONValid
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -32,8 +33,8 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 return@onErrorReturn response
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
-                                if (AppUtils.isJSONValid(raw!!)) {
-                                    return@onErrorReturn AppUtils.gson.fromJson(raw, Response::class.java)
+                                if (isJSONValid(raw!!)) {
+                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
                                 }
                                 val response = Response()
                                 response.data = HttpException(retrofit2.Response.error<String>(500,
@@ -44,7 +45,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             }
                         }
                         .subscribe {
-                            if (it.response == "00") {
+                            if (it.response != null && it.response == "00") {
                                 mvpView.onSendOTPSuccessful(it)
                             } else {
                                 mvpView.onSendOTPFailed(it)

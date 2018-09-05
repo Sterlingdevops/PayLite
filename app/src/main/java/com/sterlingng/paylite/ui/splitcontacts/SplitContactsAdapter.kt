@@ -18,7 +18,8 @@ import com.sterlingng.paylite.data.model.ContactItem
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
-class SplitContactsAdapter(val mContext: Context) : RecyclerSwipeAdapter<SplitContactsAdapter.ViewHolder>() {
+
+class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter<SplitContactsAdapter.ViewHolder>() {
 
     val contacts: ArrayList<ContactItem> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener

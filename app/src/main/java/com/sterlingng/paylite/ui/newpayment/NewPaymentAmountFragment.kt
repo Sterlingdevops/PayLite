@@ -65,7 +65,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
                             if (it is java.net.SocketTimeoutException) {
-                                val response = Response()
+                                 val response = Response()
                                 response.data = SocketTimeoutException()
                                 response.message = "Error!!! The server didn't respond fast enough and the request timed out"
                                 response.response = "failed"
@@ -84,7 +84,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             }
                         }
                         .subscribe {
-                            if (it.message == "successful") {
+                            if (it.response != null && it.response == "00") {
                                 val wallet = gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
                                 dataManager.saveWallet(wallet)
                                 mvpView.hideLoading()

@@ -5,10 +5,10 @@ import com.sterlingng.paylite.data.model.realms.UserRealm
 import com.sterlingng.paylite.utils.AppUtils.gson
 
 open class User {
-    @SerializedName("bvn")
+    @SerializedName("Bvn")
     var bvn: String = ""
 
-    @SerializedName("email")
+    @SerializedName("Email")
     var email: String = ""
 
     @SerializedName("HandleUsername")
@@ -20,13 +20,13 @@ open class User {
     @SerializedName("longitude")
     var longitude: String = ""
 
-    @SerializedName("last_name")
+    @SerializedName("LastName")
     var lastName: String = ""
 
-    @SerializedName("first_name")
+    @SerializedName("FirstName")
     var firstName: String = ""
 
-    @SerializedName("mobile")
+    @SerializedName("Mobile")
     var phoneNumber: String = ""
 
     override fun toString(): String {

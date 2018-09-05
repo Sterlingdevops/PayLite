@@ -29,7 +29,7 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
-import com.sterlingng.paylite.ui.contacts.SelectContactsBottomSheetFragment
+import com.sterlingng.paylite.ui.contacts.ContactsBottomSheetFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import io.reactivex.disposables.CompositeDisposable
 import java.util.HashMap
@@ -37,7 +37,7 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 class SplitContactFragment : BaseFragment(), SplitContactMvpView,
-        SelectContactsBottomSheetFragment.OnSelectContactsItemSelected {
+        ContactsBottomSheetFragment.OnContactsItemSelected {
 
     @Inject
     lateinit var mPresenter: SplitContactMvpContract<SplitContactMvpView>
@@ -140,7 +140,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView,
         return contacts
     }
 
-    fun loadContactNumbers(contactsMap: Map<String, Contact>) {
+    private fun loadContactNumbers(contactsMap: Map<String, Contact>) {
         // Get numbers
         val numberProjection = arrayOf(
                 ContactsContract.CommonDataKinds.Phone.NUMBER,
@@ -171,7 +171,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView,
         phone.close()
     }
 
-    fun loadContactEmails(contactsMap: Map<String, Contact>) {
+    private fun loadContactEmails(contactsMap: Map<String, Contact>) {
         // Get email
         val emailProjection = arrayOf(
                 ContactsContract.CommonDataKinds.Email.DATA,
@@ -211,17 +211,17 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView,
                     }
 
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                        val selectBottomSheetFragment = SelectContactsBottomSheetFragment.newInstance()
-                        selectBottomSheetFragment.onSelectContactsItemSelectedListener = this@SplitContactFragment
+                        val selectBottomSheetFragment = ContactsBottomSheetFragment.newInstance()
+                        selectBottomSheetFragment.onContactsItemSelectedListener = this@SplitContactFragment
                         selectBottomSheetFragment.selector = position
-                        selectBottomSheetFragment.title = "Choose Contacts"
-                        selectBottomSheetFragment.items = setUpLoader()
+                        selectBottomSheetFragment.title = "Contacts"
+                        selectBottomSheetFragment.contacts = setUpLoader()
                         (baseActivity as DashboardActivity).mNavController.showDialogFragment(selectBottomSheetFragment)
                     }
                 }).check()
     }
 
-    override fun onSelectContactsItemSelected(dialog: Dialog, selector: Int, contact: Contact) {
+    override fun onContactsItemSelected(dialog: Dialog, selector: Int, contact: Contact) {
         mSplitContactsAdapter.contacts[selector].contact = contact.name
         mSplitContactsAdapter.notifyItemChanged(selector)
         dialog.dismiss()

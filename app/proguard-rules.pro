@@ -92,3 +92,6 @@
 -keepattributes *Annotation,Signature
 -dontwarn com.github.siyamed.**
 -keep class com.github.siyamed.shapeimageview.**{ *; }
+
+# Keep model classes, they're needed by both Realm and OkHttp
+-keep class com.sterlingng.paylite.data.model.** { *; }

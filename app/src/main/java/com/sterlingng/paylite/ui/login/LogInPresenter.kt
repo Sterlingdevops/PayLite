@@ -19,18 +19,12 @@ class LogInPresenter<V : LogInMvpView>
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), LogInMvpContract<V> {
 
-    override fun onViewInitialized() {
-        super.onViewInitialized()
-        if (dataManager.getCurrentUser() != null) {
-            mvpView.initView(dataManager.getCurrentUser()!!)
-        }
-    }
-
     /**
      * Try to login, checking and catching any server errors that could occur,
      * then fail silently and inform the user with a helpful message
      */
     override fun doLogIn(data: HashMap<String, Any>) {
+        data["email"] = "foo@bar.com" //dataManager.getCurrentUser()?.email!!
         mvpView.showLoading()
         compositeDisposable.add(
                 dataManager.signin(data)

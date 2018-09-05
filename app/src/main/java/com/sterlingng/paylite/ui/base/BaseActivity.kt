@@ -22,6 +22,7 @@ import com.sterlingng.paylite.root.MvpApp
 import com.sterlingng.paylite.utils.CommonUtils
 import com.sterlingng.paylite.utils.NetworkUtils
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 /**
  * Created by rtukpe on 13/03/2018.
@@ -29,8 +30,8 @@ import com.sterlingng.paylite.utils.RecyclerViewClickListener
 
 abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickListener {
 
-    var onBackClickedListener: OnBackClicked? = null
-    lateinit var mProgressDialog: ProgressDialog
+    private var onBackClickedListener: OnBackClicked? = null
+    private lateinit var mProgressDialog: ProgressDialog
     lateinit var activityComponent: ActivityComponent
         private set
 
@@ -42,6 +43,10 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
         activityComponent = DaggerActivityComponent.builder()
                 .activityModule(ActivityModule(this))
                 .applicationComponent((application as MvpApp).component).build()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -129,7 +134,7 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
 
     override fun showKeyboard() {
         val inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
     abstract fun bindViews()

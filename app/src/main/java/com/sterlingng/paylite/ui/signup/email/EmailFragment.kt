@@ -65,7 +65,7 @@ class EmailFragment : BaseFragment(), EmailMvpView {
     }
 
     override fun onSendOTPFailed(it: Response) {
-        show("Error sending OTP. Please ensure you've entered a valid email address and phone number", true)
+        show("Error sending OTP. Please ensure you've entered a valid email address and phone number $it", true)
     }
 
     override fun onSendOTPSuccessful(it: Response) {

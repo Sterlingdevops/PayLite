@@ -50,7 +50,7 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                             }
                         }
                         .subscribe {
-                            if (it.message == "successful") {
+                            if (it.response != null && it.response == "00") {
                                 val wallet = gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
                                 dataManager.saveWallet(wallet)
                                 mvpView.onFundWalletSuccessful(wallet)

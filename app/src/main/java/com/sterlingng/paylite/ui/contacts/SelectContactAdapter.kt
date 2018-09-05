@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Contact
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
-class SelectContactsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+class SelectContactAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
     private val contacts: ArrayList<Contact> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
@@ -24,7 +22,7 @@ class SelectContactsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
         val view: View?
         return when (viewType) {
             VIEW_TYPE_NORMAL -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_filter_item, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_select_contact_item, parent, false)
                 ViewHolder(view, mRecyclerViewClickListener)
             }
             VIEW_TYPE_EMPTY -> {
@@ -42,29 +40,22 @@ class SelectContactsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
 
     fun add(item: Contact) {
         contacts.add(item)
-        notifyItemInserted(this.contacts.size - 1)
+        notifyDataSetChanged()
     }
 
     fun add(contacts: Collection<Contact>) {
-        val index = this.contacts.size - 1
         this.contacts.addAll(contacts)
-        notifyItemRangeInserted(index, contacts.size - 1)
+        notifyDataSetChanged()
     }
 
     fun remove(index: Int) {
-        if (contacts.size <= 2) {
-            Toast.makeText(mContext, "Split action needs at least people", LENGTH_SHORT).show()
-            return
-        }
         contacts.removeAt(index)
-        notifyItemRemoved(index)
+        notifyDataSetChanged()
     }
 
     fun clear() {
-        for (index in 0 until contacts.size - 2) {
-            this.contacts.removeAt(0)
-            notifyItemRemoved(0)
-        }
+        contacts.clear()
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -89,16 +80,36 @@ class SelectContactsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
 
     inner class ViewHolder(itemView: View, var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
 
-        private val filterItemTextView: TextView = itemView.findViewById(R.id.filter_item)
+        private val contactNameTextView: TextView = itemView.findViewById(R.id.contact_name)
+        private val contactEmailTextView: TextView = itemView.findViewById(R.id.contact_email)
+        private val contactPhoneTextView: TextView = itemView.findViewById(R.id.contact_phone)
 
         override fun onBind(position: Int) {
-            super.onBind(position)
+            super.onBind(adapterPosition)
 
-            with(contacts[position]) {
-                filterItemTextView.text = name
+            with(contacts[adapterPosition]) {
+                contactNameTextView.text = name
+
+                if (emails.size <= 0)
+                    contactEmailTextView.visibility = View.GONE
+                else
+                    contactEmailTextView.visibility = View.VISIBLE
+
+                if (numbers.size <= 0)
+                    contactPhoneTextView.visibility = View.GONE
+                else
+                    contactPhoneTextView.visibility = View.VISIBLE
+
+                contactEmailTextView.text = if (emails.size <= 0) "" else "${emails[0].address} - ${emails[0].type}"
+                contactPhoneTextView.text = if (numbers.size <= 0) "" else "${numbers[0].number} - ${numbers[0].type}"
             }
-            itemView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, position)
+
+            contactEmailTextView.setOnClickListener {
+                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
+            }
+
+            contactPhoneTextView.setOnClickListener {
+                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
             }
         }
     }
@@ -109,7 +120,7 @@ class SelectContactsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
         private var retry: TextView = itemView.findViewById(R.id.retry)
 
         override fun onBind(position: Int) {
-            super.onBind(position)
+            super.onBind(adapterPosition)
             checkConnection()
             retry.setOnClickListener { retryClicked() }
         }
