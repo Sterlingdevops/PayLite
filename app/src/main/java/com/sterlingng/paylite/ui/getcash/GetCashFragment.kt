@@ -41,6 +41,14 @@ class GetCashFragment : BaseFragment(), GetCashMvpView {
     lateinit var next: Button
 
     override fun setUp(view: View) {
+        exit.setOnClickListener {
+            baseActivity.onBackPressed()
+        }
+
+        next.setOnClickListener {
+
+        }
+
         others = false
         mSelfCheckBox.isChecked = true
         mOthersCheckBox.isChecked = false

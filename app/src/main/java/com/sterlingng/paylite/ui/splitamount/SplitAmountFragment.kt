@@ -23,12 +23,14 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
     lateinit var mPresenter: SplitAmountMvpContract<SplitAmountMvpView>
 
     private lateinit var mSplitAmountEditText: EditText
-    private lateinit var mBalanceEditText: EditText
+    private lateinit var mBalanceTextView: TextView
     private lateinit var mUnequalTextView: TextView
     private lateinit var mUnequalCheckBox: CheckBox
     private lateinit var mEqualTextView: TextView
     private lateinit var mEqualCheckBox: CheckBox
+
     private var equal: Boolean = false
+
     lateinit var exit: ImageView
     lateinit var next: Button
 
@@ -44,7 +46,7 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
         exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next)
 
-        mBalanceEditText = view.findViewById(R.id.balance)
+        mBalanceTextView = view.findViewById(R.id.balance)
 
         mEqualCheckBox = view.findViewById(R.id.equal_checkBox)
         mUnequalCheckBox = view.findViewById(R.id.unequal_checkBox)

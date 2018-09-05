@@ -22,6 +22,7 @@ import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.profile.edit.EditActivity
 import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
 import com.sterlingng.paylite.ui.request.RequestFragment
+import com.sterlingng.paylite.ui.request.custom.CustomRequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
@@ -122,6 +123,8 @@ interface ActivityComponent {
     fun inject(splitAmountFragment: SplitAmountFragment)
 
     fun inject(splitContactFragment: SplitContactFragment)
+
+    fun inject(customRequestFragment: CustomRequestFragment)
 
     fun inject(newPaymentAmountFragment: NewPaymentAmountFragment)
 

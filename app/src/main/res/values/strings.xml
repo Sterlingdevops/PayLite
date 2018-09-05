@@ -273,4 +273,6 @@
     <string name="name">Name</string>
     <string name="phone_number">Phone number</string>
     <string name="add_a_username_you_want_to_use_e_g_khafil_s_smoothies">Add a username you want to use (e.g Khafil’s Smoothies)</string>
+    <string name="input_the_amount_you_want">Input the amount you want</string>
+    <string name="add_a_custom_message">Add a custom message</string>
 </resources>

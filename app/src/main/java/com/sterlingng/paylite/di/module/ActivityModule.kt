@@ -68,6 +68,9 @@ import com.sterlingng.paylite.ui.profile.notifications.NotificationsAdapter
 import com.sterlingng.paylite.ui.request.RequestMvpContract
 import com.sterlingng.paylite.ui.request.RequestMvpView
 import com.sterlingng.paylite.ui.request.RequestPresenter
+import com.sterlingng.paylite.ui.request.custom.CustomRequestMvpContract
+import com.sterlingng.paylite.ui.request.custom.CustomRequestMvpView
+import com.sterlingng.paylite.ui.request.custom.CustomRequestPresenter
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpContract
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpView
 import com.sterlingng.paylite.ui.scheduled.ScheduledPresenter
@@ -296,6 +299,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideOnBoardingPresenter(presenter: OnBoardingPresenter<OnBoardingMvpView>): OnBoardingMvpContract<OnBoardingMvpView> = presenter
 
     @Provides
+    internal fun provideSelectContactPresenter(presenter: SelectContactPresenter<ContactsMvpView>): ContactsMvpContract<ContactsMvpView> = presenter
+
+    @Provides
     internal fun provideCategoriesPresenter(presenter: CategoriesPresenter<CategoriesMvpView>): CategoriesMvpContract<CategoriesMvpView> = presenter
 
     @Provides
@@ -305,5 +311,5 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideSplitContactPresenter(presenter: SplitContactPresenter<SplitContactMvpView>): SplitContactMvpContract<SplitContactMvpView> = presenter
 
     @Provides
-    internal fun provideSelectContactPresenter(presenter: SelectContactPresenter<ContactsMvpView>): ContactsMvpContract<ContactsMvpView> = presenter
+    internal fun provideCustomRequestPresenter(presenter: CustomRequestPresenter<CustomRequestMvpView>): CustomRequestMvpContract<CustomRequestMvpView> = presenter
 }
