@@ -45,8 +45,8 @@
 
     <ImageView
         android:id="@+id/exit"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:contentDescription="@string/exit"
         app:layout_constraintBottom_toBottomOf="@+id/balance"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"

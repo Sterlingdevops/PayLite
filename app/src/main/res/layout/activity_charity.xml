@@ -103,7 +103,7 @@
 
     <ImageView
         android:id="@+id/exit"
-        android:layout_width="wrap_content"
+        android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/exit"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
