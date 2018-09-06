@@ -30,8 +30,11 @@ interface RemoteServiceApi {
     @GET("GetFullWalletDetails")
     fun getWallet(@Query("bvn") bvn: String): Observable<Response>
 
-    @POST("wallets/fund")
-    fun fundWallet(@Body data: HashMap<String, Any>): Observable<Response>
+    @POST("SterlingAccountToWallet")
+    fun fundWalletWithBankAccount(@Body data: HashMap<String, Any>): Observable<Response>
+
+    @POST("DebitAnyBankCard")
+    fun fundWalletWithCard(@Body data: HashMap<String, Any>): Observable<Response>
 
     @POST("ValidateOtp")
     fun validateOtp(@Body data: HashMap<String, Any>): Observable<Response>

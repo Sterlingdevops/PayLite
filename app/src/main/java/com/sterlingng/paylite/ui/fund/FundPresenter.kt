@@ -19,14 +19,100 @@ class FundPresenter<V : FundMvpView> @Inject
 internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), FundMvpContract<V> {
 
-    override fun fundWallet(data: HashMap<String, Any>) {
+    override fun loadCachedWallet() {
+        dataManager.getWallet()?.let { mvpView.initView(it) }
+    }
+
+    override fun loadWallet() {
+        mvpView.showLoading()
         val user = dataManager.getCurrentUser()
-        data["username"] = user?.username!!
+        compositeDisposable.add(
+                dataManager.getWallet(user?.bvn!!)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .onErrorReturn {
+                            if (it is java.net.SocketTimeoutException) {
+                                val response = Response()
+                                response.data = SocketTimeoutException()
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                response.response = "failed"
+                                return@onErrorReturn response
+                            } else {
+                                val raw = (it as HttpException).response().errorBody()?.string()
+                                if (AppUtils.isJSONValid(raw!!)) {
+                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                                }
+                                val response = Response()
+                                response.data = HttpException(retrofit2.Response.error<String>(500,
+                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                response.response = "failed"
+                                return@onErrorReturn response
+                            }
+                        }
+                        .subscribe {
+                            if (it.response != null && it.response == "00") {
+                                val wallet = gson.fromJson(gson.toJson(it.data), Wallet::class.java)
+                                dataManager.saveWallet(wallet)
+                                mvpView.onGetWalletSuccessful(wallet)
+                            } else {
+
+                                mvpView.onGetWalletFailed(it)
+                            }
+                            mvpView.hideLoading()
+                        }
+        )
+    }
+
+    override fun fundWalletWithCard(data: HashMap<String, Any>) {
+        dataManager.getCurrentUser()?.bvn?.let { data["bvn"] = it }
+        dataManager.getWallet()?.walletId?.let { data["customerId"] = it }
 
         mvpView.showLoading()
         compositeDisposable.add(
                 dataManager
-                        .fundWallet(data)
+                        .fundWalletWithCard(data)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .onErrorReturn {
+                            if (it is java.net.SocketTimeoutException) {
+                                val response = Response()
+                                response.data = SocketTimeoutException()
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                response.response = "failed"
+                                return@onErrorReturn response
+                            } else {
+                                val raw = (it as HttpException).response().errorBody()?.string()
+                                if (AppUtils.isJSONValid(raw!!)) {
+                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                                }
+                                val response = Response()
+                                response.data = HttpException(retrofit2.Response.error<String>(500,
+                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                response.response = "failed"
+                                return@onErrorReturn response
+                            }
+                        }
+                        .subscribe {
+                            if (it.response != null && it.response == "00") {
+                                mvpView.onFundWalletSuccessful()
+                            } else {
+                                mvpView.onFundWalletFailed(it)
+                            }
+                            mvpView.hideLoading()
+                        }
+        )
+    }
+
+    override fun fundWalletWithBankAccount(data: HashMap<String, Any>) {
+        val user = dataManager.getCurrentUser()
+        data["toacct"] = user?.bvn!!
+
+        mvpView.showLoading()
+        compositeDisposable.add(
+                dataManager
+                        .fundWalletWithBankAccount(data)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
@@ -53,7 +139,7 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                             if (it.response != null && it.response == "00") {
                                 val wallet = gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
                                 dataManager.saveWallet(wallet)
-                                mvpView.onFundWalletSuccessful(wallet)
+                                mvpView.onFundWalletSuccessful()
                             } else {
                                 mvpView.onFundWalletFailed(it)
                             }
@@ -69,13 +155,35 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                         .resolveCardNumber(bin)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .subscribe({
-                            mvpView.hideLoading()
-                            mvpView.onResolveCardNumberSuccessful(it)
-                        }) {
-                            Log.e(it, "FundPresenter->resolveCardNumber")
-                            mvpView.hideLoading()
-                            mvpView.onResolveCardNumberFailed(it)
+                        .onErrorReturn {
+                            if (it is java.net.SocketTimeoutException) {
+                                val response = Response()
+                                response.data = SocketTimeoutException()
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                response.response = "failed"
+                                return@onErrorReturn response
+                            } else {
+                                val raw = (it as HttpException).response().errorBody()?.string()
+                                if (AppUtils.isJSONValid(raw!!)) {
+                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                                }
+                                val response = Response()
+                                response.data = HttpException(retrofit2.Response.error<String>(500,
+                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                response.response = "failed"
+                                return@onErrorReturn response
+                            }
+                        }
+                        .subscribe {
+                            if (it.status) {
+                                mvpView.hideLoading()
+                                mvpView.onResolveCardNumberSuccessful(it)
+                            } else {
+                                Log.e(it.toString())
+                                mvpView.hideLoading()
+                                mvpView.onResolveCardNumberFailed(it)
+                            }
                         }
         )
     }

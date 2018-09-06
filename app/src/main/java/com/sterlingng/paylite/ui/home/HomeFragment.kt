@@ -143,7 +143,6 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mFundButton.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(FundFragment.newInstance())
         }
 
         mCashOutImageView.setOnClickListener {

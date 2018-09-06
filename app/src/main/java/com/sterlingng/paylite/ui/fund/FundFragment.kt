@@ -1,6 +1,5 @@
 package com.sterlingng.paylite.ui.fund
 
-import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.widget.NestedScrollView
 import android.text.Editable
@@ -13,13 +12,13 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.CardExpiryTextWatcher
 import mostafa.ma.saleh.gmail.com.editcredit.EditCredit
 import javax.inject.Inject
 
-class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
+class FundFragment : BaseFragment(), FundMvpView {
 
     @Inject
     lateinit var mPresenter: FundMvpContract<FundMvpView>
@@ -36,6 +35,7 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
     private lateinit var mCardCvvTextView: EditText
 
     private lateinit var mSaveCardTextView: TextView
+    private lateinit var mBalanceTextView: TextView
     private lateinit var mSaveCardSwitch: Switch
 
     private lateinit var mCardTextView: TextView
@@ -47,11 +47,8 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
     private lateinit var mFundBankNestedScrollView: NestedScrollView
     private lateinit var mFundCardNestedScrollView: NestedScrollView
 
-    private var chosenBank: Bank? = null
-    private var banks = ArrayList<Bank>()
     private var isCard = true
 
-    private lateinit var mBankNameTextView: TextView
     private lateinit var mAccountNameTextView: TextView
     private lateinit var mAccountNumberTextView: TextView
     private lateinit var mFundAmountCardEditText: EditText
@@ -66,6 +63,8 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
     }
 
     override fun setUp(view: View) {
+        mPresenter.loadCachedWallet()
+
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }
@@ -81,12 +80,12 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
                 return@setOnClickListener
             }
 
-            if (isCard && mCardNumberEditCredit.isCardValid) {
-                mPresenter.resolveCardNumber(mCardNumberEditCredit.textWithoutSeparator.substring(0, 5))
+            if (isCard) {
+                mPresenter.resolveCardNumber(mCardNumberEditCredit.textWithoutSeparator.substring(0, 6))
                 return@setOnClickListener
             }
 
-            if (!isCard && (mAccountNumberTextView.length() == 0 || chosenBank == null || mAccountNameTextView.length() == 0 || mFundAmountBankEditText.text.isEmpty())) {
+            if (!isCard && (mAccountNumberTextView.length() == 0 || mAccountNameTextView.length() == 0 || mFundAmountBankEditText.text.isEmpty())) {
                 show("Please fill in the required fields", true)
                 return@setOnClickListener
             }
@@ -98,12 +97,11 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
 
             if (!isCard) {
                 val data = HashMap<String, Any>()
-                data["amount"] = mFundAmountBankEditText.text.toString().toInt()
-                data["account_number"] = mAccountNumberTextView.text.toString().substring(0 until 4)
-                data["bank"] = chosenBank?.name!!
-                data["comments"] = "Funded Wallet Via Bank Account"
-                data["channel"] = "Android Application"
-                mPresenter.fundWallet(data)
+                data["amt"] = mFundAmountBankEditText.text.toString().toInt()
+                data["frmacct"] = mAccountNumberTextView.text.toString()
+                data["remarks"] = "Fund Wallet (Via Bank Account: ${mAccountNumberTextView.text})"
+                data["paymentRef"] = System.currentTimeMillis().toString()
+                mPresenter.fundWalletWithBankAccount(data)
                 return@setOnClickListener
             }
         }
@@ -132,27 +130,18 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
 
         mCardExpiryTextView.addTextChangedListener(CardExpiryTextWatcher(mCardExpiryTextView))
 
-        mBankNameTextView.setOnClickListener { _ ->
-            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
-            filterBottomSheetFragment.onFilterItemSelectedListener = this
-            filterBottomSheetFragment.selector = 1
-            filterBottomSheetFragment.title = "Select Bank"
-            filterBottomSheetFragment.items = banks.map { it.name }
-            filterBottomSheetFragment.show(childFragmentManager, "filter")
-        }
-
         mSaveCardTextView.setOnClickListener {
             mSaveCardSwitch.toggle()
         }
 
         mAccountNumberTextView.addTextChangedListener(AccountNumberTextWatcher())
-
-        mPresenter.loadBanks()
     }
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next)
+
+        mBalanceTextView = view.findViewById(R.id.balance)
 
         mCardNumberEditCredit = view.findViewById(R.id.card_number)
         mCardNameEditText = view.findViewById(R.id.card_name)
@@ -162,7 +151,6 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
         mCardCheckBox = view.findViewById(R.id.card_checkBox)
         mBankCheckBox = view.findViewById(R.id.bank_checkBox)
 
-        mBankNameTextView = view.findViewById(R.id.bank)
         mAccountNameTextView = view.findViewById(R.id.name)
         mAccountNumberTextView = view.findViewById(R.id.account_number)
         mFundAmountBankEditText = view.findViewById(R.id.fund_amount_bank)
@@ -183,17 +171,11 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
     }
 
     override fun onLoadBanksSuccessful(it: ArrayList<Bank>) {
-        banks = it
+
     }
 
-    override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
-        chosenBank = banks.find { it.name == s }!!
-        mBankNameTextView.text = chosenBank?.name
-
-        if (mAccountNumberTextView.text.length == 10) {
-            mPresenter.resolveAccountNumber(mAccountNumberTextView.text.toString(), chosenBank?.code!!)
-        }
-        dialog.dismiss()
+    override fun initView(wallet: Wallet) {
+        mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet.balance.toFloat())
     }
 
     override fun onResolveAccountNumberFailed(it: Throwable) {
@@ -208,25 +190,33 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
         hideKeyboard()
     }
 
-    override fun onResolveCardNumberFailed(it: Throwable) {
-        show(gson.toJson(it.localizedMessage), true)
+    override fun onResolveCardNumberFailed(response: Response?) {
+        show("An error occurred while processing the transaction", true)
     }
 
     override fun onResolveCardNumberSuccessful(it: Response) {
+        show("Card BIN Resolved", true)
         val data = HashMap<String, Any>()
-        data["amount"] = mFundAmountCardEditText.text.toString().toInt()
-        data["card_number"] = mCardNumberEditCredit.textWithoutSeparator.substring(0 until 4)
-        data["card_type"] = when (mCardNumberEditCredit.mCurrentDrawableResId) {
-            R.drawable.visa -> "Visa"
-            R.drawable.amex -> "American Express"
-            R.drawable.mastercard -> "MasterCard"
-            else -> {
-                "Card Type"
-            }
+        data["pin"] = "1234"
+        data["currency"] = "NGN"
+        data["cvv"] = mCardCvvTextView.text.toString()
+        data["pan"] = mCardNumberEditCredit.textWithoutSeparator
+        data["amount"] = mFundAmountCardEditText.text.toString()
+        data["expiry_date"] = with(mCardExpiryTextView.text.toString().split("/")) {
+            "${get(1)}${get(0)}"
         }
-        data["comments"] = "Funded Wallet Via Credit Card"
-        data["channel"] = "Android Application"
-        mPresenter.fundWallet(data)
+        mPresenter.fundWalletWithCard(data)
+    }
+
+    override fun onGetWalletSuccessful(wallet: Wallet?) {
+        show("Successfully funded wallet", true)
+        eventBus.post(UpdateWallet())
+        hideLoading()
+        (baseActivity as DashboardActivity).mNavController.clearStack()
+    }
+
+    override fun onGetWalletFailed(response: Response?) {
+        show("An error occurred while processing the transaction", true)
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
@@ -234,18 +224,18 @@ class FundFragment : BaseFragment(), FundMvpView, FilterBottomSheetFragment.OnFi
     }
 
     override fun onFundWalletFailed(it: Response) {
-        show(it.message!!, false)
+        show("An error occurred while processing the transaction", false)
     }
 
-    override fun onFundWalletSuccessful(wallet: Wallet) {
-        eventBus.post(UpdateWallet())
-        baseActivity.onBackPressed()
+    override fun onFundWalletSuccessful() {
+        show("Payment Received", true)
+        mPresenter.loadWallet()
     }
 
     private inner class AccountNumberTextWatcher : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            if (s?.length == 10 && chosenBank != null) {
-                mPresenter.resolveAccountNumber(mAccountNumberTextView.text.toString(), chosenBank?.code!!)
+            if (s?.length == 10) {
+                mPresenter.resolveAccountNumber(mAccountNumberTextView.text.toString(), "232")
             }
         }
 

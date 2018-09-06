@@ -224,13 +224,29 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <EditText
+                android:id="@+id/fund_amount_bank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/amount_minimum_amount_of_n100"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:padding="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView23"/>
+
+            <EditText
                 android:id="@+id/account_number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/background_light_blue_outline"
                 android:hint="@string/account_number"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="10"
                 android:padding="16dp"
@@ -239,22 +255,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fund_amount_bank"/>
 
-            <TextView
-                android:id="@+id/bank"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_light_blue_outline"
-                android:drawableEnd="@drawable/chevron_down"
-                android:drawableRight="@drawable/chevron_down"
-                android:padding="16dp"
-                android:text="@string/bank"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/account_number"/>
+            <!--<TextView-->
+            <!--android:id="@+id/bank"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:background="@drawable/background_light_blue_outline"-->
+            <!--android:drawableEnd="@drawable/chevron_down"-->
+            <!--android:drawableRight="@drawable/chevron_down"-->
+            <!--android:padding="16dp"-->
+            <!--android:text="@string/bank"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="16sp"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="1"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/account_number"/>-->
 
             <TextView
                 android:id="@+id/name"
@@ -270,23 +286,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bank"/>
-
-            <EditText
-                android:id="@+id/fund_amount_bank"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_light_blue_outline"
-                android:hint="@string/amount_minimum_amount_of_n100"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:padding="16dp"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView23"/>
+                app:layout_constraintTop_toBottomOf="@+id/account_number"/>
 
         </android.support.constraint.ConstraintLayout>
 

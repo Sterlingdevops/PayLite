@@ -26,6 +26,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun fundWalletWithCard(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.fundWalletWithCard(data)
+
     override fun validateOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.validateOtp(data)
 
     override fun buyAirtime(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.buyAirtime(data)
@@ -56,7 +58,7 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun getUser(bvn: String): Observable<Response> = mRemoteServiceHelper.getUser(bvn)
 
-    override fun fundWallet(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.fundWallet(data)
+    override fun fundWalletWithBankAccount(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.fundWalletWithBankAccount(data)
 
     override fun getWallet(bvn: String): Observable<Response> = mRemoteServiceHelper.getWallet(bvn)
 
