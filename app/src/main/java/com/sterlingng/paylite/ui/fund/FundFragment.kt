@@ -209,10 +209,7 @@ class FundFragment : BaseFragment(), FundMvpView {
     }
 
     override fun onGetWalletSuccessful(wallet: Wallet?) {
-        show("Successfully funded wallet", true)
-        eventBus.post(UpdateWallet())
-        hideLoading()
-        (baseActivity as DashboardActivity).mNavController.clearStack()
+
     }
 
     override fun onGetWalletFailed(response: Response?) {
@@ -228,8 +225,9 @@ class FundFragment : BaseFragment(), FundMvpView {
     }
 
     override fun onFundWalletSuccessful() {
-        show("Payment Received", true)
-        mPresenter.loadWallet()
+        show("Successfully funded wallet", true)
+        eventBus.post(UpdateWallet())
+        (baseActivity as DashboardActivity).mNavController.clearStack()
     }
 
     private inner class AccountNumberTextWatcher : TextWatcher {

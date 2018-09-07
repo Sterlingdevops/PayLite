@@ -6,7 +6,7 @@ import com.sterlingng.paylite.utils.AppUtils.gson
 
 class Wallet {
     @SerializedName("availablebalance")
-    var balance: Int = 0
+    var balance: Number = 0
 
     @SerializedName("customerid")
     var walletId: String = ""
@@ -17,7 +17,7 @@ class Wallet {
     fun asWalletRealm(): WalletRealm {
         val walletRealm = WalletRealm()
         walletRealm.name = name
-        walletRealm.balance = balance
+        walletRealm.balance = balance.toInt()
         walletRealm.walletid = walletId
         return walletRealm
     }
@@ -31,7 +31,7 @@ class Wallet {
     }
 
     override fun hashCode(): Int {
-        var result = balance
+        var result = balance.toInt()
         result = 31 * result + walletId.hashCode()
         result = 31 * result + name.hashCode()
         return result

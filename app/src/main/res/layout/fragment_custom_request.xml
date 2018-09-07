@@ -55,19 +55,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/add_a_username_you_want_to_use_e_g_khafil_s_smoothies"
+        android:text="@string/recepient_s_email"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/backdrop"/>
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/background_light_blue_outline"
-        android:hint="@string/username"
-        android:inputType=""
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
         android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -83,7 +83,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/username"/>
+        app:layout_constraintTop_toBottomOf="@+id/email"/>
 
     <TextView
         android:id="@+id/textView11"
@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/background_light_blue_outline"
-        android:hint="@string/amount"
+        android:hint="@string/amount_minimum_amount_of_n100"
         android:inputType="number"
         android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -113,16 +113,23 @@
     <EditText
         android:id="@+id/message"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/background_light_blue_outline"
-        android:lines="4"
-        android:maxLines="4"
+        android:fadeScrollbars="true"
+        android:gravity="top|start"
+        android:hint="@string/request_money"
+        android:inputType="textMultiLine"
+        android:lines="10"
         android:padding="16dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:layout_constraintVertical_bias="0.0"/>
 
     <Button
         android:id="@+id/next"

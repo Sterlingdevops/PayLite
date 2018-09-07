@@ -44,6 +44,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
                 data["password"] = mPinView.value
                 mPresenter.doLogIn(data)
             } else {
+                mPinView.clearValue()
                 show("Internet connection required", true)
             }
         }

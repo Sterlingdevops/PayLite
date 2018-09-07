@@ -56,7 +56,6 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                                 dataManager.saveWallet(wallet)
                                 mvpView.onGetWalletSuccessful(wallet)
                             } else {
-
                                 mvpView.onGetWalletFailed(it)
                             }
                             mvpView.hideLoading()

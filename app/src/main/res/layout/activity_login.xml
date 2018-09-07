@@ -122,7 +122,7 @@
         app:password="true"
         app:pinBackground="@drawable/background_blue_outline"
         app:pinHeight="16dp"
-        app:pinLength="6"
+        app:pinLength="4"
         app:pinTextBackground="@drawable/background_light_blue_outline"
         app:pinWidth="16dp"/>
 

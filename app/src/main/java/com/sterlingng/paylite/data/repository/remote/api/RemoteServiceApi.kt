@@ -36,8 +36,16 @@ interface RemoteServiceApi {
     @POST("DebitAnyBankCard")
     fun fundWalletWithCard(@Body data: HashMap<String, Any>): Observable<Response>
 
+    @GET("GetUserTransactions")
+    fun getUserTransactions(@Query("bvn.bvn") bvn: String,
+                            @Query("bvn.toDate") toDate: String,
+                            @Query("bvn.fromDate") fromDate: String): Observable<Response>
+
     @POST("ValidateOtp")
     fun validateOtp(@Body data: HashMap<String, Any>): Observable<Response>
+
+    @POST("RequestPaymentLink")
+    fun requestPaymentLink(@Body data: HashMap<String, Any>): Observable<Response>
 
     @POST("BuyAirtimeFromWallet")
     fun buyAirtime(@Body data: HashMap<String, Any>): Observable<Response>

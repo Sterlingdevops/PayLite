@@ -104,9 +104,11 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
         mPresenter.loadWallet()
+        hideLoading()
+        hideKeyboard()
 
         eventBus.observe(UpdateWallet::class.java)
-                .delay(1L, TimeUnit.SECONDS)
+                .delay(1L, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
