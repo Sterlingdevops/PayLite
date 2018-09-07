@@ -12,6 +12,22 @@ import retrofit2.http.Query
  */
 
 interface RemoteServiceApi {
+
+    // GET
+
+    @GET("GetUserDetails")
+    fun getUser(@Query("bvn") bvn: String): Observable<Response>
+
+    @GET("GetFullWalletDetails")
+    fun getWallet(@Query("bvn") bvn: String): Observable<Response>
+
+    @GET("GetUserTransactions")
+    fun getUserTransactions(@Query("bvn.bvn") bvn: String,
+                            @Query("bvn.toDate") toDate: String,
+                            @Query("bvn.fromDate") fromDate: String): Observable<Response>
+
+    // POST
+
     @POST("LoginUser")
     fun signin(@Body data: HashMap<String, Any>): Observable<Response>
 
@@ -21,25 +37,14 @@ interface RemoteServiceApi {
     @POST("SendOtp")
     fun sendOtp(@Body data: HashMap<String, Any>): Observable<Response>
 
-    @GET("GetUserDetails")
-    fun getUser(@Query("bvn") bvn: String): Observable<Response>
-
     @POST("SendMoneyViaUserHandle")
     fun sendMoney(@Body data: HashMap<String, Any>): Observable<Response>
-
-    @GET("GetFullWalletDetails")
-    fun getWallet(@Query("bvn") bvn: String): Observable<Response>
 
     @POST("SterlingAccountToWallet")
     fun fundWalletWithBankAccount(@Body data: HashMap<String, Any>): Observable<Response>
 
     @POST("DebitAnyBankCard")
     fun fundWalletWithCard(@Body data: HashMap<String, Any>): Observable<Response>
-
-    @GET("GetUserTransactions")
-    fun getUserTransactions(@Query("bvn.bvn") bvn: String,
-                            @Query("bvn.toDate") toDate: String,
-                            @Query("bvn.fromDate") fromDate: String): Observable<Response>
 
     @POST("ValidateOtp")
     fun validateOtp(@Body data: HashMap<String, Any>): Observable<Response>

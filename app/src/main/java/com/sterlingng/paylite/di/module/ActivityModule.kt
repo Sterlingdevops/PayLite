@@ -52,6 +52,9 @@ import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpContract
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpView
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingPresenter
 import com.sterlingng.paylite.ui.newpayment.*
+import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountMvpContract
+import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountMvpView
+import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountPresenter
 import com.sterlingng.paylite.ui.payment.PaymentMvpContract
 import com.sterlingng.paylite.ui.payment.PaymentMvpView
 import com.sterlingng.paylite.ui.payment.PaymentPresenter

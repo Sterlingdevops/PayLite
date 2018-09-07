@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.newpayment
+package com.sterlingng.paylite.ui.newpaymentamount
 
 import android.app.Dialog
 import android.os.Bundle
@@ -10,97 +10,21 @@ import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.SendMoneyRequest
 import com.sterlingng.paylite.data.model.UpdateWallet
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
-import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.ui.base.MvpPresenter
-import com.sterlingng.paylite.ui.base.MvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
-import com.sterlingng.paylite.utils.AppUtils
-import com.sterlingng.paylite.utils.AppUtils.gson
-import com.sterlingng.paylite.utils.AppUtils.isJSONValid
 import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
-import io.reactivex.disposables.CompositeDisposable
-import okhttp3.MediaType
-import okhttp3.ResponseBody
-import retrofit2.HttpException
-import java.net.SocketTimeoutException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-
-interface NewPaymentAmountMvpContract<V : NewPaymentAmountMvpView> : MvpPresenter<V> {
-    fun loadCachedWallet()
-    fun sendMoney(data: HashMap<String, Any>)
-}
-
-interface NewPaymentAmountMvpView : MvpView {
-    fun initView(wallet: Wallet?)
-    fun onSendMoneySuccessful(wallet: Wallet)
-    fun onSendMoneyFailed(response: Response)
-}
-
-class NewPaymentAmountPresenter<V : NewPaymentAmountMvpView> @Inject
-constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), NewPaymentAmountMvpContract<V> {
-
-    override fun sendMoney(data: HashMap<String, Any>) {
-        val user = dataManager.getCurrentUser()
-        data["user"] = user?.username!!
-
-        mvpView.showLoading()
-        compositeDisposable.add(
-                dataManager.sendMoney(data)
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .onErrorReturn {
-                            if (it is java.net.SocketTimeoutException) {
-                                 val response = Response()
-                                response.data = SocketTimeoutException()
-                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.response = "failed"
-                                return@onErrorReturn response
-                            } else {
-                                val raw = (it as HttpException).response().errorBody()?.string()
-                                if (isJSONValid(raw!!)) {
-                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
-                                }
-                                val response = Response()
-                                response.data = HttpException(retrofit2.Response.error<String>(500,
-                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
-                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.response = "failed"
-                                return@onErrorReturn response
-                            }
-                        }
-                        .subscribe {
-                            if (it.response != null && it.response == "00") {
-                                val wallet = gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
-                                dataManager.saveWallet(wallet)
-                                mvpView.hideLoading()
-                                mvpView.onSendMoneySuccessful(wallet)
-                            } else {
-                                mvpView.hideLoading()
-                                mvpView.onSendMoneyFailed(it)
-                            }
-                        }
-        )
-    }
-
-    override fun loadCachedWallet() {
-        mvpView.initView(dataManager.getWallet())
-    }
-}
 
 class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,
         FilterBottomSheetFragment.OnFilterItemSelected {
@@ -181,19 +105,14 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
             }
 
             try {
-                request?.amount = mAmountEditText.text.toString().toInt()
+                request?.amount = mAmountEditText.text.toString()
             } catch (e: NumberFormatException) {
                 show("Amount should be more than NGN100", true)
             }
 
-            if (request == null) {
-                show("Request object is null", true)
-                return@setOnClickListener
-            }
+            request?.paymentReference = mAmountReferenceEditText.text.toString()
 
-            request.comments = mAmountReferenceEditText.text.toString()
-
-            if (request.amount > 100) {
+            if (request?.amount?.toInt()!! > 100) {
                 mPresenter.sendMoney(request.toHashMap())
             } else {
                 show("Amount should be more than NGN100", true)
@@ -290,13 +209,11 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
 
     override fun onSendMoneySuccessful(wallet: Wallet) {
         eventBus.post(UpdateWallet())
-        val intent = DashboardActivity.getStartIntent(baseActivity)
-                .putExtra(DashboardActivity.SELECTED_ITEM, 0)
-        startActivity(intent)
+        (baseActivity as DashboardActivity).mNavController.clearStack()
     }
 
     override fun onSendMoneyFailed(response: Response) {
-        show(response.message!!, true)
+        show("An error occurred while processing the transaction", true)
     }
 
     private fun showDatePicker(type: Int) {
@@ -333,6 +250,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     }
 
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
+        // 0-daily, 1-weekly, 2-monthly, 3-yearly
         mRepeatTextView.text = s
         dialog.dismiss()
     }

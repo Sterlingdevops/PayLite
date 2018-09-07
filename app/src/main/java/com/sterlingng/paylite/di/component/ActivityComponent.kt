@@ -15,7 +15,7 @@ import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
-import com.sterlingng.paylite.ui.newpayment.NewPaymentAmountFragment
+import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.profile.ProfileFragment

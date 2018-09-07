@@ -4,36 +4,40 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class SendMoneyRequest() : Parcelable {
-    var amount = 0
-    var rcpt: String = ""
+    var amount = ""
+    var recipientHandle: String = ""
     var user: String = ""
-    var channel: String = ""
-    var comments: String = ""
+    var recipientName: String = ""
+    var paymentReference: String = ""
+    var repeatType = "-1"
 
     constructor(parcel: Parcel) : this() {
-        amount = parcel.readInt()
-        rcpt = parcel.readString()
+        amount = parcel.readString()
+        recipientHandle = parcel.readString()
         user = parcel.readString()
-        channel = parcel.readString()
-        comments = parcel.readString()
+        recipientName = parcel.readString()
+        paymentReference = parcel.readString()
+        repeatType = parcel.readString()
     }
 
     fun toHashMap(): HashMap<String, Any> {
         val data = HashMap<String, Any>()
-        data["user"] = user.toLowerCase()
-        data["rcpt"] = rcpt.toLowerCase()
-        data["amount"] = amount
-        data["channel"] = channel
-        data["comments"] = comments
+        data["Bvn"] = user
+        data["Amount"] = amount
+        data["RepeatType"] = repeatType
+        data["ReceipientName"] = recipientName
+        data["PaymentReference"] = paymentReference
+        data["ReceipientHandle"] = recipientHandle.toLowerCase()
         return data
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(amount)
-        parcel.writeString(rcpt)
+        parcel.writeString(amount)
+        parcel.writeString(recipientHandle)
         parcel.writeString(user)
-        parcel.writeString(channel)
-        parcel.writeString(comments)
+        parcel.writeString(recipientName)
+        parcel.writeString(paymentReference)
+        parcel.writeString(repeatType)
     }
 
     override fun describeContents(): Int {
@@ -49,4 +53,5 @@ class SendMoneyRequest() : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }

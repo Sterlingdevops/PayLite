@@ -175,7 +175,8 @@
     <string name="select_a_bundle">Select A Bundle</string>
     <string name="close">Close</string>
     <string name="account_number_email_or_phone">Account number, email or phone</string>
-    <string name="recipient_name">Recipient\'s name</string>
+    <string name="recipient_name">Recipient\'s Name</string>
+    <string name="recipient_username">Recipient\'s Username</string>
     <string name="mastercard">Mastercard</string>
     <string name="card_details">Card Details</string>
     <string name="_0000">0000</string>

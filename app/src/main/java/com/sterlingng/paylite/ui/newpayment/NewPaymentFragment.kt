@@ -1,6 +1,5 @@
 package com.sterlingng.paylite.ui.newpayment
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
@@ -8,48 +7,20 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.SendMoneyRequest
 import com.sterlingng.paylite.data.model.Wallet
-import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.ui.base.MvpPresenter
-import com.sterlingng.paylite.ui.base.MvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import io.reactivex.disposables.CompositeDisposable
+import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
+import java.util.regex.Pattern
 import javax.inject.Inject
-
-interface NewPaymentMvpContract<V : NewPaymentMvpView> : MvpPresenter<V> {
-    fun loadCachedWallet()
-}
-
-interface NewPaymentMvpView : MvpView {
-    fun initView(wallet: Wallet?)
-}
-
-class NewPaymentPresenter<V : NewPaymentMvpView> @Inject
-constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), NewPaymentMvpContract<V> {
-
-    override fun loadCachedWallet() {
-        mvpView.initView(dataManager.getWallet())
-    }
-}
 
 class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
 
@@ -94,41 +65,49 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
                 return@setOnClickListener
             }
 
+            val pattern = Pattern.compile("^[A-z0-9_]{1,15}$")
+            val matcher = pattern.matcher(mPhoneEmailEditText.text.toString())
+            if (!matcher.matches()) {
+                show("Invalid username, please choose another username", true)
+                return@setOnClickListener
+            }
+
             val request = SendMoneyRequest()
-            request.rcpt = mPhoneEmailEditText.text.toString()
-            request.channel = "Android Application"
+            request.recipientHandle = mPhoneEmailEditText.text.toString()
+            request.recipientName = mRecipientNameEditText.text.toString()
+            request.paymentReference = System.currentTimeMillis().toString()
 
             (baseActivity as DashboardActivity).mNavController.pushFragment(NewPaymentAmountFragment.newInstance(request))
         }
 
-        mPhoneEmailEditText.setOnTouchListener { _, event ->
-
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
-                    Dexter.withActivity(baseActivity)
-                            .withPermission(Manifest.permission.READ_CONTACTS)
-                            .withListener(object : PermissionListener {
-                                override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
-                                    token?.continuePermissionRequest()
-                                }
-
-                                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                                    show("Permission Denied", true)
-                                }
-
-                                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                                    val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-                                    if (intent.resolveActivity(baseActivity.packageManager) != null) {
-                                        startActivityForResult(intent, REQUEST_SELECT_CONTACT)
-                                    }
-                                }
-
-                            }).check()
-                    return@setOnTouchListener true
-                }
-            }
-            return@setOnTouchListener false
-        }
+//        mPhoneEmailEditText.setOnTouchListener { _, event ->
+//
+//            if (event.action == MotionEvent.ACTION_UP) {
+//                if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
+//                    Dexter.withActivity(baseActivity)
+//                            .withPermission(Manifest.permission.READ_CONTACTS)
+//                            .withListener(object : PermissionListener {
+//                                override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+//                                    token?.continuePermissionRequest()
+//                                }
+//
+//                                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+//                                    show("Permission Denied", true)
+//                                }
+//
+//                                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+//                                    val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+//                                    if (intent.resolveActivity(baseActivity.packageManager) != null) {
+//                                        startActivityForResult(intent, REQUEST_SELECT_CONTACT)
+//                                    }
+//                                }
+//
+//                            }).check()
+//                    return@setOnTouchListener true
+//                }
+//            }
+//            return@setOnTouchListener false
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
