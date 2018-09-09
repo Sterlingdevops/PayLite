@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.signup.SignUpActivity
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.paylite.utils.isValidEmail
 import com.sterlingng.views.LargeLabelEditText
@@ -54,22 +51,8 @@ class EmailFragment : BaseFragment(), EmailMvpView {
                 return@setOnClickListener
             }
 
-            val data = HashMap<String, Any>()
-            data["mobile"] = (baseActivity as SignUpActivity).signUpRequest.phoneNumber
-            data["email"] = mEmailEditText.mTextEditText.text.toString()
-            mPresenter.sendOtp(data)
-
-            Log.d(data.toString())
-            hideKeyboard()
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mEmailEditText.text())
         }
-    }
-
-    override fun onSendOTPFailed(it: Response) {
-        show("Error sending OTP. Please ensure you've entered a valid email address and phone number $it", true)
-    }
-
-    override fun onSendOTPSuccessful(it: Response) {
-        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mEmailEditText.mTextEditText.text.toString())
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

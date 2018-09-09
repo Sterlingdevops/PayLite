@@ -26,6 +26,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun sendOtpForgotPassword(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendOtpForgotPassword(data)
+
     override fun getUserTransactions(bvn: String, toDate: String, fromDate: String): Observable<Response> = mRemoteServiceHelper.getUserTransactions(bvn, toDate, fromDate)
 
     override fun requestPaymentLink(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.requestPaymentLink(data)

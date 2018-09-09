@@ -33,6 +33,18 @@ import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
 import com.sterlingng.paylite.ui.filter.FilterMvpContract
 import com.sterlingng.paylite.ui.filter.FilterMvpView
 import com.sterlingng.paylite.ui.filter.FilterPresenter
+import com.sterlingng.paylite.ui.forgot.ForgotMvpContract
+import com.sterlingng.paylite.ui.forgot.ForgotMvpView
+import com.sterlingng.paylite.ui.forgot.ForgotPresenter
+import com.sterlingng.paylite.ui.forgot.email.EmailForgotMvpContract
+import com.sterlingng.paylite.ui.forgot.email.EmailForgotMvpView
+import com.sterlingng.paylite.ui.forgot.email.EmailForgotPresenter
+import com.sterlingng.paylite.ui.forgot.reset.ResetMvpContract
+import com.sterlingng.paylite.ui.forgot.reset.ResetMvpView
+import com.sterlingng.paylite.ui.forgot.reset.ResetPresenter
+import com.sterlingng.paylite.ui.forgot.token.TokenMvpContract
+import com.sterlingng.paylite.ui.forgot.token.TokenMvpView
+import com.sterlingng.paylite.ui.forgot.token.TokenPresenter
 import com.sterlingng.paylite.ui.fund.FundMvpContract
 import com.sterlingng.paylite.ui.fund.FundMvpView
 import com.sterlingng.paylite.ui.fund.FundPresenter
@@ -51,7 +63,9 @@ import com.sterlingng.paylite.ui.main.MainPresenter
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpContract
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingMvpView
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingPresenter
-import com.sterlingng.paylite.ui.newpayment.*
+import com.sterlingng.paylite.ui.newpayment.NewPaymentMvpContract
+import com.sterlingng.paylite.ui.newpayment.NewPaymentMvpView
+import com.sterlingng.paylite.ui.newpayment.NewPaymentPresenter
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountMvpContract
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountMvpView
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountPresenter
@@ -200,7 +214,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideFundPresenter(presenter: FundPresenter<FundMvpView>): FundMvpContract<FundMvpView> = presenter
 
     @Provides
-    @PerActivity
     internal fun provideBillsPresenter(presenter: BillsPresenter<BillsMvpView>): BillsMvpContract<BillsMvpView> = presenter
 
     @Provides
@@ -209,7 +222,19 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    internal fun provideForgotPresenter(presenter: ForgotPresenter<ForgotMvpView>): ForgotMvpContract<ForgotMvpView> = presenter
+
+    @Provides
+    @PerActivity
     internal fun provideSignUpPresenter(presenter: SignUpPresenter<SignUpMvpView>): SignUpMvpContract<SignUpMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun provideDashboardPresenter(presenter: DashboardPresenter<DashboardMvpView>): DashboardMvpContract<DashboardMvpView> = presenter
+
+    @Provides
+    @PerActivity
+    internal fun provideNotificationPresenter(presenter: NotificationPresenter<NotificationMvpView>): NotificationMvpContract<NotificationMvpView> = presenter
 
     @Provides
     internal fun provideConfirmPresenter(presenter: ConfirmPresenter<ConfirmMvpView>): ConfirmMvpContract<ConfirmMvpView> = presenter
@@ -221,7 +246,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideAirTimePresenter(presenter: AirTimePresenter<AirTimeMvpView>): AirTimeMvpContract<AirTimeMvpView> = presenter
 
     @Provides
-    @PerActivity
     internal fun provideProfilePresenter(presenter: ProfilePresenter<ProfileMvpView>): ProfileMvpContract<ProfileMvpView> = presenter
 
     @Provides
@@ -234,27 +258,15 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideSendMoneyPresenter(presenter: SendMoneyPresenter<SendMoneyMvpView>): SendMoneyMvpContract<SendMoneyMvpView> = presenter
 
     @Provides
-    @PerActivity
-    internal fun provideDashboardPresenter(presenter: DashboardPresenter<DashboardMvpView>): DashboardMvpContract<DashboardMvpView> = presenter
-
-    @Provides
-    @PerActivity
     internal fun provideNewPaymentPresenter(presenter: NewPaymentPresenter<NewPaymentMvpView>): NewPaymentMvpContract<NewPaymentMvpView> = presenter
 
     @Provides
-    @PerActivity
     internal fun provideSuccessfulPresenter(presenter: SuccessfulPresenter<SuccessfulMvpView>): SuccessfulMvpContract<SuccessfulMvpView> = presenter
 
     @Provides
-    @PerActivity
-    internal fun provideNotificationPresenter(presenter: NotificationPresenter<NotificationMvpView>): NotificationMvpContract<NotificationMvpView> = presenter
-
-    @Provides
-    @PerActivity
     internal fun provideTransactionsPresenter(presenter: TransactionsPresenter<TransactionsMvpView>): TransactionsMvpContract<TransactionsMvpView> = presenter
 
     @Provides
-    @PerActivity
     internal fun provideNewPaymentAmountPresenter(presenter: NewPaymentAmountPresenter<NewPaymentAmountMvpView>): NewPaymentAmountMvpContract<NewPaymentAmountMvpView> = presenter
 
     // Provide Fragment Contexts
@@ -269,10 +281,16 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideBvnPresenter(presenter: BvnPresenter<BvnMvpView>): BvnMvpContract<BvnMvpView> = presenter
 
     @Provides
+    internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter
+
+    @Provides
     internal fun provideNamePresenter(presenter: NamePresenter<NameMvpView>): NameMvpContract<NameMvpView> = presenter
 
     @Provides
-    internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter
+    internal fun provideResetPresenter(presenter: ResetPresenter<ResetMvpView>): ResetMvpContract<ResetMvpView> = presenter
+
+    @Provides
+    internal fun provideTokenPresenter(presenter: TokenPresenter<TokenMvpView>): TokenMvpContract<TokenMvpView> = presenter
 
     @Provides
     internal fun providePhonePresenter(presenter: PhonePresenter<PhoneMvpView>): PhoneMvpContract<PhoneMvpView> = presenter
@@ -309,6 +327,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideSplitAmountPresenter(presenter: SplitAmountPresenter<SplitAmountMvpView>): SplitAmountMvpContract<SplitAmountMvpView> = presenter
+
+    @Provides
+    internal fun provideEmailForgotPresenter(presenter: EmailForgotPresenter<EmailForgotMvpView>): EmailForgotMvpContract<EmailForgotMvpView> = presenter
 
     @Provides
     internal fun provideSplitContactPresenter(presenter: SplitContactPresenter<SplitContactMvpView>): SplitContactMvpContract<SplitContactMvpView> = presenter

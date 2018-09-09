@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.forgot.ForgotActivity
 import com.sterlingng.paylite.utils.AppUtils.hasInternetConnection
 import javax.inject.Inject
 
@@ -18,6 +20,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     lateinit var mPresenter: LogInMvpContract<LogInMvpView>
 
     private lateinit var mPinView: PinView
+    private lateinit var mForgotPinTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +31,18 @@ class LogInActivity : BaseActivity(), LogInMvpView {
 
     override fun bindViews() {
         mPinView = findViewById(R.id.pin_view)
+        mForgotPinTextView = findViewById(R.id.forgot)
     }
 
     override fun setUp() {
         mPresenter.onViewInitialized()
 
         mPinView.setOnClickListener {
-            showKeyboard()
             mPinView.requestPinEntryFocus()
+        }
+
+        mForgotPinTextView.setOnClickListener {
+            startActivity(ForgotActivity.getStartIntent(this))
         }
 
         mPinView.setPinViewEventListener { _, _ ->
@@ -62,7 +69,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     }
 
     override fun onDoSignInFailed(response: Response) {
-        show("Error logging in. Please check the email and password", true)
+        show("An error while logging you in. Please check the PIN you entered", true)
         mPinView.clearValue()
     }
 

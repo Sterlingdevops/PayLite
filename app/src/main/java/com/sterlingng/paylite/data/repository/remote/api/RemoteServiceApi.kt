@@ -37,6 +37,9 @@ interface RemoteServiceApi {
     @POST("SendOtp")
     fun sendOtp(@Body data: HashMap<String, Any>): Observable<Response>
 
+    @POST("SendForgotPasswordTokenForMail")
+    fun sendOtpForgotPassword(@Body data: HashMap<String, Any>): Observable<Response>
+
     @POST("SendMoneyViaUserHandle")
     fun sendMoney(@Body data: HashMap<String, Any>): Observable<Response>
 

@@ -18,7 +18,6 @@ import com.sterlingng.paylite.ui.base.BaseActivity
 import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -33,10 +32,6 @@ class EditActivity : BaseActivity(), EditMvpView, DatePickerDialog.OnDateSetList
     private var now = Calendar.getInstance()
     private lateinit var doneTextView: TextView
     private lateinit var phoneInputLayout: PhoneInputLayout
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

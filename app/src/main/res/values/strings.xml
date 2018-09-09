@@ -280,4 +280,8 @@
     <string name="send_money_to_bank_accounts">Send money to bank accounts</string>
     <string name="to_phone_or_email">To Phone or Email</string>
     <string name="send_money_to_contacts_on_your_phone">Send money to contacts on your phone</string>
+    <string name="reset_password_text">An OTP will be sent to\n your phone number</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="input_the_6_digit_otp">Input the 6-digit OTP</string>
+    <string name="set_a_new_password">Set a new password</string>
 </resources>
