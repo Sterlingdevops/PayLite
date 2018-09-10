@@ -12,32 +12,31 @@ import javax.inject.Inject
 
 class RemoteServiceHelper @Inject
 internal constructor() : BaseHelper(), RemoteServiceApi {
+    override fun getUserTransactions(mobile: String, toDate: String, fromDate: String, authorization: String): Observable<Response> = mRemoteServiceApi.getUserTransactions(mobile, toDate, fromDate, authorization)
 
-    override fun sendOtpForgotPassword(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.sendOtpForgotPassword(data)
+    override fun fundWalletWithBankAccount(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceApi.fundWalletWithBankAccount(data, authorization)
 
-    override fun getUserTransactions(bvn: String, toDate: String, fromDate: String): Observable<Response> = mRemoteServiceApi.getUserTransactions(bvn, toDate, fromDate)
+    override fun sendOtpForgotPassword(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceApi.sendOtpForgotPassword(data, authorization)
 
-    override fun requestPaymentLink(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.requestPaymentLink(data)
+    override fun signin(username: String, password: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceApi.signin(username, password, grantType)
 
-    override fun fundWalletWithCard(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.fundWalletWithCard(data)
+    override fun requestPaymentLink(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceApi.requestPaymentLink(data, authorization)
+
+    override fun fundWalletWithCard(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceApi.fundWalletWithCard(data, authorization)
+
+    override fun buyAirtime(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceApi.buyAirtime(data, authorization)
+
+    override fun sendMoney(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceApi.sendMoney(data, authorization)
+
+    override fun getWallet(mobile: String, authorization: String): Observable<Response> = mRemoteServiceApi.getWallet(mobile, authorization)
+
+    override fun getUser(mobile: String, authorization: String): Observable<Response> = mRemoteServiceApi.getUser(mobile, authorization)
 
     override fun validateOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.validateOtp(data)
 
-    override fun buyAirtime(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.buyAirtime(data)
-
-    override fun fundWalletWithBankAccount(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.fundWalletWithBankAccount(data)
-
-    override fun sendMoney(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.sendMoney(data)
-
     override fun sendOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.sendOtp(data)
 
-    override fun signin(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.signin(data)
-
     override fun signup(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.signup(data)
-
-    override fun getWallet(bvn: String): Observable<Response> = mRemoteServiceApi.getWallet(bvn)
-
-    override fun getUser(bvn: String): Observable<Response> = mRemoteServiceApi.getUser(bvn)
 
     private var mRemoteServiceApi: RemoteServiceApi = createService(RemoteServiceApi::class.java)
 }

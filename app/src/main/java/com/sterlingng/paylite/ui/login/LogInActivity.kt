@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.TextView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
@@ -47,7 +46,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
 
         mPinView.setPinViewEventListener { _, _ ->
             if (hasInternetConnection(this@LogInActivity)) {
-                val data = HashMap<String, Any>()
+                val data = HashMap<String, String>()
                 data["password"] = mPinView.value
                 mPresenter.doLogIn(data)
             } else {
@@ -61,14 +60,14 @@ class LogInActivity : BaseActivity(), LogInMvpView {
 
     }
 
-    override fun onDoSignInSuccessful(response: Response) {
+    override fun onDoSignInSuccessful() {
         hideKeyboard()
         val intent = DashboardActivity.getStartIntent(this)
                 .putExtra(DashboardActivity.SELECTED_ITEM, 0)
         startActivity(intent)
     }
 
-    override fun onDoSignInFailed(response: Response) {
+    override fun onDoSignInFailed() {
         show("An error while logging you in. Please check the PIN you entered", true)
         mPinView.clearValue()
     }

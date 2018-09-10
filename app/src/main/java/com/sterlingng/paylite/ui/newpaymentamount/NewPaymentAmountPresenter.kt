@@ -20,11 +20,11 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
 
     override fun sendMoney(data: HashMap<String, Any>) {
         val user = dataManager.getCurrentUser()
-        data["Bvn"] = user?.bvn!!
+        data["Mobile"] = user?.phoneNumber!!
 
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.sendMoney(data)
+                dataManager.sendMoney(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {

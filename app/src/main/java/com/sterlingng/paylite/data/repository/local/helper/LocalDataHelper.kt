@@ -18,7 +18,7 @@ import javax.inject.Inject
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
 
-    private val config: RealmConfiguration = RealmConfiguration.Builder().schemaVersion(4).migration(Migrations()).build()
+    private val config: RealmConfiguration = RealmConfiguration.Builder().schemaVersion(5).migration(Migrations()).build()
     private val realm: Realm
 
     init {

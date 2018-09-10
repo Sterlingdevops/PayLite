@@ -5,20 +5,8 @@ import com.sterlingng.paylite.data.model.realms.UserRealm
 import com.sterlingng.paylite.utils.AppUtils.gson
 
 open class User {
-    @SerializedName("Bvn")
-    var bvn: String = ""
-
     @SerializedName("Email")
     var email: String = ""
-
-    @SerializedName("HandleUsername")
-    var username: String = ""
-
-    @SerializedName("latitude")
-    var latitude: String = ""
-
-    @SerializedName("longitude")
-    var longitude: String = ""
 
     @SerializedName("LastName")
     var lastName: String = ""
@@ -29,36 +17,33 @@ open class User {
     @SerializedName("Mobile")
     var phoneNumber: String = ""
 
+    @SerializedName("access_token")
+    var accessToken: String = ""
+
     override fun toString(): String {
         return gson.toJson(this)
     }
 
     override fun equals(other: Any?): Boolean {
-        return if (other is User) other.bvn == bvn else false
+        return if (other is User) other.phoneNumber == phoneNumber else false
     }
 
     fun asUserRealm(): UserRealm {
         val userRealm = UserRealm()
-        userRealm.bvn = bvn
         userRealm.email = email
         userRealm.phone = phoneNumber
         userRealm.lastname = lastName
-        userRealm.username = username
-        userRealm.latitude = latitude
         userRealm.firstname = firstName
-        userRealm.longitude = longitude
+        userRealm.accesstoken = accessToken
         return userRealm
     }
 
     override fun hashCode(): Int {
-        var result = bvn.hashCode()
+        var result = phoneNumber.hashCode()
         result = 31 * result + email.hashCode()
-        result = 31 * result + username.hashCode()
-        result = 31 * result + latitude.hashCode()
-        result = 31 * result + longitude.hashCode()
         result = 31 * result + lastName.hashCode()
         result = 31 * result + firstName.hashCode()
-        result = 31 * result + phoneNumber.hashCode()
+        result = 31 * result + accessToken.hashCode()
         return result
     }
 }

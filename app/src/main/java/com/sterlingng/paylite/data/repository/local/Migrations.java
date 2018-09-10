@@ -46,5 +46,19 @@ public class Migrations implements RealmMigration {
             ;
             ++oldVersion;
         }
+
+        //version 5
+        if (oldVersion == 4) {
+            schema.get("UserRealm")
+                    .removeField("bvn")
+                    .removeField("latitude")
+                    .removeField("longitude")
+                    .removeField("username")
+                    .addField("accesstoken", String.class)
+                    .setRequired("accesstoken", true)
+                    .addPrimaryKey("phone")
+            ;
+            ++oldVersion;
+        }
     }
 }

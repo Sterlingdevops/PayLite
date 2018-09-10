@@ -32,7 +32,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun loadWallet() {
         val user = dataManager.getCurrentUser()
         compositeDisposable.add(
-                dataManager.getWallet(user?.bvn!!)
+                dataManager.getWallet(user?.phoneNumber!!, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {

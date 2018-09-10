@@ -174,7 +174,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     @SuppressLint("SetTextI18n")
     override fun initView(currentUser: User?) {
-        mUserGreetingTextView.text = "Hi ${currentUser?.username!!}"
+        mUserGreetingTextView.text = "Hi ${currentUser?.firstName!!}"
     }
 
     override fun onGetWalletFailed(response: Response?) {

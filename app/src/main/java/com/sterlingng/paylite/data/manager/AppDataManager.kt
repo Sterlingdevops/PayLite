@@ -26,53 +26,25 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
-    override fun sendOtpForgotPassword(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendOtpForgotPassword(data)
-
-    override fun getUserTransactions(bvn: String, toDate: String, fromDate: String): Observable<Response> = mRemoteServiceHelper.getUserTransactions(bvn, toDate, fromDate)
-
-    override fun requestPaymentLink(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.requestPaymentLink(data)
-
-    override fun fundWalletWithCard(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.fundWalletWithCard(data)
-
-    override fun validateOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.validateOtp(data)
-
-    override fun buyAirtime(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.buyAirtime(data)
-
-    override fun sendOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendOtp(data)
+    override fun getWallet(): Wallet? = mLocalDataHelper.getWallet()
 
     override fun mockBanks(): ArrayList<Bank> = mMockHelper.mockBanks()
 
     override fun deleteAllWallets() = mLocalDataHelper.deleteAllWallets()
 
-    override fun getWallet(): Wallet? = mLocalDataHelper.getWallet()
-
     override fun saveWallet(wallet: Wallet) = mLocalDataHelper.saveWallet(wallet)
 
     override fun getWalletRealm(): WalletRealm? = mLocalDataHelper.getWalletRealm()
 
-    override fun sendMoney(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendMoney(data)
-
-    override fun resolveBankAccount(accountNumber: String, bankCode: String): Observable<Response> = mPayStackServiceHelper.resolveBankAccount(accountNumber, bankCode)
-
-    override fun resolveCardNumber(bin: String): Observable<Response> = mPayStackServiceHelper.resolveCardNumber(bin)
-
     override fun getBanks(): Observable<Response> = mPayStackServiceHelper.getBanks()
-
-    override fun signup(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.signup(data)
-
-    override fun signin(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.signin(data)
-
-    override fun getUser(bvn: String): Observable<Response> = mRemoteServiceHelper.getUser(bvn)
-
-    override fun fundWalletWithBankAccount(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.fundWalletWithBankAccount(data)
-
-    override fun getWallet(bvn: String): Observable<Response> = mRemoteServiceHelper.getWallet(bvn)
 
     override fun deleteAll() = mLocalDataHelper.deleteAll()
 
     override fun closeRealm() = mLocalDataHelper.closeRealm()
 
     override fun deleteAllUsers() = mLocalDataHelper.deleteAllUsers()
+
+    override fun mockDeals(): ArrayList<Deal> = mMockHelper.mockDeals()
 
     override fun saveUser(user: User) = mLocalDataHelper.saveUser(user)
 
@@ -94,5 +66,33 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun mockProjects(): ArrayList<Project> = mMockHelper.mockProjects()
 
-    override fun mockDeals(): ArrayList<Deal> = mMockHelper.mockDeals()
+    override fun signup(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.signup(data)
+
+    override fun sendOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendOtp(data)
+
+    override fun resolveCardNumber(bin: String): Observable<Response> = mPayStackServiceHelper.resolveCardNumber(bin)
+
+    override fun validateOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.validateOtp(data)
+
+    override fun getUser(mobile: String, authorization: String): Observable<Response> = mRemoteServiceHelper.getUser(mobile, authorization)
+
+    override fun getWallet(mobile: String, authorization: String): Observable<Response> = mRemoteServiceHelper.getWallet(mobile, authorization)
+
+    override fun sendMoney(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.sendMoney(data, authorization)
+
+    override fun buyAirtime(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.buyAirtime(data, authorization)
+
+    override fun resolveBankAccount(accountNumber: String, bankCode: String): Observable<Response> = mPayStackServiceHelper.resolveBankAccount(accountNumber, bankCode)
+
+    override fun requestPaymentLink(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.requestPaymentLink(data, authorization)
+
+    override fun fundWalletWithCard(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.fundWalletWithCard(data, authorization)
+
+    override fun signin(username: String, password: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceHelper.signin(username, password, grantType)
+
+    override fun sendOtpForgotPassword(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.sendOtpForgotPassword(data, authorization)
+
+    override fun fundWalletWithBankAccount(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.fundWalletWithBankAccount(data, authorization)
+
+    override fun getUserTransactions(mobile: String, toDate: String, fromDate: String, authorization: String): Observable<Response> = mRemoteServiceHelper.getUserTransactions(mobile, toDate, fromDate, authorization)
 }

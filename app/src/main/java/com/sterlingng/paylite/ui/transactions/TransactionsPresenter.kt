@@ -23,7 +23,7 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
         val endDate = SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE).format(Date(System.currentTimeMillis()))
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.getUserTransactions(dataManager.getCurrentUser()?.bvn!!, endDate, startDate)
+                dataManager.getUserTransactions(dataManager.getCurrentUser()?.phoneNumber!!, endDate, startDate, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {

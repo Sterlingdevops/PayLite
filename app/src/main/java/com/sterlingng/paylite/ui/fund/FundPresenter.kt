@@ -27,7 +27,7 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
         mvpView.showLoading()
         val user = dataManager.getCurrentUser()
         compositeDisposable.add(
-                dataManager.getWallet(user?.bvn!!)
+                dataManager.getWallet(user?.phoneNumber!!, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
@@ -64,13 +64,13 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
     }
 
     override fun fundWalletWithCard(data: HashMap<String, Any>) {
-        dataManager.getCurrentUser()?.bvn?.let { data["bvn"] = it }
+        dataManager.getCurrentUser()?.phoneNumber?.let { data["mobile"] = it }
         dataManager.getWallet()?.walletId?.let { data["customerId"] = it }
 
         mvpView.showLoading()
         compositeDisposable.add(
                 dataManager
-                        .fundWalletWithCard(data)
+                        .fundWalletWithCard(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
@@ -106,12 +106,12 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
 
     override fun fundWalletWithBankAccount(data: HashMap<String, Any>) {
         val user = dataManager.getCurrentUser()
-        data["toacct"] = user?.bvn!!
+        data["toacct"] = user?.phoneNumber!!
 
         mvpView.showLoading()
         compositeDisposable.add(
                 dataManager
-                        .fundWalletWithBankAccount(data)
+                        .fundWalletWithBankAccount(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {

@@ -1,17 +1,10 @@
 package com.sterlingng.paylite.ui.login
 
 import com.sterlingng.paylite.data.manager.DataManager
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.utils.AppUtils.gson
-import com.sterlingng.paylite.utils.AppUtils.isJSONValid
 import io.reactivex.disposables.CompositeDisposable
-import okhttp3.MediaType
-import okhttp3.ResponseBody
-import retrofit2.HttpException
-import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 class LogInPresenter<V : LogInMvpView>
@@ -23,41 +16,25 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
      * Try to login, checking and catching any server errors that could occur,
      * then fail silently and inform the user with a helpful message
      */
-    override fun doLogIn(data: HashMap<String, Any>) {
-        data["email"] = "bsrtukpe@gmail.com" //dataManager.getCurrentUser()?.email!!
+    override fun doLogIn(data: HashMap<String, String>) {
+        data["username"] = "bsrtukpe@gmail.com" //dataManager.getCurrentUser()?.email!!
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.signin(data)
+                dataManager.signin(data["username"]!!, data["password"]!!, "password")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .onErrorReturn {
-                            if (it is java.net.SocketTimeoutException) {
-                                val response = Response()
-                                response.data = SocketTimeoutException()
-                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.response = "failed"
-                                return@onErrorReturn response
-                            } else {
-                                val raw = (it as HttpException).response().errorBody()?.string()
-                                if (isJSONValid(raw!!)) {
-                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
-                                }
-                                val response = Response()
-                                response.data = HttpException(retrofit2.Response.error<String>(500,
-                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
-                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.response = "failed"
-                                return@onErrorReturn response
-                            }
-                        }
-                        .subscribe {
-                            if (it.message == "successful") {
-                                val user = gson.fromJson(gson.toJson(it.data), User::class.java)
-                                dataManager.saveUser(user)
-                                mvpView.onDoSignInSuccessful(it)
-                            } else {
-                                mvpView.onDoSignInFailed(it)
-                            }
+                        .subscribe({
+                            val user = User()
+                            user.email = it["Email"] as String
+                            user.lastName = it["LastName"] as String
+                            user.phoneNumber = it["Mobile"] as String
+                            user.firstName = it["FirstName"] as String
+                            user.accessToken = it["access_token"] as String
+                            dataManager.saveUser(user)
+                            mvpView.onDoSignInSuccessful()
+                            mvpView.hideLoading()
+                        }) {
+                            mvpView.onDoSignInFailed()
                             mvpView.hideLoading()
                         }
         )

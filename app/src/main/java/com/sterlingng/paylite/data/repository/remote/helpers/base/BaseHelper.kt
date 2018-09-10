@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
  */
 
 open class BaseHelper {
-    private val baseUrl: String = "https://pass.sterlingbankng.com/PayliteApi/api/Paylite/"
+    private val baseUrl: String = "https://pass.sterlingbankng.com/PayliteApi/"
     private val okHttpCBuilder = OkHttpClient.Builder()
     private val builder = Retrofit.Builder()
             .baseUrl(baseUrl)

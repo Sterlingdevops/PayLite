@@ -7,25 +7,19 @@ import io.realm.annotations.PrimaryKey
 open class UserRealm : RealmObject() {
 
     @PrimaryKey
-    lateinit var bvn: String
-    lateinit var email: String
     lateinit var phone: String
-    lateinit var latitude: String
-    lateinit var username: String
+    lateinit var email: String
     lateinit var lastname: String
-    lateinit var longitude: String
     lateinit var firstname: String
+    lateinit var accesstoken: String
 
     fun asUser(): User {
         val user = User()
-        user.bvn = bvn
         user.email = email
-        user.phoneNumber = phone
         user.lastName = lastname
-        user.username = username
-        user.latitude = latitude
+        user.phoneNumber = phone
         user.firstName = firstname
-        user.longitude = longitude
+        user.accessToken = accesstoken
         return user
     }
 }
