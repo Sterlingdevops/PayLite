@@ -97,7 +97,7 @@ class FundFragment : BaseFragment(), FundMvpView {
 
             if (!isCard) {
                 val data = HashMap<String, Any>()
-                data["amt"] = mFundAmountBankEditText.text.toString().toInt()
+                data["amt"] = mFundAmountBankEditText.text.toString()
                 data["frmacct"] = mAccountNumberTextView.text.toString()
                 data["remarks"] = "Fund Wallet (Via Bank Account: ${mAccountNumberTextView.text})"
                 data["paymentRef"] = System.currentTimeMillis().toString()

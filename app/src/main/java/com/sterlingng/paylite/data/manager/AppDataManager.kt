@@ -78,21 +78,21 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun getWallet(mobile: String, authorization: String): Observable<Response> = mRemoteServiceHelper.getWallet(mobile, authorization)
 
-    override fun sendMoney(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.sendMoney(data, authorization)
+    override fun sendMoney(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.sendMoney(data, authorization, hash)
 
-    override fun buyAirtime(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.buyAirtime(data, authorization)
+    override fun buyAirtime(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.buyAirtime(data, authorization, hash)
 
     override fun resolveBankAccount(accountNumber: String, bankCode: String): Observable<Response> = mPayStackServiceHelper.resolveBankAccount(accountNumber, bankCode)
 
-    override fun requestPaymentLink(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.requestPaymentLink(data, authorization)
+    override fun requestPaymentLink(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.requestPaymentLink(data, authorization, hash)
 
-    override fun fundWalletWithCard(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.fundWalletWithCard(data, authorization)
+    override fun fundWalletWithCard(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.fundWalletWithCard(data, authorization, hash)
 
     override fun signin(username: String, password: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceHelper.signin(username, password, grantType)
 
-    override fun sendOtpForgotPassword(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.sendOtpForgotPassword(data, authorization)
+    override fun sendOtpForgotPassword(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.sendOtpForgotPassword(data, authorization, hash)
 
-    override fun fundWalletWithBankAccount(data: HashMap<String, Any>, authorization: String): Observable<Response> = mRemoteServiceHelper.fundWalletWithBankAccount(data, authorization)
+    override fun fundWalletWithBankAccount(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.fundWalletWithBankAccount(data, authorization, hash)
 
     override fun getUserTransactions(mobile: String, toDate: String, fromDate: String, authorization: String): Observable<Response> = mRemoteServiceHelper.getUserTransactions(mobile, toDate, fromDate, authorization)
 }

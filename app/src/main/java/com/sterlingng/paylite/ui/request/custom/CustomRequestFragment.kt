@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.ui.request.custom
 
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +18,16 @@ import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.utils.AppUtils
+import com.sterlingng.paylite.utils.CRYPTO_ALGO
+import com.sterlingng.paylite.utils.SECRET_KEY
 import com.sterlingng.paylite.utils.isValidEmail
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 
 class CustomRequestFragment : BaseFragment(), CustomRequestMvpView {
@@ -130,9 +135,16 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
         dataManager.getCurrentUser()?.firstName?.let { data["username"] = it }
         dataManager.getCurrentUser()?.phoneNumber?.let { data["phone"] = it }
 
+        val message = AppUtils.gson.toJson(data)
+        val sha256_HMAC = Mac.getInstance(CRYPTO_ALGO)
+        val secret_key = SecretKeySpec(SECRET_KEY.toByteArray(), CRYPTO_ALGO)
+        sha256_HMAC.init(secret_key)
+
+        val hash = Base64.encodeToString(sha256_HMAC.doFinal(message.toByteArray()), Base64.NO_WRAP)
+
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.requestPaymentLink(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
+                dataManager.requestPaymentLink(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}", hash)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
