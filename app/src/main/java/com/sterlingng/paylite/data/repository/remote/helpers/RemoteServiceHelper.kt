@@ -18,7 +18,7 @@ internal constructor() : BaseHelper(), RemoteServiceApi {
 
     override fun sendOtpForgotPassword(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.sendOtpForgotPassword(data, authorization, hash)
 
-    override fun signin(username: String, password: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceApi.signin(username, password, grantType)
+    override fun signin(username: String, password: String, initializationVector: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceApi.signin(username, password, initializationVector, grantType)
 
     override fun requestPaymentLink(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.requestPaymentLink(data, authorization, hash)
 

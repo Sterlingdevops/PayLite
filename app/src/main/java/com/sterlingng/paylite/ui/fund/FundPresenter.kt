@@ -112,19 +112,6 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
         val user = dataManager.getCurrentUser()
         data["toacct"] = user?.phoneNumber!!
 
-//        val base_string = gson.toJson(data)
-//        var hash = ""
-//        try {
-//            val mac = Mac.getInstance("HmacSHA256")
-//            val secret = SecretKeySpec(SECRET_KEY.fromBase64(), mac.algorithm)
-//            mac.init(secret)
-//
-//            val digest = mac.doFinal(base_string.toByteArray())
-//            hash = Base64.encodeToString(digest, Base64.NO_WRAP)
-//        } catch (e: Exception) {
-//            Log.e(e.localizedMessage)
-//        }
-
         mvpView.showLoading()
         compositeDisposable.add(
                 dataManager

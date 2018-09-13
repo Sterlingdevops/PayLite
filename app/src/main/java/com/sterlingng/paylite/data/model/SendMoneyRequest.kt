@@ -4,17 +4,17 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class SendMoneyRequest() : Parcelable {
+    var email = ""
+    var phone = ""
     var amount = ""
-    var recipientHandle: String = ""
-    var user: String = ""
+    var repeatType = "-1"
     var recipientName: String = ""
     var paymentReference: String = ""
-    var repeatType = "-1"
 
     constructor(parcel: Parcel) : this() {
+        email = parcel.readString()
+        phone = parcel.readString()
         amount = parcel.readString()
-        recipientHandle = parcel.readString()
-        user = parcel.readString()
         recipientName = parcel.readString()
         paymentReference = parcel.readString()
         repeatType = parcel.readString()
@@ -22,19 +22,19 @@ class SendMoneyRequest() : Parcelable {
 
     fun toHashMap(): HashMap<String, Any> {
         val data = HashMap<String, Any>()
-        data["Bvn"] = user
         data["Amount"] = amount
+        data["RecipientEmail"] = email
         data["RepeatType"] = repeatType
+        data["RecipientPhoneNumber"] = phone
         data["ReceipientName"] = recipientName
         data["PaymentReference"] = paymentReference
-        data["ReceipientHandle"] = recipientHandle.toLowerCase()
         return data
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(email)
+        parcel.writeString(phone)
         parcel.writeString(amount)
-        parcel.writeString(recipientHandle)
-        parcel.writeString(user)
         parcel.writeString(recipientName)
         parcel.writeString(paymentReference)
         parcel.writeString(repeatType)

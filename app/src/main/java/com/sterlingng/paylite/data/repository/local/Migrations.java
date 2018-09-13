@@ -60,5 +60,17 @@ public class Migrations implements RealmMigration {
             ;
             ++oldVersion;
         }
+
+        //version 6
+        if (oldVersion == 5) {
+            schema.create("PinRealm")
+                    .addField("pin", String.class)
+                    .addField("phone", String.class)
+                    .setRequired("pin", true)
+                    .setRequired("phone", true)
+                    .addPrimaryKey("phone")
+            ;
+            ++oldVersion;
+        }
     }
 }

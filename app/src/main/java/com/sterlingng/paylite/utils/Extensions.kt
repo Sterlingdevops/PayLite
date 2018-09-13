@@ -4,9 +4,12 @@ import android.text.TextUtils
 import android.util.Base64
 import android.util.Patterns
 import java.util.regex.Pattern
+import javax.crypto.Cipher
 import javax.crypto.Mac
+import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 import kotlin.text.Charsets.UTF_8
+
 
 fun String.toSentenceCase(): String {
     val stringBuilder = StringBuilder()
@@ -31,6 +34,46 @@ fun String.sha256(): String {
         Log.e(e.localizedMessage)
     }
     return hash
+}
+
+fun String.encryptAES(initVector: String): String {
+    var cipherText = ""
+    try {
+        val bytes = initVector.fromBase64()
+        val iv = IvParameterSpec(bytes)
+        val skeySpec = SecretKeySpec(SECRET_KEY.fromBase64(), "AES")
+
+        val cipher = Cipher.getInstance("AES/CBC/PKCS7PADDING")
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv)
+
+        val encrypted = cipher.doFinal(this.toByteArray())
+        Log.d("encrypted string: " + Base64.encodeToString(encrypted, Base64.NO_WRAP))
+
+        cipherText = Base64.encodeToString(encrypted, Base64.NO_WRAP)
+    } catch (ex: Exception) {
+        ex.printStackTrace()
+    }
+    return cipherText
+}
+
+fun String.decryptAES(initVector: String): String {
+    var cleartext = ""
+    try {
+        val bytes = initVector.toByteArray()
+        val iv = IvParameterSpec(bytes)
+        val skeySpec = SecretKeySpec(SECRET_KEY.fromBase64(), "AES")
+
+        val cipher = Cipher.getInstance("AES/CBC/PKCS7PADDING")
+        cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv)
+
+        val original = cipher.doFinal(Base64.decode(this, Base64.NO_WRAP))
+
+        cleartext = String(original)
+    } catch (ex: Exception) {
+        ex.printStackTrace()
+    }
+
+    return cleartext
 }
 
 fun String.isValidEmail(): Boolean {

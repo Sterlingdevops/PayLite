@@ -2,6 +2,7 @@ package com.sterlingng.paylite.data.manager
 
 import android.content.Context
 import com.sterlingng.paylite.data.model.*
+import com.sterlingng.paylite.data.model.realms.PinRealm
 import com.sterlingng.paylite.data.model.realms.UserRealm
 import com.sterlingng.paylite.data.model.realms.WalletRealm
 import com.sterlingng.paylite.data.repository.local.helper.LocalDataHelper
@@ -25,6 +26,12 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mRemoteServiceHelper: RemoteServiceHelper,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
+
+    override fun getPinRealm(): PinRealm? = mLocalDataHelper.getPinRealm()
+
+    override fun getPin(): Pin? = mLocalDataHelper.getPin()
+
+    override fun savePin(pin: Pin) = mLocalDataHelper.savePin(pin)
 
     override fun getWallet(): Wallet? = mLocalDataHelper.getWallet()
 
@@ -88,7 +95,7 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun fundWalletWithCard(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.fundWalletWithCard(data, authorization, hash)
 
-    override fun signin(username: String, password: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceHelper.signin(username, password, grantType)
+    override fun signin(username: String, password: String, initializationVector: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceHelper.signin(username, password, initializationVector, grantType)
 
     override fun sendOtpForgotPassword(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.sendOtpForgotPassword(data, authorization, hash)
 

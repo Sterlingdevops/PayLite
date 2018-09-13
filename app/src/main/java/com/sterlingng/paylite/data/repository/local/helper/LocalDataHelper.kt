@@ -1,7 +1,9 @@
 package com.sterlingng.paylite.data.repository.local.helper
 
+import com.sterlingng.paylite.data.model.Pin
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.data.model.Wallet
+import com.sterlingng.paylite.data.model.realms.PinRealm
 import com.sterlingng.paylite.data.model.realms.UserRealm
 import com.sterlingng.paylite.data.model.realms.WalletRealm
 import com.sterlingng.paylite.data.repository.local.Migrations
@@ -18,7 +20,7 @@ import javax.inject.Inject
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
 
-    private val config: RealmConfiguration = RealmConfiguration.Builder().schemaVersion(5).migration(Migrations()).build()
+    private val config: RealmConfiguration = RealmConfiguration.Builder().schemaVersion(6).migration(Migrations()).build()
     private val realm: Realm
 
     init {
@@ -104,5 +106,24 @@ constructor() : LocalDataInterface {
 
     override fun getWalletRealm(): WalletRealm? {
         return getRealm().where(WalletRealm::class.java).findFirst()
+    }
+
+    override fun getPinRealm(): PinRealm? {
+        return realm.where(PinRealm::class.java).findFirst()
+    }
+
+    override fun getPin(): Pin? {
+        return getPinRealm()?.asPin()
+    }
+
+    override fun savePin(pin: Pin) {
+        getRealm().beginTransaction()
+        try {
+            getRealm().copyToRealmOrUpdate(pin.asPinRealm())
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->savePin")
+        } finally {
+            getRealm().commitTransaction()
+        }
     }
 }

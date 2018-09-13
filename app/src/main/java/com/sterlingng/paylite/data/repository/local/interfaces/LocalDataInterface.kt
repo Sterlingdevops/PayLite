@@ -1,7 +1,9 @@
 package com.sterlingng.paylite.data.repository.local.interfaces
 
+import com.sterlingng.paylite.data.model.Pin
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.data.model.Wallet
+import com.sterlingng.paylite.data.model.realms.PinRealm
 import com.sterlingng.paylite.data.model.realms.UserRealm
 import com.sterlingng.paylite.data.model.realms.WalletRealm
 
@@ -22,6 +24,12 @@ interface LocalDataInterface {
     fun saveUser(user: User)
     fun getCurrentUser(): User?
     fun getUserRealm(): UserRealm?
+
+    // Pin
+
+    fun getPinRealm(): PinRealm?
+    fun getPin(): Pin?
+    fun savePin(pin: Pin)
 
     // wallet
 
