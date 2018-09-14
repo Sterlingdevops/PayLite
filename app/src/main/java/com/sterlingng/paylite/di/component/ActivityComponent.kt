@@ -3,6 +3,7 @@ package com.sterlingng.paylite.di.component
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.ui.airtime.AirTimeFragment
+import com.sterlingng.paylite.ui.authpin.AuthPinFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
@@ -28,6 +29,7 @@ import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.request.custom.CustomRequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
+import com.sterlingng.paylite.ui.security.LoginAndSecurityFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
@@ -143,4 +145,8 @@ interface ActivityComponent {
     fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
 
     fun inject(contactsBottomSheetFragment: ContactsBottomSheetFragment)
+
+    fun inject(authPinFragment: AuthPinFragment)
+
+    fun inject(loginAndSecurityFragment: LoginAndSecurityFragment)
 }

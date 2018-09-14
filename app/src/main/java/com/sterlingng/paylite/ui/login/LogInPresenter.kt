@@ -4,9 +4,9 @@ import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.utils.asByteArray
-import com.sterlingng.paylite.utils.asHexString
+import com.sterlingng.paylite.utils.RandomString
 import com.sterlingng.paylite.utils.encryptAES
+import com.sterlingng.paylite.utils.toBase64String
 import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 import javax.inject.Inject
@@ -30,16 +30,16 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
      * then fail silently and inform the user with a helpful message
      */
     override fun doLogIn(data: HashMap<String, String>) {
-        val initializationVector = "j+N89vDbHBf8+CE2WkdEtw==" //: String = RandomString().nextString()
+        val initializationVector: String = RandomString(length = 16).nextString()
 
-        data["username"] = "bsrtukpe@gmail.com" //dataManager.getCurrentUser()?.email!!
+        data["username"] = dataManager.getCurrentUser()?.email!!
 
-        val username: String = (data["username"] as String).encryptAES(initializationVector).asByteArray().asHexString()
-        val password: String = (data["password"] as String).encryptAES(initializationVector).asByteArray().asHexString()
+        val username: String = (data["username"] as String).encryptAES(initializationVector)
+        val password: String = (data["password"] as String).encryptAES(initializationVector)
 
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.signin(username, password, initializationVector, "password")
+                dataManager.signIn(username, password, initializationVector.toByteArray().toBase64String(), "password")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({

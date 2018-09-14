@@ -39,7 +39,7 @@ fun String.sha256(): String {
 fun String.encryptAES(initVector: String): String {
     var cipherText = ""
     try {
-        val bytes = initVector.fromBase64()
+        val bytes = initVector.toByteArray()
         val iv = IvParameterSpec(bytes)
         val skeySpec = SecretKeySpec(SECRET_KEY.fromBase64(), "AES")
 
@@ -51,7 +51,7 @@ fun String.encryptAES(initVector: String): String {
 
         cipherText = Base64.encodeToString(encrypted, Base64.NO_WRAP)
     } catch (ex: Exception) {
-        ex.printStackTrace()
+        Log.e(ex, "encryptAES Error")
     }
     return cipherText
 }

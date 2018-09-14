@@ -16,5 +16,5 @@ operator fun ViewGroup.get(view: View): Int {
     return this.indexOfChild(view)
 }
 
-const val CRYPTO_ALGO = "HmacSHA256"
+const val PIN_KEY = "j+N89vDbHBf8+CE2WkdEtw=="
 const val SECRET_KEY = "VCsJcMNfCLaXCB29+dTaudk3fG44k2chkpprXryxhF8="

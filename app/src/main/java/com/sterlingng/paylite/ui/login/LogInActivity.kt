@@ -34,7 +34,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     }
 
     override fun setUp() {
-        mPresenter.onViewInitialized()
+//        mPresenter.onViewInitialized()
 
         mPinView.setOnClickListener {
             mPinView.requestPinEntryFocus()

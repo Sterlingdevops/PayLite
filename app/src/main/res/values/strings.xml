@@ -284,4 +284,8 @@
     <string name="reset_password">Reset Password</string>
     <string name="input_the_6_digit_otp">Input the 6-digit OTP</string>
     <string name="set_a_new_password">Set a new password</string>
+    <string name="change_login_pin">Change Login PIN</string>
+    <string name="change_transaction_pin">Change Transaction PIN</string>
+    <string name="create_a_new_transaction_pin">Create a new Transaction PIN</string>
+    <string name="please_enter_a_new_transaction_pin">Please enter a new transaction PIN</string>
 </resources>

@@ -3,7 +3,8 @@
     <declare-styleable name="PinView">
         <attr name="pinTextBackground" format="reference"/>
         <attr name="pinBackground" format="reference"/>
-        <attr name="forceKeyboard" format ="boolean"/>
+        <attr name="swapBackground" format="boolean"/>
+        <attr name="forceKeyboard" format="boolean"/>
         <attr name="cursorVisible" format="boolean"/>
         <attr name="splitWidth" format="dimension"/>
         <attr name="pinHeight" format="dimension"/>

@@ -31,8 +31,7 @@ interface RemoteServiceApi {
 
     @FormUrlEncoded
     @POST("AccessToken")
-    @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun signin(@Field("username") username: String,
+    fun signIn(@Field("username") username: String,
                @Field("password") password: String,
                @Header("X-IV") initializationVector: String,
                @Field("grant_type") grantType: String): Observable<HashMap<String, Any>>

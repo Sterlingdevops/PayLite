@@ -95,7 +95,7 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun fundWalletWithCard(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.fundWalletWithCard(data, authorization, hash)
 
-    override fun signin(username: String, password: String, initializationVector: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceHelper.signin(username, password, initializationVector, grantType)
+    override fun signIn(username: String, password: String, initializationVector: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceHelper.signIn(username, password, initializationVector, grantType)
 
     override fun sendOtpForgotPassword(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.sendOtpForgotPassword(data, authorization, hash)
 

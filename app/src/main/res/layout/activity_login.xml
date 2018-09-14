@@ -124,7 +124,8 @@
         app:pinHeight="16dp"
         app:pinLength="4"
         app:pinTextBackground="@drawable/background_light_blue_outline"
-        app:pinWidth="16dp"/>
+        app:pinWidth="16dp"
+        app:swapBackground="true"/>
 
     <TextView
         android:id="@+id/forgot"

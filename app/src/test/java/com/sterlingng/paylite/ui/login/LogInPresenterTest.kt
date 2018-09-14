@@ -52,7 +52,7 @@ class LogInPresenterTest {
         val data = HashMap<String, Any>()
         val response = Response()
 
-        `when`(mDataManager.signin(data)).thenReturn(Observable.just(response))
+        `when`(mDataManager.signIn(data)).thenReturn(Observable.just(response))
 
 
         //trigger presenter
@@ -61,7 +61,7 @@ class LogInPresenterTest {
 
         //show progress bar, load data
         verify(mMockLogInMvpView).showLoading()
-        verify(mDataManager).signin(data)
+        verify(mDataManager).signIn(data)
 
         verify(mMockLogInMvpView).hideLoading()
     }

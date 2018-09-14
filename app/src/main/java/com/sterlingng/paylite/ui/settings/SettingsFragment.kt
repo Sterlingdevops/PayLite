@@ -11,6 +11,7 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.payment.PaymentFragment
+import com.sterlingng.paylite.ui.security.LoginAndSecurityFragment
 import javax.inject.Inject
 
 class SettingsFragment : BaseFragment(), SettingsMvpView {
@@ -18,6 +19,7 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
     @Inject
     lateinit var mPresenter: SettingsMvpContract<SettingsMvpView>
 
+    private lateinit var mLoginAndSecurityTextView: TextView
     private lateinit var mPaymentMethodsTextView: TextView
     private lateinit var mLogOutTextView: TextView
 
@@ -30,6 +32,7 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
     }
 
     override fun bindViews(view: View) {
+        mLoginAndSecurityTextView = view.findViewById(R.id.login_and_security)
         mPaymentMethodsTextView = view.findViewById(R.id.payment_methods)
         mLogOutTextView = view.findViewById(R.id.log_out)
     }
@@ -37,6 +40,10 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
     override fun setUp(view: View) {
         mPaymentMethodsTextView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
+        }
+
+        mLoginAndSecurityTextView.setOnClickListener {
+            (baseActivity as DashboardActivity).mNavController.pushFragment(LoginAndSecurityFragment.newInstance())
         }
 
         mLogOutTextView.setOnClickListener {

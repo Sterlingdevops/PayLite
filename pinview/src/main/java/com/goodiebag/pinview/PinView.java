@@ -78,6 +78,7 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
     private int mSplitWidth = 20;
     private boolean mCursorVisible = false;
     private boolean mDelPressed = false;
+    private boolean mSwapBackground = false;
     @DrawableRes
     private int mPinBackground = R.drawable.sample_background;
     private int mPinTextBackground = R.drawable.sample_background;
@@ -180,9 +181,10 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
             final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PinView, defStyleAttr, 0);
             mPinTextBackground = array.getResourceId(R.styleable.PinView_pinTextBackground, mPinTextBackground);
             mPinBackground = array.getResourceId(R.styleable.PinView_pinBackground, mPinBackground);
-            mSplitWidth = (int) array.getDimension(R.styleable.PinView_splitWidth, mSplitWidth);
+            mSwapBackground = array.getBoolean(R.styleable.PinView_swapBackground, mSwapBackground);
             mCursorVisible = array.getBoolean(R.styleable.PinView_cursorVisible, mCursorVisible);
             mForceKeyboard = array.getBoolean(R.styleable.PinView_forceKeyboard, mForceKeyboard);
+            mSplitWidth = (int) array.getDimension(R.styleable.PinView_splitWidth, mSplitWidth);
             mPinHeight = (int) array.getDimension(R.styleable.PinView_pinHeight, mPinHeight);
             mPinWidth = (int) array.getDimension(R.styleable.PinView_pinWidth, mPinWidth);
             mPassword = array.getBoolean(R.styleable.PinView_password, mPassword);
@@ -398,28 +400,10 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
                 if (mPassword)
                     delay = 25;
                 this.postDelayed(() -> {
-                    EditText currentEditText = editTextList.get(currentTag);
-                    currentEditText.setBackgroundResource(mPinTextBackground);
-
-//                    addView(ripple);
-//                    ripple.setVisibility(View.VISIBLE);
-//                    ripple.setX(currentEditText.getX());
-//                    ripple.setY(currentEditText.getY());
-//                    ripple.animate()
-//                            .setDuration(250)
-//                            .alpha(0f)
-//                            .scaleXBy(2f)
-//                            .scaleYBy(2f)
-//                            .setListener(new AnimatorListenerAdapter() {
-//                                @Override
-//                                public void onAnimationEnd(Animator animation) {
-//                                    super.onAnimationEnd(animation);
-//                                    ripple.setAlpha(1f);
-//                                    ripple.setVisibility(View.GONE);
-//                                    removeView(ripple);
-//                                }
-//                            });
-////                            .start();
+                    if (mSwapBackground) {
+                        EditText currentEditText = editTextList.get(currentTag);
+                        currentEditText.setBackgroundResource(mPinTextBackground);
+                    }
 
                     EditText nextEditText = editTextList.get(currentTag + 1);
                     nextEditText.setEnabled(true);
@@ -427,28 +411,10 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
                 }, delay);
             } else {
                 //Last Pin box has been reached.
-                EditText currentEditText = editTextList.get(currentTag);
-                currentEditText.setBackgroundResource(mPinTextBackground);
-
-//                addView(ripple);
-//                ripple.setVisibility(View.VISIBLE);
-//                ripple.setX(currentEditText.getX());
-//                ripple.setY(currentEditText.getY());
-//                ripple.animate()
-//                        .setDuration(250)
-//                        .alpha(0f)
-//                        .scaleXBy(2f)
-//                        .scaleYBy(2f)
-//                        .setListener(new AnimatorListenerAdapter() {
-//                            @Override
-//                            public void onAnimationEnd(Animator animation) {
-//                                super.onAnimationEnd(animation);
-//                                ripple.setAlpha(1f);
-//                                ripple.setVisibility(View.GONE);
-//                                removeView(ripple);
-//                            }
-//                        });
-////                        .start();
+                if (mSwapBackground) {
+                    EditText currentEditText = editTextList.get(currentTag);
+                    currentEditText.setBackgroundResource(mPinTextBackground);
+                }
             }
             if (currentTag == mPinLength - 1 && inputType == InputType.NUMBER || currentTag == mPinLength - 1 && mPassword) {
                 finalNumberPin = true;
@@ -670,7 +636,7 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
         private class PasswordCharSequence implements CharSequence {
             private final CharSequence source;
 
-            public PasswordCharSequence(@NonNull CharSequence source) {
+            PasswordCharSequence(@NonNull CharSequence source) {
                 this.source = source;
             }
 
@@ -681,7 +647,7 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
 
             @Override
             public char charAt(int index) {
-                return SPACE;
+                return mSwapBackground ? SPACE : BULLET;
             }
 
             @Override

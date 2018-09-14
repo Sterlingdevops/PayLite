@@ -15,6 +15,9 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.airtime.AirTimeMvpContract
 import com.sterlingng.paylite.ui.airtime.AirTimeMvpView
 import com.sterlingng.paylite.ui.airtime.AirTimePresenter
+import com.sterlingng.paylite.ui.authpin.AuthPinMvpContract
+import com.sterlingng.paylite.ui.authpin.AuthPinMvpView
+import com.sterlingng.paylite.ui.authpin.AuthPinPresenter
 import com.sterlingng.paylite.ui.bills.BillsMvpContract
 import com.sterlingng.paylite.ui.bills.BillsMvpView
 import com.sterlingng.paylite.ui.bills.BillsPresenter
@@ -91,6 +94,9 @@ import com.sterlingng.paylite.ui.request.custom.CustomRequestPresenter
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpContract
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpView
 import com.sterlingng.paylite.ui.scheduled.ScheduledPresenter
+import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpContract
+import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpView
+import com.sterlingng.paylite.ui.security.LoginAndSecurityPresenter
 import com.sterlingng.paylite.ui.send.SendMoneyMvpContract
 import com.sterlingng.paylite.ui.send.SendMoneyMvpView
 import com.sterlingng.paylite.ui.send.SendMoneyPresenter
@@ -278,6 +284,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun providePinPresenter(presenter: PinPresenter<PinMvpView>): PinMvpContract<PinMvpView> = presenter
 
     @Provides
+    internal fun provideAuthPinPresenter(presenter: AuthPinPresenter<AuthPinMvpView>): AuthPinMvpContract<AuthPinMvpView> = presenter
+
+    @Provides
     internal fun provideBvnPresenter(presenter: BvnPresenter<BvnMvpView>): BvnMvpContract<BvnMvpView> = presenter
 
     @Provides
@@ -330,6 +339,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideEmailForgotPresenter(presenter: EmailForgotPresenter<EmailForgotMvpView>): EmailForgotMvpContract<EmailForgotMvpView> = presenter
+
+    @Provides
+    internal fun provideLoginAndSecurityPresenter(presenter: LoginAndSecurityPresenter<LoginAndSecurityMvpView>): LoginAndSecurityMvpContract<LoginAndSecurityMvpView> = presenter
 
     @Provides
     internal fun provideSplitContactPresenter(presenter: SplitContactPresenter<SplitContactMvpView>): SplitContactMvpContract<SplitContactMvpView> = presenter

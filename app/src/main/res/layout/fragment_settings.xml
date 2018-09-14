@@ -175,7 +175,7 @@
     <TextView
         android:id="@+id/login_and_security"
         android:layout_width="0dp"
-        android:layout_height="51dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/background_settings_item"
         android:clickable="true"
