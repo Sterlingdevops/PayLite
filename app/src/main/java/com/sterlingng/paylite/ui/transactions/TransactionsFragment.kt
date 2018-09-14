@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
@@ -34,16 +33,15 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
     override fun setUp(view: View) {
         mPagerAdapter = CustomPagerAdapter(childFragmentManager)
 
-        mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "IN")
-        mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "OUT")
-        mPagerAdapter.addFragment(CategoriesFragment.newInstance(), "All")
+        mPagerAdapter.addFragment(CategoriesFragment.newInstance("ALL"), "ALL")
+        mPagerAdapter.addFragment(CategoriesFragment.newInstance("IN"), "IN")
+        mPagerAdapter.addFragment(CategoriesFragment.newInstance("OUT"), "OUT")
 
         mViewPager.isPagingEnabled = true
         mViewPager.adapter = mPagerAdapter
+        mViewPager.offscreenPageLimit = 3
 
         mSmartTabLayout.setViewPager(mViewPager)
-
-        mPresenter.getUserTransactions()
     }
 
     override fun bindViews(view: View) {
@@ -52,14 +50,6 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
-
-    }
-
-    override fun onGetUserTransactionsFailed(response: Response) {
-
-    }
-
-    override fun onGetUserTransactionsSuccessful(response: Response) {
 
     }
 

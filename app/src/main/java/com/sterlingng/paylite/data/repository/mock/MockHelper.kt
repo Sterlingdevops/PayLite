@@ -144,17 +144,17 @@ internal constructor() : MockerInterface {
 
     override fun mockTransactions(): ArrayList<Transaction> {
         val transactions: ArrayList<Transaction> = ArrayList()
-        transactions += Transaction("11,000", "Income", Transaction.TransactionType.Credit, "2 transactions", Date(1524149746L))
-        transactions += Transaction("3,000", "General", Transaction.TransactionType.Debit, "5 transactions", Date(1524128746L))
-        transactions += Transaction("110,000", "Vacation", Transaction.TransactionType.Debit, "1 transaction", Date(1024328746L))
-        transactions += Transaction("100,000", "Wedding Gifts", Transaction.TransactionType.Credit, "2 transactions", Date(1522128746L))
-        transactions += Transaction("10,000", "Income", Transaction.TransactionType.Credit, "2 transactions", Date(1524128726L))
-        transactions += Transaction("1,000", "Side Hustle", Transaction.TransactionType.Credit, "3 transactions", Date(1524128746L))
-        transactions += Transaction("122,000", "Allowance", Transaction.TransactionType.Debit, "4 transactions", Date(1524178746L))
-        transactions += Transaction("12,000", "Allowance", Transaction.TransactionType.Debit, "1 transaction", Date(1224128766L))
-        transactions += Transaction("14,000", "Side Hustle", Transaction.TransactionType.Credit, "1 transaction", Date(1526128766L))
-        transactions += Transaction("17,000", "Allowance", Transaction.TransactionType.Debit, "1 transaction", Date(1529128766L))
-        transactions += Transaction("11,000", "Allowance", Transaction.TransactionType.Credit, "1 transaction", Date(1524128866L))
+//        transactions += Transaction("11,000", "Income", Transaction.TransactionType.Credit, "2 transactions", Date(1524149746L))
+//        transactions += Transaction("3,000", "General", Transaction.TransactionType.Debit, "5 transactions", Date(1524128746L))
+//        transactions += Transaction("110,000", "Vacation", Transaction.TransactionType.Debit, "1 transaction", Date(1024328746L))
+//        transactions += Transaction("100,000", "Wedding Gifts", Transaction.TransactionType.Credit, "2 transactions", Date(1522128746L))
+//        transactions += Transaction("10,000", "Income", Transaction.TransactionType.Credit, "2 transactions", Date(1524128726L))
+//        transactions += Transaction("1,000", "Side Hustle", Transaction.TransactionType.Credit, "3 transactions", Date(1524128746L))
+//        transactions += Transaction("122,000", "Allowance", Transaction.TransactionType.Debit, "4 transactions", Date(1524178746L))
+//        transactions += Transaction("12,000", "Allowance", Transaction.TransactionType.Debit, "1 transaction", Date(1224128766L))
+//        transactions += Transaction("14,000", "Side Hustle", Transaction.TransactionType.Credit, "1 transaction", Date(1526128766L))
+//        transactions += Transaction("17,000", "Allowance", Transaction.TransactionType.Debit, "1 transaction", Date(1529128766L))
+//        transactions += Transaction("11,000", "Allowance", Transaction.TransactionType.Credit, "1 transaction", Date(1524128866L))
         return transactions
     }
 

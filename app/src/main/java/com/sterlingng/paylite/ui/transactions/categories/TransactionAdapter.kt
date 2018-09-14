@@ -85,9 +85,14 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
     }
 
     override fun getHeaderId(position: Int): Long {
-        val calendar = Calendar.getInstance()
-        calendar.time = Date(transactions[position].date.time * 1000)
-        return calendar.get(Calendar.WEEK_OF_YEAR).toLong()
+        return if (transactions.size > 0) {
+            val calendar = Calendar.getInstance()
+            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            val date = formatter.parse(transactions[position].date.split("T")[0])
+            calendar.time = Date(date.time)
+            calendar.get(Calendar.WEEK_OF_YEAR).toLong()
+        } else
+            0
     }
 
     override fun onCreateHeaderViewHolder(parent: ViewGroup): HeaderViewHolder {
@@ -96,8 +101,12 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
     }
 
     override fun onBindHeaderViewHolder(holder: HeaderViewHolder, position: Int) {
-        val date = SimpleDateFormat("dd MMMM, yyyy", Locale.US).format(Date(transactions[position].date.time * 1000))
-        holder.headerName.text = date
+        if (transactions.size > 0) {
+            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            val date = formatter.parse(transactions[position].date.split("T")[0])
+            val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+            holder.headerName.text = dateFormat.format(date.time)
+        }
     }
 
     inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
@@ -108,13 +117,18 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
 
         override fun onBind(position: Int) {
             super.onBind(position)
+
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ENGLISH)
+            val date = formatter.parse(transactions[position].date)
+            val dateFormat = SimpleDateFormat("hh:mm aaa", Locale.ENGLISH)
+
             with(transactions[position]) {
-                transactionAmount.text = if (type == Transaction.TransactionType.Credit) "+${mContext.getString(R.string.naira)} $amount" else "-${mContext.getString(R.string.naira)} $amount"
+                transactionAmount.text = if (type == "11") "+${mContext.getString(R.string.naira)} $amount" else "-${mContext.getString(R.string.naira)} $amount"
                 transactionName.text = name
-                transactionDate.text = count
-                transactionType.setImageDrawable(ContextCompat.getDrawable(mContext, if (type == Transaction.TransactionType.Credit) R.drawable.arrow_bottom_left else R.drawable.arrow_top_right))
-                transactionType.setColorFilter(ContextCompat.getColor(mContext, if (type == Transaction.TransactionType.Credit) R.color.apple_green else R.color.scarlet), android.graphics.PorterDuff.Mode.SRC_IN)
-                transactionAmount.setTextColor(ContextCompat.getColor(mContext, if (type == Transaction.TransactionType.Credit) R.color.apple_green else R.color.scarlet))
+                transactionDate.text = dateFormat.format(date.time)
+                transactionType.setImageDrawable(ContextCompat.getDrawable(mContext, if (type == "11") R.drawable.arrow_bottom_left else R.drawable.arrow_top_right))
+                transactionType.setColorFilter(ContextCompat.getColor(mContext, if (type == "11") R.color.apple_green else R.color.scarlet), android.graphics.PorterDuff.Mode.SRC_IN)
+                transactionAmount.setTextColor(ContextCompat.getColor(mContext, if (type == "11") R.color.apple_green else R.color.scarlet))
             }
             itemView.setOnClickListener {
                 recyclerViewClickListener.recyclerViewListClicked(it, position)

@@ -7,13 +7,36 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.utils.AppUtils.gson
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import javax.inject.Inject
 
 class CategoriesFragment : BaseFragment(), CategoriesMvpView {
+
+    override fun onGetUserTransactionsFailed(response: Response) {
+        show("Failed getting transactions", true)
+    }
+
+    override fun onGetUserTransactionsSuccessful(response: Response) {
+        val transactionType = arguments?.getString(TYPE)!!
+
+        val type = object : TypeToken<ArrayList<Transaction>>() {}.type
+        var transactions = gson.fromJson<ArrayList<Transaction>>(gson.toJson(response.data), type)
+        transactions.sortByDescending { it.id }
+
+        when (transactionType) {
+            "IN" -> transactions = transactions.filter { it.type == "11" }.toList() as ArrayList<Transaction>
+            "OUT" -> transactions = transactions.filter { it.type == "00" }.toList() as ArrayList<Transaction>
+        }
+
+        mTransactionAdapter.add(transactions)
+        recyclerView.scrollToPosition(0)
+    }
 
     @Inject
     lateinit var mPresenter: CategoriesMvpContract<CategoriesMvpView>
@@ -41,7 +64,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
         recyclerView.layoutManager = mLinearLayoutManager
         recyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(mTransactionAdapter))
 
-        mPresenter.loadMockTransactions()
+        mPresenter.loadTransactions()
     }
 
     override fun updateCategories(it: Collection<Transaction>) {
@@ -59,9 +82,12 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
 
     companion object {
 
-        fun newInstance(): CategoriesFragment {
+        private const val TYPE = "CategoriesFragment.TYPE"
+
+        fun newInstance(type: String): CategoriesFragment {
             val fragment = CategoriesFragment()
             val args = Bundle()
+            args.putString(TYPE, type)
             fragment.arguments = args
             return fragment
         }

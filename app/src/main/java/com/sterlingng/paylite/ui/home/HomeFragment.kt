@@ -104,7 +104,6 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
         mPresenter.loadWallet()
-        hideLoading()
         hideKeyboard()
 
         eventBus.observe(UpdateWallet::class.java)
