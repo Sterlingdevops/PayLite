@@ -11,7 +11,6 @@ import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.utils.OnChildDidClickNext
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 class NameFragment : BaseFragment(), NameMvpView {
@@ -21,7 +20,6 @@ class NameFragment : BaseFragment(), NameMvpView {
 
     private lateinit var mFirstNameEditText: EditText
     private lateinit var mLastNameEditText: EditText
-    private lateinit var mUsernameEditText: EditText
     private lateinit var exit: ImageView
     private lateinit var next: Button
 
@@ -38,34 +36,20 @@ class NameFragment : BaseFragment(), NameMvpView {
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next_name)
-        mUsernameEditText = view.findViewById(R.id.username)
         mLastNameEditText = view.findViewById(R.id.last_name)
         mFirstNameEditText = view.findViewById(R.id.first_name)
     }
 
     override fun setUp(view: View) {
         next.setOnClickListener {
-            if (mFirstNameEditText.text.isEmpty() || mLastNameEditText.text.isEmpty() || mUsernameEditText.text.isEmpty()) {
+            if (mFirstNameEditText.text.isEmpty() || mLastNameEditText.text.isEmpty()) {
                 show("All the fields are required", true)
-                return@setOnClickListener
-            }
-
-            if (mUsernameEditText.text.length < 6) {
-                show("Username should be at least 6 characters long", true)
-                return@setOnClickListener
-            }
-
-            val pattern = Pattern.compile("^[A-z0-9_]{1,15}$")
-            val matcher = pattern.matcher(mUsernameEditText.text.toString())
-            if (!matcher.matches()) {
-                show("Invalid username, please choose another username", true)
                 return@setOnClickListener
             }
 
             mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!,
                     listOf(mFirstNameEditText.text.toString(),
-                            mLastNameEditText.text.toString(),
-                            mUsernameEditText.text.toString()))
+                            mLastNameEditText.text.toString()))
             hideKeyboard()
         }
     }

@@ -46,26 +46,10 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
     <EditText
-        android:id="@+id/username"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/background_light_blue_outline"
-        android:hint="@string/username"
-        android:imeOptions="actionNext"
-        android:inputType="textPersonName"
-        android:padding="16dp"
-        android:textColor="@color/blue_black_dark"
-        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"/>
-
-    <EditText
         android:id="@+id/first_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/background_light_blue_outline"
         android:hint="@string/first_name"
         android:imeOptions="actionNext"
@@ -75,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/username"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView4"/>
 
     <EditText
         android:id="@+id/last_name"

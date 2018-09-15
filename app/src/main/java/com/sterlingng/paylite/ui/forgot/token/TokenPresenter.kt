@@ -5,6 +5,8 @@ import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils
+import com.sterlingng.paylite.utils.AppUtils.gson
+import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -20,7 +22,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun validateOtp(data: HashMap<String, Any>) {
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.validateOtp(data)
+                dataManager.validateOtp(data, gson.toJson(data).sha256())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {

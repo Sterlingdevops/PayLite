@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.signup.SignUpActivity
 import javax.inject.Inject
 
 class CompleteFragment : BaseFragment(), CompleteMvpView {
@@ -42,16 +43,28 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
 
     override fun setUp(view: View) {
         next.setOnClickListener {
-            val intent = DashboardActivity.getStartIntent(baseActivity)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    .putExtra(DashboardActivity.SELECTED_ITEM, 0)
-            startActivity(intent)
-            baseActivity.finish()
+            val data = HashMap<String, String>()
+            data["username"] = (baseActivity as SignUpActivity).signUpRequest.email
+            data["password"] = (baseActivity as SignUpActivity).signUpRequest.password
+            mPresenter.doLogIn(data)
         }
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
 
+    }
+
+    override fun onAccessTokenSuccessful() {
+        val intent = DashboardActivity.getStartIntent(baseActivity)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .putExtra(DashboardActivity.SELECTED_ITEM, 0)
+        startActivity(intent)
+        baseActivity.finish()
+    }
+
+    override fun onAccessTokenFailed() {
+        show("An error occurred while processing your request, Please try again", true)
+        hideLoading()
     }
 
     companion object {

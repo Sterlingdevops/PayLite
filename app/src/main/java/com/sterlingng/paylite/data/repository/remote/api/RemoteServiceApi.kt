@@ -36,13 +36,13 @@ interface RemoteServiceApi {
                @Header("X-IV") initializationVector: String,
                @Field("grant_type") grantType: String): Observable<HashMap<String, Any>>
 
-    @POST("api/Paylite/RegisterUser")
+    @POST("api/Paylite/RegisterUsers")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun signup(@Body data: HashMap<String, Any>): Observable<Response>
+    fun signup(@Body data: HashMap<String, Any>, @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/SendOtp")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun sendOtp(@Body data: HashMap<String, Any>): Observable<Response>
+    fun sendOtp(@Body data: HashMap<String, Any>, @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/SendForgotPasswordTokenForMail")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
@@ -62,7 +62,7 @@ interface RemoteServiceApi {
 
     @POST("api/Paylite/ValidateOtp")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun validateOtp(@Body data: HashMap<String, Any>): Observable<Response>
+    fun validateOtp(@Body data: HashMap<String, Any>, @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/RequestPaymentLink")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")

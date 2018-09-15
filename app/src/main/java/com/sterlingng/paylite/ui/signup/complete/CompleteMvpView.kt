@@ -4,4 +4,6 @@ import com.sterlingng.paylite.ui.base.MvpView
 
 interface CompleteMvpView : MvpView {
     fun setUsername(firstName: String)
+    fun onAccessTokenSuccessful()
+    fun onAccessTokenFailed()
 }

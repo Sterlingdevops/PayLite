@@ -54,6 +54,11 @@ class LogInActivity : BaseActivity(), LogInMvpView {
         }
     }
 
+    override fun onUserNotRegistered() {
+        mPinView.clearValue()
+        show("No User has be registered on this device", true)
+    }
+
     override fun recyclerViewListClicked(v: View, position: Int) {
 
     }

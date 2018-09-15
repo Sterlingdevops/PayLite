@@ -18,6 +18,7 @@ import com.sterlingng.paylite.ui.base.MvpView
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.OnChildDidClickNext
+import com.sterlingng.paylite.utils.sha256
 import com.sterlingng.views.LargeLabelEditText
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
@@ -116,7 +117,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun doSignUp(data: HashMap<String, Any>) {
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.signup(data)
+                dataManager.signup(data, AppUtils.gson.toJson(data).sha256())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {

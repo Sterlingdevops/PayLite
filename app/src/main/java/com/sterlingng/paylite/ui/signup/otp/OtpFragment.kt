@@ -47,7 +47,6 @@ class OtpFragment : BaseFragment(), OtpMvpView {
             val data = HashMap<String, Any>()
             with((baseActivity as SignUpActivity).signUpRequest) {
                 data["mobile"] = phoneNumber
-                data["email"] = email
                 data["Otp"] = mPinView.value
             }
             mPresenter.validateOtp(data)
@@ -58,7 +57,6 @@ class OtpFragment : BaseFragment(), OtpMvpView {
             val data = HashMap<String, Any>()
             with((baseActivity as SignUpActivity).signUpRequest) {
                 data["mobile"] = phoneNumber
-                data["email"] = email
                 data["Otp"] = mPinView.value
             }
             mPresenter.validateOtp(data)

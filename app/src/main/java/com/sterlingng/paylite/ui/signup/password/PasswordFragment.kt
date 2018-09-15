@@ -77,7 +77,7 @@ class PasswordFragment : BaseFragment(), PasswordMvpView {
 
     companion object {
 
-        private const val INDEX = "AuthPinFragment.INDEX"
+        private const val INDEX = "PasswordPinFragment.INDEX"
 
         fun newInstance(index: Int): PasswordFragment {
             val fragment = PasswordFragment()

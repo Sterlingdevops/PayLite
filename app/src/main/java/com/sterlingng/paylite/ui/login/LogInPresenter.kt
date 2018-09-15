@@ -32,7 +32,11 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun doLogIn(data: HashMap<String, String>) {
         val initializationVector: String = RandomString(length = 16).nextString()
 
-        data["username"] = dataManager.getCurrentUser()?.email!!
+        if (dataManager.getCurrentUser() == null) {
+            mvpView.onUserNotRegistered()
+            return
+        }
+        data["username"] = dataManager.getCurrentUser()?.email!! //"bsrtukpe@gmail.com"
 
         val username: String = (data["username"] as String).encryptAES(initializationVector)
         val password: String = (data["password"] as String).encryptAES(initializationVector)

@@ -7,6 +7,8 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.AppUtils.gson
+import com.sterlingng.paylite.utils.Log
+import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -22,7 +24,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun doSignUp(data: HashMap<String, Any>) {
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.signup(data)
+                dataManager.signup(data, gson.toJson(data).sha256())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
@@ -49,6 +51,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             if (it.response != null && it.response == "00") {
                                 val user = gson.fromJson(AppUtils.gson.toJson(it.data), User::class.java)
                                 dataManager.saveUser(user)
+                                Log.d(dataManager.getCurrentUser()?.toString()!!)
                                 mvpView.onDoSignUpSuccessful(it)
                             } else {
                                 mvpView.onDoSignUpFailed(it)

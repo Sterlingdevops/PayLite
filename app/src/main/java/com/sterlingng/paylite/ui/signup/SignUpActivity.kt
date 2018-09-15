@@ -51,14 +51,14 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
         val emailFragment = EmailFragment.newInstance(3)
         emailFragment.mDidClickNext = this
 
-        val pinFragment = PinFragment.newInstance(4)
+        val nameFragment = NameFragment.newInstance(4)
+        nameFragment.mDidClickNext = this
+
+        val pinFragment = PinFragment.newInstance(5, 1)
         pinFragment.mDidClickNext = this
 
-        val confirmPinFragment = PinFragment.newInstance(5)
+        val confirmPinFragment = PinFragment.newInstance(6, 2)
         confirmPinFragment.mDidClickNext = this
-
-        val nameFragment = NameFragment.newInstance(6)
-        nameFragment.mDidClickNext = this
 
         val bvnFragment = BvnFragment.newInstance(7)
         bvnFragment.mDidClickNext = this
@@ -69,10 +69,9 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
             addFragment(phoneFragment, getString(R.string.phone))
             addFragment(otpFragment, getString(R.string.otp_ph))
             addFragment(emailFragment, getString(R.string.email))
+            addFragment(nameFragment, getString(R.string.personal_details))
             addFragment(pinFragment, getString(R.string.set_pin))
             addFragment(confirmPinFragment, getString(R.string.confirm_password))
-            addFragment(nameFragment, getString(R.string.personal_details))
-            addFragment(bvnFragment, getString(R.string.bvn))
             addFragment(completeFragment, getString(R.string.account_setup_completed))
         }
 
@@ -101,25 +100,24 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
                 1 -> {
                     signUpRequest.phoneNumber = "0${data as String}"
                 }
-                2 -> {
+                3 -> {
                     signUpRequest.email = data as String
                 }
                 4 -> {
-                    signUpRequest.password = data as String
-                }
-                5 -> {
-                    val password = data as String
-                    if (password != signUpRequest.password) {
-                        show("Passwords do no match", true)
-                        return@case
-                    }
-                }
-                6 -> {
                     with(data as List<String>) {
                         signUpRequest.firstName = get(0)
                         signUpRequest.lastName = get(1)
-                        signUpRequest.username = get(2)
                     }
+                }
+                5 -> {
+                    signUpRequest.password = data as String
+                }
+                6 -> {
+//                    val password = data as String
+//                    if (password != signUpRequest.password) {
+//                        show("Passwords do no match", true)
+//                        return@case
+//                    }
                 }
             }
             mViewPager.currentItem = index % mPagerAdapter.count

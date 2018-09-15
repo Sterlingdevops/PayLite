@@ -27,6 +27,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun validateOtp(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.validateOtp(data, hash)
+
     override fun saveTransactions(transactions: ArrayList<Transaction>) = mLocalDataHelper.saveTransactions(transactions)
 
     override fun deleteAllTransactions() = mLocalDataHelper.deleteAllTransactions()
@@ -83,13 +85,11 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun mockProjects(): ArrayList<Project> = mMockHelper.mockProjects()
 
-    override fun signup(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.signup(data)
+    override fun signup(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.signup(data, hash)
 
-    override fun sendOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.sendOtp(data)
+    override fun sendOtp(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.sendOtp(data, hash)
 
     override fun resolveCardNumber(bin: String): Observable<Response> = mPayStackServiceHelper.resolveCardNumber(bin)
-
-    override fun validateOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceHelper.validateOtp(data)
 
     override fun getUser(mobile: String, authorization: String): Observable<Response> = mRemoteServiceHelper.getUser(mobile, authorization)
 

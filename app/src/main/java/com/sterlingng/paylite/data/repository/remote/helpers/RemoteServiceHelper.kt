@@ -12,6 +12,9 @@ import javax.inject.Inject
 
 class RemoteServiceHelper @Inject
 internal constructor() : BaseHelper(), RemoteServiceApi {
+
+    override fun validateOtp(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceApi.validateOtp(data, hash)
+
     override fun getUserTransactions(mobile: String, toDate: String, fromDate: String, authorization: String): Observable<Response> = mRemoteServiceApi.getUserTransactions(mobile, toDate, fromDate, authorization)
 
     override fun fundWalletWithBankAccount(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.fundWalletWithBankAccount(data, authorization, hash)
@@ -32,11 +35,9 @@ internal constructor() : BaseHelper(), RemoteServiceApi {
 
     override fun getUser(mobile: String, authorization: String): Observable<Response> = mRemoteServiceApi.getUser(mobile, authorization)
 
-    override fun validateOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.validateOtp(data)
+    override fun sendOtp(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceApi.sendOtp(data, hash)
 
-    override fun sendOtp(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.sendOtp(data)
-
-    override fun signup(data: HashMap<String, Any>): Observable<Response> = mRemoteServiceApi.signup(data)
+    override fun signup(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceApi.signup(data, hash)
 
     private var mRemoteServiceApi: RemoteServiceApi = createService(RemoteServiceApi::class.java)
 }

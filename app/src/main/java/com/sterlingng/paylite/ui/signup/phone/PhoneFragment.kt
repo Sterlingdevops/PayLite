@@ -16,6 +16,7 @@ import com.sterlingng.paylite.ui.base.MvpPresenter
 import com.sterlingng.paylite.ui.base.MvpView
 import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.OnChildDidClickNext
+import com.sterlingng.paylite.utils.sha256
 import com.sterlingng.views.LargeLabelEditText
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
@@ -56,7 +57,7 @@ class PhoneFragment : BaseFragment(), PhoneMvpView {
             }
 
             val data = HashMap<String, Any>()
-            data["mobile"] = mPhoneEditText.text()
+            data["mobile"] = "0${mPhoneEditText.text()}"
             mPresenter.sendOtp(data)
         }
 
@@ -108,7 +109,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun sendOtp(data: HashMap<String, Any>) {
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.sendOtp(data)
+                dataManager.sendOtp(data, AppUtils.gson.toJson(data).sha256())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {

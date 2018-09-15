@@ -8,7 +8,9 @@ import android.widget.Button
 import android.widget.ImageView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import javax.inject.Inject
 
@@ -36,11 +38,33 @@ class PinFragment : BaseFragment(), PinMvpView {
         }
 
         pinView.setPinViewEventListener { _, _ ->
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
+            if (arguments?.getInt(MODE, 1) == 2) {
+                val password = pinView.value
+                if (password != (baseActivity as SignUpActivity).signUpRequest.password) {
+                    show("Passwords do no match", true)
+                    return@setPinViewEventListener
+
+                }
+            }
+
+            if (arguments?.getInt(MODE, 1) == 2)
+                mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
+            else mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
             hideKeyboard()
         }
+
         next.setOnClickListener {
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
+            if (arguments?.getInt(MODE, 1) == 2) {
+                val password = pinView.value
+                if (password != (baseActivity as SignUpActivity).signUpRequest.password) {
+                    show("Passwords do no match", true)
+                    return@setOnClickListener
+                }
+            }
+
+            if (arguments?.getInt(MODE, 1) == 2)
+                mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
+            else mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
             hideKeyboard()
         }
     }
@@ -55,14 +79,24 @@ class PinFragment : BaseFragment(), PinMvpView {
 
     }
 
+    override fun onDoSignUpFailed(response: Response) {
+        show("An error occurred while processing your request", true)
+    }
+
+    override fun onDoSignUpSuccessful(response: Response) {
+        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
+    }
+
     companion object {
 
         private const val INDEX = "PinFragment.INDEX"
+        private const val MODE = "PinFragment.MODE"
 
-        fun newInstance(index: Int): PinFragment {
+        fun newInstance(index: Int, mode: Int): PinFragment {
             val fragment = PinFragment()
             val args = Bundle()
             args.putInt(INDEX, index)
+            args.putInt(MODE, mode)
             fragment.arguments = args
             return fragment
         }
