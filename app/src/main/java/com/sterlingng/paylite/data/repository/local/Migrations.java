@@ -72,5 +72,25 @@ public class Migrations implements RealmMigration {
             ;
             ++oldVersion;
         }
+
+        //version 7
+        if (oldVersion == 6) {
+            schema.create("TransactionRealm")
+                    .addField("id", String.class)
+                    .addField("name", String.class)
+                    .addField("type", String.class)
+                    .addField("date", String.class)
+                    .addField("amount", String.class)
+                    .addField("reference", String.class)
+                    .setRequired("id", true)
+                    .setRequired("name", true)
+                    .setRequired("type", true)
+                    .setRequired("date", true)
+                    .setRequired("amount", true)
+                    .setRequired("reference", true)
+                    .addPrimaryKey("id")
+            ;
+            ++oldVersion;
+        }
     }
 }

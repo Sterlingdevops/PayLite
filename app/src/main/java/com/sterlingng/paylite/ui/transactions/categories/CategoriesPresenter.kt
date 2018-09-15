@@ -1,10 +1,13 @@
 package com.sterlingng.paylite.ui.transactions.categories
 
+import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils
+import com.sterlingng.paylite.utils.AppUtils.gson
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -17,6 +20,11 @@ import javax.inject.Inject
 class CategoriesPresenter<V : CategoriesMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CategoriesMvpContract<V> {
+
+    override fun onViewInitialized() {
+        super.onViewInitialized()
+        mvpView.initView(dataManager.getTransactions())
+    }
 
     override fun loadTransactions() {
         val startDate = "2018-01-01"
@@ -45,11 +53,15 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 return@onErrorReturn response
                             }
                         }
-                        .subscribe {
-                            if (it.response == "00") {
-                                mvpView.onGetUserTransactionsSuccessful(it)
+                        .subscribe { response ->
+                            if (response.response == "00") {
+                                val type = object : TypeToken<ArrayList<Transaction>>() {}.type
+                                val transactions =
+                                        gson.fromJson<ArrayList<Transaction>>(gson.toJson(response.data), type)
+                                dataManager.saveTransactions(transactions)
+                                mvpView.onGetUserTransactionsSuccessful(transactions)
                             } else {
-                                mvpView.onGetUserTransactionsFailed(it)
+                                mvpView.onGetUserTransactionsFailed(response)
                             }
                         }
         )

@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.data.model
 
 import com.google.gson.annotations.SerializedName
+import com.sterlingng.paylite.data.model.realms.TransactionRealm
 import com.sterlingng.paylite.utils.AppUtils.gson
 
 class Transaction {
@@ -9,7 +10,7 @@ class Transaction {
     var amount = ""
 
     @SerializedName("Refid")
-    var id: String = ""
+    var id: Int = 0
 
     @SerializedName("SenderID")
     var sender: String = ""
@@ -20,8 +21,6 @@ class Transaction {
     @SerializedName("ReciepientName")
     var name: String = ""
 
-    var count: String = ""
-
     @SerializedName("DateAdded")
     var date: String = ""
 
@@ -30,6 +29,17 @@ class Transaction {
 
     @SerializedName("Transtype1")
     var type: String = ""
+
+    fun asTransactionRealm(): TransactionRealm {
+        val transactionRealm = TransactionRealm()
+        transactionRealm.id = id.toString()
+        transactionRealm.type = type
+        transactionRealm.name = name
+        transactionRealm.date = date
+        transactionRealm.amount = amount
+        transactionRealm.reference = reference
+        return transactionRealm
+    }
 
     override fun toString(): String {
         return gson.toJson(this)

@@ -97,12 +97,11 @@ fun ByteArray.asHexString(): String {
     return result.toString()
 }
 
-fun String.toNumber(default: Int): Int =
-        try {
-            Integer.valueOf(this)
-        } catch (e: NumberFormatException) {
-            default
-        }
+fun String.toNumber(default: Int): Int = try {
+    Integer.valueOf(this)
+} catch (e: NumberFormatException) {
+    default
+}
 
 @Throws(IllegalArgumentException::class)
 fun String.asByteArray(): ByteArray = this.toByteArray(Charsets.UTF_8)

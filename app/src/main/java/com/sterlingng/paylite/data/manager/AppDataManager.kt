@@ -27,6 +27,16 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun saveTransactions(transactions: ArrayList<Transaction>) = mLocalDataHelper.saveTransactions(transactions)
+
+    override fun deleteAllTransactions() = mLocalDataHelper.deleteAllTransactions()
+
+    override fun getTransaction(id: String): Transaction? = mLocalDataHelper.getTransaction(id)
+
+    override fun saveTransaction(transaction: Transaction) = mLocalDataHelper.saveTransaction(transaction)
+
+    override fun getTransactions(): ArrayList<Transaction> = mLocalDataHelper.getTransactions()
+
     override fun getPinRealm(): PinRealm? = mLocalDataHelper.getPinRealm()
 
     override fun getPin(): Pin? = mLocalDataHelper.getPin()

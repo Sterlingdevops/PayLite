@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.data.repository.local.interfaces
 
 import com.sterlingng.paylite.data.model.Pin
+import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.data.model.realms.PinRealm
@@ -25,7 +26,15 @@ interface LocalDataInterface {
     fun getCurrentUser(): User?
     fun getUserRealm(): UserRealm?
 
-    // Pin
+    // transactions
+
+    fun deleteAllTransactions()
+    fun getTransaction(id: String): Transaction?
+    fun getTransactions(): ArrayList<Transaction>
+    fun saveTransaction(transaction: Transaction)
+    fun saveTransactions(transactions: ArrayList<Transaction>)
+
+    // pin
 
     fun getPinRealm(): PinRealm?
     fun getPin(): Pin?

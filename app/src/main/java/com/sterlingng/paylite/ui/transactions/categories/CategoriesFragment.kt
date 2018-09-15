@@ -1,42 +1,19 @@
 package com.sterlingng.paylite.ui.transactions.categories
 
-
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.utils.AppUtils.gson
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import javax.inject.Inject
 
 class CategoriesFragment : BaseFragment(), CategoriesMvpView {
-
-    override fun onGetUserTransactionsFailed(response: Response) {
-        show("Failed getting transactions", true)
-    }
-
-    override fun onGetUserTransactionsSuccessful(response: Response) {
-        val transactionType = arguments?.getString(TYPE)!!
-
-        val type = object : TypeToken<ArrayList<Transaction>>() {}.type
-        var transactions = gson.fromJson<ArrayList<Transaction>>(gson.toJson(response.data), type)
-        transactions.sortByDescending { it.id }
-
-        when (transactionType) {
-            "IN" -> transactions = transactions.filter { it.type == "11" }.toList() as ArrayList<Transaction>
-            "OUT" -> transactions = transactions.filter { it.type == "00" }.toList() as ArrayList<Transaction>
-        }
-
-        mTransactionAdapter.add(transactions)
-        recyclerView.scrollToPosition(0)
-    }
 
     @Inject
     lateinit var mPresenter: CategoriesMvpContract<CategoriesMvpView>
@@ -58,6 +35,8 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     }
 
     override fun setUp(view: View) {
+        mPresenter.onViewInitialized()
+
         mTransactionAdapter.mRecyclerViewClickListener = this
 
         recyclerView.adapter = mTransactionAdapter
@@ -67,7 +46,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
         mPresenter.loadTransactions()
     }
 
-    override fun updateCategories(it: Collection<Transaction>) {
+    override fun updateCategories(it: ArrayList<Transaction>) {
         mTransactionAdapter.add(it)
         recyclerView.scrollToPosition(0)
     }
@@ -78,6 +57,38 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
 
     override fun recyclerViewListClicked(v: View, position: Int) {
 
+    }
+
+    override fun initView(transactions: ArrayList<Transaction>) {
+        val transactionType = arguments?.getString(TYPE)!!
+        val newTransactions: ArrayList<Transaction>
+
+        newTransactions = when (transactionType) {
+            "IN" -> transactions.filter { it.type == "11" } as ArrayList<Transaction>
+            "OUT" -> transactions.filter { it.type == "00" } as ArrayList<Transaction>
+            else -> transactions
+        }
+
+        mTransactionAdapter.add(newTransactions)
+        recyclerView.scrollToPosition(0)
+    }
+
+    override fun onGetUserTransactionsFailed(response: Response) {
+        show("Failed getting transactions", true)
+    }
+
+    override fun onGetUserTransactionsSuccessful(transactions: ArrayList<Transaction>) {
+        val transactionType = arguments?.getString(TYPE)!!
+        val newTransactions: ArrayList<Transaction>
+
+        newTransactions = when (transactionType) {
+            "IN" -> transactions.filter { it.type == "11" } as ArrayList<Transaction>
+            "OUT" -> transactions.filter { it.type == "00" } as ArrayList<Transaction>
+            else -> transactions
+        }
+
+        mTransactionAdapter.add(newTransactions)
+        recyclerView.scrollToPosition(0)
     }
 
     companion object {

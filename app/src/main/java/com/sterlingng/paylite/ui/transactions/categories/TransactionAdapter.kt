@@ -15,6 +15,7 @@ import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>(),
         StickyRecyclerHeadersAdapter<TransactionAdapter.HeaderViewHolder> {
@@ -44,14 +45,23 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
     fun get(position: Int): Transaction = transactions[position]
 
     fun add(transaction: Transaction) {
-        transactions.add(transaction)
-        notifyItemInserted(this.transactions.size - 1)
+        transactions += transaction
+        val transactionsSet = transactions.sortedByDescending { it.id }.distinctBy { it.id }
+
+        clear()
+
+        this.transactions.addAll(transactionsSet)
+        notifyDataSetChanged()
     }
 
-    fun add(transactions: Collection<Transaction>) {
-        val index = this.transactions.size - 1
-        this.transactions.addAll(transactions)
-        notifyItemRangeInserted(index, transactions.size - 1)
+    fun add(newTransactions: ArrayList<Transaction>) {
+        newTransactions.addAll(this.transactions)
+        val transactionsSet = newTransactions.sortedByDescending { it.id }.distinctBy { it.id }
+
+        clear()
+
+        this.transactions.addAll(transactionsSet)
+        notifyDataSetChanged()
     }
 
     fun remove(index: Int) {
@@ -60,8 +70,10 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
     }
 
     fun clear() {
-        transactions.clear()
-        notifyItemRangeRemoved(0, this.transactions.size)
+        for (index in 0 until transactions.size) {
+            this.transactions.removeAt(0)
+            notifyItemRemoved(0)
+        }
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -90,7 +102,7 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
             val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
             val date = formatter.parse(transactions[position].date.split("T")[0])
             calendar.time = Date(date.time)
-            calendar.get(Calendar.WEEK_OF_YEAR).toLong()
+            calendar.get(Calendar.DAY_OF_YEAR).toLong()
         } else
             0
     }
@@ -116,14 +128,14 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
         private var transactionAmount: TextView = itemView.findViewById(R.id.transaction_amount)
 
         override fun onBind(position: Int) {
-            super.onBind(position)
+            super.onBind(adapterPosition)
 
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ENGLISH)
-            val date = formatter.parse(transactions[position].date)
+            val date = formatter.parse(transactions[adapterPosition].date)
             val dateFormat = SimpleDateFormat("hh:mm aaa", Locale.ENGLISH)
 
-            with(transactions[position]) {
-                transactionAmount.text = if (type == "11") "+${mContext.getString(R.string.naira)} $amount" else "-${mContext.getString(R.string.naira)} $amount"
+            with(transactions[adapterPosition]) {
+                transactionAmount.text = if (type == "11") "+ ${mContext.getString(R.string.naira)} $amount" else "- ${mContext.getString(R.string.naira)} $amount"
                 transactionName.text = name
                 transactionDate.text = dateFormat.format(date.time)
                 transactionType.setImageDrawable(ContextCompat.getDrawable(mContext, if (type == "11") R.drawable.arrow_bottom_left else R.drawable.arrow_top_right))
@@ -131,7 +143,7 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
                 transactionAmount.setTextColor(ContextCompat.getColor(mContext, if (type == "11") R.color.apple_green else R.color.scarlet))
             }
             itemView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, position)
+                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
             }
         }
     }
