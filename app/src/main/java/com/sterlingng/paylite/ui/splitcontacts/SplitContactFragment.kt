@@ -1,12 +1,7 @@
 package com.sterlingng.paylite.ui.splitcontacts
 
 import android.Manifest
-import android.app.Dialog
-import android.content.ContentResolver
-import android.database.Cursor
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.support.v4.content.CursorLoader
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -20,27 +15,26 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.manager.DataManager
-import com.sterlingng.paylite.data.model.Contact
+import com.sterlingng.paylite.data.model.ChosenContact
 import com.sterlingng.paylite.data.model.ContactItem
-import com.sterlingng.paylite.rx.SchedulerProvider
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.ui.base.MvpPresenter
-import com.sterlingng.paylite.ui.base.MvpView
-import com.sterlingng.paylite.ui.contacts.ContactsBottomSheetFragment
+import com.sterlingng.paylite.ui.contacts.ContactsFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import io.reactivex.disposables.CompositeDisposable
-import java.util.HashMap
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
-class SplitContactFragment : BaseFragment(), SplitContactMvpView,
-        ContactsBottomSheetFragment.OnContactsItemSelected {
+class SplitContactFragment : BaseFragment(), SplitContactMvpView {
 
     @Inject
     lateinit var mPresenter: SplitContactMvpContract<SplitContactMvpView>
+
+    @Inject
+    lateinit var eventBus: EventBus
 
     @Inject
     lateinit var mLinearLayoutManager: LinearLayoutManager
@@ -96,110 +90,15 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView,
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }
-    }
 
-    fun setUpLoader(): ArrayList<Contact> {
-        val contacts = ArrayList<Contact>()
-        val contentResolver: ContentResolver = baseActivity.contentResolver
-        val projectionFields = arrayOf(
-                ContactsContract.Data._ID,
-                ContactsContract.Data.LOOKUP_KEY,
-                ContactsContract.Data.DISPLAY_NAME
-        )
-        val cursor: Cursor? = contentResolver.query(
-                ContactsContract.Contacts.CONTENT_URI,
-                projectionFields, // projection fields
-                null, // the selection criteria
-                null, // the selection args
-                null // the sort order
-        )
-
-        if (cursor == null || cursor.count <= 0)
-            return arrayListOf()
-
-        val contactsMap = HashMap<String, Contact>(cursor.count)
-
-        val idIndex = cursor.getColumnIndex(ContactsContract.Data._ID)
-        val nameIndex = cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME)
-
-        while (cursor.moveToNext()) {
-            val contactId = cursor.getString(idIndex)
-            val contactDisplayName = cursor.getString(nameIndex)
-            val contact = Contact(contactId, contactDisplayName)
-
-            contactsMap[contactId] = contact
-            contacts += contact
-        }
-
-        cursor.close()
-
-        loadContactEmails(contactsMap)
-        loadContactNumbers(contactsMap)
-
-        contacts.sortBy { it.name }
-        return contacts
-    }
-
-    private fun loadContactNumbers(contactsMap: Map<String, Contact>) {
-        // Get numbers
-        val numberProjection = arrayOf(
-                ContactsContract.CommonDataKinds.Phone.NUMBER,
-                ContactsContract.CommonDataKinds.Phone.TYPE,
-                ContactsContract.CommonDataKinds.Phone.CONTACT_ID
-        )
-
-        val phone = CursorLoader(baseActivity,
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                numberProjection, null, null, null).loadInBackground()
-
-        if (phone!!.moveToFirst()) {
-            val contactNumberColumnIndex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-            val contactTypeColumnIndex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)
-            val contactIdColumnIndex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
-
-            while (!phone.isAfterLast) {
-                val number = phone.getString(contactNumberColumnIndex)
-                val contactId = phone.getString(contactIdColumnIndex)
-                val contact = contactsMap[contactId] ?: continue
-                val type = phone.getInt(contactTypeColumnIndex)
-                val customLabel = "Custom"
-                val phoneType = ContactsContract.CommonDataKinds.Phone.getTypeLabel(baseActivity.resources, type, customLabel)
-                contact.addNumber(number, phoneType.toString())
-                phone.moveToNext()
-            }
-        }
-        phone.close()
-    }
-
-    private fun loadContactEmails(contactsMap: Map<String, Contact>) {
-        // Get email
-        val emailProjection = arrayOf(
-                ContactsContract.CommonDataKinds.Email.DATA,
-                ContactsContract.CommonDataKinds.Email.TYPE,
-                ContactsContract.CommonDataKinds.Email.CONTACT_ID
-        )
-
-        val email = CursorLoader(baseActivity,
-                ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-                emailProjection, null, null, null).loadInBackground()
-
-        if (email!!.moveToFirst()) {
-            val contactEmailColumnIndex = email.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)
-            val contactTypeColumnIndex = email.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE)
-            val contactIdColumnsIndex = email.getColumnIndex(ContactsContract.CommonDataKinds.Email.CONTACT_ID)
-
-            while (!email.isAfterLast) {
-                val address = email.getString(contactEmailColumnIndex)
-                val contactId = email.getString(contactIdColumnsIndex)
-                val type = email.getInt(contactTypeColumnIndex)
-                val customLabel = "Custom"
-                val contact = contactsMap[contactId] ?: continue
-                val emailType = ContactsContract.CommonDataKinds.Email.getTypeLabel(baseActivity.resources, type, customLabel)
-                contact.addEmail(address, emailType.toString())
-                email.moveToNext()
-            }
-        }
-        email.close()
+        eventBus.observe(ChosenContact::class.java)
+                .delay(1L, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mSplitContactsAdapter.contacts = it.contacts
+                    mSplitContactsAdapter.notifyDataSetChanged()
+                }
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
@@ -211,20 +110,12 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView,
                     }
 
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                        val selectBottomSheetFragment = ContactsBottomSheetFragment.newInstance()
-                        selectBottomSheetFragment.onContactsItemSelectedListener = this@SplitContactFragment
-                        selectBottomSheetFragment.selector = position
-                        selectBottomSheetFragment.title = "Contacts"
-                        selectBottomSheetFragment.contacts = setUpLoader()
-                        (baseActivity as DashboardActivity).mNavController.showDialogFragment(selectBottomSheetFragment)
+                        val builder = FragNavTransactionOptions.newBuilder()
+                        builder.allowStateLoss = false
+                        (baseActivity as DashboardActivity).mNavController
+                                .pushFragment(ContactsFragment.newInstance("Contacts", position, mSplitContactsAdapter.contacts), builder.build())
                     }
                 }).check()
-    }
-
-    override fun onContactsItemSelected(dialog: Dialog, selector: Int, contact: Contact) {
-        mSplitContactsAdapter.contacts[selector].contact = contact.name
-        mSplitContactsAdapter.notifyItemChanged(selector)
-        dialog.dismiss()
     }
 
     companion object {
@@ -240,12 +131,3 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView,
         }
     }
 }
-
-interface SplitContactMvpView : MvpView
-
-interface SplitContactMvpContract<V : SplitContactMvpView> : MvpPresenter<V>
-
-class SplitContactPresenter<V : SplitContactMvpView>
-@Inject
-constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SplitContactMvpContract<V>

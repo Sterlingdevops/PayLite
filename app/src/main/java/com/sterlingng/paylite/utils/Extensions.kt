@@ -47,7 +47,7 @@ fun String.encryptAES(initVector: String): String {
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv)
 
         val encrypted = cipher.doFinal(this.toByteArray())
-        Log.d("encrypted string: " + Base64.encodeToString(encrypted, Base64.NO_WRAP))
+//        Log.d("encrypted string: " + Base64.encodeToString(encrypted, Base64.NO_WRAP))
 
         cipherText = Base64.encodeToString(encrypted, Base64.NO_WRAP)
     } catch (ex: Exception) {

@@ -21,7 +21,7 @@ import java.util.*
 
 class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter<SplitContactsAdapter.ViewHolder>() {
 
-    val contacts: ArrayList<ContactItem> = ArrayList()
+    var contacts: ArrayList<ContactItem> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,14 +35,12 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
     fun add(item: ContactItem) {
         contacts.add(item)
-//        notifyItemInserted(this.contacts.size - 1)
         notifyDataSetChanged()
     }
 
     fun add(contacts: Collection<ContactItem>) {
         val index = this.contacts.size - 1
         this.contacts.addAll(contacts)
-//        notifyItemRangeInserted(index, contacts.size - 1)
         notifyDataSetChanged()
     }
 
@@ -52,7 +50,6 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
             return
         }
         contacts.removeAt(index)
-//        notifyItemRemoved(index)
         notifyDataSetChanged()
     }
 

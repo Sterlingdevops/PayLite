@@ -6,15 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.manager.DataManager
-import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.ui.base.MvpPresenter
-import com.sterlingng.paylite.ui.base.MvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.splitcontacts.SplitContactFragment
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
@@ -99,12 +93,3 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
         }
     }
 }
-
-interface SplitAmountMvpView : MvpView
-
-interface SplitAmountMvpContract<V : SplitAmountMvpView> : MvpPresenter<V>
-
-class SplitAmountPresenter<V : SplitAmountMvpView>
-@Inject
-constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SplitAmountMvpContract<V>

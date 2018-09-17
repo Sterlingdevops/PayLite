@@ -8,7 +8,6 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.AppUtils.gson
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
@@ -58,8 +57,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 user.lastName = d["lastname"] as String
                                 user.phoneNumber = d["mobile"] as String
                                 user.firstName = d["firstname"] as String
-
-                                Log.d(user.toString())
 
                                 dataManager.saveUser(user)
                                 mvpView.onDoSignUpSuccessful(it)
