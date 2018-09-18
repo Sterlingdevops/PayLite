@@ -1,5 +1,6 @@
 package com.sterlingng.paylite.ui.contacts
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Contact
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import com.sterlingng.paylite.utils.initails
 import java.util.*
 
 class SelectContactAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
@@ -78,12 +80,14 @@ class SelectContactAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
         }
     }
 
-    inner class ViewHolder(itemView: View, var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
 
         private val contactNameTextView: TextView = itemView.findViewById(R.id.contact_name)
         private val contactEmailTextView: TextView = itemView.findViewById(R.id.contact_email)
         private val contactPhoneTextView: TextView = itemView.findViewById(R.id.contact_phone)
+        private val contactInitialsTextView: TextView = itemView.findViewById(R.id.contact_initials)
 
+        @SuppressLint("SetTextI18n")
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
 
@@ -100,6 +104,7 @@ class SelectContactAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
                 else
                     contactPhoneTextView.visibility = View.VISIBLE
 
+                contactInitialsTextView.text = name.initails()
                 contactEmailTextView.text = if (emails.size <= 0) "" else "${emails[0].address} - ${emails[0].type}"
                 contactPhoneTextView.text = if (numbers.size <= 0) "" else "${numbers[0].number} - ${numbers[0].type}"
             }

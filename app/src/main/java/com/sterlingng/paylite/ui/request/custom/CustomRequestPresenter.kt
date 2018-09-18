@@ -1,12 +1,10 @@
-package com.sterlingng.paylite.ui.newpaymentamount
+package com.sterlingng.paylite.ui.request.custom
 
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Response
-import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils
-import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
@@ -15,17 +13,20 @@ import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 
-class NewPaymentAmountPresenter<V : NewPaymentAmountMvpView> @Inject
+class CustomRequestPresenter<V : CustomRequestMvpView>
+@Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), NewPaymentAmountMvpContract<V> {
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CustomRequestMvpContract<V> {
 
-    override fun sendMoney(data: HashMap<String, Any>) {
-        val user = dataManager.getCurrentUser()
-        data["Mobile"] = user?.phoneNumber!!
+    override fun requestPaymentLink(data: HashMap<String, Any>) {
+        dataManager.getCurrentUser()?.firstName?.let { data["username"] = it }
+        dataManager.getCurrentUser()?.phoneNumber?.let { data["phone"] = it }
 
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.sendMoney(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}", gson.toJson(data).sha256())
+                dataManager.requestPaymentLink(data,
+                        "Bearer ${dataManager.getCurrentUser()?.accessToken!!}",
+                        AppUtils.gson.toJson(data).sha256())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
@@ -50,23 +51,16 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         }
                         .subscribe {
                             if (it.response != null && it.response == "00") {
-                                val wallet = AppUtils.gson.fromJson(AppUtils.gson.toJson(it.data), Wallet::class.java)
-                                dataManager.saveWallet(wallet)
-                                mvpView.hideLoading()
-                                mvpView.onSendMoneySuccessful(wallet)
+                                mvpView.onRequestPaymentLinkSent(it)
                             } else {
                                 if (it.message == "Authorization has been denied for this request") {
                                     mvpView.logout()
                                 } else {
-                                    mvpView.hideLoading()
-                                    mvpView.onSendMoneyFailed(it)
+                                    mvpView.onSendRequestPaymentLinkFailed(it)
                                 }
                             }
+                            mvpView.hideLoading()
                         }
         )
-    }
-
-    override fun loadCachedWallet() {
-        mvpView.initView(dataManager.getWallet())
     }
 }

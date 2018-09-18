@@ -8,23 +8,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Response
-import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.ui.base.MvpPresenter
-import com.sterlingng.paylite.ui.base.MvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.utils.AppUtils
-import com.sterlingng.paylite.utils.AppUtils.gson
+import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.utils.isValidEmail
-import com.sterlingng.paylite.utils.sha256
-import io.reactivex.disposables.CompositeDisposable
-import okhttp3.MediaType
-import okhttp3.ResponseBody
-import retrofit2.HttpException
-import java.net.SocketTimeoutException
 import javax.inject.Inject
 import kotlin.collections.set
 
@@ -96,6 +84,12 @@ class CustomRequestFragment : BaseFragment(), CustomRequestMvpView {
 
     }
 
+    override fun logout() {
+        show("Session has timed out", true)
+        startActivity(MainActivity.getStartIntent(baseActivity))
+        baseActivity.finish()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custom_request, container, false)
         val component = activityComponent
@@ -112,62 +106,5 @@ class CustomRequestFragment : BaseFragment(), CustomRequestMvpView {
             fragment.arguments = args
             return fragment
         }
-    }
-}
-
-interface CustomRequestMvpView : MvpView {
-    fun onRequestPaymentLinkSent(response: Response)
-    fun onSendRequestPaymentLinkFailed(response: Response)
-}
-
-interface CustomRequestMvpContract<V : CustomRequestMvpView> : MvpPresenter<V> {
-    fun requestPaymentLink(data: HashMap<String, Any>)
-}
-
-class CustomRequestPresenter<V : CustomRequestMvpView>
-@Inject
-constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CustomRequestMvpContract<V> {
-
-    override fun requestPaymentLink(data: HashMap<String, Any>) {
-        dataManager.getCurrentUser()?.firstName?.let { data["username"] = it }
-        dataManager.getCurrentUser()?.phoneNumber?.let { data["phone"] = it }
-
-        mvpView.showLoading()
-        compositeDisposable.add(
-                dataManager.requestPaymentLink(data,
-                        "Bearer ${dataManager.getCurrentUser()?.accessToken!!}",
-                        gson.toJson(data).sha256())
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .onErrorReturn {
-                            if (it is java.net.SocketTimeoutException) {
-                                val response = Response()
-                                response.data = SocketTimeoutException()
-                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.response = "failed"
-                                return@onErrorReturn response
-                            } else {
-                                val raw = (it as HttpException).response().errorBody()?.string()
-                                if (AppUtils.isJSONValid(raw!!)) {
-                                    return@onErrorReturn AppUtils.gson.fromJson(raw, Response::class.java)
-                                }
-                                val response = Response()
-                                response.data = HttpException(retrofit2.Response.error<String>(500,
-                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
-                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.response = "failed"
-                                return@onErrorReturn response
-                            }
-                        }
-                        .subscribe {
-                            if (it.response != null && it.response == "00") {
-                                mvpView.onRequestPaymentLinkSent(it)
-                            } else {
-                                mvpView.onSendRequestPaymentLinkFailed(it)
-                            }
-                            mvpView.hideLoading()
-                        }
-        )
     }
 }

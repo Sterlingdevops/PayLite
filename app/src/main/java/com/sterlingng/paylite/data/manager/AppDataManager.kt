@@ -27,6 +27,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun splitPayment(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.splitPayment(data, hash)
+
     override fun validateOtp(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.validateOtp(data, hash)
 
     override fun saveTransactions(transactions: ArrayList<Transaction>) = mLocalDataHelper.saveTransactions(transactions)
@@ -63,8 +65,6 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun deleteAllUsers() = mLocalDataHelper.deleteAllUsers()
 
-    override fun mockDeals(): ArrayList<Deal> = mMockHelper.mockDeals()
-
     override fun saveUser(user: User) = mLocalDataHelper.saveUser(user)
 
     override fun getCurrentUser(): User? = mLocalDataHelper.getCurrentUser()
@@ -77,13 +77,7 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun mockCategories(): ArrayList<PaymentCategory> = mMockHelper.mockCategories()
 
-    override fun mockTransactions(): ArrayList<Transaction> = mMockHelper.mockTransactions()
-
     override fun mockNotifications(): ArrayList<Notification> = mMockHelper.mockNotifications()
-
-    override fun mockCharities(): ArrayList<Charity> = mMockHelper.mockCharities()
-
-    override fun mockProjects(): ArrayList<Project> = mMockHelper.mockProjects()
 
     override fun signup(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.signup(data, hash)
 

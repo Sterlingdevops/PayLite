@@ -22,7 +22,7 @@ import javax.inject.Inject
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
 
-    private val config: RealmConfiguration = RealmConfiguration.Builder().schemaVersion(7).migration(Migrations()).build()
+    private val config: RealmConfiguration = RealmConfiguration.Builder().schemaVersion(8).migration(Migrations()).build()
     private val realm: Realm
 
     init {

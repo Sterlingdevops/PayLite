@@ -7,7 +7,6 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.AppUtils.gson
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
@@ -101,7 +100,11 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                             if (it.response != null && it.response == "00") {
                                 mvpView.onFundWalletSuccessful()
                             } else {
-                                mvpView.onFundWalletFailed(it)
+                                if (it.message == "Authorization has been denied for this request") {
+                                    mvpView.logout()
+                                } else {
+                                    mvpView.onFundWalletFailed(it)
+                                }
                             }
                             mvpView.hideLoading()
                         }
@@ -144,7 +147,11 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                                 dataManager.saveWallet(wallet)
                                 mvpView.onFundWalletSuccessful()
                             } else {
-                                mvpView.onFundWalletFailed(it)
+                                if (it.message == "Authorization has been denied for this request") {
+                                    mvpView.logout()
+                                } else {
+                                    mvpView.onFundWalletFailed(it)
+                                }
                             }
                             mvpView.hideLoading()
                         }
@@ -183,7 +190,6 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                                 mvpView.hideLoading()
                                 mvpView.onResolveCardNumberSuccessful(it)
                             } else {
-                                Log.e(it.toString())
                                 mvpView.hideLoading()
                                 mvpView.onResolveCardNumberFailed(it)
                             }
@@ -202,7 +208,6 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                             mvpView.hideLoading()
                             mvpView.onResolveAccountNumberSuccessful(it)
                         }) {
-                            Log.e(it, "FundPresenter->resolveAccountNumber")
                             mvpView.hideLoading()
                             mvpView.onResolveAccountNumberFailed(it)
                         }

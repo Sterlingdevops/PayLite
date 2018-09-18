@@ -8,4 +8,5 @@ interface NewPaymentAmountMvpView : MvpView {
     fun initView(wallet: Wallet?)
     fun onSendMoneySuccessful(wallet: Wallet)
     fun onSendMoneyFailed(response: Response)
+    fun logout()
 }

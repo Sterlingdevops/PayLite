@@ -17,4 +17,5 @@ interface FundMvpView : MvpView {
     fun onResolveAccountNumberSuccessful(it: Response)
     fun onGetWalletSuccessful(wallet: Wallet?)
     fun onGetWalletFailed(response: Response?)
+    fun logout()
 }

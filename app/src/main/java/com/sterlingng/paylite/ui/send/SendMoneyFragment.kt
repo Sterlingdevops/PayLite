@@ -8,42 +8,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.PayliteContact
 import com.sterlingng.paylite.data.model.Wallet
-import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.ui.base.MvpPresenter
-import com.sterlingng.paylite.ui.base.MvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.views.NoScrollingLinearLayoutManager
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
-
-interface SendMoneyMvpContract<V : SendMoneyMvpView> : MvpPresenter<V> {
-    fun loadContacts()
-    fun loadCachedWallet()
-}
-
-interface SendMoneyMvpView : MvpView {
-    fun updateContacts(it: ArrayList<PayliteContact>)
-    fun initView(wallet: Wallet?)
-}
-
-class SendMoneyPresenter<V : SendMoneyMvpView> @Inject
-constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SendMoneyMvpContract<V> {
-
-    override fun loadCachedWallet() {
-        mvpView.initView(dataManager.getWallet())
-    }
-
-    override fun loadContacts() {
-        mvpView.updateContacts(dataManager.mockContacts())
-    }
-}
 
 class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRetryClicked {
 
@@ -88,7 +59,7 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRe
             baseActivity.onBackPressed()
         }
 
-        // PayliteContact
+        // Paylite Contact
 
         mContactsAdapter = ContactsAdapter(baseActivity, 0)
         mContactsLinearLayoutManager = NoScrollingLinearLayoutManager(baseActivity)

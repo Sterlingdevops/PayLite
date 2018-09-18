@@ -13,6 +13,7 @@ import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.CardExpiryTextWatcher
 import mostafa.ma.saleh.gmail.com.editcredit.EditCredit
@@ -228,6 +229,12 @@ class FundFragment : BaseFragment(), FundMvpView {
         show("Successfully funded wallet", true)
         eventBus.post(UpdateWallet())
         (baseActivity as DashboardActivity).mNavController.clearStack()
+    }
+
+    override fun logout() {
+        show("Session has timed out", true)
+        startActivity(MainActivity.getStartIntent(baseActivity))
+        baseActivity.finish()
     }
 
     private inner class AccountNumberTextWatcher : TextWatcher {

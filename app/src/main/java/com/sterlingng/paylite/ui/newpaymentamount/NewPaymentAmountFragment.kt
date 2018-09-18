@@ -18,6 +18,7 @@ import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
+import com.sterlingng.paylite.ui.main.MainActivity
 import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
@@ -201,6 +202,12 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
                 mRepeatTextView.visibility = View.GONE
             }
         }
+    }
+
+    override fun logout() {
+        show("Session has timed out", true)
+        startActivity(MainActivity.getStartIntent(baseActivity))
+        baseActivity.finish()
     }
 
     override fun initView(wallet: Wallet?) {

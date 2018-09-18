@@ -21,6 +21,11 @@ fun String.toSentenceCase(): String {
     return stringBuilder.toString()
 }
 
+fun String.initails(): String {
+    val parts = this.split(" ")
+    return if (parts.size > 1) "${parts[0][0]}${parts[1][0]}".toUpperCase() else "${parts[0][0]}".toUpperCase()
+}
+
 fun String.sha256(): String {
     var hash = ""
     try {

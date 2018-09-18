@@ -67,8 +67,8 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
     }
 
     override fun setUp(view: View) {
-        arguments?.getString(AMOUNT).let {
-            mSplitCostTextView.text = baseActivity.resources.getString(R.string.split_ngn, it)
+        arguments?.getString(AMOUNT)?.let {
+            mSplitCostTextView.text = baseActivity.resources.getString(R.string.split_ngn, it.toInt().toString())
         }
 
         mSplitContactsAdapter = SplitContactsAdapter(baseActivity)
@@ -113,7 +113,12 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
                         val builder = FragNavTransactionOptions.newBuilder()
                         builder.allowStateLoss = false
                         (baseActivity as DashboardActivity).mNavController
-                                .pushFragment(ContactsFragment.newInstance("Contacts", position, mSplitContactsAdapter.contacts), builder.build())
+                                .pushFragment(
+                                        ContactsFragment.newInstance("Contacts",
+                                                position,
+                                                mSplitContactsAdapter.contacts),
+                                        builder.build()
+                                )
                     }
                 }).check()
     }

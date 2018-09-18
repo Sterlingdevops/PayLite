@@ -39,7 +39,6 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
     }
 
     fun add(contacts: Collection<ContactItem>) {
-        val index = this.contacts.size - 1
         this.contacts.addAll(contacts)
         notifyDataSetChanged()
     }

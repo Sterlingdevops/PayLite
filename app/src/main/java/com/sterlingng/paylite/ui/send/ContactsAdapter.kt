@@ -17,7 +17,7 @@ import java.util.*
 
 class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    val payliteContacts: ArrayList<PayliteContact> = ArrayList()
+    val contacts: ArrayList<PayliteContact> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
     lateinit var onRetryClickedListener: OnRetryClicked
 
@@ -47,27 +47,27 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
         }
     }
 
-    fun get(position: Int): PayliteContact = payliteContacts[position]
+    fun get(position: Int): PayliteContact = contacts[position]
 
-    fun add(payliteContact: PayliteContact) {
-        payliteContacts.add(payliteContact)
-        notifyItemInserted(this.payliteContacts.size - 1)
+    fun add(contact: PayliteContact) {
+        contacts.add(contact)
+        notifyItemInserted(this.contacts.size - 1)
     }
 
-    fun add(payliteContacts: Collection<PayliteContact>) {
-        val index = this.payliteContacts.size - 1
-        this.payliteContacts.addAll(payliteContacts.filterNot { it.firstname == "See" })
-        notifyItemRangeInserted(index, payliteContacts.size - 1)
+    fun add(contacts: Collection<PayliteContact>) {
+        val index = this.contacts.size - 1
+        this.contacts.addAll(contacts.filterNot { it.firstname == "See" })
+        notifyItemRangeInserted(index, contacts.size - 1)
     }
 
     fun remove(index: Int) {
-        this.payliteContacts.removeAt(index)
+        this.contacts.removeAt(index)
         notifyItemRemoved(index)
     }
 
     fun clear() {
-        for (index in 0 until payliteContacts.size) {
-            this.payliteContacts.removeAt(0)
+        for (index in 0 until contacts.size) {
+            this.contacts.removeAt(0)
             notifyItemRemoved(0)
         }
     }
@@ -77,7 +77,7 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (payliteContacts.size > 0) {
+        return if (contacts.size > 0) {
             VIEW_TYPE_NORMAL
         } else {
             VIEW_TYPE_EMPTY
@@ -85,8 +85,8 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
     }
 
     override fun getItemCount(): Int {
-        return if (payliteContacts.size > 0) {
-            payliteContacts.size
+        return if (contacts.size > 0) {
+            contacts.size
         } else {
             1
         }
@@ -101,7 +101,7 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
         override fun onBind(position: Int) {
             super.onBind(position)
 
-            with(payliteContacts[position]) {
+            with(contacts[position]) {
                 if (type == 1)
                     contactInitialsTextView?.text = "${firstname[0]}${lastname[0]}".toUpperCase()
                 contactNameTextView.text = "$firstname $lastname"

@@ -1,11 +1,6 @@
 package com.sterlingng.paylite.ui.contacts
 
-import android.content.ContentResolver
-import android.database.Cursor
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.support.v4.content.CursorLoader
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -26,10 +21,7 @@ import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.send.ContactsAdapter
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
-import java.util.HashMap
 import javax.inject.Inject
-import kotlin.collections.ArrayList
-import kotlin.collections.set
 
 class ContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListener,
         ContactsAdapter.OnRetryClicked, SelectContactAdapter.OnRetryClicked {
@@ -45,13 +37,10 @@ class ContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListe
     private lateinit var closeImageView: ImageView
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mContactsAdapter: SelectContactAdapter
-    var selectedContact = -1
+    private var selectedContact = -1
 
     @Inject
     lateinit var mLinearLayoutManager: LinearLayoutManager
-
-    @Inject
-    lateinit var mDividerItemDecoration: DividerItemDecoration
 
     lateinit var mContacts: List<Contact>
     lateinit var mContactsClone: List<Contact>
@@ -77,7 +66,6 @@ class ContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListe
         mContactsAdapter.onRetryClickedListener = this
         mRecyclerView.adapter = mContactsAdapter
         mRecyclerView.layoutManager = mLinearLayoutManager
-        mRecyclerView.addItemDecoration(mDividerItemDecoration)
 
         titleTextView.text = arguments?.getString(TITLE)
         closeImageView.setOnClickListener {
@@ -88,8 +76,8 @@ class ContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListe
 
         selectedContact = arguments?.getInt(POSITION, 0)!!
 
-        mContactsClone = setUpLoader()
-        mContacts = setUpLoader()
+        mContactsClone = (baseActivity as DashboardActivity).contacts
+        mContacts = (baseActivity as DashboardActivity).contacts
         mContactsAdapter.add(mContacts)
     }
 
@@ -179,120 +167,15 @@ class ContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListe
         }
     }
 
-    private fun setUpLoader(): ArrayList<Contact> {
-        val contacts = ArrayList<Contact>()
-        val contentResolver: ContentResolver = baseActivity.contentResolver
-        val projectionFields = arrayOf(
-                ContactsContract.Data._ID,
-                ContactsContract.Data.LOOKUP_KEY,
-                ContactsContract.Data.DISPLAY_NAME
-        )
-        val cursor: Cursor? = contentResolver.query(
-                ContactsContract.Contacts.CONTENT_URI,
-                projectionFields, // projection fields
-                null, // the selection criteria
-                null, // the selection args
-                null // the sort order
-        )
-
-        if (cursor == null || cursor.count <= 0)
-            return arrayListOf()
-
-        val contactsMap = HashMap<String, Contact>(cursor.count)
-
-        val idIndex = cursor.getColumnIndex(ContactsContract.Data._ID)
-        val nameIndex = cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME)
-
-        while (cursor.moveToNext()) {
-            val contactId = cursor.getString(idIndex)
-            val contactDisplayName = cursor.getString(nameIndex)
-            val contact = Contact(contactId, contactDisplayName)
-
-            contactsMap[contactId] = contact
-            contacts += contact
-        }
-
-        cursor.close()
-
-        loadContactEmails(contactsMap)
-        loadContactNumbers(contactsMap)
-
-        contacts.sortBy { it.name }
-        return contacts
-    }
-
-    private fun loadContactNumbers(contactsMap: Map<String, Contact>) {
-        // Get numbers
-        val numberProjection = arrayOf(
-                ContactsContract.CommonDataKinds.Phone.NUMBER,
-                ContactsContract.CommonDataKinds.Phone.TYPE,
-                ContactsContract.CommonDataKinds.Phone.CONTACT_ID
-        )
-
-        val phone = CursorLoader(baseActivity,
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                numberProjection, null, null, null).loadInBackground()
-
-        if (phone!!.moveToFirst()) {
-            val contactNumberColumnIndex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-            val contactTypeColumnIndex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)
-            val contactIdColumnIndex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
-
-            while (!phone.isAfterLast) {
-                val number = phone.getString(contactNumberColumnIndex)
-                val contactId = phone.getString(contactIdColumnIndex)
-                val contact = contactsMap[contactId] ?: continue
-                val type = phone.getInt(contactTypeColumnIndex)
-                val customLabel = "Custom"
-                val phoneType = ContactsContract.CommonDataKinds.Phone.getTypeLabel(baseActivity.resources, type, customLabel)
-                contact.addNumber(number, phoneType.toString())
-                phone.moveToNext()
-            }
-        }
-        phone.close()
-    }
-
-    private fun loadContactEmails(contactsMap: Map<String, Contact>) {
-        // Get email
-        val emailProjection = arrayOf(
-                ContactsContract.CommonDataKinds.Email.DATA,
-                ContactsContract.CommonDataKinds.Email.TYPE,
-                ContactsContract.CommonDataKinds.Email.CONTACT_ID
-        )
-
-        val email = CursorLoader(baseActivity,
-                ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-                emailProjection, null, null, null).loadInBackground()
-
-        if (email!!.moveToFirst()) {
-            val contactEmailColumnIndex = email.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)
-            val contactTypeColumnIndex = email.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE)
-            val contactIdColumnsIndex = email.getColumnIndex(ContactsContract.CommonDataKinds.Email.CONTACT_ID)
-
-            while (!email.isAfterLast) {
-                val address = email.getString(contactEmailColumnIndex)
-                val contactId = email.getString(contactIdColumnsIndex)
-                val type = email.getInt(contactTypeColumnIndex)
-                val customLabel = "Custom"
-                val contact = contactsMap[contactId] ?: continue
-                val emailType = ContactsContract.CommonDataKinds.Email.getTypeLabel(baseActivity.resources, type, customLabel)
-                contact.addEmail(address, emailType.toString())
-                email.moveToNext()
-            }
-        }
-        email.close()
-    }
-
-
     override fun onRetryClicked() {
 
     }
 
     companion object {
 
+        private const val DATA = "ContactsFragment.DATA"
         private const val TITLE = "ContactsFragment.TITLE"
         private const val POSITION = "ContactsFragment.POSITION"
-        private const val DATA = "ContactsFragment.DATA"
 
         fun newInstance(title: String, position: Int, data: ArrayList<ContactItem>): ContactsFragment {
             val dialog = ContactsFragment()

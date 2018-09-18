@@ -92,5 +92,31 @@ public class Migrations implements RealmMigration {
             ;
             ++oldVersion;
         }
+
+        //version 8
+        if (oldVersion == 7) {
+            schema.create("BankRealm")
+                    .addField("bankcode", String.class)
+                    .addField("bankname", String.class)
+                    .addField("accountname", String.class)
+                    .addField("accountnumber", String.class)
+                    .setRequired("bankcode", true)
+                    .setRequired("bankname", true)
+                    .setRequired("accountname", true)
+                    .setRequired("accountnumber", true)
+                    .addPrimaryKey("accountnumber")
+            ;
+
+            schema.create("CardRealm")
+                    .addField("name", String.class)
+                    .addField("number", String.class)
+                    .addField("expiry", String.class)
+                    .setRequired("name", true)
+                    .setRequired("number", true)
+                    .setRequired("expiry", true)
+                    .addPrimaryKey("number")
+            ;
+            ++oldVersion;
+        }
     }
 }
