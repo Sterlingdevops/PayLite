@@ -9,10 +9,6 @@ import retrofit2.http.Query
 
 interface PayStackServiceApi {
 
-    @GET("bank")
-    @Headers("Authorization: Bearer sk_test_4844e2650b69fd92f0af204275ca74b9f1d1336f")
-    fun getBanks(): Observable<Response>
-
     @GET("bank/resolve")
     @Headers("Authorization: Bearer sk_test_4844e2650b69fd92f0af204275ca74b9f1d1336f")
     fun resolveBankAccount(@Query("account_number") accountNumber: String,

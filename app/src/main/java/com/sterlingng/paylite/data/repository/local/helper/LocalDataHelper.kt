@@ -1,13 +1,7 @@
 package com.sterlingng.paylite.data.repository.local.helper
 
-import com.sterlingng.paylite.data.model.Pin
-import com.sterlingng.paylite.data.model.Transaction
-import com.sterlingng.paylite.data.model.User
-import com.sterlingng.paylite.data.model.Wallet
-import com.sterlingng.paylite.data.model.realms.PinRealm
-import com.sterlingng.paylite.data.model.realms.TransactionRealm
-import com.sterlingng.paylite.data.model.realms.UserRealm
-import com.sterlingng.paylite.data.model.realms.WalletRealm
+import com.sterlingng.paylite.data.model.*
+import com.sterlingng.paylite.data.model.realms.*
 import com.sterlingng.paylite.data.repository.local.Migrations
 import com.sterlingng.paylite.data.repository.local.interfaces.LocalDataInterface
 import com.sterlingng.paylite.utils.Log
@@ -21,6 +15,84 @@ import javax.inject.Inject
 
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
+
+    override fun getCards(): ArrayList<Card> {
+        val cards =
+                getRealm().where(CardRealm::class.java).findAll()
+        return if (cards.size > 0)
+            cards.map {
+                it.asCard()
+            } as ArrayList<Card>
+        else ArrayList()
+    }
+
+    override fun saveCard(card: Card) {
+        getRealm().beginTransaction()
+        try {
+            getRealm().copyToRealmOrUpdate(card.asCardRealm())
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->saveCard")
+        } finally {
+            getRealm().commitTransaction()
+        }
+    }
+
+    override fun setCardDefault(card: Card) {
+
+    }
+
+    override fun deleteCard(cardNumber: String) {
+        try {
+            getRealm()
+                    .where(CardRealm::class.java)
+                    .equalTo("number", cardNumber)
+                    .findAll()
+                    .deleteAllFromRealm()
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->deleteBank")
+        } finally {
+            getRealm().commitTransaction()
+        }
+    }
+
+    override fun getBanks(): ArrayList<Bank> {
+        val banks =
+                getRealm().where(BankRealm::class.java).findAll()
+        return if (banks.size > 0)
+            banks.map {
+                it.asBank()
+            } as ArrayList<Bank>
+        else ArrayList()
+    }
+
+    override fun saveBank(bank: Bank) {
+        getRealm().beginTransaction()
+        try {
+            getRealm().copyToRealmOrUpdate(bank.asBankRealm())
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->saveBank")
+        } finally {
+            getRealm().commitTransaction()
+        }
+    }
+
+    override fun setBankDefault(bank: Bank) {
+
+    }
+
+    override fun deleteBank(accountNumber: String) {
+        try {
+            getRealm()
+                    .where(BankRealm::class.java)
+                    .equalTo("accountnumber", accountNumber)
+                    .findAll()
+                    .deleteAllFromRealm()
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->deleteBank")
+        } finally {
+            getRealm().commitTransaction()
+        }
+    }
 
     private val config: RealmConfiguration = RealmConfiguration.Builder()
             .schemaVersion(8).migration(Migrations()).build()
@@ -112,7 +184,7 @@ constructor() : LocalDataInterface {
     }
 
     override fun getPinRealm(phone: String): PinRealm? {
-        return realm.where(PinRealm::class.java).equalTo("phone", phone) .findFirst()
+        return realm.where(PinRealm::class.java).equalTo("phone", phone).findFirst()
     }
 
     override fun getPin(phone: String): Pin? {

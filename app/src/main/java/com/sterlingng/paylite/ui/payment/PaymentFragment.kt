@@ -57,12 +57,13 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
 
         mPaymentMethodsAdapter = PaymentMethodsAdapter(baseActivity)
         mPaymentMethodsAdapter.mRecyclerViewClickListener = this
+        mPaymentMethodsAdapter.onRetryClickedListener = this
 
         mRecyclerView.adapter = mPaymentMethodsAdapter
         mRecyclerView.layoutManager = mLinearLayoutManager
         mRecyclerView.addItemDecoration(mDividerItemDecoration)
 
-        mPresenter.loadMockPaymentMethods()
+        mPresenter.loadPaymentMethods()
     }
 
     override fun updatePaymentMethods(it: ArrayList<PaymentMethod>) {
@@ -70,7 +71,7 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
     }
 
     override fun onRetryClicked() {
-        mPresenter.loadMockPaymentMethods()
+        mPresenter.loadPaymentMethods()
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

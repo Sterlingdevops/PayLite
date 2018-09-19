@@ -27,6 +27,22 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun getBanks(): ArrayList<Bank> = mLocalDataHelper.getBanks()
+
+    override fun getCards(): ArrayList<Card> = mLocalDataHelper.getCards()
+
+    override fun saveCard(card: Card) = mLocalDataHelper.saveCard(card)
+
+    override fun setCardDefault(card: Card) = mLocalDataHelper.setCardDefault(card)
+
+    override fun deleteCard(cardNumber: String) = mLocalDataHelper.deleteCard(cardNumber)
+
+    override fun saveBank(bank: Bank) = mLocalDataHelper.saveBank(bank)
+
+    override fun setBankDefault(bank: Bank) = mLocalDataHelper.setBankDefault(bank)
+
+    override fun deleteBank(accountNumber: String) = mLocalDataHelper.deleteBank(accountNumber)
+
     override fun splitPayment(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.splitPayment(data, hash)
 
     override fun validateOtp(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.validateOtp(data, hash)
@@ -57,8 +73,6 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun getWalletRealm(): WalletRealm? = mLocalDataHelper.getWalletRealm()
 
-    override fun getBanks(): Observable<Response> = mPayStackServiceHelper.getBanks()
-
     override fun deleteAll() = mLocalDataHelper.deleteAll()
 
     override fun closeRealm() = mLocalDataHelper.closeRealm()
@@ -72,8 +86,6 @@ internal constructor(@param:ApplicationContext val context: Context,
     override fun getUserRealm(): UserRealm? = mLocalDataHelper.getUserRealm()
 
     override fun mockContacts(): ArrayList<PayliteContact> = mMockHelper.mockContacts()
-
-    override fun mockPaymentMethods(): ArrayList<PaymentMethod> = mMockHelper.mockPaymentMethods()
 
     override fun mockCategories(): ArrayList<PaymentCategory> = mMockHelper.mockCategories()
 

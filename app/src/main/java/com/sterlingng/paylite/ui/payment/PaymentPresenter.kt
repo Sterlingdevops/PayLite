@@ -11,9 +11,9 @@ class PaymentPresenter<V : PaymentMvpView>
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), PaymentMvpContract<V> {
 
-    override fun loadMockPaymentMethods() {
+    override fun loadPaymentMethods() {
         mvpView.showLoading()
-        mvpView.updatePaymentMethods(dataManager.mockPaymentMethods())
+        mvpView.updatePaymentMethods(ArrayList())
         mvpView.hideLoading()
     }
 }

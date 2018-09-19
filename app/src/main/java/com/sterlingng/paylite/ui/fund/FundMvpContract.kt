@@ -12,4 +12,6 @@ interface FundMvpContract<V : FundMvpView> : MvpPresenter<V> {
     fun resolveAccountNumber(accountNumber: String, bankCode: String)
     fun fundWalletWithCard(data: HashMap<String, Any>)
     fun loadWallet()
+    fun saveBank()
+    fun saveCard()
 }

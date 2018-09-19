@@ -22,6 +22,14 @@ class FundPresenter<V : FundMvpView> @Inject
 internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), FundMvpContract<V> {
 
+    override fun saveBank() {
+
+    }
+
+    override fun saveCard() {
+
+    }
+
     override fun loadCachedWallet() {
         dataManager.getWallet()?.let { mvpView.initView(it) }
     }

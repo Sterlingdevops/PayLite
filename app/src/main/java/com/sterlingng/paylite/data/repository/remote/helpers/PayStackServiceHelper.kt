@@ -13,8 +13,6 @@ import javax.inject.Inject
 class PayStackServiceHelper @Inject
 internal constructor() : PayStackHelper(), PayStackServiceApi {
 
-    override fun getBanks(): Observable<Response> = mPayStackServiceApi.getBanks()
-
     override fun resolveCardNumber(bin: String): Observable<Response> = mPayStackServiceApi.resolveCardNumber(bin)
 
     override fun resolveBankAccount(accountNumber: String, bankCode: String): Observable<Response> = mPayStackServiceApi.resolveBankAccount(accountNumber, bankCode)

@@ -31,14 +31,19 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
     private lateinit var exit: ImageView
     private lateinit var next: Button
 
+    private lateinit var mBalanceTextView: TextView
+
     private lateinit var mCardNumberEditCredit: EditCredit
     private lateinit var mCardExpiryTextView: EditText
     private lateinit var mCardNameEditText: EditText
+
     private lateinit var mCardCvvTextView: EditText
 
     private lateinit var mSaveCardTextView: TextView
-    private lateinit var mBalanceTextView: TextView
     private lateinit var mSaveCardSwitch: Switch
+
+    private lateinit var mSaveBankTextView: TextView
+    private lateinit var mSaveBankSwitch: Switch
 
     private lateinit var mCardTextView: TextView
     private lateinit var mBankTextView: TextView
@@ -135,6 +140,10 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
             mSaveCardSwitch.toggle()
         }
 
+        mSaveBankTextView.setOnClickListener {
+            mSaveBankSwitch.toggle()
+        }
+
         mAccountNumberTextView.addTextChangedListener(AccountNumberTextWatcher())
     }
 
@@ -162,6 +171,9 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
 
         mSaveCardTextView = view.findViewById(R.id.save_card)
         mSaveCardSwitch = view.findViewById(R.id.save_card_switch)
+
+        mSaveBankTextView = view.findViewById(R.id.save_bank)
+        mSaveBankSwitch = view.findViewById(R.id.save_bank_switch)
 
         mFundBankNestedScrollView = view.findViewById(R.id.fund_bank)
         mFundCardNestedScrollView = view.findViewById(R.id.fund_card)
@@ -223,8 +235,10 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
 
     override fun onPinCorrect() {
         if (isCard) {
+            mPresenter.saveCard()
             mPresenter.resolveCardNumber(mCardNumberEditCredit.textWithoutSeparator.substring(0, 6))
         } else {
+            mPresenter.saveBank()
             val data = HashMap<String, Any>()
             data["amt"] = mFundAmountBankEditText.text.toString()
             data["frmacct"] = mAccountNumberTextView.text.toString()
