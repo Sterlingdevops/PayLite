@@ -21,7 +21,7 @@ fun String.toSentenceCase(): String {
     return stringBuilder.toString()
 }
 
-fun String.initails(): String {
+fun String.initials(): String {
     val parts = this.split(" ")
     return if (parts.size > 1) "${parts[0][0]}${parts[1][0]}".toUpperCase() else "${parts[0][0]}".toUpperCase()
 }
@@ -52,7 +52,6 @@ fun String.encryptAES(initVector: String): String {
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv)
 
         val encrypted = cipher.doFinal(this.toByteArray())
-//        Log.d("encrypted string: " + Base64.encodeToString(encrypted, Base64.NO_WRAP))
 
         cipherText = Base64.encodeToString(encrypted, Base64.NO_WRAP)
     } catch (ex: Exception) {

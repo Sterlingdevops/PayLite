@@ -21,7 +21,7 @@ import com.sterlingng.paylite.data.model.ChosenContact
 import com.sterlingng.paylite.data.model.ContactItem
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.contacts.ContactsFragment
+import com.sterlingng.paylite.ui.contacts.SelectContactsFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -114,7 +114,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
                         builder.allowStateLoss = false
                         (baseActivity as DashboardActivity).mNavController
                                 .pushFragment(
-                                        ContactsFragment.newInstance("Contacts",
+                                        SelectContactsFragment.newInstance("Contacts",
                                                 position,
                                                 mSplitContactsAdapter.contacts),
                                         builder.build()

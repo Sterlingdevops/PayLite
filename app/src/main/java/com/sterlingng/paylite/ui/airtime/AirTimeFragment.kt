@@ -66,7 +66,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
         }
 
         next.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(ConfirmFragment.newInstance())
+            (baseActivity as DashboardActivity).mNavController.showDialogFragment(ConfirmFragment.newInstance())
         }
 
         bundle.isClickable = true

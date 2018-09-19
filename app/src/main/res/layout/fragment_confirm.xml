@@ -7,25 +7,31 @@
     android:layout_height="match_parent"
     android:background="@color/lighter_gray">
 
-    <TextView
+    <ImageView
         android:id="@+id/exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
         android:contentDescription="@string/exit"
-        android:text="@string/cancel"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:tint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/close"/>
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="@string/yemi_odubiyi"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/exit"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
@@ -74,14 +80,14 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="84dp"
         android:text="@string/confirm_payment"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/repeat"/>
+        app:layout_constraintTop_toTopOf="@+id/repeat"/>
 
     <com.goodiebag.pinview.PinView
         android:id="@+id/pin_view"
@@ -89,7 +95,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:cursorVisible="true"
-        app:forceKeyboard="true"
         app:hint="0"
         app:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -106,6 +111,7 @@
         android:id="@+id/next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
         android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"
@@ -116,8 +122,9 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/pin_view"
         tools:targetApi="lollipop"/>
 
     <android.support.constraint.Guideline
@@ -146,6 +153,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="16dp"/>
+        app:layout_constraintGuide_end="56dp"/>
 
 </android.support.constraint.ConstraintLayout>

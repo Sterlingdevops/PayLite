@@ -39,7 +39,9 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
                                 if (AppUtils.isJSONValid(raw!!)) {
-                                    return@onErrorReturn AppUtils.gson.fromJson(raw, Response::class.java)
+                                    val response = AppUtils.gson.fromJson(raw, Response::class.java)
+                                    response.code = it.code()
+                                    return@onErrorReturn response
                                 }
                                 val response = Response()
                                 response.data = HttpException(retrofit2.Response.error<String>(500,
@@ -53,7 +55,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             if (it.response != null && it.response == "00") {
                                 mvpView.onRequestPaymentLinkSent(it)
                             } else {
-                                if (it.message == "Authorization has been denied for this request") {
+                                if (it.code == 401) {
                                     mvpView.logout()
                                 } else {
                                     mvpView.onSendRequestPaymentLinkFailed(it)

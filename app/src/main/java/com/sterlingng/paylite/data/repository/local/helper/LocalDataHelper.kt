@@ -22,7 +22,8 @@ import javax.inject.Inject
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
 
-    private val config: RealmConfiguration = RealmConfiguration.Builder().schemaVersion(8).migration(Migrations()).build()
+    private val config: RealmConfiguration = RealmConfiguration.Builder()
+            .schemaVersion(8).migration(Migrations()).build()
     private val realm: Realm
 
     init {
@@ -110,12 +111,12 @@ constructor() : LocalDataInterface {
         return getRealm().where(WalletRealm::class.java).findFirst()
     }
 
-    override fun getPinRealm(): PinRealm? {
-        return realm.where(PinRealm::class.java).findFirst()
+    override fun getPinRealm(phone: String): PinRealm? {
+        return realm.where(PinRealm::class.java).equalTo("phone", phone) .findFirst()
     }
 
-    override fun getPin(): Pin? {
-        return getPinRealm()?.asPin()
+    override fun getPin(phone: String): Pin? {
+        return getPinRealm(phone)?.asPin()
     }
 
     override fun savePin(pin: Pin) {
@@ -130,8 +131,8 @@ constructor() : LocalDataInterface {
     }
 
     override fun getTransactions(): ArrayList<Transaction> {
-        val transactions = getRealm().where(TransactionRealm::class.java).findAll()
-        Log.d(transactions.size.toString())
+        val transactions =
+                getRealm().where(TransactionRealm::class.java).findAll()
         return if (transactions.size > 0)
             transactions.map {
                 it.asTransaction()

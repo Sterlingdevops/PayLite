@@ -23,7 +23,7 @@ import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import javax.inject.Inject
 
-class ContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListener,
+class SelectContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListener,
         ContactsAdapter.OnRetryClicked, SelectContactAdapter.OnRetryClicked {
 
     @Inject
@@ -46,7 +46,7 @@ class ContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListe
     lateinit var mContactsClone: List<Contact>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_select_contact_bottom_sheet, container, false)
+        val view = inflater.inflate(R.layout.fragment_select_contact, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)
@@ -173,12 +173,12 @@ class ContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListe
 
     companion object {
 
-        private const val DATA = "ContactsFragment.DATA"
-        private const val TITLE = "ContactsFragment.TITLE"
-        private const val POSITION = "ContactsFragment.POSITION"
+        private const val DATA = "SelectContactsFragment.DATA"
+        private const val TITLE = "SelectContactsFragment.TITLE"
+        private const val POSITION = "SelectContactsFragment.POSITION"
 
-        fun newInstance(title: String, position: Int, data: ArrayList<ContactItem>): ContactsFragment {
-            val dialog = ContactsFragment()
+        fun newInstance(title: String, position: Int, data: ArrayList<ContactItem>): SelectContactsFragment {
+            val dialog = SelectContactsFragment()
             val args = Bundle()
             args.putString(TITLE, title)
             args.putInt(POSITION, position)

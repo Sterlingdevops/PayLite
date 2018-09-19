@@ -36,8 +36,8 @@ interface LocalDataInterface {
 
     // pin
 
-    fun getPinRealm(): PinRealm?
-    fun getPin(): Pin?
+    fun getPinRealm(phone: String): PinRealm?
+    fun getPin(phone: String): Pin?
     fun savePin(pin: Pin)
 
     // wallet

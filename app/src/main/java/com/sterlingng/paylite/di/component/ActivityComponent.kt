@@ -7,7 +7,7 @@ import com.sterlingng.paylite.ui.authpin.AuthPinFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
-import com.sterlingng.paylite.ui.contacts.ContactsFragment
+import com.sterlingng.paylite.ui.contacts.SelectContactsFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
@@ -144,7 +144,7 @@ interface ActivityComponent {
 
     fun inject(filterBottomSheetFragment: FilterBottomSheetFragment)
 
-    fun inject(contactsFragment: ContactsFragment)
+    fun inject(selectContactsFragment: SelectContactsFragment)
 
     fun inject(authPinFragment: AuthPinFragment)
 

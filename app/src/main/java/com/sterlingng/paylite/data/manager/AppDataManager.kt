@@ -41,9 +41,9 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun getTransactions(): ArrayList<Transaction> = mLocalDataHelper.getTransactions()
 
-    override fun getPinRealm(): PinRealm? = mLocalDataHelper.getPinRealm()
+    override fun getPinRealm(phone: String): PinRealm? = mLocalDataHelper.getPinRealm(phone)
 
-    override fun getPin(): Pin? = mLocalDataHelper.getPin()
+    override fun getPin(phone: String): Pin? = mLocalDataHelper.getPin(phone)
 
     override fun savePin(pin: Pin) = mLocalDataHelper.savePin(pin)
 

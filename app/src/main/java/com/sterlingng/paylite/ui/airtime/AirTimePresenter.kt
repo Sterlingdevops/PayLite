@@ -13,5 +13,4 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
     override fun loadCachedWallet() {
         mvpView.initView(dataManager.getWallet())
     }
-
 }

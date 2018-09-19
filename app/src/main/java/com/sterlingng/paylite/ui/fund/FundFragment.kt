@@ -12,6 +12,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.utils.AppUtils.gson
@@ -19,7 +20,7 @@ import com.sterlingng.paylite.utils.CardExpiryTextWatcher
 import mostafa.ma.saleh.gmail.com.editcredit.EditCredit
 import javax.inject.Inject
 
-class FundFragment : BaseFragment(), FundMvpView {
+class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated {
 
     @Inject
     lateinit var mPresenter: FundMvpContract<FundMvpView>
@@ -82,7 +83,9 @@ class FundFragment : BaseFragment(), FundMvpView {
             }
 
             if (isCard) {
-                mPresenter.resolveCardNumber(mCardNumberEditCredit.textWithoutSeparator.substring(0, 6))
+                val confirmFragment = ConfirmFragment.newInstance()
+                confirmFragment.onPinValidatedListener = this
+                (baseActivity as DashboardActivity).mNavController.showDialogFragment(confirmFragment)
                 return@setOnClickListener
             }
 
@@ -97,12 +100,9 @@ class FundFragment : BaseFragment(), FundMvpView {
             }
 
             if (!isCard) {
-                val data = HashMap<String, Any>()
-                data["amt"] = mFundAmountBankEditText.text.toString()
-                data["frmacct"] = mAccountNumberTextView.text.toString()
-                data["remarks"] = "Fund Wallet (Via Bank Account: ${mAccountNumberTextView.text})"
-                data["paymentRef"] = System.currentTimeMillis().toString()
-                mPresenter.fundWalletWithBankAccount(data)
+                val confirmFragment = ConfirmFragment.newInstance()
+                confirmFragment.onPinValidatedListener = this
+                (baseActivity as DashboardActivity).mNavController.showDialogFragment(confirmFragment)
                 return@setOnClickListener
             }
         }
@@ -219,6 +219,23 @@ class FundFragment : BaseFragment(), FundMvpView {
 
     override fun recyclerViewListClicked(v: View, position: Int) {
 
+    }
+
+    override fun onPinCorrect() {
+        if (isCard) {
+            mPresenter.resolveCardNumber(mCardNumberEditCredit.textWithoutSeparator.substring(0, 6))
+        } else {
+            val data = HashMap<String, Any>()
+            data["amt"] = mFundAmountBankEditText.text.toString()
+            data["frmacct"] = mAccountNumberTextView.text.toString()
+            data["remarks"] = "Fund Wallet (Via Bank Account: ${mAccountNumberTextView.text})"
+            data["paymentRef"] = System.currentTimeMillis().toString()
+            mPresenter.fundWalletWithBankAccount(data)
+        }
+    }
+
+    override fun onPinIncorrect() {
+        show("The PIN entered is incorrect", true)
     }
 
     override fun onFundWalletFailed(it: Response) {

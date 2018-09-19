@@ -38,33 +38,24 @@ class PinFragment : BaseFragment(), PinMvpView {
         }
 
         pinView.setPinViewEventListener { _, _ ->
-            if (arguments?.getInt(MODE, 1) == 2) {
-                val password = pinView.value
-                if (password != (baseActivity as SignUpActivity).signUpRequest.password) {
-                    show("Passwords do no match", true)
-                    return@setPinViewEventListener
-
-                }
+            val password = pinView.value
+            if (password != (baseActivity as SignUpActivity).signUpRequest.password) {
+                show("Passwords do no match", true)
+                return@setPinViewEventListener
             }
 
-            if (arguments?.getInt(MODE, 1) == 2)
-                mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
-            else mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
+            mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
             hideKeyboard()
         }
 
         next.setOnClickListener {
-            if (arguments?.getInt(MODE, 1) == 2) {
-                val password = pinView.value
-                if (password != (baseActivity as SignUpActivity).signUpRequest.password) {
-                    show("Passwords do no match", true)
-                    return@setOnClickListener
-                }
+            val password = pinView.value
+            if (password != (baseActivity as SignUpActivity).signUpRequest.password) {
+                show("Passwords do no match", true)
+                return@setOnClickListener
             }
 
-            if (arguments?.getInt(MODE, 1) == 2)
-                mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
-            else mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
+            mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
             hideKeyboard()
         }
     }
@@ -90,13 +81,11 @@ class PinFragment : BaseFragment(), PinMvpView {
     companion object {
 
         private const val INDEX = "PinFragment.INDEX"
-        private const val MODE = "PinFragment.MODE"
 
-        fun newInstance(index: Int, mode: Int): PinFragment {
+        fun newInstance(index: Int): PinFragment {
             val fragment = PinFragment()
             val args = Bundle()
             args.putInt(INDEX, index)
-            args.putInt(MODE, mode)
             fragment.arguments = args
             return fragment
         }

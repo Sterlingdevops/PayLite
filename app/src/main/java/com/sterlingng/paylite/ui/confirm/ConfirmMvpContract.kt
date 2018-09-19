@@ -8,4 +8,6 @@ import com.sterlingng.paylite.ui.base.MvpPresenter
  */
 
 @PerActivity
-interface ConfirmMvpContract<V : ConfirmMvpView> : MvpPresenter<V>
+interface ConfirmMvpContract<V : ConfirmMvpView> : MvpPresenter<V> {
+    fun validatePin(value: String)
+}

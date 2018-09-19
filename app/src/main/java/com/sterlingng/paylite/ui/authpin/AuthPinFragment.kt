@@ -60,16 +60,10 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
         val mode = OpenPinMode.valueOf(arguments?.getString(OPEN_PIN_MODE)!!)
         val extra = arguments?.getString(PIN_EXTRA)!!
         when (mode) {
-            OpenPinMode.VALIDATE_FOR_USE -> {
-                if (mPresenter.validate(mPinView.value)) {
-                    (baseActivity as DashboardActivity)
-                            .mNavController.clearStack()
-                }
-            }
             OpenPinMode.ENTER_NEW -> {
                 (baseActivity as DashboardActivity)
                         .mNavController
-                        .pushFragment(AuthPinFragment.newInstance(OpenPinMode.CONFIRM_NEW.name, extra))
+                        .pushFragment(AuthPinFragment.newInstance(OpenPinMode.CONFIRM_NEW.name, mPinView.value))
             }
             OpenPinMode.CONFIRM_NEW -> {
                 if (mPinView.value == extra) {

@@ -54,10 +54,10 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
         val nameFragment = NameFragment.newInstance(4)
         nameFragment.mDidClickNext = this
 
-        val pinFragment = PinFragment.newInstance(5, 1)
+        val pinFragment = PinFragment.newInstance(5)
         pinFragment.mDidClickNext = this
 
-        val confirmPinFragment = PinFragment.newInstance(6, 2)
+        val confirmPinFragment = PinFragment.newInstance(6)
         confirmPinFragment.mDidClickNext = this
 
         val bvnFragment = BvnFragment.newInstance(7)

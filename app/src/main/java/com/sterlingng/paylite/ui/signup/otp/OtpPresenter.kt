@@ -34,7 +34,9 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
                                 if (AppUtils.isJSONValid(raw!!)) {
-                                    return@onErrorReturn AppUtils.gson.fromJson(raw, Response::class.java)
+                                    val response = gson.fromJson(raw, Response::class.java)
+                                    response.code = it.code()
+                                    return@onErrorReturn response
                                 }
                                 val response = Response()
                                 response.data = HttpException(retrofit2.Response.error<String>(500,

@@ -46,7 +46,7 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
 
     fun add(transaction: Transaction) {
         transactions += transaction
-        val transactionsSet = transactions.sortedByDescending { it.id }.distinctBy { it.id }
+        val transactionsSet = transactions.asSequence().sortedByDescending { it.id }.distinctBy { it.id }.toList()
 
         clear()
 

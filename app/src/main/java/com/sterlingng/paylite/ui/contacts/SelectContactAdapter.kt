@@ -11,7 +11,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Contact
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
-import com.sterlingng.paylite.utils.initails
+import com.sterlingng.paylite.utils.initials
 import java.util.*
 
 class SelectContactAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
@@ -104,7 +104,7 @@ class SelectContactAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
                 else
                     contactPhoneTextView.visibility = View.VISIBLE
 
-                contactInitialsTextView.text = name.initails()
+                contactInitialsTextView.text = name.initials()
                 contactEmailTextView.text = if (emails.size <= 0) "" else "${emails[0].address} - ${emails[0].type}"
                 contactPhoneTextView.text = if (numbers.size <= 0) "" else "${numbers[0].number} - ${numbers[0].type}"
             }

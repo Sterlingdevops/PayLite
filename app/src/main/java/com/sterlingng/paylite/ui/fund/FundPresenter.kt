@@ -7,6 +7,7 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.AppUtils.gson
+import com.sterlingng.paylite.utils.AppUtils.isJSONValid
 import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
@@ -43,7 +44,9 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
                                 if (AppUtils.isJSONValid(raw!!)) {
-                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                                    val response = gson.fromJson(raw, Response::class.java)
+                                    response.code = it.code()
+                                    return@onErrorReturn response
                                 }
                                 val response = Response()
                                 response.data = HttpException(retrofit2.Response.error<String>(500,
@@ -86,7 +89,9 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
                                 if (AppUtils.isJSONValid(raw!!)) {
-                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                                    val response = gson.fromJson(raw, Response::class.java)
+                                    response.code = it.code()
+                                    return@onErrorReturn response
                                 }
                                 val response = Response()
                                 response.data = HttpException(retrofit2.Response.error<String>(500,
@@ -100,7 +105,7 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                             if (it.response != null && it.response == "00") {
                                 mvpView.onFundWalletSuccessful()
                             } else {
-                                if (it.message == "Authorization has been denied for this request") {
+                                if (it.code == 401) {
                                     mvpView.logout()
                                 } else {
                                     mvpView.onFundWalletFailed(it)
@@ -130,8 +135,10 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                                 return@onErrorReturn response
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
-                                if (AppUtils.isJSONValid(raw!!)) {
-                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                                if (isJSONValid(raw!!)) {
+                                    val response = gson.fromJson(raw, Response::class.java)
+                                    response.code = it.code()
+                                    return@onErrorReturn response
                                 }
                                 val response = Response()
                                 response.data = HttpException(retrofit2.Response.error<String>(500,
@@ -147,7 +154,7 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                                 dataManager.saveWallet(wallet)
                                 mvpView.onFundWalletSuccessful()
                             } else {
-                                if (it.message == "Authorization has been denied for this request") {
+                                if (it.code == 401) {
                                     mvpView.logout()
                                 } else {
                                     mvpView.onFundWalletFailed(it)
@@ -174,10 +181,13 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                                 return@onErrorReturn response
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
-                                if (AppUtils.isJSONValid(raw!!)) {
-                                    return@onErrorReturn gson.fromJson(raw, Response::class.java)
+                                if (isJSONValid(raw!!)) {
+                                    val response = gson.fromJson(raw, Response::class.java)
+                                    response.code = it.code()
+                                    return@onErrorReturn response
                                 }
                                 val response = Response()
+                                response.code = it.code()
                                 response.data = HttpException(retrofit2.Response.error<String>(500,
                                         ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
                                 response.message = "Error!!! The server didn't respond fast enough and the request timed out"
@@ -187,12 +197,11 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                         }
                         .subscribe {
                             if (it.status) {
-                                mvpView.hideLoading()
                                 mvpView.onResolveCardNumberSuccessful(it)
                             } else {
-                                mvpView.hideLoading()
                                 mvpView.onResolveCardNumberFailed(it)
                             }
+                            mvpView.hideLoading()
                         }
         )
     }
