@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.ui.payment
 
 import com.sterlingng.paylite.data.manager.DataManager
+import com.sterlingng.paylite.data.model.PaymentMethod
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import io.reactivex.disposables.CompositeDisposable
@@ -12,8 +13,12 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), PaymentMvpContract<V> {
 
     override fun loadPaymentMethods() {
+        val banks = dataManager.getBanks()
+        val cards = dataManager.getCards()
+        val paymentMethods = cards.map { it.asPaymentMethod() } as ArrayList<PaymentMethod>
+        paymentMethods.addAll(banks.map { it.asPaymentMethod() })
         mvpView.showLoading()
-        mvpView.updatePaymentMethods(ArrayList())
+        mvpView.updatePaymentMethods(paymentMethods)
         mvpView.hideLoading()
     }
 }

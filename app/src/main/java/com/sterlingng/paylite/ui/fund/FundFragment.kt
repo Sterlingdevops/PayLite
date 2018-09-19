@@ -34,10 +34,10 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
     private lateinit var mBalanceTextView: TextView
 
     private lateinit var mCardNumberEditCredit: EditCredit
-    private lateinit var mCardExpiryTextView: EditText
+    private lateinit var mCardExpiryEditText: EditText
     private lateinit var mCardNameEditText: EditText
 
-    private lateinit var mCardCvvTextView: EditText
+    private lateinit var mCardCvvEditText: EditText
 
     private lateinit var mSaveCardTextView: TextView
     private lateinit var mSaveCardSwitch: Switch
@@ -77,7 +77,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         }
 
         next.setOnClickListener {
-            if (isCard && (mCardNameEditText.text.isEmpty() || mCardExpiryTextView.text.isEmpty() || mCardCvvTextView.text.isEmpty() || mCardNumberEditCredit.text.isEmpty())) {
+            if (isCard && (mCardNameEditText.text.isEmpty() || mCardExpiryEditText.text.isEmpty() || mCardCvvEditText.text.isEmpty() || mCardNumberEditCredit.text.isEmpty())) {
                 show("Please fill in the required fields", true)
                 return@setOnClickListener
             }
@@ -134,7 +134,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
             mFundCardNestedScrollView.visibility = View.GONE
         }
 
-        mCardExpiryTextView.addTextChangedListener(CardExpiryTextWatcher(mCardExpiryTextView))
+        mCardExpiryEditText.addTextChangedListener(CardExpiryTextWatcher(mCardExpiryEditText))
 
         mSaveCardTextView.setOnClickListener {
             mSaveCardSwitch.toggle()
@@ -166,8 +166,8 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         mFundAmountBankEditText = view.findViewById(R.id.fund_amount_bank)
         mFundAmountCardEditText = view.findViewById(R.id.fund_amount_card)
 
-        mCardCvvTextView = view.findViewById(R.id.card_cvv)
-        mCardExpiryTextView = view.findViewById(R.id.card_expiry)
+        mCardCvvEditText = view.findViewById(R.id.card_cvv)
+        mCardExpiryEditText = view.findViewById(R.id.card_expiry)
 
         mSaveCardTextView = view.findViewById(R.id.save_card)
         mSaveCardSwitch = view.findViewById(R.id.save_card_switch)
@@ -212,10 +212,10 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         val data = HashMap<String, Any>()
         data["pin"] = "1234"
         data["currency"] = "NGN"
-        data["cvv"] = mCardCvvTextView.text.toString()
+        data["cvv"] = mCardCvvEditText.text.toString()
         data["pan"] = mCardNumberEditCredit.textWithoutSeparator
         data["amount"] = mFundAmountCardEditText.text.toString()
-        data["expiry_date"] = with(mCardExpiryTextView.text.toString().split("/")) {
+        data["expiry_date"] = with(mCardExpiryEditText.text.toString().split("/")) {
             "${get(1)}${get(0)}"
         }
         mPresenter.fundWalletWithCard(data)
@@ -235,10 +235,25 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
 
     override fun onPinCorrect() {
         if (isCard) {
-            mPresenter.saveCard()
+            if (mSaveCardSwitch.isChecked) {
+                val card = Card()
+                card.default = false
+                card.name = mCardNameEditText.text.toString()
+                card.expiry = mCardExpiryEditText.text.toString()
+                card.number = mCardNumberEditCredit.textWithoutSeparator
+                mPresenter.saveCard(card)
+            }
             mPresenter.resolveCardNumber(mCardNumberEditCredit.textWithoutSeparator.substring(0, 6))
         } else {
-            mPresenter.saveBank()
+            if (mSaveBankSwitch.isChecked) {
+                val bank = Bank()
+                bank.default = false
+                bank.bankcode = "232" // TODO: Update this when we add other banks
+                bank.bankname = "Sterling Bank" // TODO: Update this when we add other banks
+                bank.accountname = mAccountNameTextView.text.toString()
+                bank.accountnumber = mAccountNumberTextView.text.toString()
+                mPresenter.saveBank(bank)
+            }
             val data = HashMap<String, Any>()
             data["amt"] = mFundAmountBankEditText.text.toString()
             data["frmacct"] = mAccountNumberTextView.text.toString()

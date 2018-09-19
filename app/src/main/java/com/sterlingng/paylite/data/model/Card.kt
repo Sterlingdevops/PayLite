@@ -9,6 +9,15 @@ class Card {
     var expiry: String = ""
     var default = false
 
+    fun asPaymentMethod(): PaymentMethod {
+        val paymentMethod = PaymentMethod()
+        paymentMethod.expiry = expiry
+        paymentMethod.number = number
+        paymentMethod.name = name
+        paymentMethod.image = 0
+        return paymentMethod
+    }
+
     fun asCardRealm(): CardRealm {
         val cardRealm = CardRealm()
         cardRealm.name = name

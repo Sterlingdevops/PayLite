@@ -1,6 +1,8 @@
 package com.sterlingng.paylite.ui.fund
 
 import com.sterlingng.paylite.data.manager.DataManager
+import com.sterlingng.paylite.data.model.Bank
+import com.sterlingng.paylite.data.model.Card
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
@@ -22,12 +24,12 @@ class FundPresenter<V : FundMvpView> @Inject
 internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), FundMvpContract<V> {
 
-    override fun saveBank() {
-
+    override fun saveBank(bank: Bank) {
+        dataManager.saveBank(bank)
     }
 
-    override fun saveCard() {
-
+    override fun saveCard(card: Card) {
+        dataManager.saveCard(card)
     }
 
     override fun loadCachedWallet() {

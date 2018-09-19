@@ -38,7 +38,22 @@ constructor() : LocalDataInterface {
     }
 
     override fun setCardDefault(card: Card) {
-
+        getRealm().beginTransaction()
+        try {
+            val cards = getRealm()
+                    .where(CardRealm::class.java)
+                    .findAll().map { it.asCard() }
+            val banks = getRealm()
+                    .where(BankRealm::class.java)
+                    .findAll().map { it.asBank() }
+            banks.forEach { it.default = false }
+            cards.forEach { it.default = it.number == card.number }
+            getRealm().copyToRealmOrUpdate(cards.map { it.asCardRealm() })
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->setCardDefault")
+        } finally {
+            getRealm().commitTransaction()
+        }
     }
 
     override fun deleteCard(cardNumber: String) {
@@ -77,7 +92,22 @@ constructor() : LocalDataInterface {
     }
 
     override fun setBankDefault(bank: Bank) {
-
+        getRealm().beginTransaction()
+        try {
+            val cards = getRealm()
+                    .where(CardRealm::class.java)
+                    .findAll().map { it.asCard() }
+            val banks = getRealm()
+                    .where(BankRealm::class.java)
+                    .findAll().map { it.asBank() }
+            cards.forEach { it.default = false }
+            banks.forEach { it.default = it.accountnumber == bank.accountnumber }
+            getRealm().copyToRealmOrUpdate(banks.map { it.asBankRealm() })
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->setBankDefault")
+        } finally {
+            getRealm().commitTransaction()
+        }
     }
 
     override fun deleteBank(accountNumber: String) {
@@ -92,14 +122,6 @@ constructor() : LocalDataInterface {
         } finally {
             getRealm().commitTransaction()
         }
-    }
-
-    private val config: RealmConfiguration = RealmConfiguration.Builder()
-            .schemaVersion(8).migration(Migrations()).build()
-    private val realm: Realm
-
-    init {
-        realm = Realm.getInstance(config)
     }
 
     private fun getRealm(): Realm {
@@ -139,7 +161,9 @@ constructor() : LocalDataInterface {
     }
 
     override fun getUserRealm(): UserRealm? {
-        return getRealm().where(UserRealm::class.java).findFirst()
+        return getRealm()
+                .where(UserRealm::class.java)
+                .findFirst()
     }
 
     override fun saveUser(user: User) {
@@ -184,7 +208,10 @@ constructor() : LocalDataInterface {
     }
 
     override fun getPinRealm(phone: String): PinRealm? {
-        return realm.where(PinRealm::class.java).equalTo("phone", phone).findFirst()
+        return getRealm()
+                .where(PinRealm::class.java)
+                .equalTo("phone", phone)
+                .findFirst()
     }
 
     override fun getPin(phone: String): Pin? {
@@ -249,5 +276,13 @@ constructor() : LocalDataInterface {
         } finally {
             getRealm().commitTransaction()
         }
+    }
+
+    private val config: RealmConfiguration = RealmConfiguration.Builder()
+            .schemaVersion(8).migration(Migrations()).build()
+    private val realm: Realm
+
+    init {
+        realm = Realm.getInstance(config)
     }
 }

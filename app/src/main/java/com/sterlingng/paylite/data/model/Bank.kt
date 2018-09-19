@@ -10,6 +10,15 @@ class Bank {
     var accountnumber: String = ""
     var accountname: String = ""
 
+    fun asPaymentMethod(): PaymentMethod {
+        val paymentMethod = PaymentMethod()
+        paymentMethod.expiry = ""
+        paymentMethod.number = accountnumber
+        paymentMethod.name = accountname
+        paymentMethod.image = 0
+        return paymentMethod
+    }
+
     fun asBankRealm(): BankRealm {
         val bankRealm = BankRealm()
         bankRealm.default = default
