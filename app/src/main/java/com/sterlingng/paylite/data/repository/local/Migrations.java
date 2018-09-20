@@ -101,7 +101,6 @@ public class Migrations implements RealmMigration {
                     .addField("accountname", String.class)
                     .addField("accountnumber", String.class)
                     .addField("default", boolean.class)
-                    .setRequired("default", true)
                     .setRequired("bankcode", true)
                     .setRequired("bankname", true)
                     .setRequired("accountname", true)
@@ -114,7 +113,6 @@ public class Migrations implements RealmMigration {
                     .addField("number", String.class)
                     .addField("expiry", String.class)
                     .addField("default", boolean.class)
-                    .setRequired("default", true)
                     .setRequired("name", true)
                     .setRequired("number", true)
                     .setRequired("expiry", true)
@@ -123,16 +121,16 @@ public class Migrations implements RealmMigration {
             ++oldVersion;
         }
 
-//        //version 9
-//        if (oldVersion == 8) {
-//            schema.get("BankRealm")
-//
-//            ;
-//
-//            schema.get("CardRealm")
-//
-//            ;
-//            ++oldVersion;
-//        }
+        //version 9
+        if (oldVersion == 8) {
+            schema.get("BankRealm")
+                    .removeField("default")
+            ;
+
+            schema.get("CardRealm")
+                    .removeField("default")
+            ;
+            ++oldVersion;
+        }
     }
 }

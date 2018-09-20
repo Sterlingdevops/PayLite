@@ -12,25 +12,27 @@
         android:layout_height="0dp"
         android:contentDescription="@string/account_setup_completed"
         android:scaleType="centerInside"
-        app:layout_constraintDimensionRatio="w,4:5"
+        app:layout_constraintDimensionRatio="w,3:4"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"
-        app:srcCompat="@drawable/welcome"/>
+        app:srcCompat="@drawable/fund_wallet"/>
 
     <Button
-        android:id="@+id/next_complete"
+        android:id="@+id/add_payment_method"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:stateListAnimator="@null"
-        android:text="@string/finish"
+        android:text="@string/add_a_payment_method"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,19 +44,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/welcome_to_paylite"
+        android:text="@string/fund_your_wallet"
         android:textColor="@color/black"
         android:textSize="28sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"/>
 
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/get_started_by_funding_your_account_you_can_manage_your_payment_methods_in_settings"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_text"/>
+
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="64dp"/>
+        app:layout_constraintGuide_begin="16dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineLeft"
@@ -75,6 +94,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="32dp"/>
+        app:layout_constraintGuide_end="16dp"/>
 
 </android.support.constraint.ConstraintLayout>

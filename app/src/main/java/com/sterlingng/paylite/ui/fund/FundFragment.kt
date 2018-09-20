@@ -58,7 +58,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
     private var isCard = true
 
     private lateinit var mAccountNameTextView: TextView
-    private lateinit var mAccountNumberTextView: TextView
+    private lateinit var mAccountNumberEditText: EditText
     private lateinit var mFundAmountCardEditText: EditText
     private lateinit var mFundAmountBankEditText: EditText
 
@@ -86,6 +86,15 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
                     mCardCheckBox.isChecked = it
                     mFundBankNestedScrollView.visibility = it then View.GONE ?: View.VISIBLE
                     mFundCardNestedScrollView.visibility = it then View.VISIBLE ?: View.GONE
+
+                    if (it) {
+                        mCardNumberEditCredit.setText(paymentMethod?.number)
+                        mCardExpiryEditText.setText(paymentMethod?.expiry)
+                        mCardNameEditText.setText(paymentMethod?.name)
+                    } else {
+                        mAccountNumberEditText.setText(paymentMethod?.number)
+                        mAccountNameTextView.text = paymentMethod?.name
+                    }
                 }
             }
         } else {
@@ -114,7 +123,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
                 return@setOnClickListener
             }
 
-            if (!isCard && (mAccountNumberTextView.length() == 0 || mAccountNameTextView.length() == 0 || mFundAmountBankEditText.text.isEmpty())) {
+            if (!isCard && (mAccountNumberEditText.length() == 0 || mAccountNameTextView.length() == 0 || mFundAmountBankEditText.text.isEmpty())) {
                 show("Please fill in the required fields", true)
                 return@setOnClickListener
             }
@@ -158,7 +167,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
             mSaveBankSwitch.toggle()
         }
 
-        mAccountNumberTextView.addTextChangedListener(AccountNumberTextWatcher())
+        mAccountNumberEditText.addTextChangedListener(AccountNumberTextWatcher())
     }
 
     override fun bindViews(view: View) {
@@ -176,7 +185,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         mBankCheckBox = view.findViewById(R.id.bank_checkBox)
 
         mAccountNameTextView = view.findViewById(R.id.name)
-        mAccountNumberTextView = view.findViewById(R.id.account_number)
+        mAccountNumberEditText = view.findViewById(R.id.account_number)
         mFundAmountBankEditText = view.findViewById(R.id.fund_amount_bank)
         mFundAmountCardEditText = view.findViewById(R.id.fund_amount_card)
 
@@ -265,13 +274,13 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
                 bank.bankcode = "232" // TODO: Update this when we add other banks
                 bank.bankname = "Sterling Bank" // TODO: Update this when we add other banks
                 bank.accountname = mAccountNameTextView.text.toString()
-                bank.accountnumber = mAccountNumberTextView.text.toString()
+                bank.accountnumber = mAccountNumberEditText.text.toString()
                 mPresenter.saveBank(bank)
             }
             val data = HashMap<String, Any>()
             data["amt"] = mFundAmountBankEditText.text.toString()
-            data["frmacct"] = mAccountNumberTextView.text.toString()
-            data["remarks"] = "Fund Wallet (Via Bank Account: ${mAccountNumberTextView.text})"
+            data["frmacct"] = mAccountNumberEditText.text.toString()
+            data["remarks"] = "Fund Wallet (Via Bank Account: ${mAccountNumberEditText.text})"
             data["paymentRef"] = System.currentTimeMillis().toString()
             mPresenter.fundWalletWithBankAccount(data)
         }
@@ -300,7 +309,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
     private inner class AccountNumberTextWatcher : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             if (s?.length == 10) {
-                mPresenter.resolveAccountNumber(mAccountNumberTextView.text.toString(), "232")
+                mPresenter.resolveAccountNumber(mAccountNumberEditText.text.toString(), "232")
             }
         }
 

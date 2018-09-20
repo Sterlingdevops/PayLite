@@ -12,6 +12,12 @@ import android.support.v4.content.CursorLoader
 import android.view.MenuItem
 import android.view.View
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import com.ncapdevi.fragnav.FragNavController
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Contact
@@ -46,7 +52,21 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         activityComponent.inject(this)
         mPresenter.onAttach(this)
 
-        contacts = setUpLoader()
+        Dexter.withActivity(this)
+                .withPermission(android.Manifest.permission.READ_CONTACTS)
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                        contacts = setUpLoader()
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+                        token?.continuePermissionRequest()
+                    }
+
+                    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                        show("Permission: ${response?.permissionName!!} denied", true)
+                    }
+                })
 
         mNavController = FragNavController(supportFragmentManager, R.id.container)
         mNavController.apply {

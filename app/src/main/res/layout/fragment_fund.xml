@@ -60,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -145,7 +145,7 @@
                 android:id="@+id/fund_amount_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/background_light_blue_outline"
                 android:hint="@string/amount_minimum_amount_of_n100"
                 android:imeOptions="actionDone"
@@ -155,13 +155,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_expiry"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView22"/>
 
             <EditText
                 android:id="@+id/card_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/background_light_blue_outline"
                 android:hint="@string/name_on_card"
                 android:imeOptions="actionNext"
@@ -169,8 +169,9 @@
                 android:padding="16dp"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView22"/>
+                app:layout_constraintTop_toBottomOf="@+id/fund_amount_card"/>
 
             <TextView
                 android:id="@+id/save_card"
@@ -184,7 +185,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fund_amount_card"/>
+                app:layout_constraintTop_toBottomOf="@+id/card_expiry"/>
 
             <Switch
                 android:id="@+id/save_card_switch"
@@ -202,7 +203,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"

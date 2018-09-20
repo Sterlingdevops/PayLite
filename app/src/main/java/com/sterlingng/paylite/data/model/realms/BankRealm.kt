@@ -2,6 +2,7 @@ package com.sterlingng.paylite.data.model.realms
 
 import com.sterlingng.paylite.data.model.Bank
 import io.realm.RealmObject
+import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
 open class BankRealm : RealmObject() {
@@ -10,6 +11,7 @@ open class BankRealm : RealmObject() {
     lateinit var bankcode: String
     lateinit var bankname: String
     lateinit var accountname: String
+    @Ignore
     var default: Boolean = false
 
     fun asBank(): Bank {

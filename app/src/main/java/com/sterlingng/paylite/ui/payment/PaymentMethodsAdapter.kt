@@ -22,7 +22,7 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
 
     val paymentMethods: ArrayList<PaymentMethod> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
-    lateinit var onRetryClickedListener: OnRetryClicked
+    lateinit var onAddPaymentMethodListener: OnAddPaymentMethod
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View?
@@ -32,11 +32,11 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
                 ViewHolder(view, mRecyclerViewClickListener)
             }
             VIEW_TYPE_EMPTY -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_fund_empty_view, parent, false)
                 EmptyViewHolder(view)
             }
             else -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_fund_empty_view, parent, false)
                 EmptyViewHolder(view)
             }
         }
@@ -141,27 +141,18 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
 
     inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
-        private var errorText: TextView = itemView.findViewById(R.id.error_text)
-        private var retry: TextView = itemView.findViewById(R.id.retry)
+        private var addPaymentMethod: TextView = itemView.findViewById(R.id.add_payment_method)
 
         override fun onBind(position: Int) {
             super.onBind(position)
-            checkConnection()
-            retry.setOnClickListener { retryClicked() }
-        }
-
-        private fun checkConnection() {
-            errorText.text = mContext.resources.getString(R.string.offline)
-        }
-
-        private fun retryClicked() {
-            checkConnection()
-            onRetryClickedListener.onRetryClicked()
+            addPaymentMethod.setOnClickListener {
+                onAddPaymentMethodListener.onAddPaymentMethodClicked()
+            }
         }
     }
 
-    interface OnRetryClicked {
-        fun onRetryClicked()
+    interface OnAddPaymentMethod {
+        fun onAddPaymentMethodClicked()
     }
 
     companion object {

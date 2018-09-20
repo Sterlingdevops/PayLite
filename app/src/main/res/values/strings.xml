@@ -289,4 +289,8 @@
     <string name="create_a_new_transaction_pin">Create a new Transaction PIN</string>
     <string name="please_enter_a_new_transaction_pin">Please enter a new transaction PIN</string>
     <string name="save_this_bank">Save Bank Account</string>
+    <string name="fund_your_wallet">Fund your wallet!</string>
+    <string name="get_started_by_funding_your_account_you_can_manage_your_payment_methods_in_settings">Get started by funding your account. You can manage your payment methods in settings</string>
+    <string name="add_a_payment_method">Add a payment method</string>
+    <string name="finish">Finish</string>
 </resources>

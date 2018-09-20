@@ -14,9 +14,10 @@ import com.sterlingng.paylite.data.model.PaymentMethod
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.fund.FundFragment
+import com.sterlingng.paylite.utils.then
 import javax.inject.Inject
 
-class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.OnRetryClicked {
+class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.OnAddPaymentMethod {
 
     @Inject
     lateinit var mPresenter: PaymentMvpContract<PaymentMvpView>
@@ -52,12 +53,14 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
         }
 
         add.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(FundFragment.newInstance())
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(FundFragment.newInstance())
         }
 
         mPaymentMethodsAdapter = PaymentMethodsAdapter(baseActivity)
         mPaymentMethodsAdapter.mRecyclerViewClickListener = this
-        mPaymentMethodsAdapter.onRetryClickedListener = this
+        mPaymentMethodsAdapter.onAddPaymentMethodListener = this
 
         mRecyclerView.adapter = mPaymentMethodsAdapter
         mRecyclerView.layoutManager = mLinearLayoutManager
@@ -68,10 +71,13 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
 
     override fun updatePaymentMethods(it: ArrayList<PaymentMethod>) {
         mPaymentMethodsAdapter.add(it)
+        add.visibility = (mPaymentMethodsAdapter.paymentMethods.size == 0) then View.GONE ?: View.VISIBLE
     }
 
-    override fun onRetryClicked() {
-        mPresenter.loadPaymentMethods()
+    override fun onAddPaymentMethodClicked() {
+        (baseActivity as DashboardActivity)
+                .mNavController
+                .pushFragment(FundFragment.newInstance())
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
@@ -83,7 +89,8 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
                     mPresenter.setBankDefault(mPaymentMethodsAdapter.get(position))
                 mPaymentMethodsAdapter.toggleSelection(position)
             }
-            R.id.payment_method -> (baseActivity as DashboardActivity).mNavController
+            R.id.payment_method -> (baseActivity as DashboardActivity)
+                    .mNavController
                     .pushFragment(FundFragment.newInstance(mPaymentMethodsAdapter.get(position)))
         }
     }
