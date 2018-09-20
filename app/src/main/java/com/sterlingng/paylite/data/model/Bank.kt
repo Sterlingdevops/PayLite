@@ -1,5 +1,6 @@
 package com.sterlingng.paylite.data.model
 
+import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.realms.BankRealm
 import com.sterlingng.paylite.utils.AppUtils.gson
 
@@ -12,10 +13,13 @@ class Bank {
 
     fun asPaymentMethod(): PaymentMethod {
         val paymentMethod = PaymentMethod()
-        paymentMethod.expiry = ""
+        paymentMethod.image = R.drawable.icon_my_bank
         paymentMethod.number = accountnumber
         paymentMethod.name = accountname
-        paymentMethod.image = 0
+        paymentMethod.default = default
+        paymentMethod.code = bankcode
+        paymentMethod.isCard = false
+        paymentMethod.expiry = ""
         return paymentMethod
     }
 

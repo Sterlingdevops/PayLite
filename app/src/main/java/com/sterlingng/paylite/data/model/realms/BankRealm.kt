@@ -10,7 +10,7 @@ open class BankRealm : RealmObject() {
     lateinit var bankcode: String
     lateinit var bankname: String
     lateinit var accountname: String
-    var default = false
+    var default: Boolean = false
 
     fun asBank(): Bank {
         val bank = Bank()

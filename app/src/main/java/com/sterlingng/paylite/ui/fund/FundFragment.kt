@@ -17,6 +17,7 @@ import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.CardExpiryTextWatcher
+import com.sterlingng.paylite.utils.then
 import mostafa.ma.saleh.gmail.com.editcredit.EditCredit
 import javax.inject.Inject
 
@@ -76,6 +77,25 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
             baseActivity.onBackPressed()
         }
 
+        val paymentMethod = arguments?.getParcelable<PaymentMethod>(PAYMENT_METHOD)
+        if (paymentMethod?.number != "") {
+            paymentMethod.run {
+                this?.isCard?.let {
+                    this@FundFragment.isCard = it
+                    mBankCheckBox.isChecked = !it
+                    mCardCheckBox.isChecked = it
+                    mFundBankNestedScrollView.visibility = it then View.GONE ?: View.VISIBLE
+                    mFundCardNestedScrollView.visibility = it then View.VISIBLE ?: View.GONE
+                }
+            }
+        } else {
+            isCard = true
+            mBankCheckBox.isChecked = false
+            mCardCheckBox.isChecked = true
+            mFundBankNestedScrollView.visibility = View.GONE
+            mFundCardNestedScrollView.visibility = View.VISIBLE
+        }
+
         next.setOnClickListener {
             if (isCard && (mCardNameEditText.text.isEmpty() || mCardExpiryEditText.text.isEmpty() || mCardCvvEditText.text.isEmpty() || mCardNumberEditCredit.text.isEmpty())) {
                 show("Please fill in the required fields", true)
@@ -111,12 +131,6 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
                 return@setOnClickListener
             }
         }
-
-        isCard = true
-        mBankCheckBox.isChecked = false
-        mCardCheckBox.isChecked = true
-        mFundBankNestedScrollView.visibility = View.GONE
-        mFundCardNestedScrollView.visibility = View.VISIBLE
 
         mCardTextView.setOnClickListener {
             isCard = true
@@ -301,9 +315,13 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
 
     companion object {
 
-        fun newInstance(): FundFragment {
+        private const val PAYMENT_METHOD = "FundFragment.PAYMENT_METHOD"
+
+        @JvmOverloads
+        fun newInstance(paymentMethod: PaymentMethod = PaymentMethod()): FundFragment {
             val fragment = FundFragment()
             val args = Bundle()
+            args.putParcelable(PAYMENT_METHOD, paymentMethod)
             fragment.arguments = args
             return fragment
         }

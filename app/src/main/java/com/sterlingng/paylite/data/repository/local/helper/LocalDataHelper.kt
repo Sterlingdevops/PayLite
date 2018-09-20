@@ -4,6 +4,7 @@ import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.data.model.realms.*
 import com.sterlingng.paylite.data.repository.local.Migrations
 import com.sterlingng.paylite.data.repository.local.interfaces.LocalDataInterface
+import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.Log
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -102,7 +103,8 @@ constructor() : LocalDataInterface {
                     .findAll().map { it.asBank() }
             cards.forEach { it.default = false }
             banks.forEach { it.default = it.accountnumber == bank.accountnumber }
-            getRealm().copyToRealmOrUpdate(banks.map { it.asBankRealm() })
+            val items = getRealm().copyToRealmOrUpdate(banks.map { it.asBankRealm() })
+            Log.d(gson.toJson(items.map { it.asBank() }))
         } catch (e: IllegalArgumentException) {
             Log.e(e, "LocalDataHelper->setBankDefault")
         } finally {

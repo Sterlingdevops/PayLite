@@ -14,12 +14,13 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PaymentMethod
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import com.sterlingng.paylite.utils.then
 import java.util.*
 
 
 class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    val methods: ArrayList<PaymentMethod> = ArrayList()
+    val paymentMethods: ArrayList<PaymentMethod> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
     lateinit var onRetryClickedListener: OnRetryClicked
 
@@ -54,27 +55,27 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
         notifyDataSetChanged()
     }
 
-    fun get(position: Int): PaymentMethod = methods[position]
+    fun get(position: Int): PaymentMethod = paymentMethods[position]
 
     fun add(PaymentMethod: PaymentMethod) {
-        methods.add(PaymentMethod)
-        notifyItemInserted(this.methods.size - 1)
+        paymentMethods.add(PaymentMethod)
+        notifyItemInserted(this.paymentMethods.size - 1)
     }
 
     fun add(projects: Collection<PaymentMethod>) {
-        val index = this.methods.size - 1
-        this.methods.addAll(projects)
+        val index = this.paymentMethods.size - 1
+        this.paymentMethods.addAll(projects)
         notifyItemRangeInserted(index, projects.size - 1)
     }
 
     fun remove(index: Int) {
-        this.methods.removeAt(index)
+        this.paymentMethods.removeAt(index)
         notifyItemRemoved(index)
     }
 
     fun clear() {
-        methods.clear()
-        notifyItemRangeRemoved(0, this.methods.size)
+        paymentMethods.clear()
+        notifyItemRangeRemoved(0, this.paymentMethods.size)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -82,7 +83,7 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (methods.size > 0) {
+        return if (paymentMethods.size > 0) {
             VIEW_TYPE_NORMAL
         } else {
             VIEW_TYPE_EMPTY
@@ -90,8 +91,8 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
     }
 
     override fun getItemCount(): Int {
-        return if (methods.size > 0) {
-            methods.size
+        return if (paymentMethods.size > 0) {
+            paymentMethods.size
         } else {
             1
         }
@@ -107,17 +108,18 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
         private val defaultTextView: TextView = itemView.findViewById(R.id.default_payment_method)
 
         override fun onBind(position: Int) {
-            super.onBind(position)
+            super.onBind(adapterPosition)
 
-            with(methods[position]) {
-                expiryTextView.text = expiry ?: ""
+            with(paymentMethods[adapterPosition]) {
+                expiryTextView.text = expiry
                 nameTextView.text = name
                 numberTextView.text = number
-//                imageView.setImageDrawable(ContextCompat.getDrawable(mContext, image))
+                imageView.setImageDrawable(ContextCompat.getDrawable(mContext,
+                        (image != 0) then image ?: R.drawable.card))
             }
 
-            defaultCheckBox.isChecked = selectedItems.get(position)
-            if (selectedItems.get(position)) {
+            defaultCheckBox.isChecked = selectedItems.get(adapterPosition)
+            if (selectedItems.get(adapterPosition)) {
                 defaultTextView.text = mContext.getString(R.string.default_payment_method)
                 defaultTextView.setTextColor(ContextCompat.getColor(mContext, R.color.black))
             } else {
@@ -126,12 +128,14 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
             }
 
             defaultTextView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, position)
+                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
             }
 
             itemView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, position)
+                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
             }
+
+            if (paymentMethods[adapterPosition].default) toggleSelection(adapterPosition)
         }
     }
 

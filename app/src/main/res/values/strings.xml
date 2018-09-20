@@ -288,4 +288,5 @@
     <string name="change_transaction_pin">Change Transaction PIN</string>
     <string name="create_a_new_transaction_pin">Create a new Transaction PIN</string>
     <string name="please_enter_a_new_transaction_pin">Please enter a new transaction PIN</string>
+    <string name="save_this_bank">Save Bank Account</string>
 </resources>

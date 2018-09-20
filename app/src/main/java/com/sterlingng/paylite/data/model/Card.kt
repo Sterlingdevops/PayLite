@@ -1,5 +1,6 @@
 package com.sterlingng.paylite.data.model
 
+import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.realms.CardRealm
 import com.sterlingng.paylite.utils.AppUtils
 
@@ -11,10 +12,12 @@ class Card {
 
     fun asPaymentMethod(): PaymentMethod {
         val paymentMethod = PaymentMethod()
+        paymentMethod.image = R.drawable.card
+        paymentMethod.default = default
         paymentMethod.expiry = expiry
         paymentMethod.number = number
+        paymentMethod.isCard = true
         paymentMethod.name = name
-        paymentMethod.image = 0
         return paymentMethod
     }
 

@@ -76,8 +76,15 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
 
     override fun recyclerViewListClicked(v: View, position: Int) {
         when (v.id) {
-            R.id.default_payment_method -> mPaymentMethodsAdapter.toggleSelection(position)
-            R.id.payment_method -> (baseActivity as DashboardActivity).mNavController.pushFragment(FundFragment.newInstance())
+            R.id.default_payment_method -> {
+                if (mPaymentMethodsAdapter.get(position).isCard)
+                    mPresenter.setCardDefault(mPaymentMethodsAdapter.get(position))
+                else
+                    mPresenter.setBankDefault(mPaymentMethodsAdapter.get(position))
+                mPaymentMethodsAdapter.toggleSelection(position)
+            }
+            R.id.payment_method -> (baseActivity as DashboardActivity).mNavController
+                    .pushFragment(FundFragment.newInstance(mPaymentMethodsAdapter.get(position)))
         }
     }
 
