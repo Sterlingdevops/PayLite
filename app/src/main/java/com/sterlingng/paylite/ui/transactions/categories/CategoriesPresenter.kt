@@ -63,7 +63,11 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 dataManager.saveTransactions(transactions)
                                 mvpView.onGetUserTransactionsSuccessful(transactions)
                             } else {
-                                mvpView.onGetUserTransactionsFailed(response)
+                                if (response.code == 401) {
+                                    mvpView.logout()
+                                } else {
+                                    mvpView.onGetUserTransactionsFailed(response)
+                                }
                             }
                         }
         )

@@ -111,9 +111,9 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
             super.onBind(adapterPosition)
 
             with(paymentMethods[adapterPosition]) {
-                expiryTextView.text = expiry
+                expiryTextView.text = isCard then "Exp: $expiry" ?: ""
                 nameTextView.text = name
-                numberTextView.text = number
+                numberTextView.text = isCard then "Card: $number" ?: "$bankname: $number"
                 imageView.setImageDrawable(ContextCompat.getDrawable(mContext,
                         (image != 0) then image ?: R.drawable.card))
             }

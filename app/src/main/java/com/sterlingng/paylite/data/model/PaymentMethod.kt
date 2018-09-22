@@ -5,11 +5,14 @@ import android.os.Parcelable
 import com.sterlingng.paylite.utils.AppUtils.gson
 
 class PaymentMethod() : Parcelable {
-    var code: String = ""
     var number: String = ""
-    var name: String = ""
     var expiry: String = ""
+    var code: String = ""
+    var bankname: String = ""
+    var name: String = ""
+
     var image: Int = 0
+
     var default: Boolean = false
     var isCard: Boolean = false
 
@@ -39,11 +42,11 @@ class PaymentMethod() : Parcelable {
 
     fun asBank(default: Boolean): Bank {
         val bank = Bank()
-        bank.bankname = "Sterling Bank"
-        bank.bankcode = code
         bank.accountnumber = number
+        bank.bankname = bankname
         bank.accountname = name
         bank.default = default
+        bank.bankcode = code
         return bank
     }
 

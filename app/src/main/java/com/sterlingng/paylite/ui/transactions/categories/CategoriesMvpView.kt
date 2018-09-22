@@ -9,4 +9,5 @@ interface CategoriesMvpView : MvpView {
     fun initView(transactions: ArrayList<Transaction>)
     fun onGetUserTransactionsFailed(response: Response)
     fun onGetUserTransactionsSuccessful(transactions: ArrayList<Transaction>)
+    fun logout()
 }

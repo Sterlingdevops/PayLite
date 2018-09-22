@@ -132,5 +132,32 @@ public class Migrations implements RealmMigration {
             ;
             ++oldVersion;
         }
+
+        //version 10
+        if (oldVersion == 9) {
+            schema.get("TransactionRealm")
+                    .removeField("name")
+                    .addField("mobile", String.class)
+                    .addField("sendername", String.class)
+                    .addField("recipientname", String.class)
+                    .addField("recipientemail", String.class)
+                    .addField("recipientphone", String.class)
+                    .setRequired("mobile", true)
+                    .setRequired("sendername", true)
+                    .setRequired("recipientname", true)
+                    .setRequired("recipientemail", true)
+                    .setRequired("recipientphone", true)
+            ;
+            ++oldVersion;
+        }
+
+        //version 11
+        if (oldVersion == 10) {
+            schema.get("TransactionRealm")
+                    .addField("credit", String.class)
+                    .setRequired("credit", true)
+            ;
+            ++oldVersion;
+        }
     }
 }

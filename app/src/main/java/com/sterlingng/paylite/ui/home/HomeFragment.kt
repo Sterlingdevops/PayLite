@@ -188,6 +188,10 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     }
 
+    override fun logout() {
+        baseActivity.logout()
+    }
+
     companion object {
 
         fun newInstance(): HomeFragment {

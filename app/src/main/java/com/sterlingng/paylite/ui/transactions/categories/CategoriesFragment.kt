@@ -10,7 +10,13 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.utils.Log
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter.OnCreateNewClicked {
@@ -25,6 +31,8 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter
     lateinit var mTransactionAdapter: TransactionAdapter
 
     lateinit var recyclerView: RecyclerView
+
+    lateinit var disposable: Disposable
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_transaction_type, container, false)
@@ -45,6 +53,13 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter
         recyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(mTransactionAdapter))
 
         mPresenter.loadTransactions()
+        disposable = Observable.timer(60L, TimeUnit.SECONDS)
+                .repeat()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mPresenter.loadTransactions()
+                }
     }
 
     override fun updateCategories(it: ArrayList<Transaction>) {
@@ -65,8 +80,8 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter
         val newTransactions: ArrayList<Transaction>
 
         newTransactions = when (transactionType) {
-            "IN" -> transactions.filter { it.type == "11" } as ArrayList<Transaction>
-            "OUT" -> transactions.filter { it.type == "00" } as ArrayList<Transaction>
+            "IN" -> transactions.filter { it.credit == "11" } as ArrayList<Transaction>
+            "OUT" -> transactions.filter { it.credit == "00" } as ArrayList<Transaction>
             else -> transactions
         }
 
@@ -83,8 +98,8 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter
         val newTransactions: ArrayList<Transaction>
 
         newTransactions = when (transactionType) {
-            "IN" -> transactions.filter { it.type == "11" } as ArrayList<Transaction>
-            "OUT" -> transactions.filter { it.type == "00" } as ArrayList<Transaction>
+            "IN" -> transactions.filter { it.credit == "11" } as ArrayList<Transaction>
+            "OUT" -> transactions.filter { it.credit == "00" } as ArrayList<Transaction>
             else -> transactions
         }
 
@@ -95,6 +110,22 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter
     override fun onCreateNew() {
         show("Loading transactions", true)
         mPresenter.loadTransactions()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("CategoriesFragment::onDetach")
+        disposable.dispose()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("CategoriesFragment::onDestroy")
+        disposable.dispose()
+    }
+
+    override fun logout() {
+        baseActivity.logout()
     }
 
     companion object {

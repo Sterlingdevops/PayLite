@@ -76,14 +76,11 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
 
     override fun showLoading() {
         mProgressDialog = CommonUtils.showLoadingDialog(this)
-        hideLoading()
         mProgressDialog.show()
     }
 
     override fun hideLoading() {
-        if (mProgressDialog.isShowing) {
-            mProgressDialog.cancel()
-        }
+        mProgressDialog.cancel()
     }
 
     override fun show(message: String, useToast: Boolean) {
@@ -140,6 +137,8 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
     abstract fun bindViews()
 
     protected abstract fun setUp()
+
+    open fun logout() {}
 
     interface OnBackClicked {
         fun onBackClicked(): Boolean

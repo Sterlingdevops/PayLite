@@ -7,16 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.manager.DataManager
-import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.authpin.AuthPinFragment
 import com.sterlingng.paylite.ui.authpin.OpenPinMode
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.ui.base.MvpPresenter
-import com.sterlingng.paylite.ui.base.MvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class LoginAndSecurityFragment : BaseFragment(), LoginAndSecurityMvpView {
@@ -48,11 +42,15 @@ class LoginAndSecurityFragment : BaseFragment(), LoginAndSecurityMvpView {
         }
 
         mChangeLoginPinTextView.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name))
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name))
         }
 
         mChangeTransactionPinTextView.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(AuthPinFragment.newInstance(OpenPinMode.VALIDATE_FOR_CHANGE.name))
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(AuthPinFragment.newInstance(OpenPinMode.VALIDATE_FOR_CHANGE.name))
         }
     }
 
@@ -71,12 +69,3 @@ class LoginAndSecurityFragment : BaseFragment(), LoginAndSecurityMvpView {
         }
     }
 }
-
-interface LoginAndSecurityMvpView : MvpView
-
-interface LoginAndSecurityMvpContract<V : LoginAndSecurityMvpView> : MvpPresenter<V>
-
-class LoginAndSecurityPresenter<V : LoginAndSecurityMvpView>
-@Inject
-constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), LoginAndSecurityMvpContract<V>

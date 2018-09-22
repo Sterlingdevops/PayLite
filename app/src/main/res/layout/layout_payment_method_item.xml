@@ -41,6 +41,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/exp_04_22"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/name"/>
 
@@ -61,6 +62,7 @@
         android:layout_height="wrap_content"
         android:button="@drawable/custom_checkbox_black"
         android:checked="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"/>
 
@@ -72,6 +74,7 @@
         android:text="@string/default_payment_method"
         android:textColor="@color/black"
         android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/expiry"/>

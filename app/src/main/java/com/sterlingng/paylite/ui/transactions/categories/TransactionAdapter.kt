@@ -12,6 +12,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import com.sterlingng.paylite.utils.then
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 import java.text.SimpleDateFormat
 import java.util.*
@@ -56,7 +57,7 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
 
     fun add(newTransactions: ArrayList<Transaction>) {
         newTransactions.addAll(this.transactions)
-        val transactionsSet = newTransactions.sortedByDescending { it.id }.distinctBy { it.id }
+        val transactionsSet = newTransactions.asSequence().sortedByDescending { it.id }.distinctBy { it.id }.toList()
 
         clear()
 
@@ -135,12 +136,13 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
             val dateFormat = SimpleDateFormat("hh:mm aaa", Locale.ENGLISH)
 
             with(transactions[adapterPosition]) {
-                transactionAmount.text = if (type == "11") "+ ${mContext.getString(R.string.naira)} $amount" else "- ${mContext.getString(R.string.naira)} $amount"
-                transactionName.text = name
+                transactionAmount.text = (credit == "11") then "+ ${mContext.getString(R.string.naira)}$amount" ?: "- ${mContext.getString(R.string.naira)}$amount"
+                transactionName.text = (credit == "11") then senderName ?: recipientName
                 transactionDate.text = dateFormat.format(date.time)
-                transactionType.setImageDrawable(ContextCompat.getDrawable(mContext, if (type == "11") R.drawable.arrow_bottom_left else R.drawable.arrow_top_right))
-                transactionType.setColorFilter(ContextCompat.getColor(mContext, if (type == "11") R.color.apple_green else R.color.scarlet), android.graphics.PorterDuff.Mode.SRC_IN)
-                transactionAmount.setTextColor(ContextCompat.getColor(mContext, if (type == "11") R.color.apple_green else R.color.scarlet))
+
+                transactionType.setImageDrawable(ContextCompat.getDrawable(mContext, if (credit == "11") R.drawable.arrow_bottom_left else R.drawable.arrow_top_right))
+                transactionType.setColorFilter(ContextCompat.getColor(mContext, if (credit == "11") R.color.apple_green else R.color.scarlet), android.graphics.PorterDuff.Mode.SRC_IN)
+                transactionAmount.setTextColor(ContextCompat.getColor(mContext, if (credit == "11") R.color.apple_green else R.color.scarlet))
             }
             itemView.setOnClickListener {
                 recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)

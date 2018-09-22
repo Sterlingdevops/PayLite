@@ -6,38 +6,52 @@ import com.sterlingng.paylite.utils.AppUtils.gson
 
 class Transaction {
 
-    @SerializedName("AmountSent")
-    var amount = ""
-
     @SerializedName("Refid")
     var id: Int = 0
 
-    @SerializedName("SenderID")
-    var sender: String = ""
+    @SerializedName("Amount")
+    var amount = ""
 
-    @SerializedName("ReceiverID")
-    var reciever: String = ""
+    @SerializedName("Mobile")
+    var mobile: String = ""
 
-    @SerializedName("ReciepientName")
-    var name: String = ""
+    @SerializedName("Transtype")
+    var type: Int = 0
 
-    @SerializedName("DateAdded")
+    @SerializedName("DebitCreditFlag")
+    var credit: String = ""
+
+    @SerializedName("TransDate")
     var date: String = ""
 
-    @SerializedName("PaymentRef")
+    @SerializedName("SenderName")
+    var senderName: String = ""
+
+    @SerializedName("ReceiverName")
+    var recipientName: String = ""
+
+    @SerializedName("RecipientEmail")
+    var recipientEmail: String = ""
+
+    @SerializedName("PaymentReference")
     var reference: String = ""
 
-    @SerializedName("Transtype1")
-    var type: String = ""
+    @SerializedName("RecipientPhoneNumber")
+    var recipientPhoneNumber: String = ""
 
     fun asTransactionRealm(): TransactionRealm {
         val transactionRealm = TransactionRealm()
-        transactionRealm.id = id.toString()
-        transactionRealm.type = type
-        transactionRealm.name = name
-        transactionRealm.date = date
-        transactionRealm.amount = amount
+        transactionRealm.recipientphone = recipientPhoneNumber
+        transactionRealm.recipientemail = recipientEmail
+        transactionRealm.recipientname = recipientName
+        transactionRealm.sendername = senderName
+        transactionRealm.type = type.toString()
         transactionRealm.reference = reference
+        transactionRealm.id = id.toString()
+        transactionRealm.amount = amount
+        transactionRealm.credit = credit
+        transactionRealm.mobile = mobile
+        transactionRealm.date = date
         return transactionRealm
     }
 

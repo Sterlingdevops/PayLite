@@ -9,4 +9,5 @@ interface HomeMvpView : MvpView {
     fun onGetWalletFailed(response: Response?)
     fun onGetWalletSuccessful(wallet: Wallet)
     fun initView(currentUser: User?)
+    fun logout()
 }

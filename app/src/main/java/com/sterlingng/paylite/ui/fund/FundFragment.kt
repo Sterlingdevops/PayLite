@@ -14,7 +14,6 @@ import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.CardExpiryTextWatcher
 import com.sterlingng.paylite.utils.then
@@ -22,6 +21,7 @@ import mostafa.ma.saleh.gmail.com.editcredit.EditCredit
 import javax.inject.Inject
 
 class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated {
+
 
     @Inject
     lateinit var mPresenter: FundMvpContract<FundMvpView>
@@ -300,12 +300,6 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         (baseActivity as DashboardActivity).mNavController.clearStack()
     }
 
-    override fun logout() {
-        show("Session has timed out", true)
-        startActivity(MainActivity.getStartIntent(baseActivity))
-        baseActivity.finish()
-    }
-
     private inner class AccountNumberTextWatcher : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             if (s?.length == 10) {
@@ -320,6 +314,10 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
         }
+    }
+
+    override fun logout() {
+        baseActivity.logout()
     }
 
     companion object {

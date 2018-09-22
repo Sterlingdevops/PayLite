@@ -15,6 +15,7 @@ class Bank {
         val paymentMethod = PaymentMethod()
         paymentMethod.image = R.drawable.icon_my_bank
         paymentMethod.number = accountnumber
+        paymentMethod.bankname = bankname
         paymentMethod.name = accountname
         paymentMethod.default = default
         paymentMethod.code = bankcode

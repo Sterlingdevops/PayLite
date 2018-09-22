@@ -63,7 +63,12 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 dataManager.saveWallet(wallet)
                                 mvpView.onGetWalletSuccessful(wallet)
                             } else {
-                                mvpView.onGetWalletFailed(it)
+                                if (it.code == 401) {
+                                    mvpView.logout()
+                                } else {
+                                    mvpView.onGetWalletFailed(it)
+
+                                }
                             }
                         }
         )

@@ -23,6 +23,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Contact
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.home.HomeFragment
+import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import java.util.HashMap
@@ -228,6 +229,11 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         email.close()
     }
 
+    override fun logout() {
+        show("Session has timed out", true)
+        startActivity(MainActivity.getStartIntent(this))
+        finish()
+    }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
 

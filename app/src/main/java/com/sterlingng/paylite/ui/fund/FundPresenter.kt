@@ -176,42 +176,17 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
     }
 
     override fun resolveCardNumber(bin: String) {
-        mvpView.showLoading()
         compositeDisposable.add(
                 dataManager
                         .resolveCardNumber(bin)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .onErrorReturn {
-                            if (it is java.net.SocketTimeoutException) {
-                                val response = Response()
-                                response.data = SocketTimeoutException()
-                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.response = "failed"
-                                return@onErrorReturn response
-                            } else {
-                                val raw = (it as HttpException).response().errorBody()?.string()
-                                if (isJSONValid(raw!!)) {
-                                    val response = gson.fromJson(raw, Response::class.java)
-                                    response.code = it.code()
-                                    return@onErrorReturn response
-                                }
-                                val response = Response()
-                                response.code = it.code()
-                                response.data = HttpException(retrofit2.Response.error<String>(500,
-                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
-                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.response = "failed"
-                                return@onErrorReturn response
-                            }
-                        }
                         .subscribe {
                             if (it.status) {
                                 mvpView.onResolveCardNumberSuccessful(it)
                             } else {
                                 mvpView.onResolveCardNumberFailed(it)
                             }
-                            mvpView.hideLoading()
                         }
         )
     }
