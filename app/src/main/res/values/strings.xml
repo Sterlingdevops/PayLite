@@ -262,7 +262,7 @@
     <string name="choose_contact">Choose Contact</string>
     <string name="add_another_person">Add another person</string>
     <string name="split">Split</string>
-    <string name="split_ngn">Split NGN %1$s</string>
+    <string name="split_ngn">Split ₦%1$s</string>
     <string name="delete">Delete</string>
     <string name="phone_2348124329064">Phone: +2348124329064</string>
     <string name="email_rtukpe_gmail_com">Email: rtukpe@gmail.com</string>

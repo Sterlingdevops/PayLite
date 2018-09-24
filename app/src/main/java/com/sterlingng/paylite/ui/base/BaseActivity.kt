@@ -30,7 +30,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickListener {
 
-    private var onBackClickedListener: OnBackClicked? = null
+    var onBackClickedListener: OnBackClicked? = null
     private lateinit var mProgressDialog: ProgressDialog
     lateinit var activityComponent: ActivityComponent
         private set
@@ -56,8 +56,8 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
     }
 
     override fun onBackPressed() {
-        if (onBackClickedListener != null && onBackClickedListener!!.onBackClicked()) {
-            return
+        if (onBackClickedListener != null) {
+            onBackClickedListener?.onBackClicked()
         }
         super.onBackPressed()
     }
@@ -141,6 +141,6 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
     open fun logout() {}
 
     interface OnBackClicked {
-        fun onBackClicked(): Boolean
+        fun onBackClicked()
     }
 }

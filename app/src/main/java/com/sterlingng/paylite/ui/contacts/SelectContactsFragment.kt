@@ -16,6 +16,7 @@ import com.sterlingng.paylite.data.model.ChosenContact
 import com.sterlingng.paylite.data.model.Contact
 import com.sterlingng.paylite.data.model.ContactItem
 import com.sterlingng.paylite.rx.EventBus
+import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.send.ContactsAdapter
@@ -24,8 +25,7 @@ import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import javax.inject.Inject
 
 class SelectContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListener,
-        ContactsAdapter.OnRetryClicked, SelectContactAdapter.OnRetryClicked {
-
+        ContactsAdapter.OnRetryClicked, SelectContactAdapter.OnRetryClicked, BaseActivity.OnBackClicked {
     @Inject
     lateinit var mPresenter: ContactsMvpContract<ContactsMvpView>
 
@@ -33,18 +33,18 @@ class SelectContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClic
     lateinit var eventBus: EventBus
 
     private lateinit var mSearchView: FloatingSearchView
+
     private lateinit var titleTextView: TextView
     private lateinit var closeImageView: ImageView
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mContactsAdapter: SelectContactAdapter
     private var selectedContact = -1
-
     @Inject
     lateinit var mLinearLayoutManager: LinearLayoutManager
 
     lateinit var mContacts: List<Contact>
-    lateinit var mContactsClone: List<Contact>
 
+    lateinit var mContactsClone: List<Contact>
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_select_contact, container, false)
         val component = activityComponent
@@ -68,12 +68,14 @@ class SelectContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClic
         mRecyclerView.layoutManager = mLinearLayoutManager
 
         titleTextView.text = arguments?.getString(TITLE)
+
         closeImageView.setOnClickListener {
             baseActivity.onBackPressed()
         }
 
         initSearchView()
 
+        baseActivity.onBackClickedListener = this
         selectedContact = arguments?.getInt(POSITION, 0)!!
 
         mContactsClone = (baseActivity as DashboardActivity).contacts
@@ -169,6 +171,12 @@ class SelectContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClic
 
     override fun onRetryClicked() {
 
+    }
+
+    override fun onBackClicked() {
+        val type = object : TypeToken<ArrayList<ContactItem>>() {}.type
+        val contactList = gson.fromJson<ArrayList<ContactItem>>(arguments?.getString(DATA), type)
+        eventBus.post(ChosenContact(contactList))
     }
 
     companion object {

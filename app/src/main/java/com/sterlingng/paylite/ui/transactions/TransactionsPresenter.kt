@@ -8,4 +8,10 @@ import javax.inject.Inject
 
 class TransactionsPresenter<V : TransactionsMvpView> @Inject
 internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), TransactionsMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), TransactionsMvpContract<V>{
+
+    override fun onViewInitialized() {
+        super.onViewInitialized()
+        mvpView.initView(dataManager.getWallet())
+    }
+}

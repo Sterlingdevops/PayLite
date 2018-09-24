@@ -46,7 +46,7 @@ interface RemoteServiceApi {
 
     @POST("api/Paylite/SplitPayment")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun splitPayment(@Body data: HashMap<String, Any>, @Header("X-CS") hash: String): Observable<Response>
+    fun splitPayment(@Body data: HashMap<String, Any>, @Header("Authorization") authorization: String, @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/SendForgotPasswordTokenForMail")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")

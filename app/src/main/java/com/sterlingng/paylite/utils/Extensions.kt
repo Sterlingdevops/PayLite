@@ -10,7 +10,15 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 import kotlin.text.Charsets.UTF_8
 
-infix fun <T> Boolean.then(param: T) : T? = if (this) param else null
+fun List<String>.asString(): String {
+    val result = StringBuilder()
+    this.forEach {
+        result.append("$it, ")
+    }
+    return result.toString()
+}
+
+infix fun <T> Boolean.then(param: T): T? = if (this) param else null
 
 fun String.toSentenceCase(): String {
     val stringBuilder = StringBuilder()

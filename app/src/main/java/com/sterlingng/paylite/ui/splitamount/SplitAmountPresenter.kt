@@ -10,3 +10,9 @@ class SplitAmountPresenter<V : SplitAmountMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SplitAmountMvpContract<V>
+{
+    override fun onViewInitialized() {
+        super.onViewInitialized()
+        mvpView.initView(dataManager.getWallet())
+    }
+}

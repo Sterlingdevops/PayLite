@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
@@ -19,6 +21,7 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
 
     lateinit var mPagerAdapter: CustomPagerAdapter
 
+    private lateinit var mBalanceTextView: TextView
     private lateinit var mViewPager: CustomViewPager
     private lateinit var mSmartTabLayout: SmartTabLayout
 
@@ -42,11 +45,18 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
         mViewPager.offscreenPageLimit = 3
 
         mSmartTabLayout.setViewPager(mViewPager)
+
+        mPresenter.onViewInitialized()
     }
 
     override fun bindViews(view: View) {
         mViewPager = view.findViewById(R.id.viewpager)
+        mBalanceTextView = view.findViewById(R.id.balance)
         mSmartTabLayout = view.findViewById(R.id.viewpagertab)
+    }
+
+    override fun initView(wallet: Wallet?) {
+        mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet?.balance?.toFloat())
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {

@@ -43,7 +43,7 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun deleteBank(accountNumber: String) = mLocalDataHelper.deleteBank(accountNumber)
 
-    override fun splitPayment(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.splitPayment(data, hash)
+    override fun splitPayment(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.splitPayment(data, authorization, hash)
 
     override fun validateOtp(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.validateOtp(data, hash)
 

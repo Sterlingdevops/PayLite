@@ -13,11 +13,10 @@ import android.view.MenuItem
 import android.view.View
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ncapdevi.fragnav.FragNavController
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Contact
@@ -26,6 +25,7 @@ import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
+import com.sterlingng.paylite.utils.asString
 import java.util.HashMap
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -45,7 +45,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
     override val numberOfRootFragments: Int
         get() = 3
 
-    lateinit var contacts: ArrayList<Contact>
+    var contacts = ArrayList<Contact>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,20 +54,33 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         mPresenter.onAttach(this)
 
         Dexter.withActivity(this)
-                .withPermission(android.Manifest.permission.READ_CONTACTS)
-                .withListener(object : PermissionListener {
-                    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                        contacts = setUpLoader()
-                    }
-
-                    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+                .withPermissions(android.Manifest.permission.READ_CONTACTS,
+                        android.Manifest.permission.WRITE_CONTACTS)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>?, token: PermissionToken?) {
                         token?.continuePermissionRequest()
                     }
 
-                    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                        show("Permission: ${response?.permissionName!!} denied", true)
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                        if (report?.isAnyPermissionPermanentlyDenied!!) {
+                            val permissions = report.deniedPermissionResponses
+                                    .asSequence()
+                                    .filter { it.isPermanentlyDenied }
+                                    .map { it.permissionName }
+
+                            show("Please allow ${permissions.toList().asString()} " +
+                                    "it has been permanently denied", true)
+                        }
+
+                        if (report.areAllPermissionsGranted()) {
+                            contacts = setUpLoader()
+                        } else {
+                            val permissions = report.deniedPermissionResponses.map { it.permissionName }
+                            show("These permissions: ${permissions.asString()}" +
+                                    " have been denied. Please enabled them to continue", true)
+                        }
                     }
-                })
+                }).check()
 
         mNavController = FragNavController(supportFragmentManager, R.id.container)
         mNavController.apply {
@@ -119,11 +132,17 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
 
     override fun onBackPressed() {
         when {
-            mNavController.isRootFragment.not() -> mNavController.popFragment()
-            else -> super.onBackPressed()
+            mNavController.isRootFragment.not() -> {
+                if (onBackClickedListener != null) {
+                    onBackClickedListener?.onBackClicked()
+                }
+                mNavController.popFragment()
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
-
 
     private fun setUpLoader(): ArrayList<Contact> {
         val contacts = ArrayList<Contact>()

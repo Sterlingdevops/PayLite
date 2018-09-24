@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.splitcontacts.SplitContactFragment
@@ -23,7 +24,7 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
     private lateinit var mEqualTextView: TextView
     private lateinit var mEqualCheckBox: CheckBox
 
-    private var equal: Boolean = false
+    private var isEqual: Boolean = false
 
     lateinit var exit: ImageView
     lateinit var next: Button
@@ -52,6 +53,8 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
     }
 
     override fun setUp(view: View) {
+        mPresenter.onViewInitialized()
+
         next.setOnClickListener {
             if (mSplitAmountEditText.text.isEmpty()) {
                 show("SplitAmount number is required", true)
@@ -59,7 +62,7 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
             }
 
             (baseActivity as DashboardActivity).mNavController
-                    .pushFragment(SplitContactFragment.newInstance(mSplitAmountEditText.text.toString()))
+                    .pushFragment(SplitContactFragment.newInstance(mSplitAmountEditText.text.toString(), isEqual))
         }
 
         exit.setOnClickListener {
@@ -67,16 +70,20 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
         }
 
         mEqualTextView.setOnClickListener {
-            equal = true
+            isEqual = true
             mEqualCheckBox.isChecked = true
             mUnequalCheckBox.isChecked = false
         }
 
         mUnequalTextView.setOnClickListener {
-            equal = false
+            isEqual = false
             mEqualCheckBox.isChecked = false
             mUnequalCheckBox.isChecked = true
         }
+    }
+
+    override fun initView(wallet: Wallet?) {
+        mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet?.balance?.toFloat())
     }
 
     override fun recyclerViewListClicked(v: View, position: Int) {
