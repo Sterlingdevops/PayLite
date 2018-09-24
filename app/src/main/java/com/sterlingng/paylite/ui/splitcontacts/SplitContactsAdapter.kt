@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -62,7 +63,7 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mContactAmountTextWatcher.updatePosition(holder.adapterPosition)
-        holder.chooseContactTextView.text = contacts[holder.adapterPosition].contact
+        holder.chooseContactEditText.setText(contacts[holder.adapterPosition].contact)
         holder.contactAmountEditText.setText(contacts[holder.adapterPosition].amount)
     }
 
@@ -74,7 +75,7 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
         private val swipeLayout: SwipeLayout = itemView.findViewById(R.id.swipe)
         private val deleteContactTextView: TextView = itemView.findViewById(R.id.delete)
-        val chooseContactTextView: TextView = itemView.findViewById(R.id.choose_contact)
+        val chooseContactEditText: EditText = itemView.findViewById(R.id.choose_contact)
         val contactAmountEditText: EditText = itemView.findViewById(R.id.contact_amount)
         val mContactAmountTextWatcher: ContactAmountTextWatcher = contactAmountTextWatcher
 
@@ -82,14 +83,23 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
             contactAmountEditText.addTextChangedListener(contactAmountTextWatcher)
             swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
 
+            chooseContactEditText.setOnTouchListener { view, event ->
+                if (event.action == MotionEvent.ACTION_UP &&
+                        event.rawX >= (chooseContactEditText.right - chooseContactEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
+                    recyclerViewClickListener.recyclerViewListClicked(view, adapterPosition)
+                    return@setOnTouchListener true
+                }
+                return@setOnTouchListener false
+            }
+
             deleteContactTextView.setOnClickListener {
                 remove(adapterPosition)
             }
-
-            chooseContactTextView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
-            }
         }
+    }
+
+    companion object {
+        const val DRAWABLE_RIGHT = 2
     }
 
     inner class ContactAmountTextWatcher : TextWatcher {

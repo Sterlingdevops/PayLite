@@ -97,12 +97,18 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
                     return@setOnClickListener
                 }
 
+                try {
+                    contact.amount.toInt()
+                } catch (e: NumberFormatException) {
+                    show("Invalid amounts entered for split participants", true)
+                    return@setOnClickListener
+                }
+
                 val person = SplitPerson()
                 person.note = ""
-                arguments?.getString(AMOUNT)?.let { value ->
-                    person.note = "Please pay me ${baseActivity.getString(R.string.naira)}$value"
-                    person.amount = value.toInt()
-                }
+
+                arguments?.getString(NOTE)?.let { note: String -> person.note = note }
+                person.amount = contact.amount.toInt()
 
                 if (contact.contact.isValidEmail()) {
                     person.email = contact.contact
@@ -113,9 +119,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
                 request.split.add(person)
             }
 
-            arguments?.getString(AMOUNT)?.let { value ->
-                request.amount = value
-            }
+            arguments?.getString(AMOUNT)?.let { value: String -> request.amount = value }
 
             val type = object : TypeToken<HashMap<String, Any>>() {}.type
             val data = gson.fromJson<HashMap<String, Any>>(gson.toJson(request), type)
@@ -160,7 +164,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
     }
 
     override fun onSplitPaymentSuccessful() {
-
+        (baseActivity as DashboardActivity).mNavController.clearStack()
     }
 
     override fun logout() {
@@ -168,17 +172,19 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
     }
 
     override fun onSplitPaymentFailed(response: Response) {
-
+        show("An error occurred while processing the transaction", true)
     }
 
     companion object {
 
+        private const val NOTE = "SplitContactFragment.NOTE"
         private const val EQUAL = "SplitContactFragment.EQUAL"
         private const val AMOUNT = "SplitContactFragment.AMOUNT"
 
-        fun newInstance(amount: String, equal: Boolean): SplitContactFragment {
+        fun newInstance(amount: String, equal: Boolean, note: String): SplitContactFragment {
             val fragment = SplitContactFragment()
             val args = Bundle()
+            args.putString(NOTE, note)
             args.putBoolean(EQUAL, equal)
             args.putString(AMOUNT, amount)
             fragment.arguments = args

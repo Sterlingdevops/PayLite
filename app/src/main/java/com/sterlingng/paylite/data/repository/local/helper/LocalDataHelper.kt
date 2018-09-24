@@ -17,6 +17,18 @@ import javax.inject.Inject
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
 
+    override fun getContact(): PayliteContact {
+        return PayliteContact()
+    }
+
+    override fun saveContact(contact: PayliteContact) {
+
+    }
+
+    override fun deleteContact(contact: PayliteContact) {
+
+    }
+
     override fun getCards(): ArrayList<Card> {
         val cards =
                 getRealm().where(CardRealm::class.java).findAll()

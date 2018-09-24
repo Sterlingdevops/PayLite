@@ -47,16 +47,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
+        <EditText
             android:id="@+id/choose_contact"
             android:layout_width="0dp"
             android:layout_height="53dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/background_light_down_blue_outline"
+            android:drawableEnd="@drawable/phone_book"
+            android:drawableRight="@drawable/phone_book"
             android:hint="@string/choose_contact"
+            android:inputType="text"
             android:padding="16dp"
-            android:paddingEnd="0dp"
+            android:paddingEnd="16dp"
             android:paddingLeft="56dp"
-            android:paddingRight="0dp"
+            android:paddingRight="16dp"
             android:paddingStart="56dp"
             android:textColor="@color/black"
             android:textSize="16sp"

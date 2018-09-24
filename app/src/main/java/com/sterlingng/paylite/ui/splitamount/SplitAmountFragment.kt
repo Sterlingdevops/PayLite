@@ -23,6 +23,7 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
     private lateinit var mUnequalCheckBox: CheckBox
     private lateinit var mEqualTextView: TextView
     private lateinit var mEqualCheckBox: CheckBox
+    private lateinit var mNoteEditText: EditText
 
     private var isEqual: Boolean = false
 
@@ -41,6 +42,7 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
         exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next)
 
+        mNoteEditText = view.findViewById(R.id.note)
         mBalanceTextView = view.findViewById(R.id.balance)
 
         mEqualCheckBox = view.findViewById(R.id.equal_checkBox)
@@ -62,7 +64,9 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
             }
 
             (baseActivity as DashboardActivity).mNavController
-                    .pushFragment(SplitContactFragment.newInstance(mSplitAmountEditText.text.toString(), isEqual))
+                    .pushFragment(SplitContactFragment
+                            .newInstance(mSplitAmountEditText.text.toString(),
+                                    isEqual, mNoteEditText.text.toString()))
         }
 
         exit.setOnClickListener {

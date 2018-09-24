@@ -27,6 +27,12 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun getContact(): PayliteContact = mLocalDataHelper.getContact()
+
+    override fun saveContact(contact: PayliteContact) = mLocalDataHelper.saveContact(contact)
+
+    override fun deleteContact(contact: PayliteContact) = mLocalDataHelper.deleteContact(contact)
+
     override fun getBanks(): ArrayList<Bank> = mLocalDataHelper.getBanks()
 
     override fun getCards(): ArrayList<Card> = mLocalDataHelper.getCards()

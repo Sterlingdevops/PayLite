@@ -60,5 +60,7 @@ interface LocalDataInterface {
 
     // contacts
 
-
+    fun getContact(): PayliteContact
+    fun saveContact(contact: PayliteContact)
+    fun deleteContact(contact: PayliteContact)
 }

@@ -259,7 +259,7 @@
     <string name="add_notes">Add a note</string>
     <string name="choose_contacts">Choose Contacts</string>
     <string name="input_amount_to_pay">Input amount to pay</string>
-    <string name="choose_contact">Choose Contact</string>
+    <string name="choose_contact">Phone or email</string>
     <string name="add_another_person">Add another person</string>
     <string name="split">Split</string>
     <string name="split_ngn">Split ₦%1$s</string>
@@ -293,4 +293,6 @@
     <string name="get_started_by_funding_your_account_you_can_manage_your_payment_methods_in_settings">Get started by funding your account. You can manage your payment methods in settings</string>
     <string name="add_a_payment_method">Add a payment method</string>
     <string name="finish">Finish</string>
+    <string name="note">Note</string>
+    <string name="add_a_note">Add a note</string>
 </resources>
