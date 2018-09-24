@@ -1,12 +1,15 @@
 package com.sterlingng.paylite.data.model
 
+import com.google.gson.annotations.SerializedName
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.realms.BankRealm
 import com.sterlingng.paylite.utils.AppUtils.gson
 
 class Bank {
     var default = false
+    @SerializedName("Bankname")
     var bankname: String = ""
+    @SerializedName("bankcode")
     var bankcode: String = ""
     var accountnumber: String = ""
     var accountname: String = ""

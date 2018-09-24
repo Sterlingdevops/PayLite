@@ -159,5 +159,21 @@ public class Migrations implements RealmMigration {
             ;
             ++oldVersion;
         }
+
+        //version 12
+        if (oldVersion == 11) {
+            schema.create("ContactRealm")
+                    .addField("id", String.class)
+                    .addField("name", String.class)
+                    .addField("email", String.class)
+                    .addField("phone", String.class)
+                    .setRequired("id", true)
+                    .setRequired("name", true)
+                    .setRequired("email", true)
+                    .setRequired("phone", true)
+                    .addPrimaryKey("id")
+            ;
+            ++oldVersion;
+        }
     }
 }

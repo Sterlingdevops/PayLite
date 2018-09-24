@@ -128,8 +128,8 @@
         app:layout_constraintTop_toBottomOf="@+id/new_payment"/>
 
     <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -189,8 +189,8 @@
         app:layout_constraintTop_toBottomOf="@+id/to_bank"/>
 
     <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -250,8 +250,8 @@
         app:layout_constraintTop_toBottomOf="@+id/scheduled_payments"/>
 
     <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -325,8 +325,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginBottom="48dp"
         android:contentDescription="@string/phone"
         android:src="@drawable/phone_book_2"

@@ -57,4 +57,8 @@ interface LocalDataInterface {
     fun saveBank(bank: Bank)
     fun setBankDefault(bank: Bank)
     fun deleteBank(accountNumber: String)
+
+    // contacts
+
+
 }

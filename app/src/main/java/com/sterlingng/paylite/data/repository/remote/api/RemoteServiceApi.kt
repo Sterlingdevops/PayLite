@@ -20,6 +20,10 @@ interface RemoteServiceApi {
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
     fun getWallet(@Query("mobile") mobile: String, @Header("Authorization") authorization: String): Observable<Response>
 
+    @GET("api/Paylite/GetAllBanks")
+    @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
+    fun getBanks(@Header("Authorization") authorization: String): Observable<Response>
+
     @GET("api/Paylite/GetUserTransactions")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
     fun getUserTransactions(@Query("mobile") mobile: String,

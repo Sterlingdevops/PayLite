@@ -24,6 +24,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
         val user = dataManager.getCurrentUser()
         data["userid"] = user?.phoneNumber!!
         data["Amount"] = data["amount"] as String
+        data.remove("amount")
 
         mvpView.showLoading()
         compositeDisposable.add(

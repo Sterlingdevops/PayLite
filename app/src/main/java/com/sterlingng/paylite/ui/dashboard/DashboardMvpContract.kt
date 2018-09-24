@@ -8,4 +8,6 @@ import com.sterlingng.paylite.ui.base.MvpPresenter
  */
 
 @PerActivity
-interface DashboardMvpContract<V : DashboardMvpView> : MvpPresenter<V>
+interface DashboardMvpContract<V : DashboardMvpView> : MvpPresenter<V> {
+    fun loadBanks()
+}

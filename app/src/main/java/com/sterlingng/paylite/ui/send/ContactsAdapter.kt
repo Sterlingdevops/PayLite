@@ -12,6 +12,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PayliteContact
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import com.sterlingng.paylite.utils.initials
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
@@ -56,7 +57,7 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
 
     fun add(contacts: Collection<PayliteContact>) {
         val index = this.contacts.size - 1
-        this.contacts.addAll(contacts.filterNot { it.firstname == "See" })
+        this.contacts.addAll(contacts.filterNot { it.name == "See All" })
         notifyItemRangeInserted(index, contacts.size - 1)
     }
 
@@ -102,12 +103,10 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
             super.onBind(position)
 
             with(contacts[position]) {
-                if (type == 1)
-                    contactInitialsTextView?.text = "${firstname[0]}${lastname[0]}".toUpperCase()
-                contactNameTextView.text = "$firstname $lastname"
+                contactNameTextView.text = name
+                if (type == 1) contactInitialsTextView?.text = name.initials()
                 contactLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, image))
-                if (firstname == "See")
-                    contactLogoImageView.scaleType = ImageView.ScaleType.CENTER_CROP
+                if (name == "See All") contactLogoImageView.scaleType = ImageView.ScaleType.CENTER_CROP
             }
             itemView.setOnClickListener {
                 recyclerViewClickListener.recyclerViewListClicked(it, position)
