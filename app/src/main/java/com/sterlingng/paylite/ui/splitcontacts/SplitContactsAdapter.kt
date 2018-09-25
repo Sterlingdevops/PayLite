@@ -86,7 +86,7 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
             chooseContactEditText.setOnTouchListener { view, event ->
                 if (event.action == MotionEvent.ACTION_UP &&
                         event.rawX >= (chooseContactEditText.right - chooseContactEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
-                    recyclerViewClickListener.recyclerViewListClicked(view, adapterPosition)
+                    recyclerViewClickListener.recyclerViewItemClicked(view, adapterPosition)
                     return@setOnTouchListener true
                 }
                 return@setOnTouchListener false

@@ -11,7 +11,6 @@ import com.sterlingng.paylite.data.model.PaymentCategory
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.utils.ItemOffsetDecoration
 import com.sterlingng.views.NoScrollingGridLayoutManager
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
 class SuccessfulActivity : BaseActivity(), SuccessfulMvpView, CategoriesAdapter.OnRetryClicked {
@@ -55,7 +54,7 @@ class SuccessfulActivity : BaseActivity(), SuccessfulMvpView, CategoriesAdapter.
     }
 
     override fun updateCategories(categories: ArrayList<PaymentCategory>) {
-        mCategoriesAdapter.addCategories(categories)
+        mCategoriesAdapter.add(categories)
     }
 
     override fun onRetryClicked() {
@@ -68,7 +67,7 @@ class SuccessfulActivity : BaseActivity(), SuccessfulMvpView, CategoriesAdapter.
     }
 
     var mSelectedCategory = -1
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
         mSelectedCategory = position
     }
 

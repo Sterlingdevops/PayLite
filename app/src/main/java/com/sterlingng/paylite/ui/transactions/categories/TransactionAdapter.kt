@@ -47,17 +47,23 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
 
     fun add(transaction: Transaction) {
         transactions += transaction
-        val transactionsSet = transactions.asSequence().sortedByDescending { it.id }.distinctBy { it.id }.toList()
+        val transactionsSet =
+                transactions.asSequence()
+                        .sortedByDescending { it.id }
+                        .distinctBy { it.id }.toList()
 
         clear()
 
-        this.transactions.addAll(transactionsSet)
+        transactions.addAll(transactionsSet)
         notifyDataSetChanged()
     }
 
     fun add(newTransactions: ArrayList<Transaction>) {
-        newTransactions.addAll(this.transactions)
-        val transactionsSet = newTransactions.asSequence().sortedByDescending { it.id }.distinctBy { it.id }.toList()
+        newTransactions += this.transactions
+        val transactionsSet =
+                newTransactions.asSequence()
+                        .sortedByDescending { it.id }
+                        .distinctBy { it.id }.toList()
 
         clear()
 
@@ -145,7 +151,7 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
                 transactionAmount.setTextColor(ContextCompat.getColor(mContext, if (credit == "11") R.color.apple_green else R.color.scarlet))
             }
             itemView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
+                recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
             }
         }
     }

@@ -17,16 +17,40 @@ import javax.inject.Inject
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
 
-    override fun getContact(): PayliteContact {
-        return PayliteContact()
+    override fun getContacts(): ArrayList<PayliteContact> {
+        val contacts =
+                getRealm().where(ContactRealm::class.java).findAll()
+        return if (contacts.size > 0)
+            contacts.map {
+                it.asPayliteContact()
+            } as ArrayList<PayliteContact>
+        else ArrayList()
     }
 
     override fun saveContact(contact: PayliteContact) {
-
+        getRealm().beginTransaction()
+        try {
+            getRealm().copyToRealmOrUpdate(contact.asContactRealm())
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->saveContact")
+        } finally {
+            getRealm().commitTransaction()
+        }
     }
 
     override fun deleteContact(contact: PayliteContact) {
-
+        getRealm().beginTransaction()
+        try {
+            getRealm()
+                    .where(ContactRealm::class.java)
+                    .equalTo("id", contact.id)
+                    .findAll()
+                    .deleteAllFromRealm()
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->deleteContact")
+        } finally {
+            getRealm().commitTransaction()
+        }
     }
 
     override fun getCards(): ArrayList<Card> {
@@ -70,6 +94,7 @@ constructor() : LocalDataInterface {
     }
 
     override fun deleteCard(cardNumber: String) {
+        getRealm().beginTransaction()
         try {
             getRealm()
                     .where(CardRealm::class.java)
@@ -77,7 +102,7 @@ constructor() : LocalDataInterface {
                     .findAll()
                     .deleteAllFromRealm()
         } catch (e: IllegalArgumentException) {
-            Log.e(e, "LocalDataHelper->deleteBank")
+            Log.e(e, "LocalDataHelper->deleteCard")
         } finally {
             getRealm().commitTransaction()
         }
@@ -125,6 +150,7 @@ constructor() : LocalDataInterface {
     }
 
     override fun deleteBank(accountNumber: String) {
+        getRealm().beginTransaction()
         try {
             getRealm()
                     .where(BankRealm::class.java)

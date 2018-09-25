@@ -78,7 +78,7 @@ class ResetFragment : BaseFragment(), ResetMvpView {
         hideKeyboard()
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

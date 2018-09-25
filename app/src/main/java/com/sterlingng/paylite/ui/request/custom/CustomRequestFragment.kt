@@ -80,7 +80,7 @@ class CustomRequestFragment : BaseFragment(), CustomRequestMvpView {
         show("Something went wrong and your request wasn't successfully processed, please try again", true)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

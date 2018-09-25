@@ -19,13 +19,12 @@ import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.send.ContactsAdapter
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import javax.inject.Inject
 
 class SelectContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListener,
-        ContactsAdapter.OnRetryClicked, SelectContactAdapter.OnRetryClicked, BaseActivity.OnBackClicked {
+        SelectContactAdapter.OnRetryClicked, BaseActivity.OnBackClicked {
     @Inject
     lateinit var mPresenter: ContactsMvpContract<ContactsMvpView>
 
@@ -144,7 +143,7 @@ class SelectContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClic
         mSearchView.setOnSuggestionsListHeightChanged { newHeight -> mRecyclerView.translationY = newHeight }
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
         when (v.id) {
             R.id.contact_email -> {
                 val email = mContacts[position].emails[0].address

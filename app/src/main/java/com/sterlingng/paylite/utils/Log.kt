@@ -15,6 +15,7 @@
 
 package com.sterlingng.paylite.utils
 
+import com.orhanobut.logger.Logger
 import com.sterlingng.paylite.BuildConfig
 
 import timber.log.Timber
@@ -27,7 +28,12 @@ object Log {
 
     fun init() {
         if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
+            // Set methodOffset to 5 in order to hide internal method calls
+            Timber.plant(object : Timber.DebugTree() {
+                override fun log(priority: Int, tag: String, message: String, t: Throwable?) {
+                    Logger.log(priority, tag, message, t)
+                }
+            })
         }
     }
 

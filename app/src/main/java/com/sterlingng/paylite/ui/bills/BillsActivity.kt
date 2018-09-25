@@ -50,7 +50,7 @@ class BillsActivity : BaseActivity(), BillsMvpView {
         exit = findViewById(R.id.exit)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

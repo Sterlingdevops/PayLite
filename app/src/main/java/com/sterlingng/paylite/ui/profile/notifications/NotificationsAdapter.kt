@@ -100,7 +100,7 @@ class NotificationsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
 //                notificationLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.button_light_green))
             }
             itemView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, position)
+                recyclerViewClickListener.recyclerViewItemClicked(it, position)
             }
         }
     }

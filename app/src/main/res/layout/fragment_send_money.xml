@@ -277,17 +277,6 @@
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@id/scheduled_payments_ref"/>
 
-    <TextView
-        android:id="@+id/textView29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
-        android:text="@string/frequent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
@@ -300,43 +289,26 @@
         android:orientation="horizontal"
         android:scrollbars="none"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toStartOf="@+id/name"
+        app:layout_constraintEnd_toStartOf="@+id/see_all"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textView27"
         tools:listitem="@layout/layout_contact_item"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:scrollbars="none"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView29"
-        tools:listitem="@layout/layout_contact_item"/>
-
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/see_all_image"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginBottom="48dp"
         android:contentDescription="@string/phone"
         android:src="@drawable/phone_book_2"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="@+id/name"
-        app:layout_constraintStart_toStartOf="@+id/name"
+        app:layout_constraintEnd_toEndOf="@+id/see_all"
+        app:layout_constraintStart_toStartOf="@+id/see_all"
         app:layout_constraintTop_toTopOf="@+id/recyclerView"/>
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/see_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -345,7 +317,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintTop_toBottomOf="@+id/image"/>
+        app:layout_constraintTop_toBottomOf="@+id/see_all_image"/>
 
     <TextView
         android:id="@+id/textView31"
@@ -362,8 +334,8 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"/>
 
     <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:contentDescription="@string/next"
         app:layout_constraintBottom_toBottomOf="@+id/textView31"
         app:layout_constraintEnd_toEndOf="@+id/textView31"

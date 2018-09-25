@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.CursorLoader
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -49,6 +50,11 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
 
     var contacts = ArrayList<Contact>()
     var banks = ArrayList<String>()
+
+    override fun onResume() {
+        super.onResume()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -267,7 +273,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         finish()
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

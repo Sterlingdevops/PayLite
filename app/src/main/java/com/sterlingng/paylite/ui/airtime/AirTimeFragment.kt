@@ -232,7 +232,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
         mBalanceTextView = view.findViewById(R.id.balance)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

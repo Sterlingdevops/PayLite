@@ -252,7 +252,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         show("An error occurred while processing the transaction", true)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

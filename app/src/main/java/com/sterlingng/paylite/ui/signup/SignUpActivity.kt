@@ -86,7 +86,7 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
             --mViewPager.currentItem
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

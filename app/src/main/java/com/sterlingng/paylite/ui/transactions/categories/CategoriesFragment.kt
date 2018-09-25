@@ -71,7 +71,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter
         recyclerView = view.findViewById(R.id.recyclerView)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

@@ -110,11 +110,11 @@ class SelectContactAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
             }
 
             contactEmailTextView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
+                recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
             }
 
             contactPhoneTextView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
+                recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
             }
         }
     }

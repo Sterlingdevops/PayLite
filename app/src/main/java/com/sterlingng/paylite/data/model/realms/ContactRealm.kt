@@ -12,13 +12,13 @@ open class ContactRealm : RealmObject() {
     lateinit var phone: String
     lateinit var email: String
 
-    fun toPayliteContact(): PayliteContact {
-        val payliteContact = PayliteContact()
-        payliteContact.email = email
-        payliteContact.phone = phone
-        payliteContact.name = name
-        payliteContact.id = id
-        return payliteContact
+    fun asPayliteContact(): PayliteContact {
+        val contact = PayliteContact()
+        contact.email = email
+        contact.phone = phone
+        contact.name = name
+        contact.id = id
+        return contact
     }
 
     override fun toString(): String {

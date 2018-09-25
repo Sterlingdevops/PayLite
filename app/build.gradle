@@ -151,6 +151,7 @@ dependencies {
     implementation('com.lamudi.phonefield:phone-field:0.1.3@aar') {
         transitive = true
     }
+    implementation 'com.orhanobut:logger:2.2.0'
     implementation 'com.karumi:dexter:4.2.0'
     implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
     implementation 'com.budiyev.android:circular-progress-bar:1.2.0'

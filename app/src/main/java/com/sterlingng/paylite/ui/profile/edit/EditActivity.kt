@@ -63,7 +63,7 @@ class EditActivity : BaseActivity(), EditMvpView, DatePickerDialog.OnDateSetList
         phoneInputLayout = findViewById(R.id.phone_input_layout)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

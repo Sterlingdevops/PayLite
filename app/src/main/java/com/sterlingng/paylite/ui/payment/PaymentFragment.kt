@@ -80,7 +80,7 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
                 .pushFragment(FundFragment.newInstance())
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
         when (v.id) {
             R.id.default_payment_method -> {
                 if (mPaymentMethodsAdapter.get(position).isCard)

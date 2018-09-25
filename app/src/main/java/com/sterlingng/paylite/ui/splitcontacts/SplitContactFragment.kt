@@ -142,7 +142,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
                 }
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
         Dexter.withActivity(baseActivity)
                 .withPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS)
                 .withListener(object : MultiplePermissionsListener {

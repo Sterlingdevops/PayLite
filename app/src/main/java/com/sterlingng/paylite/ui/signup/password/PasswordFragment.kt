@@ -71,7 +71,7 @@ class PasswordFragment : BaseFragment(), PasswordMvpView {
         show(response.message!!, true)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

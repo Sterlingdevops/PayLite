@@ -88,7 +88,7 @@ class FilterAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder
                 filterItemTextView.text = this
             }
             itemView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, position)
+                recyclerViewClickListener.recyclerViewItemClicked(it, position)
             }
         }
     }

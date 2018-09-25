@@ -56,7 +56,7 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
         baseActivity.finish()
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

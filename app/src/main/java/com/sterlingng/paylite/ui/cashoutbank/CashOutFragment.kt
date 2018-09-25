@@ -77,7 +77,7 @@ class CashOutFragment : BaseFragment(), CashOutMvpView, FilterBottomSheetFragmen
         mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet?.balance?.toFloat())
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

@@ -184,7 +184,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mMainAmountTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

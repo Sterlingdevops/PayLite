@@ -44,7 +44,7 @@ class RequestFragment : BaseFragment(), RequestMvpView {
         next = view.findViewById(R.id.next)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

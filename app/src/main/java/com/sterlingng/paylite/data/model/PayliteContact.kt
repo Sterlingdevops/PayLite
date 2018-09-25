@@ -17,7 +17,7 @@ class PayliteContact {
 
     constructor()
 
-    fun toContactRealm(): ContactRealm {
+    fun asContactRealm(): ContactRealm {
         val contactRealm = ContactRealm()
         contactRealm.email = email
         contactRealm.phone = phone

@@ -40,20 +40,20 @@ class CategoriesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHo
         }
     }
 
-    fun getCategoryAtPosition(position: Int): PaymentCategory = categories[position]
+    fun get(position: Int): PaymentCategory = categories[position]
 
-    fun addCategory(PaymentCategory: PaymentCategory) {
+    fun add(PaymentCategory: PaymentCategory) {
         categories.add(PaymentCategory)
         notifyItemInserted(this.categories.size - 1)
     }
 
-    fun addCategories(categories: Collection<PaymentCategory>) {
+    fun add(categories: Collection<PaymentCategory>) {
         val index = this.categories.size - 1
         this.categories.addAll(categories)
         notifyItemRangeInserted(index, categories.size - 1)
     }
 
-    fun removeCategory(index: Int) {
+    fun remove(index: Int) {
         this.categories.removeAt(index)
         notifyItemRemoved(index)
     }
@@ -104,7 +104,7 @@ class CategoriesAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHo
                     booleanArray[i] = false
                 }
                 booleanArray[position] = true
-                recyclerViewClickListener.recyclerViewListClicked(it, position)
+                recyclerViewClickListener.recyclerViewItemClicked(it, position)
             }
         }
     }

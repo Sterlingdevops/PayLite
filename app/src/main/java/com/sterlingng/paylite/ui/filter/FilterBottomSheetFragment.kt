@@ -104,7 +104,7 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
         baseActivity.show(message, useToast)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
         onFilterItemSelectedListener.onFilterItemSelected(dialog, selector, items[position])
     }
 

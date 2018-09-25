@@ -61,7 +61,7 @@ class LogInActivity : BaseActivity(), LogInMvpView {
         show("No User has be registered on this device", true)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

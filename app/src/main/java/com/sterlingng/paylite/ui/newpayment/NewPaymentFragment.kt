@@ -11,10 +11,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -22,6 +19,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.PayliteContact
 import com.sterlingng.paylite.data.model.SendMoneyRequest
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
@@ -40,7 +38,9 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
     private lateinit var next: Button
 
     private lateinit var mRecipientNameEditText: EditText
+    private lateinit var mSaveRecipientTextView: TextView
     private lateinit var mPhoneEmailEditText: EditText
+    private lateinit var mSaveRecipientSwitch: Switch
     private lateinit var mBalanceTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -55,6 +55,9 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
         exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next)
 
+        mSaveRecipientSwitch = view.findViewById(R.id.save_recipient_switch)
+        mSaveRecipientTextView = view.findViewById(R.id.save_recipient)
+
         mRecipientNameEditText = view.findViewById(R.id.recipient_name)
         mPhoneEmailEditText = view.findViewById(R.id.phone_email)
         mBalanceTextView = view.findViewById(R.id.balance)
@@ -66,6 +69,10 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
 
         exit.setOnClickListener {
             baseActivity.onBackPressed()
+        }
+
+        mSaveRecipientTextView.setOnClickListener {
+            mSaveRecipientSwitch.toggle()
         }
 
         next.setOnClickListener {
@@ -82,17 +89,28 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
             }
 
             val request = SendMoneyRequest()
+            val contact = PayliteContact()
+            contact.id = System.currentTimeMillis().toString()
+            contact.name = mRecipientNameEditText.text.toString()
 
             if (mPhoneEmailEditText.text.toString().isValidEmail()) {
                 request.email = mPhoneEmailEditText.text.toString()
+                contact.email = mPhoneEmailEditText.text.toString()
             } else {
+                contact.phone = mPhoneEmailEditText.text.toString()
                 request.phone = mPhoneEmailEditText.text.toString()
             }
 
             request.recipientName = mRecipientNameEditText.text.toString()
             request.paymentReference = System.currentTimeMillis().toString()
 
-            (baseActivity as DashboardActivity).mNavController.pushFragment(NewPaymentAmountFragment.newInstance(request))
+            if (mSaveRecipientSwitch.isChecked) {
+                mPresenter.saveContact(contact)
+            }
+
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(NewPaymentAmountFragment.newInstance(request))
         }
 
         mPhoneEmailEditText.setOnTouchListener { _, event ->
@@ -163,7 +181,7 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
         mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet?.balance?.toFloat())
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

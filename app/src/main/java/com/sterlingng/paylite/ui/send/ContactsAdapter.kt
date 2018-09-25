@@ -12,15 +12,15 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PayliteContact
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import com.sterlingng.paylite.utils.RecyclerViewLongClickListener
 import com.sterlingng.paylite.utils.initials
 import de.hdodenhof.circleimageview.CircleImageView
-import java.util.*
 
 class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapter<BaseViewHolder>() {
 
     val contacts: ArrayList<PayliteContact> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
-    lateinit var onRetryClickedListener: OnRetryClicked
+    lateinit var mRecyclerViewLongClickListener: RecyclerViewLongClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View?
@@ -38,11 +38,11 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
                 }
             }
             VIEW_TYPE_EMPTY -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_contact_view, parent, false)
                 EmptyViewHolder(view)
             }
             else -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_contact_view, parent, false)
                 EmptyViewHolder(view)
             }
         }
@@ -51,26 +51,46 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
     fun get(position: Int): PayliteContact = contacts[position]
 
     fun add(contact: PayliteContact) {
-        contacts.add(contact)
-        notifyItemInserted(this.contacts.size - 1)
+        contacts += contact
+        val contactsSet =
+                contacts.asSequence()
+                        .sortedByDescending { it.id }
+                        .distinctBy { it.id }.toList()
+
+        clear()
+
+        contactsSet.forEach {
+            if (contacts.size < 3) contacts += it
+        }
+        notifyDataSetChanged()
     }
 
-    fun add(contacts: Collection<PayliteContact>) {
-        val index = this.contacts.size - 1
-        this.contacts.addAll(contacts.filterNot { it.name == "See All" })
-        notifyItemRangeInserted(index, contacts.size - 1)
+    fun add(newContacts: ArrayList<PayliteContact>) {
+        newContacts += contacts
+        val contactsSet =
+                newContacts.asSequence()
+                        .sortedByDescending { it.id }
+                        .distinctBy { it.id }.toList()
+
+        clear()
+
+        contactsSet.forEach {
+            if (contacts.size < 3) contacts += it
+        }
+        notifyDataSetChanged()
     }
 
     fun remove(index: Int) {
         this.contacts.removeAt(index)
-        notifyItemRemoved(index)
+        notifyDataSetChanged()
     }
 
     fun clear() {
         for (index in 0 until contacts.size) {
-            this.contacts.removeAt(0)
+            contacts.removeAt(0)
             notifyItemRemoved(0)
         }
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -100,44 +120,27 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
         private val contactLogoImageView: CircleImageView = itemView.findViewById(R.id.image)
 
         override fun onBind(position: Int) {
-            super.onBind(position)
+            super.onBind(adapterPosition)
 
-            with(contacts[position]) {
+            with(contacts[adapterPosition]) {
                 contactNameTextView.text = name
-                if (type == 1) contactInitialsTextView?.text = name.initials()
-                contactLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, image))
+                contactInitialsTextView?.text = name.initials()
+                contactLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.color.apple_green))
                 if (name == "See All") contactLogoImageView.scaleType = ImageView.ScaleType.CENTER_CROP
             }
+
             itemView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, position)
+                recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
+            }
+
+            itemView.setOnLongClickListener {
+                mRecyclerViewLongClickListener.recyclerViewItemLongClicked(it, adapterPosition)
+                return@setOnLongClickListener true
             }
         }
     }
 
-    inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView) {
-
-        private var errorText: TextView = itemView.findViewById(R.id.error_text)
-        private var retry: TextView = itemView.findViewById(R.id.retry)
-
-        override fun onBind(position: Int) {
-            super.onBind(position)
-            checkConnection()
-            retry.setOnClickListener { retryClicked() }
-        }
-
-        private fun checkConnection() {
-            errorText.text = mContext.resources.getString(R.string.offline)
-        }
-
-        private fun retryClicked() {
-            checkConnection()
-            onRetryClickedListener.onRetryClicked()
-        }
-    }
-
-    interface OnRetryClicked {
-        fun onRetryClicked()
-    }
+    inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView)
 
     companion object {
 

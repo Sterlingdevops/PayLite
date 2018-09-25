@@ -65,7 +65,7 @@ class EmailForgotFragment : BaseFragment(), EmailForgotMvpView {
         mPhoneEditText = view.findViewById(R.id.phone)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

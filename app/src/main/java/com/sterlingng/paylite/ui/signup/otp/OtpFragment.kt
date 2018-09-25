@@ -73,7 +73,7 @@ class OtpFragment : BaseFragment(), OtpMvpView {
         mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPinView.value)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

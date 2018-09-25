@@ -128,11 +128,11 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
             }
 
             defaultTextView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
+                recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
             }
 
             itemView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewListClicked(it, adapterPosition)
+                recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
             }
 
             if (paymentMethods[adapterPosition].default) toggleSelection(adapterPosition)

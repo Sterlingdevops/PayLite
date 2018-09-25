@@ -9,14 +9,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PayliteContact
+import com.sterlingng.paylite.data.model.SendMoneyRequest
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
+import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
+import com.sterlingng.paylite.utils.RecyclerViewLongClickListener
+import com.sterlingng.paylite.utils.then
 import com.sterlingng.views.NoScrollingLinearLayoutManager
 import javax.inject.Inject
 
-class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRetryClicked {
+class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClickListener {
 
     @Inject
     lateinit var mPresenter: SendMoneyMvpContract<SendMoneyMvpView>
@@ -29,14 +33,14 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRe
     private lateinit var mScheduledTextView: TextView
     private lateinit var mScheduledRefTextView: TextView
 
+    private lateinit var mSeeAllTextView: TextView
+    private lateinit var mSeeAllImageView: ImageView
+
     private lateinit var mContactsAdapter: ContactsAdapter
-    private lateinit var mRecentAdapter: ContactsAdapter
 
     private lateinit var mContactsRecyclerView: RecyclerView
-    private lateinit var mRecentRecyclerView: RecyclerView
 
     private lateinit var mContactsLinearLayoutManager: NoScrollingLinearLayoutManager
-    private lateinit var mRecentLinearLayoutManager: NoScrollingLinearLayoutManager
 
     private lateinit var mBalanceTextView: TextView
 
@@ -50,7 +54,6 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRe
 
     override fun updateContacts(it: ArrayList<PayliteContact>) {
         mContactsAdapter.add(it)
-        mRecentAdapter.add(it)
     }
 
     override fun setUp(view: View) {
@@ -65,23 +68,11 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRe
         mContactsLinearLayoutManager = NoScrollingLinearLayoutManager(baseActivity)
         mContactsLinearLayoutManager.orientation = RecyclerView.HORIZONTAL
 
-        mContactsAdapter.onRetryClickedListener = this
         mContactsRecyclerView.adapter = mContactsAdapter
         mContactsAdapter.mRecyclerViewClickListener = this
+        mContactsAdapter.mRecyclerViewLongClickListener = this
         mContactsRecyclerView.layoutManager = mContactsLinearLayoutManager
         mContactsRecyclerView.scrollToPosition(0)
-
-        // Recent
-
-        mRecentAdapter = ContactsAdapter(baseActivity, 0)
-        mRecentLinearLayoutManager = NoScrollingLinearLayoutManager(baseActivity)
-        mRecentLinearLayoutManager.orientation = RecyclerView.HORIZONTAL
-
-        mRecentRecyclerView.adapter = mRecentAdapter
-        mRecentAdapter.onRetryClickedListener = this
-        mRecentAdapter.mRecyclerViewClickListener = this
-        mRecentRecyclerView.layoutManager = mRecentLinearLayoutManager
-        mRecentRecyclerView.scrollToPosition(0)
 
         mNewPaymentTextView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(NewPaymentFragment.newInstance())
@@ -99,6 +90,9 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRe
 
         }
 
+        mSeeAllTextView.visibility = (mContactsAdapter.contacts.size == 0) then View.GONE ?: View.VISIBLE
+        mSeeAllImageView.visibility = (mContactsAdapter.contacts.size == 0) then View.GONE ?: View.VISIBLE
+
         mPresenter.loadCachedWallet()
         mPresenter.loadContacts()
     }
@@ -106,7 +100,9 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRe
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
         mContactsRecyclerView = view.findViewById(R.id.recyclerView)
-        mRecentRecyclerView = view.findViewById(R.id.recyclerView2)
+
+        mSeeAllTextView = view.findViewById(R.id.see_all)
+        mSeeAllImageView = view.findViewById(R.id.see_all_image)
 
         mNewPaymentTextView = view.findViewById(R.id.new_payment)
         mNewPaymentRefTextView = view.findViewById(R.id.new_payment_ref)
@@ -121,12 +117,20 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, ContactsAdapter.OnRe
         mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet?.balance?.toFloat())
     }
 
-    override fun onRetryClicked() {
-
+    override fun recyclerViewItemClicked(v: View, position: Int) {
+        with(mContactsAdapter.get(position)) {
+            val sendMoneyRequest = SendMoneyRequest()
+            sendMoneyRequest.email = email
+            sendMoneyRequest.phone = phone
+            sendMoneyRequest.recipientName = name
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(NewPaymentAmountFragment.newInstance(sendMoneyRequest))
+        }
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
-
+    override fun recyclerViewItemLongClicked(v: View, position: Int) {
+        mPresenter.deleteContact(mContactsAdapter.contacts[position])
     }
 
     companion object {

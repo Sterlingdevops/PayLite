@@ -88,7 +88,7 @@ class GetCashFragment : BaseFragment(), GetCashMvpView {
         mOthersNestedScrollView = view.findViewById(R.id.others_scrollview)
     }
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewItemClicked(v: View, position: Int) {
 
     }
 

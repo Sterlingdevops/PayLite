@@ -11,13 +11,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="60dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/floating_search_view"
+        app:layout_constraintTop_toBottomOf="@+id/backdrop2"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/layout_select_contact_item"/>
 
