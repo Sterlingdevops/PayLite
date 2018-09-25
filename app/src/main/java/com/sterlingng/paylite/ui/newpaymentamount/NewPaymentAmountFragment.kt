@@ -10,10 +10,7 @@ import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
-import com.sterlingng.paylite.data.model.SendMoneyRequest
-import com.sterlingng.paylite.data.model.UpdateWallet
-import com.sterlingng.paylite.data.model.Wallet
+import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
@@ -93,6 +90,8 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     }
 
     override fun setUp(view: View) {
+        mPresenter.loadCachedWallet()
+
         val request = arguments?.getParcelable<SendMoneyRequest>(REQUEST)
 
         exit.setOnClickListener {
@@ -215,6 +214,8 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     }
 
     override fun onSendMoneySuccessful(wallet: Wallet) {
+        val contact = arguments?.getParcelable<PayliteContact>(CONTACT)!!
+        if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
         eventBus.post(UpdateWallet())
         (baseActivity as DashboardActivity).mNavController.clearStack()
     }
@@ -268,12 +269,15 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
 
     companion object {
 
-        const val REQUEST = "NewPaymentAmountFragment.REQUEST"
+        private const val REQUEST = "NewPaymentAmountFragment.REQUEST"
+        private const val CONTACT = "NewPaymentAmountFragment.CONTACT"
 
-        fun newInstance(request: SendMoneyRequest): NewPaymentAmountFragment {
+        @JvmOverloads
+        fun newInstance(request: SendMoneyRequest, contact: PayliteContact = PayliteContact()): NewPaymentAmountFragment {
             val fragment = NewPaymentAmountFragment()
             val args = Bundle()
             args.putParcelable(REQUEST, request)
+            args.putParcelable(CONTACT, contact)
             fragment.arguments = args
             return fragment
         }

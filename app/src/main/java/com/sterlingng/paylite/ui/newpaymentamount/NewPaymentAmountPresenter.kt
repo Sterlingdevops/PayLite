@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.ui.newpaymentamount
 
 import com.sterlingng.paylite.data.manager.DataManager
+import com.sterlingng.paylite.data.model.PayliteContact
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
@@ -18,6 +19,10 @@ import javax.inject.Inject
 class NewPaymentAmountPresenter<V : NewPaymentAmountMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), NewPaymentAmountMvpContract<V> {
+
+    override fun saveContact(contact: PayliteContact) {
+        dataManager.saveContact(contact)
+    }
 
     override fun sendMoney(data: HashMap<String, Any>) {
         val user = dataManager.getCurrentUser()

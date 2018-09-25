@@ -90,7 +90,7 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
 
             val request = SendMoneyRequest()
             val contact = PayliteContact()
-            contact.id = System.currentTimeMillis().toString()
+            contact.id = mRecipientNameEditText.text.toString().toLowerCase()
             contact.name = mRecipientNameEditText.text.toString()
 
             if (mPhoneEmailEditText.text.toString().isValidEmail()) {
@@ -105,12 +105,14 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
             request.paymentReference = System.currentTimeMillis().toString()
 
             if (mSaveRecipientSwitch.isChecked) {
-                mPresenter.saveContact(contact)
+                (baseActivity as DashboardActivity)
+                        .mNavController
+                        .pushFragment(NewPaymentAmountFragment.newInstance(request, contact))
+            } else {
+                (baseActivity as DashboardActivity)
+                        .mNavController
+                        .pushFragment(NewPaymentAmountFragment.newInstance(request))
             }
-
-            (baseActivity as DashboardActivity)
-                    .mNavController
-                    .pushFragment(NewPaymentAmountFragment.newInstance(request))
         }
 
         mPhoneEmailEditText.setOnTouchListener { _, event ->
