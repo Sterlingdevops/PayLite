@@ -4,6 +4,9 @@ import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.authpin.AuthPinFragment
+import com.sterlingng.paylite.ui.banktransfers.BankTransferFragment
+import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsFragment
+import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
@@ -146,7 +149,13 @@ interface ActivityComponent {
 
     fun inject(selectContactsFragment: SelectContactsFragment)
 
+    fun inject(bankTransferFragment: BankTransferFragment)
+
     fun inject(authPinFragment: AuthPinFragment)
 
     fun inject(loginAndSecurityFragment: LoginAndSecurityFragment)
+
+    fun inject(newBankTransferFragment: NewBankTransferFragment)
+
+    fun inject(contactsFragment: ContactsFragment)
 }

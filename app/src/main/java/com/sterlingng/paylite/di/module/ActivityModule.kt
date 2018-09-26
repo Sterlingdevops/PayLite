@@ -18,6 +18,9 @@ import com.sterlingng.paylite.ui.airtime.AirTimePresenter
 import com.sterlingng.paylite.ui.authpin.AuthPinMvpContract
 import com.sterlingng.paylite.ui.authpin.AuthPinMvpView
 import com.sterlingng.paylite.ui.authpin.AuthPinPresenter
+import com.sterlingng.paylite.ui.banktransfers.BankTransferMvpContract
+import com.sterlingng.paylite.ui.banktransfers.BankTransferMvpView
+import com.sterlingng.paylite.ui.banktransfers.BankTransferPresenter
 import com.sterlingng.paylite.ui.bills.BillsMvpContract
 import com.sterlingng.paylite.ui.bills.BillsMvpView
 import com.sterlingng.paylite.ui.bills.BillsPresenter
@@ -27,8 +30,8 @@ import com.sterlingng.paylite.ui.cashoutbank.CashOutPresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
-import com.sterlingng.paylite.ui.contacts.ContactsMvpContract
-import com.sterlingng.paylite.ui.contacts.ContactsMvpView
+import com.sterlingng.paylite.ui.contacts.SelectContactsMvpContract
+import com.sterlingng.paylite.ui.contacts.SelectContactsMvpView
 import com.sterlingng.paylite.ui.contacts.SelectContactPresenter
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
@@ -91,9 +94,9 @@ import com.sterlingng.paylite.ui.request.RequestPresenter
 import com.sterlingng.paylite.ui.request.custom.CustomRequestMvpContract
 import com.sterlingng.paylite.ui.request.custom.CustomRequestMvpView
 import com.sterlingng.paylite.ui.request.custom.CustomRequestPresenter
-import com.sterlingng.paylite.ui.scheduled.ScheduledMvpContract
+import com.sterlingng.paylite.ui.banktransfers.contacts.ScheduledMvpContract
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpView
-import com.sterlingng.paylite.ui.scheduled.ScheduledPresenter
+import com.sterlingng.paylite.ui.banktransfers.contacts.ScheduledPresenter
 import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpContract
 import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpView
 import com.sterlingng.paylite.ui.security.LoginAndSecurityPresenter
@@ -329,7 +332,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideOnBoardingPresenter(presenter: OnBoardingPresenter<OnBoardingMvpView>): OnBoardingMvpContract<OnBoardingMvpView> = presenter
 
     @Provides
-    internal fun provideSelectContactPresenter(presenter: SelectContactPresenter<ContactsMvpView>): ContactsMvpContract<ContactsMvpView> = presenter
+    internal fun provideSelectContactPresenter(presenter: SelectContactPresenter<SelectContactsMvpView>): SelectContactsMvpContract<SelectContactsMvpView> = presenter
 
     @Provides
     internal fun provideCategoriesPresenter(presenter: CategoriesPresenter<CategoriesMvpView>): CategoriesMvpContract<CategoriesMvpView> = presenter
@@ -341,11 +344,14 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideEmailForgotPresenter(presenter: EmailForgotPresenter<EmailForgotMvpView>): EmailForgotMvpContract<EmailForgotMvpView> = presenter
 
     @Provides
-    internal fun provideLoginAndSecurityPresenter(presenter: LoginAndSecurityPresenter<LoginAndSecurityMvpView>): LoginAndSecurityMvpContract<LoginAndSecurityMvpView> = presenter
-
-    @Provides
     internal fun provideSplitContactPresenter(presenter: SplitContactPresenter<SplitContactMvpView>): SplitContactMvpContract<SplitContactMvpView> = presenter
 
     @Provides
+    internal fun provideBankTransferPresenter(presenter: BankTransferPresenter<BankTransferMvpView>): BankTransferMvpContract<BankTransferMvpView> = presenter
+
+    @Provides
     internal fun provideCustomRequestPresenter(presenter: CustomRequestPresenter<CustomRequestMvpView>): CustomRequestMvpContract<CustomRequestMvpView> = presenter
+
+    @Provides
+    internal fun provideLoginAndSecurityPresenter(presenter: LoginAndSecurityPresenter<LoginAndSecurityMvpView>): LoginAndSecurityMvpContract<LoginAndSecurityMvpView> = presenter
 }

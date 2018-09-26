@@ -23,10 +23,10 @@ import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import javax.inject.Inject
 
-class SelectContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClickListener,
+class SelectContactsFragment : BaseFragment(), SelectContactsMvpView, RecyclerViewClickListener,
         SelectContactAdapter.OnRetryClicked, BaseActivity.OnBackClicked {
     @Inject
-    lateinit var mPresenter: ContactsMvpContract<ContactsMvpView>
+    lateinit var mPresenter: SelectContactsMvpContract<SelectContactsMvpView>
 
     @Inject
     lateinit var eventBus: EventBus
@@ -180,9 +180,9 @@ class SelectContactsFragment : BaseFragment(), ContactsMvpView, RecyclerViewClic
 
     companion object {
 
-        private const val DATA = "SelectContactsFragment.DATA"
-        private const val TITLE = "SelectContactsFragment.TITLE"
-        private const val POSITION = "SelectContactsFragment.POSITION"
+        private const val DATA = "SelectSelectContactsFragment.DATA"
+        private const val TITLE = "SelectSelectContactsFragment.TITLE"
+        private const val POSITION = "SelectSelectContactsFragment.POSITION"
 
         fun newInstance(title: String, position: Int, data: ArrayList<ContactItem>): SelectContactsFragment {
             val dialog = SelectContactsFragment()

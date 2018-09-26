@@ -1,18 +1,17 @@
-package com.sterlingng.paylite.ui.scheduled
+package com.sterlingng.paylite.ui.banktransfers.newbanktransfer
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.ui.banktransfers.contacts.ScheduledMvpContract
 import com.sterlingng.paylite.ui.base.BaseFragment
 import javax.inject.Inject
 
-class ScheduledFragment : BaseFragment(), ScheduledMvpView {
+class NewBankTransferFragment : BaseFragment(), NewBankTransferMvpView {
 
     @Inject
-    lateinit var mPresenter: ScheduledMvpContract<ScheduledMvpView>
+    lateinit var mPresenter: NewBankTransferMvpContract<NewBankTransferMvpView>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_scheduled, container, false)
@@ -36,8 +35,8 @@ class ScheduledFragment : BaseFragment(), ScheduledMvpView {
 
     companion object {
 
-        fun newInstance(): ScheduledFragment {
-            val fragment = ScheduledFragment()
+        fun newInstance(): NewBankTransferFragment {
+            val fragment = NewBankTransferFragment()
             val args = Bundle()
 
             fragment.arguments = args

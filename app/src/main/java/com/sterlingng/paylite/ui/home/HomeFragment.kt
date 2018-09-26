@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.UpdateWallet
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.data.model.Wallet
@@ -103,8 +102,11 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
-        mPresenter.loadWallet()
+        mPresenter.loadCachedWallet()
         hideKeyboard()
+
+        mMainAmountTextView.text = String.format("₦%,.2f",
+                (baseActivity as DashboardActivity).wallet.balance.toFloat())
 
         eventBus.observe(UpdateWallet::class.java)
                 .delay(1L, TimeUnit.MILLISECONDS)
@@ -171,17 +173,13 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         }
     }
 
+    override fun onGetWalletSuccessful(wallet: Wallet) {
+        mMainAmountTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
+    }
+
     @SuppressLint("SetTextI18n")
     override fun initView(currentUser: User?) {
         mUserGreetingTextView.text = "Hi ${currentUser?.firstName!!}"
-    }
-
-    override fun onGetWalletFailed(response: Response?) {
-        show(response?.message!!, true)
-    }
-
-    override fun onGetWalletSuccessful(wallet: Wallet) {
-        mMainAmountTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

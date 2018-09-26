@@ -154,7 +154,7 @@
     <TextView
         android:id="@+id/to_bank"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:padding="8dp"
         android:paddingEnd="0dp"
         android:paddingLeft="48dp"
@@ -167,7 +167,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@id/new_payment_ref"
-        tools:layout_editor_absoluteY="160dp"/>
+        />
 
     <TextView
         android:id="@+id/to_bank_ref"

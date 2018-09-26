@@ -166,7 +166,7 @@
     <string name="apr">APR</string>
     <string name="mar">MAR</string>
     <string name="feb">FEB</string>
-    <string name="balance_201_00">Balance ₦2,000.00</string>
+    <string name="balance_201_00">Balance ₦0.00</string>
     <string name="network_provider">Provider</string>
     <string name="mobile_top_up">Mobile Top-up</string>
     <string name="project">Project</string>
@@ -296,4 +296,5 @@
     <string name="note">Note</string>
     <string name="add_a_note">Add a note</string>
     <string name="no_saved_contacts">No Saved contacts</string>
+    <string name="bank_transfer">Bank Transfer</string>
 </resources>

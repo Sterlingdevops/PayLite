@@ -23,11 +23,13 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Bank
 import com.sterlingng.paylite.data.model.Contact
 import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
+import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.asString
 import java.util.HashMap
 import javax.inject.Inject
@@ -50,6 +52,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
 
     var contacts = ArrayList<Contact>()
     var banks = ArrayList<String>()
+    var wallet = Wallet()
 
     override fun onResume() {
         super.onResume()
@@ -112,6 +115,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
 
     override fun setUp() {
         mPresenter.loadBanks()
+        mPresenter.loadWallet()
 
         mBottomNavigationView.apply {
             setLargeTextSize(14f)
@@ -264,7 +268,15 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
     }
 
     override fun onGetBanksFailed(response: Response) {
+        Log.d(response.toString())
+    }
 
+    override fun onGetWalletFailed(response: Response) {
+        Log.d(response.toString())
+    }
+
+    override fun onGetWalletSuccessful(wallet: Wallet?) {
+        this.wallet = wallet!!
     }
 
     override fun logout() {
