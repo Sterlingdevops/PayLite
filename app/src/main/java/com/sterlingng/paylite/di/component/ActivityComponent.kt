@@ -19,6 +19,7 @@ import com.sterlingng.paylite.ui.forgot.reset.ResetFragment
 import com.sterlingng.paylite.ui.forgot.token.TokenFragment
 import com.sterlingng.paylite.ui.fund.FundFragment
 import com.sterlingng.paylite.ui.getcash.GetCashFragment
+import com.sterlingng.paylite.ui.help.HelpFragment
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.main.MainActivity
@@ -158,4 +159,6 @@ interface ActivityComponent {
     fun inject(newBankTransferFragment: NewBankTransferFragment)
 
     fun inject(contactsFragment: ContactsFragment)
+
+    fun inject(helpFragment: HelpFragment)
 }

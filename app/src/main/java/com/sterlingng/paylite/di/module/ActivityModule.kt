@@ -63,6 +63,9 @@ import com.sterlingng.paylite.ui.fund.FundPresenter
 import com.sterlingng.paylite.ui.getcash.GetCashMvpContract
 import com.sterlingng.paylite.ui.getcash.GetCashMvpView
 import com.sterlingng.paylite.ui.getcash.GetCashPresenter
+import com.sterlingng.paylite.ui.help.HelpMvpContract
+import com.sterlingng.paylite.ui.help.HelpMvpView
+import com.sterlingng.paylite.ui.help.HelpPresenter
 import com.sterlingng.paylite.ui.home.HomeMvpContract
 import com.sterlingng.paylite.ui.home.HomeMvpView
 import com.sterlingng.paylite.ui.home.HomePresenter
@@ -297,6 +300,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideBvnPresenter(presenter: BvnPresenter<BvnMvpView>): BvnMvpContract<BvnMvpView> = presenter
+
+    @Provides
+    internal fun provideHelpPresenter(presenter: HelpPresenter<HelpMvpView>): HelpMvpContract<HelpMvpView> = presenter
 
     @Provides
     internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter

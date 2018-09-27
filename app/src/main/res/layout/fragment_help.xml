@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:windowSoftInputMode="adjustPan"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineTop3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="16dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineLeft3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineRight3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineBottom3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="56dp"/>
+
+    <ImageView
+        android:id="@+id/exit"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:clickable="true"
+        android:contentDescription="@string/exit"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft3"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop3"
+        app:srcCompat="@drawable/chevron_left"/>
+</android.support.constraint.ConstraintLayout>
