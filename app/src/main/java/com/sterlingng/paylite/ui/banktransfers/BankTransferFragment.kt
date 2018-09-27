@@ -11,7 +11,6 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsFragment
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferFragment
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.paylite.utils.Log
 import com.sterlingng.views.CustomViewPager
@@ -65,8 +64,7 @@ class BankTransferFragment : BaseFragment(), BankTransferMvpView {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    mBalanceTextView.text = String.format("₦%,.2f",
-                            (baseActivity as DashboardActivity).wallet.balance.toFloat())
+
                 }
     }
 

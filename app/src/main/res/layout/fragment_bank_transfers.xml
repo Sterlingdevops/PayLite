@@ -79,7 +79,7 @@
         app:layout_constraintGuide_begin="16dp"/>
 
     <ImageView
-        android:id="@+id/exit2"
+        android:id="@+id/exit"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginLeft="16dp"

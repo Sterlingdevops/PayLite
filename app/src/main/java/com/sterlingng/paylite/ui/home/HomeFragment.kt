@@ -9,11 +9,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.UpdateWallet
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.airtime.AirTimeFragment
+import com.sterlingng.paylite.ui.authpin.AuthPinFragment
+import com.sterlingng.paylite.ui.authpin.OpenPinMode
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
@@ -103,10 +106,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
         mPresenter.loadCachedWallet()
+        mPresenter.loadWallet()
         hideKeyboard()
-
-        mMainAmountTextView.text = String.format("₦%,.2f",
-                (baseActivity as DashboardActivity).wallet.balance.toFloat())
 
         eventBus.observe(UpdateWallet::class.java)
                 .delay(1L, TimeUnit.MILLISECONDS)
@@ -145,7 +146,12 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         }
 
         mFundButton.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
+            when {
+                mPresenter.getAuthPin() -> (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
+                else -> (baseActivity as DashboardActivity)
+                        .mNavController
+                        .pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name))
+            }
         }
 
         mCashOutImageView.setOnClickListener {
@@ -175,6 +181,10 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     override fun onGetWalletSuccessful(wallet: Wallet) {
         mMainAmountTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
+    }
+
+    override fun onGetWalletFailed(response: Response) {
+
     }
 
     @SuppressLint("SetTextI18n")

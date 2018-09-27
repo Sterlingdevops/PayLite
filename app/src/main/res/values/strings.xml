@@ -297,4 +297,5 @@
     <string name="add_a_note">Add a note</string>
     <string name="no_saved_contacts">No Saved contacts</string>
     <string name="bank_transfer">Bank Transfer</string>
+    <string name="choose_a_bank">Choose a bank</string>
 </resources>

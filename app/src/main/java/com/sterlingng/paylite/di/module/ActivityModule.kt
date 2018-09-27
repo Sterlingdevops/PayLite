@@ -21,6 +21,12 @@ import com.sterlingng.paylite.ui.authpin.AuthPinPresenter
 import com.sterlingng.paylite.ui.banktransfers.BankTransferMvpContract
 import com.sterlingng.paylite.ui.banktransfers.BankTransferMvpView
 import com.sterlingng.paylite.ui.banktransfers.BankTransferPresenter
+import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsMvpContract
+import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsMvpView
+import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsPresenter
+import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferMvpContract
+import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferMvpView
+import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferPresenter
 import com.sterlingng.paylite.ui.bills.BillsMvpContract
 import com.sterlingng.paylite.ui.bills.BillsMvpView
 import com.sterlingng.paylite.ui.bills.BillsPresenter
@@ -30,9 +36,9 @@ import com.sterlingng.paylite.ui.cashoutbank.CashOutPresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
+import com.sterlingng.paylite.ui.contacts.SelectContactPresenter
 import com.sterlingng.paylite.ui.contacts.SelectContactsMvpContract
 import com.sterlingng.paylite.ui.contacts.SelectContactsMvpView
-import com.sterlingng.paylite.ui.contacts.SelectContactPresenter
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
@@ -94,9 +100,9 @@ import com.sterlingng.paylite.ui.request.RequestPresenter
 import com.sterlingng.paylite.ui.request.custom.CustomRequestMvpContract
 import com.sterlingng.paylite.ui.request.custom.CustomRequestMvpView
 import com.sterlingng.paylite.ui.request.custom.CustomRequestPresenter
-import com.sterlingng.paylite.ui.banktransfers.contacts.ScheduledMvpContract
+import com.sterlingng.paylite.ui.scheduled.ScheduledMvpContract
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpView
-import com.sterlingng.paylite.ui.banktransfers.contacts.ScheduledPresenter
+import com.sterlingng.paylite.ui.scheduled.ScheduledPresenter
 import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpContract
 import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpView
 import com.sterlingng.paylite.ui.security.LoginAndSecurityPresenter
@@ -303,6 +309,12 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideTokenPresenter(presenter: TokenPresenter<TokenMvpView>): TokenMvpContract<TokenMvpView> = presenter
+
+    @Provides
+    internal fun provideContactsPresenter(presenter: ContactsPresenter<ContactsMvpView>): ContactsMvpContract<ContactsMvpView> = presenter
+
+    @Provides
+    internal fun provideNewBankTransferPresenter(presenter: NewBankTransferPresenter<NewBankTransferMvpView>): NewBankTransferMvpContract<NewBankTransferMvpView> = presenter
 
     @Provides
     internal fun providePhonePresenter(presenter: PhonePresenter<PhoneMvpView>): PhoneMvpContract<PhoneMvpView> = presenter

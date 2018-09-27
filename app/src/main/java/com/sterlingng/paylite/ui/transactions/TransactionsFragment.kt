@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.views.CustomViewPager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -54,14 +53,17 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
 
         mSmartTabLayout.setViewPager(mViewPager)
 
-        disposable = Observable.timer(60L, TimeUnit.SECONDS)
+        disposable = Observable.timer(1L, TimeUnit.SECONDS)
                 .repeat()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    mBalanceTextView.text = String.format("₦%,.2f",
-                            (baseActivity as DashboardActivity).wallet.balance.toFloat())
+                    mPresenter.onViewInitialized()
                 }
+    }
+
+    override fun initView(wallet: Wallet) {
+        mBalanceTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
     }
 
     override fun bindViews(view: View) {
@@ -76,13 +78,11 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
 
     override fun onDetach() {
         super.onDetach()
-        Log.d("CategoriesFragment::onDetach")
         disposable.dispose()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("CategoriesFragment::onDestroy")
         disposable.dispose()
     }
 

@@ -11,6 +11,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
+import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import javax.inject.Inject
 
@@ -39,23 +40,35 @@ class PinFragment : BaseFragment(), PinMvpView {
 
         pinView.setPinViewEventListener { _, _ ->
             val password = pinView.value
-            if (password != (baseActivity as SignUpActivity).signUpRequest.password) {
-                show("Passwords do no match", true)
-                return@setPinViewEventListener
-            }
+            val index = arguments?.getInt(INDEX)!!
 
-            mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
+            Log.d((password == (baseActivity as SignUpActivity).signUpRequest.password).toString())
+
+            when (index) {
+                5 -> mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
+                6 -> {
+                    if (password == (baseActivity as SignUpActivity).signUpRequest.password)
+                        mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
+                    else
+                        show("Passwords do no match", true)
+                }
+            }
             hideKeyboard()
         }
 
         next.setOnClickListener {
             val password = pinView.value
-            if (password != (baseActivity as SignUpActivity).signUpRequest.password) {
-                show("Passwords do no match", true)
-                return@setOnClickListener
-            }
+            val index = arguments?.getInt(INDEX)!!
 
-            mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
+            when (index) {
+                5 -> mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
+                6 -> {
+                    if (password == (baseActivity as SignUpActivity).signUpRequest.password)
+                        mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
+                    else
+                        show("Passwords do no match", true)
+                }
+            }
             hideKeyboard()
         }
     }

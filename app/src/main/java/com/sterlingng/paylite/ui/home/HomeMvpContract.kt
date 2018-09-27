@@ -4,4 +4,6 @@ import com.sterlingng.paylite.ui.base.MvpPresenter
 
 interface HomeMvpContract<V : HomeMvpView> : MvpPresenter<V> {
     fun loadCachedWallet()
+    fun getAuthPin(): Boolean
+    fun loadWallet()
 }

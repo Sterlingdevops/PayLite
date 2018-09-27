@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.ui.banktransfers.contacts.ScheduledMvpContract
 import com.sterlingng.paylite.ui.base.BaseFragment
 import javax.inject.Inject
 

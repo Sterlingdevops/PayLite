@@ -41,7 +41,25 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
     }
 
     override fun setUp(view: View) {
-
+        val mode = OpenPinMode.valueOf(arguments?.getString(OPEN_PIN_MODE)!!)
+        when (mode) {
+            OpenPinMode.NONE -> {
+                mTitleTextView.text = ""
+                mSubTitleTextView.text = ""
+            }
+            OpenPinMode.VALIDATE_FOR_CHANGE -> {
+                mTitleTextView.text = "Change PIN"
+                mSubTitleTextView.text = "Enter your current PIN"
+            }
+            OpenPinMode.ENTER_NEW -> {
+                mTitleTextView.text = "Create a new Transaction PIN"
+                mSubTitleTextView.text = "Enter a PIN"
+            }
+            OpenPinMode.CONFIRM_NEW -> {
+                mTitleTextView.text = "Confirm PIN"
+                mSubTitleTextView.text = "Please re-enter your PIN"
+            }
+        }
 
         exit.setOnClickListener {
             baseActivity.onBackPressed()
@@ -70,6 +88,7 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
                     mPresenter.savePin(extra)
                     (baseActivity as DashboardActivity)
                             .mNavController.clearStack()
+                    hideKeyboard()
                 } else {
                     show("The PINs you entered do not match", true)
                 }
