@@ -1,12 +1,13 @@
-package com.sterlingng.paylite.ui.banktransfers.newbanktransfer
+package com.sterlingng.paylite.ui.banktransfers.banktransferamount
 
 import com.sterlingng.paylite.data.manager.DataManager
-import com.sterlingng.paylite.data.model.CashOutToBankAccountRequest
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
-import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.AppUtils.gson
+import com.sterlingng.paylite.utils.AppUtils.isJSONValid
+import com.sterlingng.paylite.utils.Log
+import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -14,19 +15,23 @@ import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 
-class NewBankTransferPresenter<V : NewBankTransferMvpView> @Inject
+class BankTransferAmountPresenter<V : BankTransferAmountMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), NewBankTransferMvpContract<V> {
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), BankTransferAmountMvpContract<V> {
 
-    override fun resolveBankAccount(accountNumber: String, bankCode: String) {
+    override fun bankTransfer(data: HashMap<String, Any>) {
+        val user = dataManager.getCurrentUser()
+        data["PhoneNumber"] = user?.phoneNumber!!
+
+        Log.d(data.toString())
+
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager
-                        .bankNameEnquiry(accountNumber, bankCode, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
+                dataManager.cashoutToBankAccount(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}", gson.toJson(data).sha256())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
-                            if (it is java.net.SocketTimeoutException) {
+                            if (it is SocketTimeoutException) {
                                 val response = Response()
                                 response.data = SocketTimeoutException()
                                 response.message = "Error!!! The server didn't respond fast enough and the request timed out"
@@ -34,8 +39,8 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 return@onErrorReturn response
                             } else {
                                 val raw = (it as HttpException).response().errorBody()?.string()
-                                if (AppUtils.isJSONValid(raw!!)) {
-                                    val response = AppUtils.gson.fromJson(raw, Response::class.java)
+                                if (isJSONValid(raw!!)) {
+                                    val response = gson.fromJson(raw, Response::class.java)
                                     response.code = it.code()
                                     return@onErrorReturn response
                                 }
@@ -49,17 +54,21 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         }
                         .subscribe {
                             if (it.response != null && it.response == "00") {
-                                val cashOutToBankAccountRequest: CashOutToBankAccountRequest = gson.fromJson(gson.toJson(it.data), CashOutToBankAccountRequest::class.java)
-                                mvpView.onResolveBankAccountSuccessful(cashOutToBankAccountRequest)
+                                Log.d(it.toString())
+                                mvpView.onBankTransferSuccessful()
                             } else {
                                 if (it.code == 401) {
                                     mvpView.logout()
                                 } else {
-                                    mvpView.onResolveBankAccountFailed()
+                                    mvpView.onBankTransferFailed(it)
                                 }
                             }
                             mvpView.hideLoading()
                         }
         )
+    }
+
+    override fun loadCachedWallet() {
+        dataManager.getWallet()?.let { mvpView.initView(it) }
     }
 }

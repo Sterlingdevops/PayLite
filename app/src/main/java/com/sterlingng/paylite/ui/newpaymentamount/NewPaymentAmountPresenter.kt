@@ -58,12 +58,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         .subscribe {
                             if (it.response != null && it.response == "00") {
                                 val wallet = gson.fromJson(gson.toJson(it.data), Wallet::class.java)
-//                                val type = object : TypeToken<HashMap<String, Any>>() {}.type
-//                                val d = gson.fromJson<HashMap<String, Any>>(gson.toJson(it.data), type)
-//                                val wallet = Wallet()
-//                                wallet.walletId = d["CustomerID"] as String
-//                                wallet.balance = d["AvailableBalance"] as Number
-//                                wallet.name = d["nuban"] as String
                                 dataManager.saveWallet(wallet)
                                 mvpView.hideLoading()
                                 mvpView.onSendMoneySuccessful(wallet)
@@ -80,6 +74,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     }
 
     override fun loadCachedWallet() {
-        mvpView.initView(dataManager.getWallet())
+        dataManager.getWallet()?.let { mvpView.initView(it) }
     }
 }

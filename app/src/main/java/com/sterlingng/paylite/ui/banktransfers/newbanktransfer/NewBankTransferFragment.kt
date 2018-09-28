@@ -7,12 +7,14 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Bank
-import com.sterlingng.paylite.data.model.BankNameEnquiry
+import com.sterlingng.paylite.data.model.CashOutToBankAccountRequest
+import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountFragment
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
@@ -29,8 +31,10 @@ class NewBankTransferFragment : BaseFragment(), NewBankTransferMvpView,
     private lateinit var mAccountNameTextView: TextView
     private lateinit var mChooseBankTextView: TextView
     private lateinit var mSaveRecipientSwitch: Switch
+    private lateinit var next: Button
 
     private var bankCode: String = ""
+    var cashOutRequest = CashOutToBankAccountRequest()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_new_bank_transfer, container, false)
@@ -41,6 +45,12 @@ class NewBankTransferFragment : BaseFragment(), NewBankTransferMvpView,
     }
 
     override fun setUp(view: View) {
+        next.setOnClickListener {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(BankTransferAmountFragment.newInstance(cashOutRequest))
+        }
+
         mSaveRecipientTextView.setOnClickListener {
             mSaveRecipientSwitch.toggle()
         }
@@ -58,6 +68,7 @@ class NewBankTransferFragment : BaseFragment(), NewBankTransferMvpView,
     }
 
     override fun bindViews(view: View) {
+        next = view.findViewById(R.id.next)
         mChooseBankTextView = view.findViewById(R.id.choose_bank)
         mAccountNameTextView = view.findViewById(R.id.account_name)
         mAccountNumberEditText = view.findViewById(R.id.account_number)
@@ -78,13 +89,14 @@ class NewBankTransferFragment : BaseFragment(), NewBankTransferMvpView,
 
     }
 
-
     override fun onResolveBankAccountFailed() {
         show("Unable to validate account number for the selected bank", true)
     }
 
-    override fun onResolveBankAccountSuccessful(bankNameEnquiry: BankNameEnquiry) {
-        mAccountNameTextView.text = bankNameEnquiry.beneficiaryName
+    override fun onResolveBankAccountSuccessful(cashOutToBankAccountRequest: CashOutToBankAccountRequest) {
+        cashOutRequest = cashOutToBankAccountRequest
+        cashOutRequest.toAccount = mAccountNumberEditText.text.toString()
+        mAccountNameTextView.text = cashOutToBankAccountRequest.beneficiaryName
     }
 
     override fun logout() {

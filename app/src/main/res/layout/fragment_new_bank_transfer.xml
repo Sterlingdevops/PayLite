@@ -102,7 +102,7 @@
         app:layout_constraintTop_toTopOf="@+id/save_recipient"/>
 
     <Button
-        android:id="@+id/next3"
+        android:id="@+id/next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

@@ -27,6 +27,9 @@ import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsPresenter
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferMvpContract
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferMvpView
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferPresenter
+import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountMvpContract
+import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountMvpView
+import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountPresenter
 import com.sterlingng.paylite.ui.bills.BillsMvpContract
 import com.sterlingng.paylite.ui.bills.BillsMvpView
 import com.sterlingng.paylite.ui.bills.BillsPresenter
@@ -372,4 +375,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideLoginAndSecurityPresenter(presenter: LoginAndSecurityPresenter<LoginAndSecurityMvpView>): LoginAndSecurityMvpContract<LoginAndSecurityMvpView> = presenter
+
+    @Provides
+    internal fun provideBankTransferAmountPresenter(presenter: BankTransferAmountPresenter<BankTransferAmountMvpView>): BankTransferAmountMvpContract<BankTransferAmountMvpView> = presenter
 }

@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.newpaymentamount
+package com.sterlingng.paylite.ui.banktransfers.banktransferamount
 
 import android.app.Dialog
 import android.os.Bundle
@@ -10,10 +10,11 @@ import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.*
+import com.sterlingng.paylite.data.model.CashOutToBankAccountRequest
+import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.tsongkha.spinnerdatepicker.DatePicker
@@ -23,12 +24,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-
-class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,
+class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
+        DatePickerDialog.OnDateSetListener,
         FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
-    lateinit var mPresenter: NewPaymentAmountMvpContract<NewPaymentAmountMvpView>
+    lateinit var mPresenter: BankTransferAmountMvpContract<BankTransferAmountMvpView>
 
     @Inject
     lateinit var eventBus: EventBus
@@ -59,40 +60,16 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     private lateinit var mBalanceTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_new_payment_amount, container, false)
+        val view = inflater.inflate(R.layout.fragment_bank_transfer_amount, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)
         return view
     }
 
-    override fun bindViews(view: View) {
-        exit = view.findViewById(R.id.exit)
-        next = view.findViewById(R.id.next)
-
-        mAmountReferenceEditText = view.findViewById(R.id.reference)
-        mAmountEditText = view.findViewById(R.id.amount)
-
-        mScheduleReferenceTextView = view.findViewById(R.id.schedule_payment_ref)
-        mScheduleRepeatSwitch = view.findViewById(R.id.schedule_switch)
-        mScheduleTextView = view.findViewById(R.id.schedule_payment)
-
-        mSetStartDateTextView = view.findViewById(R.id.set_start_date)
-        mStartDateTextView = view.findViewById(R.id.start_date)
-
-        mSetEndDateTextView = view.findViewById(R.id.set_end_date)
-        mEndDateTextView = view.findViewById(R.id.end_date)
-
-        mSetRepeatTextView = view.findViewById(R.id.set_repeat)
-        mRepeatTextView = view.findViewById(R.id.repeat)
-
-        mBalanceTextView = view.findViewById(R.id.balance)
-    }
-
     override fun setUp(view: View) {
+        val cashOutRequest: CashOutToBankAccountRequest = arguments?.getParcelable(CASH_OUT_REQUEST)!!
         mPresenter.loadCachedWallet()
-
-        val request = arguments?.getParcelable<SendMoneyRequest>(REQUEST)
 
         exit.setOnClickListener {
             baseActivity.onBackPressed()
@@ -105,15 +82,15 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
             }
 
             try {
-                request?.amount = mAmountEditText.text.toString()
+                cashOutRequest.amount = mAmountEditText.text.toString().toInt()
             } catch (e: NumberFormatException) {
                 show("Amount should be more than NGN100", true)
             }
 
-            request?.paymentReference = mAmountReferenceEditText.text.toString()
+            cashOutRequest.paymentReference = mAmountReferenceEditText.text.toString()
 
-            if (request?.amount?.toInt()!! >= 100) {
-                mPresenter.sendMoney(request.toHashMap())
+            if (cashOutRequest.amount >= 100) {
+                mPresenter.bankTransfer(cashOutRequest.toHashMap())
             } else {
                 show("Amount should be more than NGN100", true)
             }
@@ -203,32 +180,44 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         }
     }
 
+    override fun initView(wallet: Wallet) {
+        mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet.balance.toFloat())
+    }
+
     override fun logout() {
         show("Session has timed out", true)
         startActivity(MainActivity.getStartIntent(baseActivity))
         baseActivity.finish()
     }
 
-    override fun initView(wallet: Wallet) {
-        mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet.balance.toFloat())
-    }
+    override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
+        next = view.findViewById(R.id.next)
 
-    override fun onSendMoneySuccessful(wallet: Wallet) {
-        val contact = arguments?.getParcelable<PayliteContact>(CONTACT)!!
-        if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
-        eventBus.post(UpdateWallet())
-        (baseActivity as DashboardActivity).mNavController.clearStack()
-    }
+        mAmountReferenceEditText = view.findViewById(R.id.reference)
+        mAmountEditText = view.findViewById(R.id.amount)
 
-    override fun onSendMoneyFailed(response: Response) {
-        show("An error occurred while processing the transaction", true)
+        mScheduleReferenceTextView = view.findViewById(R.id.schedule_payment_ref)
+        mScheduleRepeatSwitch = view.findViewById(R.id.schedule_switch)
+        mScheduleTextView = view.findViewById(R.id.schedule_payment)
+
+        mSetStartDateTextView = view.findViewById(R.id.set_start_date)
+        mStartDateTextView = view.findViewById(R.id.start_date)
+
+        mSetEndDateTextView = view.findViewById(R.id.set_end_date)
+        mEndDateTextView = view.findViewById(R.id.end_date)
+
+        mSetRepeatTextView = view.findViewById(R.id.set_repeat)
+        mRepeatTextView = view.findViewById(R.id.repeat)
+
+        mBalanceTextView = view.findViewById(R.id.balance)
     }
 
     private fun showDatePicker(type: Int) {
         this.type = type
         SpinnerDatePickerDialogBuilder()
                 .context(baseActivity)
-                .callback(this@NewPaymentAmountFragment)
+                .callback(this@BankTransferAmountFragment)
                 .spinnerTheme(R.style.NumberPickerStyle)
                 .showTitle(true)
                 .defaultDate(now.get(Calendar.YEAR),
@@ -257,6 +246,14 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         }
     }
 
+    override fun onBankTransferSuccessful() {
+
+    }
+
+    override fun onBankTransferFailed(response: Response) {
+
+    }
+
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
         // 0-daily, 1-weekly, 2-monthly, 3-yearly
         mRepeatTextView.text = s
@@ -269,15 +266,12 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
 
     companion object {
 
-        private const val REQUEST = "NewPaymentAmountFragment.REQUEST"
-        private const val CONTACT = "NewPaymentAmountFragment.CONTACT"
+        private const val CASH_OUT_REQUEST = "BankTransferAmountFragment.CASH_OUT_REQUEST"
 
-        @JvmOverloads
-        fun newInstance(request: SendMoneyRequest, contact: PayliteContact = PayliteContact()): NewPaymentAmountFragment {
-            val fragment = NewPaymentAmountFragment()
+        fun newInstance(cashOutRequest: CashOutToBankAccountRequest): BankTransferAmountFragment {
+            val fragment = BankTransferAmountFragment()
             val args = Bundle()
-            args.putParcelable(REQUEST, request)
-            args.putParcelable(CONTACT, contact)
+            args.putParcelable(CASH_OUT_REQUEST, cashOutRequest)
             fragment.arguments = args
             return fragment
         }
