@@ -8,17 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsFragment
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferFragment
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.views.CustomViewPager
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class BankTransferFragment : BaseFragment(), BankTransferMvpView {
@@ -27,8 +22,6 @@ class BankTransferFragment : BaseFragment(), BankTransferMvpView {
     lateinit var mPresenter: BankTransferMvpContract<BankTransferMvpView>
 
     private lateinit var mPagerAdapter: CustomPagerAdapter
-
-    private lateinit var disposable: Disposable
 
     private lateinit var exit: ImageView
     private lateinit var mBalanceTextView: TextView
@@ -44,6 +37,8 @@ class BankTransferFragment : BaseFragment(), BankTransferMvpView {
     }
 
     override fun setUp(view: View) {
+        mPresenter.loadWallet()
+
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }
@@ -58,14 +53,10 @@ class BankTransferFragment : BaseFragment(), BankTransferMvpView {
         mViewPager.offscreenPageLimit = 2
 
         mSmartTabLayout.setViewPager(mViewPager)
+    }
 
-        disposable = Observable.timer(60L, TimeUnit.SECONDS)
-                .repeat()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-
-                }
+    override fun initView(wallet: Wallet) {
+        mBalanceTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
     }
 
     override fun bindViews(view: View) {
@@ -77,18 +68,6 @@ class BankTransferFragment : BaseFragment(), BankTransferMvpView {
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
 
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("BankTransferFragment::onDetach")
-        disposable.dispose()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("BankTransferFragment::onDestroy")
-        disposable.dispose()
     }
 
     companion object {

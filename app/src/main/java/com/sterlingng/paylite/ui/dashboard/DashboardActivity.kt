@@ -50,7 +50,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         get() = 3
 
     var contacts = ArrayList<Contact>()
-    var banks = ArrayList<String>()
+    var banks = ArrayList<Bank>()
 
     override fun onResume() {
         super.onResume()
@@ -262,7 +262,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
     }
 
     override fun onGetBanksSuccessful(banks: ArrayList<Bank>) {
-        banks.addAll(banks)
+        this.banks.addAll(banks)
     }
 
     override fun onGetBanksFailed(response: Response) {

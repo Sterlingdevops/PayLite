@@ -6,18 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sterlingng.views.ClickToSelectEditText
-        android:id="@+id/account_number2"
+    <TextView
+        android:id="@+id/choose_bank"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_light_blue_outline"
         android:drawableEnd="@drawable/chevron_down"
         android:drawableRight="@drawable/chevron_down"
         android:hint="@string/choose_a_bank"
-        android:imeOptions="actionDone"
-        android:inputType="number"
-        android:maxLength="10"
         android:padding="16dp"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight2"
         app:layout_constraintHorizontal_bias="0.0"
@@ -30,14 +28,28 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/background_light_blue_outline"
-        android:hint="@string/account_name"
+        android:hint="@string/account_number"
         android:inputType="phone"
         android:padding="16dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft2"
-        app:layout_constraintTop_toBottomOf="@+id/account_number2"/>
+        app:layout_constraintTop_toBottomOf="@+id/choose_bank"/>
+
+    <TextView
+        android:id="@+id/account_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_light_blue_outline"
+        android:hint="@string/account_name"
+        android:padding="16dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft2"
+        app:layout_constraintTop_toBottomOf="@+id/account_number"/>
 
     <TextView
         android:id="@+id/save_recipient"
@@ -51,7 +63,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft2"
-        app:layout_constraintTop_toBottomOf="@+id/account_number"/>
+        app:layout_constraintTop_toBottomOf="@+id/account_name"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop2"

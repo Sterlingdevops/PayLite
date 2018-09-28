@@ -2,4 +2,6 @@ package com.sterlingng.paylite.ui.banktransfers.newbanktransfer
 
 import com.sterlingng.paylite.ui.base.MvpPresenter
 
-interface NewBankTransferMvpContract<V : NewBankTransferMvpView> : MvpPresenter<V>
+interface NewBankTransferMvpContract<V : NewBankTransferMvpView> : MvpPresenter<V> {
+    fun resolveBankAccount(accountNumber: String, bankCode: String)
+}

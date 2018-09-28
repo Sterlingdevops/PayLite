@@ -8,4 +8,9 @@ import javax.inject.Inject
 
 class BankTransferPresenter<V : BankTransferMvpView> @Inject
 internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), BankTransferMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), BankTransferMvpContract<V> {
+
+    override fun loadWallet() {
+        dataManager.getWallet()?.let { mvpView.initView(it) }
+    }
+}

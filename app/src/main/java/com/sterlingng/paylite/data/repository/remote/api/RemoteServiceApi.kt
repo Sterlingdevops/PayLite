@@ -14,11 +14,19 @@ interface RemoteServiceApi {
 
     @GET("api/Paylite/GetUserDetails")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun getUser(@Query("mobile") mobile: String, @Header("Authorization") authorization: String): Observable<Response>
+    fun getUser(@Query("mobile") mobile: String,
+                @Header("Authorization") authorization: String): Observable<Response>
+
+    @GET("api/Paylite/BankNameEnquiry")
+    @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
+    fun bankNameEnquiry(@Query("accountNumber") accountNumber: String,
+                        @Query("destinationBankCode") bankCode: String,
+                        @Header("Authorization") authorization: String): Observable<Response>
 
     @GET("api/Paylite/GetFullWalletDetails")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun getWallet(@Query("mobile") mobile: String, @Header("Authorization") authorization: String): Observable<Response>
+    fun getWallet(@Query("mobile") mobile: String,
+                  @Header("Authorization") authorization: String): Observable<Response>
 
     @GET("api/Paylite/GetAllBanks")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
@@ -42,41 +50,64 @@ interface RemoteServiceApi {
 
     @POST("api/Paylite/RegisterUsers")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun signup(@Body data: HashMap<String, Any>, @Header("X-CS") hash: String): Observable<Response>
+    fun signup(@Body data: HashMap<String, Any>,
+               @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/SendOtp")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun sendOtp(@Body data: HashMap<String, Any>, @Header("X-CS") hash: String): Observable<Response>
+    fun sendOtp(@Body data: HashMap<String, Any>,
+                @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/SplitPayment")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun splitPayment(@Body data: HashMap<String, Any>, @Header("Authorization") authorization: String, @Header("X-CS") hash: String): Observable<Response>
+    fun splitPayment(@Body data: HashMap<String, Any>,
+                     @Header("Authorization") authorization: String,
+                     @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/SendForgotPasswordTokenForMail")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun sendOtpForgotPassword(@Body data: HashMap<String, Any>, @Header("Authorization") authorization: String, @Header("X-CS") hash: String): Observable<Response>
+    fun sendOtpForgotPassword(@Body data: HashMap<String, Any>,
+                              @Header("Authorization") authorization: String,
+                              @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/SendMoneyViaUserHandle")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun sendMoney(@Body data: HashMap<String, Any>, @Header("Authorization") authorization: String, @Header("X-CS") hash: String): Observable<Response>
+    fun sendMoney(@Body data: HashMap<String, Any>,
+                  @Header("Authorization") authorization: String,
+                  @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/SterlingAccountToWallet")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun fundWalletWithBankAccount(@Body data: HashMap<String, Any>, @Header("Authorization") authorization: String, @Header("X-CS") hash: String): Observable<Response>
+    fun fundWalletWithBankAccount(@Body data: HashMap<String, Any>,
+                                  @Header("Authorization") authorization: String,
+                                  @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/DebitAnyBankCard")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun fundWalletWithCard(@Body data: HashMap<String, Any>, @Header("Authorization") authorization: String, @Header("X-CS") hash: String): Observable<Response>
+    fun fundWalletWithCard(@Body data: HashMap<String, Any>,
+                           @Header("Authorization") authorization: String,
+                           @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/ValidateOtp")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun validateOtp(@Body data: HashMap<String, Any>, @Header("X-CS") hash: String): Observable<Response>
+    fun validateOtp(@Body data: HashMap<String, Any>,
+                    @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/RequestPaymentLink")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun requestPaymentLink(@Body data: HashMap<String, Any>, @Header("Authorization") authorization: String, @Header("X-CS") hash: String): Observable<Response>
+    fun requestPaymentLink(@Body data: HashMap<String, Any>,
+                           @Header("Authorization") authorization: String,
+                           @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/BuyAirtimeFromWallet")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
-    fun buyAirtime(@Body data: HashMap<String, Any>, @Header("Authorization") authorization: String, @Header("X-CS") hash: String): Observable<Response>
+    fun buyAirtime(@Body data: HashMap<String, Any>,
+                   @Header("Authorization") authorization: String,
+                   @Header("X-CS") hash: String): Observable<Response>
+
+    @POST("api/Paylite/CashoutToBankAccount")
+    @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
+    fun cashoutToBankAccount(@Body data: HashMap<String, Any>,
+                             @Header("Authorization") authorization: String,
+                             @Header("X-CS") hash: String): Observable<Response>
 }

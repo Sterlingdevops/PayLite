@@ -30,7 +30,8 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
         val startDate = "2018-01-01"
         val endDate = SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE).format(Date(System.currentTimeMillis()))
         compositeDisposable.add(
-                dataManager.getUserTransactions(dataManager.getCurrentUser()?.phoneNumber!!, endDate, startDate, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
+                dataManager.getUserTransactions(dataManager.getCurrentUser()?.phoneNumber!!,
+                        endDate, startDate, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
