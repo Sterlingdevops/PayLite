@@ -11,6 +11,6 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), AirTimeMvpContract<V> {
 
     override fun loadCachedWallet() {
-        mvpView.initView(dataManager.getWallet())
+        dataManager.getWallet()?.let { mvpView.initView(it) }
     }
 }

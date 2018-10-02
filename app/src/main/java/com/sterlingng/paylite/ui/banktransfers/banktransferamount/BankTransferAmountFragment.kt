@@ -91,7 +91,9 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
             cashOutRequest.paymentReference = mAmountReferenceEditText.text.toString()
 
             if (cashOutRequest.amount >= 100) {
-                mPresenter.bankTransfer(cashOutRequest.toHashMap())
+                if (cashOutRequest.destinationBankCode == "000001")
+                    mPresenter.bankTransferSterling(cashOutRequest.toHashMap())
+                else mPresenter.bankTransfer(cashOutRequest.toHashMap())
             } else {
                 show("Amount should be more than NGN100", true)
             }
@@ -253,7 +255,7 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
     }
 
     override fun onBankTransferFailed(response: Response) {
-
+        show("Server timed out, please try again", true)
     }
 
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {

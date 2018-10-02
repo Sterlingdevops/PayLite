@@ -18,6 +18,52 @@ class BankTransferAmountPresenter<V : BankTransferAmountMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), BankTransferAmountMvpContract<V> {
 
+    override fun bankTransferSterling(data: HashMap<String, Any>) {
+        val user = dataManager.getCurrentUser()
+        data["PhoneNumber"] = user?.phoneNumber!!
+
+        mvpView.showLoading()
+        compositeDisposable.add(
+                dataManager.cashoutToSterlingBankAccount(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}", gson.toJson(data).sha256())
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .onErrorReturn {
+                            if (it is SocketTimeoutException) {
+                                val response = Response()
+                                response.data = SocketTimeoutException()
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                response.response = "failed"
+                                return@onErrorReturn response
+                            } else {
+                                val raw = (it as HttpException).response().errorBody()?.string()
+                                if (isJSONValid(raw!!)) {
+                                    val response = gson.fromJson(raw, Response::class.java)
+                                    response.code = it.code()
+                                    return@onErrorReturn response
+                                }
+                                val response = Response()
+                                response.data = HttpException(retrofit2.Response.error<String>(500,
+                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
+                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                response.response = "failed"
+                                return@onErrorReturn response
+                            }
+                        }
+                        .subscribe {
+                            if (it.response != null && it.response == "00") {
+                                mvpView.onBankTransferSuccessful()
+                            } else {
+                                if (it.code == 401) {
+                                    mvpView.logout()
+                                } else {
+                                    mvpView.onBankTransferFailed(it)
+                                }
+                            }
+                            mvpView.hideLoading()
+                        }
+        )
+    }
+
     override fun bankTransfer(data: HashMap<String, Any>) {
         val user = dataManager.getCurrentUser()
         data["PhoneNumber"] = user?.phoneNumber!!

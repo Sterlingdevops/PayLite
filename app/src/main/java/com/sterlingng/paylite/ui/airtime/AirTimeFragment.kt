@@ -61,6 +61,8 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setUp(view: View) {
+        mPresenter.loadCachedWallet()
+
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }

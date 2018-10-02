@@ -41,6 +41,8 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
     }
 
     override fun setUp(view: View) {
+        mPinView.requestPinEntryFocus()
+
         val mode = OpenPinMode.valueOf(arguments?.getString(OPEN_PIN_MODE)!!)
         when (mode) {
             OpenPinMode.NONE -> {
