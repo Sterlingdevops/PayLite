@@ -34,7 +34,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun loadCachedWallet() {
         dataManager.getWallet()?.let {
             mvpView.onGetWalletSuccessful(it)
-            Log.d(it.toString())
         }
     }
 

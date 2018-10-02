@@ -87,7 +87,6 @@ class ForgotActivity : BaseActivity(), ForgotMvpView, OnChildDidClickNext {
             }
             3 -> {
                 val response = data as Response
-                Log.d(response.toString())
             }
         }
         mViewPager.currentItem = index % mPagerAdapter.count

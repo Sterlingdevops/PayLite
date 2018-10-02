@@ -15,9 +15,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), AuthPinMvpContract<V> {
 
     override fun validate(pinText: String): Boolean {
-        Log.d(dataManager.getCurrentUser()?.toString()!!)
-        Log.d(dataManager.getPin(dataManager.getCurrentUser()?.phoneNumber!!).toString())
-
         return dataManager.getPin(dataManager.getCurrentUser()?.phoneNumber!!)?.pin == pinText.encryptAES(PIN_KEY)
     }
 

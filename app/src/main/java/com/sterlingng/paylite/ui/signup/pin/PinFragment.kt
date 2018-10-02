@@ -42,8 +42,6 @@ class PinFragment : BaseFragment(), PinMvpView {
             val password = pinView.value
             val index = arguments?.getInt(INDEX)!!
 
-            Log.d((password == (baseActivity as SignUpActivity).signUpRequest.password).toString())
-
             when (index) {
                 5 -> mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
                 6 -> {
@@ -84,6 +82,7 @@ class PinFragment : BaseFragment(), PinMvpView {
     }
 
     override fun onDoSignUpFailed(response: Response) {
+        Log.d(response.toString())
         show("An error occurred while processing your request", true)
     }
 

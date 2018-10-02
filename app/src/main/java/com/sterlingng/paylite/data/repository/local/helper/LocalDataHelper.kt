@@ -141,7 +141,6 @@ constructor() : LocalDataInterface {
             cards.forEach { it.default = false }
             banks.forEach { it.default = it.accountnumber == bank.accountnumber }
             val items = getRealm().copyToRealmOrUpdate(banks.map { it.asBankRealm() })
-            Log.d(gson.toJson(items.map { it.asBank() }))
         } catch (e: IllegalArgumentException) {
             Log.e(e, "LocalDataHelper->setBankDefault")
         } finally {

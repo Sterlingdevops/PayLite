@@ -15,6 +15,7 @@ import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.tsongkha.spinnerdatepicker.DatePicker
@@ -247,7 +248,8 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
     }
 
     override fun onBankTransferSuccessful() {
-
+        show("Transaction successful", true)
+        (baseActivity as DashboardActivity).mNavController.clearStack()
     }
 
     override fun onBankTransferFailed(response: Response) {

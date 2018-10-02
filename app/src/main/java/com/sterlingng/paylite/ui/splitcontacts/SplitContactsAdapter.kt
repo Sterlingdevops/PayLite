@@ -27,7 +27,7 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(mContext).inflate(R.layout.layout_add_contact_item, parent, false)
-        return ViewHolder(view, mRecyclerViewClickListener, ContactAmountTextWatcher())
+        return ViewHolder(view, mRecyclerViewClickListener, ContactNameTextWatcher(), ContactAmountTextWatcher())
     }
 
     override fun getSwipeLayoutResourceId(adapterPosition: Int): Int = R.id.swipe
@@ -63,6 +63,8 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mContactAmountTextWatcher.updatePosition(holder.adapterPosition)
+        holder.mContactNameTextWatcher.updatePosition(holder.adapterPosition)
+
         holder.chooseContactEditText.setText(contacts[holder.adapterPosition].contact)
         holder.contactAmountEditText.setText(contacts[holder.adapterPosition].amount)
     }
@@ -71,16 +73,20 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
     inner class ViewHolder(itemView: View,
                            recyclerViewClickListener: RecyclerViewClickListener,
+                           contactNameTextWatcher: ContactNameTextWatcher,
                            contactAmountTextWatcher: ContactAmountTextWatcher) : RecyclerView.ViewHolder(itemView) {
 
         private val swipeLayout: SwipeLayout = itemView.findViewById(R.id.swipe)
         private val deleteContactTextView: TextView = itemView.findViewById(R.id.delete)
         val chooseContactEditText: EditText = itemView.findViewById(R.id.choose_contact)
         val contactAmountEditText: EditText = itemView.findViewById(R.id.contact_amount)
+
+        val mContactNameTextWatcher: ContactNameTextWatcher = contactNameTextWatcher
         val mContactAmountTextWatcher: ContactAmountTextWatcher = contactAmountTextWatcher
 
         init {
             contactAmountEditText.addTextChangedListener(contactAmountTextWatcher)
+            chooseContactEditText.addTextChangedListener(contactNameTextWatcher)
             swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
 
             chooseContactEditText.setOnTouchListener { view, event ->
@@ -100,6 +106,26 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
     companion object {
         const val DRAWABLE_RIGHT = 2
+    }
+
+    inner class ContactNameTextWatcher : TextWatcher {
+        var index: Int = -1
+
+        fun updatePosition(position: Int) {
+            this.index = position
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            contacts[index].contact = s?.toString()!!
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+        }
     }
 
     inner class ContactAmountTextWatcher : TextWatcher {

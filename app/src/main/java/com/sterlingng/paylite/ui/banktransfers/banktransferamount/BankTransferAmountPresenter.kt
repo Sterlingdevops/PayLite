@@ -6,7 +6,6 @@ import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.AppUtils.isJSONValid
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
@@ -22,8 +21,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun bankTransfer(data: HashMap<String, Any>) {
         val user = dataManager.getCurrentUser()
         data["PhoneNumber"] = user?.phoneNumber!!
-
-        Log.d(data.toString())
 
         mvpView.showLoading()
         compositeDisposable.add(
@@ -54,7 +51,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         }
                         .subscribe {
                             if (it.response != null && it.response == "00") {
-                                Log.d(it.toString())
                                 mvpView.onBankTransferSuccessful()
                             } else {
                                 if (it.code == 401) {

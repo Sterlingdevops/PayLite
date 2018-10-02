@@ -19,9 +19,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ConfirmMvpContract<V> {
 
     override fun validatePin(value: String) {
-        Log.d(dataManager.getCurrentUser()?.toString()!!)
-        Log.d(dataManager.getPin(dataManager.getCurrentUser()?.phoneNumber!!).toString())
-
         if (dataManager.getPin(dataManager.getCurrentUser()?.phoneNumber!!)?.pin == value.encryptAES(PIN_KEY))
             mvpView.onPinEnteredCorrect()
         else mvpView.onPinEnteredIncorrect()

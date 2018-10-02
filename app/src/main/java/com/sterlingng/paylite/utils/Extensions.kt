@@ -31,7 +31,7 @@ fun String.toSentenceCase(): String {
 }
 
 fun String.initials(): String {
-    val parts = this.split(" ")
+    val parts = this.trim().split(" ")
     return if (parts.size > 1) "${parts[0][0]}${parts[1][0]}".toUpperCase() else "${parts[0][0]}".toUpperCase()
 }
 

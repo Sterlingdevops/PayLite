@@ -266,7 +266,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
     }
 
     override fun onGetBanksFailed(response: Response) {
-        Log.d(response.toString())
+
     }
 
     override fun logout() {

@@ -88,35 +88,36 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
 
         next.setOnClickListener {
             val request = SplitPaymentRequest()
+            val pattern = Pattern.compile("[0-9]{11}")
 
             mSplitContactsAdapter.contacts.forEach { contact ->
-                val pattern = Pattern.compile("[0-9]{11}")
                 val matcher = pattern.matcher(contact.contact)
-                if (!contact.contact.isValidEmail() && (contact.contact.length != 11 || !matcher.matches())) {
+
+                if (contact.contact.isValidEmail() || matcher.matches()) {
+                    try {
+                        contact.amount.toInt()
+                    } catch (e: NumberFormatException) {
+                        show("Invalid amounts entered for split participants", true)
+                        return@setOnClickListener
+                    }
+
+                    val person = SplitPerson()
+                    person.note = ""
+
+                    arguments?.getString(NOTE)?.let { note: String -> person.note = note }
+                    person.amount = contact.amount.toInt()
+
+                    if (contact.contact.isValidEmail()) {
+                        person.email = contact.contact
+                    } else {
+                        person.phone = contact.contact
+                    }
+
+                    request.split.add(person)
+                } else {
                     show("Please enter a valid email or phone number", true)
                     return@setOnClickListener
                 }
-
-                try {
-                    contact.amount.toInt()
-                } catch (e: NumberFormatException) {
-                    show("Invalid amounts entered for split participants", true)
-                    return@setOnClickListener
-                }
-
-                val person = SplitPerson()
-                person.note = ""
-
-                arguments?.getString(NOTE)?.let { note: String -> person.note = note }
-                person.amount = contact.amount.toInt()
-
-                if (contact.contact.isValidEmail()) {
-                    person.email = contact.contact
-                } else {
-                    person.phone = contact.contact
-                }
-
-                request.split.add(person)
             }
 
             arguments?.getString(AMOUNT)?.let { value: String -> request.amount = value }

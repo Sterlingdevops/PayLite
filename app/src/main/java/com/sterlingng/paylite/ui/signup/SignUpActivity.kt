@@ -7,7 +7,6 @@ import android.view.View
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.SignUpRequest
 import com.sterlingng.paylite.ui.base.BaseActivity
-import com.sterlingng.paylite.ui.signup.bvn.BvnFragment
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
 import com.sterlingng.paylite.ui.signup.email.EmailFragment
 import com.sterlingng.paylite.ui.signup.name.NameFragment
@@ -60,9 +59,6 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
         val confirmPinFragment = PinFragment.newInstance(6)
         confirmPinFragment.mDidClickNext = this
 
-        val bvnFragment = BvnFragment.newInstance(7)
-        bvnFragment.mDidClickNext = this
-
         val completeFragment = CompleteFragment.newInstance()
 
         mPagerAdapter.run {
@@ -111,13 +107,6 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
                 }
                 5 -> {
                     signUpRequest.password = data as String
-                }
-                6 -> {
-//                    val password = data as String
-//                    if (password != signUpRequest.password) {
-//                        show("Passwords do no match", true)
-//                        return@case
-//                    }
                 }
             }
             mViewPager.currentItem = index % mPagerAdapter.count
