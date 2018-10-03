@@ -24,28 +24,32 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
-import com.sterlingng.views.LargeLabelClickToSelectEditText
+import com.sterlingng.paylite.utils.toNumber
 import com.sterlingng.views.LargeLabelEditText
+import java.util.regex.Pattern
 import javax.inject.Inject
 
-class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
+class AirTimeFragment : BaseFragment(), AirTimeMvpView,
+        FilterBottomSheetFragment.OnFilterItemSelected,
+        ConfirmFragment.OnPinValidated {
 
     @Inject
     lateinit var mPresenter: AirTimeMvpContract<AirTimeMvpView>
 
     private lateinit var next: Button
     private lateinit var exit: ImageView
-    private lateinit var amount: EditText
+    private lateinit var mAmountEditText: EditText
     private lateinit var bundle: EditText
     private lateinit var provider: EditText
     private lateinit var phone: LargeLabelEditText
     private lateinit var mBalanceTextView: TextView
-    private lateinit var category: LargeLabelClickToSelectEditText<String>
+    private lateinit var category: LargeLabelEditText
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_air_time, container, false)
@@ -59,6 +63,19 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
         mBalanceTextView.text = String.format("Balance ₦%,.2f", wallet?.balance?.toFloat())
     }
 
+    override fun onPinCorrect() {
+        val data = HashMap<String, Any>()
+        data["NetworkProvider"] = provider.text.toString()
+        data["amount"] = mAmountEditText.text.toString()
+        data["PhoneNumber"] = "0${phone.text()}"
+        mPresenter.buyAirtime(data)
+        hideKeyboard()
+    }
+
+    override fun onPinIncorrect() {
+        show("The PIN entered is incorrect", true)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun setUp(view: View) {
         mPresenter.loadCachedWallet()
@@ -68,28 +85,43 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
         }
 
         next.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.showDialogFragment(ConfirmFragment.newInstance())
+            try {
+                val amount = mAmountEditText.text.toString().toNumber(0)
+                if (amount < 100) throw java.lang.NumberFormatException()
+
+                val pattern = Pattern.compile("[0-9]{10}")
+                val matcher = pattern.matcher(phone.text())
+                if (matcher.matches()) {
+                    val confirmFragment = ConfirmFragment.newInstance()
+                    confirmFragment.onPinValidatedListener = this
+                    (baseActivity as DashboardActivity).mNavController.showDialogFragment(confirmFragment)
+                } else {
+                    show("Please enter a phone number", true)
+                }
+            } catch (e: NumberFormatException) {
+                show("Enter an amount greater then 100", true)
+            }
         }
 
-        bundle.isClickable = true
-        bundle.setOnClickListener {
-            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
-            filterBottomSheetFragment.onFilterItemSelectedListener = this
-            filterBottomSheetFragment.selector = 1
-            filterBottomSheetFragment.title = "Select a bundle"
-            filterBottomSheetFragment.items = listOf("30MB - 24hrs", "300MB - 48hrs", "3000MB - 72hrs", "Unlimted - 1 month")
-            filterBottomSheetFragment.show(childFragmentManager, "filter")
-        }
+//        bundle.isClickable = true
+//        bundle.setOnClickListener {
+//            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
+//            filterBottomSheetFragment.onFilterItemSelectedListener = this
+//            filterBottomSheetFragment.selector = 1
+//            filterBottomSheetFragment.title = "Select a bundle"
+//            filterBottomSheetFragment.items = listOf("30MB - 24hrs", "300MB - 48hrs", "3000MB - 72hrs", "Unlimted - 1 month")
+//            filterBottomSheetFragment.show(childFragmentManager, "filter")
+//        }
 
-        category.mTextEditText.isClickable = true
-        category.mTextEditText.setOnClickListener {
-            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
-            filterBottomSheetFragment.onFilterItemSelectedListener = this
-            filterBottomSheetFragment.selector = 2
-            filterBottomSheetFragment.title = "Project"
-            filterBottomSheetFragment.items = listOf("Data bundle", "Mobile Top-up")
-            filterBottomSheetFragment.show(childFragmentManager, "filter")
-        }
+//        category.mTextEditText.isClickable = true
+//        category.mTextEditText.setOnClickListener {
+//            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
+//            filterBottomSheetFragment.onFilterItemSelectedListener = this
+//            filterBottomSheetFragment.selector = 2
+//            filterBottomSheetFragment.title = "Project"
+//            filterBottomSheetFragment.items = listOf("Data bundle", "Mobile Top-up")
+//            filterBottomSheetFragment.show(childFragmentManager, "filter")
+//        }
 
         provider.isClickable = true
         provider.setOnClickListener {
@@ -129,6 +161,20 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
             }
             return@setOnTouchListener false
         }
+    }
+
+    override fun onBuyAirtimeFailed(response: Response) {
+        show("An error occurred while processing the transaction", true)
+    }
+
+    override fun onBuyAirtimeSuccessful() {
+        (baseActivity as DashboardActivity)
+                .mNavController
+                .clearStack()
+    }
+
+    override fun logout() {
+        baseActivity.logout()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -227,10 +273,10 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView, FilterBottomSheetFragmen
         exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next)
         phone = view.findViewById(R.id.phone)
-        amount = view.findViewById(R.id.amount)
         bundle = view.findViewById(R.id.bundles)
         category = view.findViewById(R.id.category)
         provider = view.findViewById(R.id.provider)
+        mAmountEditText = view.findViewById(R.id.amount)
         mBalanceTextView = view.findViewById(R.id.balance)
     }
 

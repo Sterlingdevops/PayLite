@@ -101,6 +101,12 @@ interface RemoteServiceApi {
 
     @POST("api/Paylite/BuyAirtimeFromWallet")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
+    fun buyAirtimeFromWallet(@Body data: HashMap<String, Any>,
+                             @Header("Authorization") authorization: String,
+                             @Header("X-CS") hash: String): Observable<Response>
+
+    @POST("api/Paylite/BuyAirtimeFromWallet")
+    @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
     fun buyAirtime(@Body data: HashMap<String, Any>,
                    @Header("Authorization") authorization: String,
                    @Header("X-CS") hash: String): Observable<Response>
@@ -114,6 +120,6 @@ interface RemoteServiceApi {
     @POST("api/Paylite/CashoutToSterlingBankAccount")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
     fun cashoutToSterlingBankAccount(@Body data: HashMap<String, Any>,
-                             @Header("Authorization") authorization: String,
-                             @Header("X-CS") hash: String): Observable<Response>
+                                     @Header("Authorization") authorization: String,
+                                     @Header("X-CS") hash: String): Observable<Response>
 }

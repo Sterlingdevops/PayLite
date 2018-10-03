@@ -6,4 +6,5 @@ import com.sterlingng.paylite.ui.base.MvpPresenter
 @PerActivity
 interface AirTimeMvpContract<V : AirTimeMvpView> : MvpPresenter<V> {
     fun loadCachedWallet()
+    fun buyAirtime(data: HashMap<String, Any>)
 }

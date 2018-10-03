@@ -8,16 +8,18 @@
     <declare-styleable name="LargeLabelEditText">
         <attr name="maxLength" format="integer"/>
         <attr name="android:inputType"/>
-        <attr name="drawable"/>
+        <attr name="android:text"/>
         <attr name="textColor"/>
+        <attr name="drawable"/>
         <attr name="label"/>
         <attr name="hint"/>
     </declare-styleable>
 
     <declare-styleable name="LargeLabelClickToSelectEditText">
         <attr name="android:drawableTint"/>
-        <attr name="drawable"/>
+        <attr name="android:text"/>
         <attr name="textColor"/>
+        <attr name="drawable"/>
         <attr name="label"/>
         <attr name="hint"/>
     </declare-styleable>

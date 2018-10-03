@@ -107,7 +107,7 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         tools:targetApi="lollipop"/>
 
-    <com.sterlingng.views.LargeLabelClickToSelectEditText
+    <com.sterlingng.views.LargeLabelEditText
         android:id="@+id/category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -168,6 +168,7 @@
         android:padding="16dp"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -204,7 +205,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/amount"
-        app:maxLength="16"
+        app:maxLength="10"
         app:textColor="@color/blue_black_dark"/>
 
 </android.support.constraint.ConstraintLayout>
