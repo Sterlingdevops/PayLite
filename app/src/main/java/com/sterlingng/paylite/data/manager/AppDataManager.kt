@@ -27,6 +27,12 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun getSchedulePayments(mobile: String, authorization: String): Observable<Response> = mRemoteServiceHelper.getSchedulePayments(mobile, authorization)
+
+    override fun deleteSchedulePayments(mobile: String, reference: String, authorization: String): Observable<Response> = mRemoteServiceHelper.deleteSchedulePayments(mobile, reference, authorization)
+
+    override fun schedulePayments(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.schedulePayments(data, authorization, hash)
+
     override fun buyAirtimeFromWallet(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.buyAirtimeFromWallet(data, authorization, hash)
 
     override fun cashoutToSterlingBankAccount(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.cashoutToSterlingBankAccount(data, authorization, hash)

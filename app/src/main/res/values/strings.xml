@@ -79,7 +79,7 @@
     <string name="send_money">Send Money</string>
     <string name="qr_payment">QR Payment</string>
     <string name="invite_friends">Invite Friends</string>
-    <string name="your_payment_link">Share your payment link with friends, clients or\n family members to request money from them</string>
+    <string name="your_payment_link">Share your payment link with friends, clients or family members to request money from them</string>
     <string name="yinka_oni">Yinka Oni</string>
     <string name="paylite_xyz_yinkaoni">paylite.xyz/yinkaoni</string>
     <string name="share_paylite_link">Share Paylite Link</string>
@@ -90,7 +90,7 @@
     <string name="qr_pay">QR Pay</string>
     <string name="quick_actions">Quick actions</string>
     <string name="pay_code">Pay Code</string>
-    <string name="you_habe_no_scheduled_payments_created">You have no scheduled payments</string>
+    <string name="you_have_no_scheduled_payments_created">You have no scheduled payments</string>
     <string name="create">Create</string>
     <string name="irrigation_2018">Irrigation 2018</string>
     <string name="agriculture">Agriculture</string>
@@ -119,7 +119,7 @@
     <string name="project_name_charity">Project Name / Charity</string>
     <string name="amount">Amount</string>
     <string name="schedule">Schedule Payment</string>
-    <string name="standing_order">Or Create a Standing Order</string>
+    <string name="standing_order">Create a Standing Order</string>
     <string name="payment_date">Payment date</string>
     <string name="_22_jun_2018">22 Jun, 2018</string>
     <string name="never">Never</string>
@@ -127,8 +127,8 @@
 
     <string name="transaction_name">Dekanla Desalu</string>
     <string name="transaction_time">Today, 12:00 AM</string>
-    <string name="transaction_amount">NGN 0.00</string>
-    <string name="transaction_amount_2">NGN 20,000.00</string>
+    <string name="transaction_amount">₦0.00</string>
+    <string name="transaction_amount_2">₦20,000.00</string>
     <string name="naira">₦</string>
 
     <string name="_continue">Continue</string>
@@ -298,4 +298,6 @@
     <string name="no_saved_contacts">No Saved contacts</string>
     <string name="bank_transfer">Bank Transfer</string>
     <string name="choose_a_bank">Choose a bank</string>
+    <string name="weekly_on_thursdays">Weekly on Thursdays</string>
+    <string name="amount_in_naira">₦%1$s</string>
 </resources>

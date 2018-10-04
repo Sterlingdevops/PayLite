@@ -131,6 +131,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         mEndDateTextView.text = simpleDateFormat.format(Date())
 
         mScheduleTextView.setOnClickListener {
+            mScheduleRepeatSwitch.toggle()
             if (mScheduleRepeatSwitch.isChecked) {
                 mSetStartDateTextView.visibility = View.VISIBLE
                 mSetEndDateTextView.visibility = View.VISIBLE
@@ -149,6 +150,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         }
 
         mScheduleReferenceTextView.setOnClickListener {
+            mScheduleRepeatSwitch.toggle()
             if (mScheduleRepeatSwitch.isChecked) {
                 mSetStartDateTextView.visibility = View.VISIBLE
                 mSetEndDateTextView.visibility = View.VISIBLE
@@ -260,6 +262,27 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
         // 0-daily, 1-weekly, 2-monthly, 3-yearly
         mRepeatTextView.text = s
+        when (s.toLowerCase()) {
+            "never" -> {
+                mSetEndDateTextView.visibility = View.GONE
+            }
+
+            "daily" -> {
+                mSetEndDateTextView.visibility = View.VISIBLE
+            }
+
+            "weekly" -> {
+                mSetEndDateTextView.visibility = View.VISIBLE
+            }
+
+            "monthly" -> {
+                mSetEndDateTextView.visibility = View.VISIBLE
+            }
+
+            "yearly" -> {
+                mSetEndDateTextView.visibility = View.VISIBLE
+            }
+        }
         dialog.dismiss()
     }
 

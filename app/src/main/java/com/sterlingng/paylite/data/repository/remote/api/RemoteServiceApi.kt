@@ -28,6 +28,11 @@ interface RemoteServiceApi {
     fun getWallet(@Query("mobile") mobile: String,
                   @Header("Authorization") authorization: String): Observable<Response>
 
+    @GET("api/Paylite/GetSchedulePayments")
+    @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
+    fun getSchedulePayments(@Query("UserMobile") mobile: String,
+                            @Header("Authorization") authorization: String): Observable<Response>
+
     @GET("api/Paylite/GetAllBanks")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
     fun getBanks(@Header("Authorization") authorization: String): Observable<Response>
@@ -38,6 +43,14 @@ interface RemoteServiceApi {
                             @Query("toDate") toDate: String,
                             @Query("fromDate") fromDate: String,
                             @Header("Authorization") authorization: String): Observable<Response>
+
+    // DELETE
+
+    @DELETE("api/Paylite/GetUserTransactions")
+    @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
+    fun deleteSchedulePayments(@Query("UserMobile") mobile: String,
+                               @Query("Paymentrefid") reference: String,
+                               @Header("Authorization") authorization: String): Observable<Response>
 
     // POST
 
@@ -104,6 +117,12 @@ interface RemoteServiceApi {
     fun buyAirtimeFromWallet(@Body data: HashMap<String, Any>,
                              @Header("Authorization") authorization: String,
                              @Header("X-CS") hash: String): Observable<Response>
+
+    @POST("api/Paylite/SchedulePayments")
+    @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
+    fun schedulePayments(@Body data: HashMap<String, Any>,
+                         @Header("Authorization") authorization: String,
+                         @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/BuyAirtimeFromWallet")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")

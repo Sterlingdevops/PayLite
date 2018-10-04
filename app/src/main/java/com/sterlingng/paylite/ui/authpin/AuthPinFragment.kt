@@ -65,6 +65,7 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
 
         exit.setOnClickListener {
             baseActivity.onBackPressed()
+            hideKeyboard()
         }
 
         mPinView.setPinViewEventListener { _, _ ->

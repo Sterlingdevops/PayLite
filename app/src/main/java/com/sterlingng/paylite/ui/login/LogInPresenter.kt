@@ -36,7 +36,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
 //            mvpView.onUserNotRegistered()
 //            return
 //        }
-        data["username"] = "ejiro.akhibi@gmail.com" //"bsrtukpe@gmail.com" //dataManager.getCurrentUser()?.email!!
+        data["username"] = "bsrtukpe@gmail.com" //dataManager.getCurrentUser()?.email!! // "ejiro.akhibi@gmail.com"
 
         val username: String = (data["username"] as String).encryptAES(initializationVector)
         val password: String = (data["password"] as String).encryptAES(initializationVector)

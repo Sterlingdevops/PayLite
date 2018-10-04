@@ -8,4 +8,10 @@ import javax.inject.Inject
 
 class RequestPresenter<V : RequestMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), RequestMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), RequestMvpContract<V> {
+
+    override fun onViewInitialized() {
+        super.onViewInitialized()
+        dataManager.getCurrentUser()?.let { mvpView.initView(it) }
+    }
+}

@@ -4,7 +4,6 @@ import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Bank
 import com.sterlingng.paylite.data.model.Response
-import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils.gson

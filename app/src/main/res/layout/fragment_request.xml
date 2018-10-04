@@ -96,6 +96,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="128dp"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/share_paylite_link"
         android:scaleType="fitCenter"
         android:src="@drawable/share_link"
         app:layout_constraintBottom_toTopOf="@id/share"
@@ -105,7 +106,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/full_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -119,14 +120,15 @@
         app:layout_constraintTop_toBottomOf="@+id/circularImageView"/>
 
     <TextView
+        android:id="@+id/link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/paylite_xyz_yinkaoni"
         android:textAlignment="center"
         android:textAppearance="@style/MyAppearance"
-        app:layout_constraintEnd_toEndOf="@+id/textView6"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+        app:layout_constraintEnd_toEndOf="@+id/full_name"
+        app:layout_constraintStart_toStartOf="@+id/full_name"
+        app:layout_constraintTop_toBottomOf="@+id/full_name"/>
 
     <Button
         android:id="@+id/share"

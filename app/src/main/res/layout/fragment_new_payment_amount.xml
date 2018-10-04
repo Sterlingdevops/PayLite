@@ -82,7 +82,7 @@
     <TextView
         android:id="@+id/schedule_payment"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="43dp"
         android:layout_marginTop="8dp"
         android:padding="8dp"
         android:paddingEnd="0dp"
@@ -203,6 +203,7 @@
         android:text="@string/stop"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -224,7 +225,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/set_end_date"
         app:layout_constraintEnd_toEndOf="@+id/set_end_date"
         app:layout_constraintTop_toTopOf="@+id/set_end_date"/>
-
 
     <TextView
         android:id="@+id/set_repeat"

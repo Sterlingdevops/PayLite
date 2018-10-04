@@ -16,6 +16,7 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
+import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.utils.RecyclerViewLongClickListener
 import com.sterlingng.paylite.utils.then
 import com.sterlingng.views.NoScrollingLinearLayoutManager
@@ -93,11 +94,11 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClic
         }
 
         mScheduledRefTextView.setOnClickListener {
-
+            (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
         }
 
         mScheduledTextView.setOnClickListener {
-
+            (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
         }
 
         mSeeAllTextView.visibility = (mContactsAdapter.contacts.size == 0) then View.GONE ?: View.VISIBLE
