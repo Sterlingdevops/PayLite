@@ -4,10 +4,10 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class SendMoneyRequest() : Parcelable {
-    var email = ""
-    var phone = ""
-    var amount = ""
-    var repeatType = "-1"
+    var email: String = ""
+    var phone: String = ""
+    var amount: String = ""
+    var repeatType: String = "-1"
     var recipientName: String = ""
     var paymentReference: String = ""
 

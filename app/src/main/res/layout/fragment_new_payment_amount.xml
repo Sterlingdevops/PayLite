@@ -200,7 +200,7 @@
         android:paddingRight="0dp"
         android:paddingStart="0dp"
         android:paddingTop="16dp"
-        android:text="@string/stop"
+        android:text="@string/end_date"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
         android:visibility="gone"

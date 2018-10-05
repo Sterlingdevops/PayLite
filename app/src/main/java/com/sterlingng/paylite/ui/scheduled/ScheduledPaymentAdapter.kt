@@ -52,10 +52,10 @@ class ScheduledPaymentAdapter(private val mContext: Context) : RecyclerView.Adap
         notifyDataSetChanged()
     }
 
-    fun add(newpayments: ArrayList<ScheduledPayment>) {
-        newpayments += payments
+    fun add(newPayments: ArrayList<ScheduledPayment>) {
+        newPayments += payments
         val paymentsSet =
-                newpayments.asSequence()
+                newPayments.asSequence()
                         .sortedByDescending { it.reference }
                         .distinctBy { it.reference }.toList()
 

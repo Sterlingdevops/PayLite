@@ -8,4 +8,5 @@ interface NewPaymentAmountMvpContract<V : NewPaymentAmountMvpView> : MvpPresente
     fun loadCachedWallet()
     fun saveContact(contact: PayliteContact)
     fun sendMoney(data: HashMap<String, Any>)
+    fun schedulePayment(data: HashMap<String, Any>)
 }

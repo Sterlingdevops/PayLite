@@ -120,7 +120,7 @@
     <string name="amount">Amount</string>
     <string name="schedule">Schedule Payment</string>
     <string name="standing_order">Create a Standing Order</string>
-    <string name="payment_date">Payment date</string>
+    <string name="payment_date">Start date</string>
     <string name="_22_jun_2018">22 Jun, 2018</string>
     <string name="never">Never</string>
     <string name="repeat">Repeat</string>
@@ -228,7 +228,7 @@
     <string name="set_default_payment_method">Set as default payment method</string>
     <string name="choose_an_account_to_transfer_to">Choose an account to transfer to</string>
     <string name="set_default">Set as default</string>
-    <string name="amount_minimum_amount_of_n100">Amount (minimum amount of N100)</string>
+    <string name="amount_minimum_amount_of_n100">Amount</string>
     <string name="category">Category</string>
     <string name="bundles">Bundles</string>
     <string name="new_payment">New payment</string>
@@ -240,7 +240,7 @@
     <string name="save_recipient">Save recipient</string>
     <string name="phone_or_email">Phone or Email</string>
     <string name="frequent">FREQUENT</string>
-    <string name="stop">Stop</string>
+    <string name="end_date">End date</string>
     <string name="cancel">Cancel</string>
     <string name="account_name">Account Name</string>
     <string name="welcome_to_paylite">Welcome to Paylite</string>

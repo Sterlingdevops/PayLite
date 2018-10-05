@@ -16,12 +16,15 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.main.MainActivity
+import com.sterlingng.paylite.utils.isValidEmail
+import com.sterlingng.paylite.utils.then
 import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 
 class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,
@@ -33,7 +36,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     @Inject
     lateinit var eventBus: EventBus
 
-    private var now = Calendar.getInstance()
+    private var now: Calendar = Calendar.getInstance()
     private var type: Int = -1
 
     private lateinit var mScheduleReferenceTextView: TextView
@@ -134,14 +137,12 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
             mScheduleRepeatSwitch.toggle()
             if (mScheduleRepeatSwitch.isChecked) {
                 mSetStartDateTextView.visibility = View.VISIBLE
-                mSetEndDateTextView.visibility = View.VISIBLE
                 mStartDateTextView.visibility = View.VISIBLE
                 mSetRepeatTextView.visibility = View.VISIBLE
                 mEndDateTextView.visibility = View.VISIBLE
                 mRepeatTextView.visibility = View.VISIBLE
             } else {
                 mSetStartDateTextView.visibility = View.GONE
-                mSetEndDateTextView.visibility = View.GONE
                 mSetRepeatTextView.visibility = View.GONE
                 mStartDateTextView.visibility = View.GONE
                 mEndDateTextView.visibility = View.GONE
@@ -153,14 +154,12 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
             mScheduleRepeatSwitch.toggle()
             if (mScheduleRepeatSwitch.isChecked) {
                 mSetStartDateTextView.visibility = View.VISIBLE
-                mSetEndDateTextView.visibility = View.VISIBLE
                 mStartDateTextView.visibility = View.VISIBLE
                 mSetRepeatTextView.visibility = View.VISIBLE
                 mEndDateTextView.visibility = View.VISIBLE
                 mRepeatTextView.visibility = View.VISIBLE
             } else {
                 mSetStartDateTextView.visibility = View.GONE
-                mSetEndDateTextView.visibility = View.GONE
                 mSetRepeatTextView.visibility = View.GONE
                 mStartDateTextView.visibility = View.GONE
                 mEndDateTextView.visibility = View.GONE
@@ -189,14 +188,12 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         mScheduleRepeatSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 mSetStartDateTextView.visibility = View.VISIBLE
-                mSetEndDateTextView.visibility = View.VISIBLE
                 mStartDateTextView.visibility = View.VISIBLE
                 mSetRepeatTextView.visibility = View.VISIBLE
                 mEndDateTextView.visibility = View.VISIBLE
                 mRepeatTextView.visibility = View.VISIBLE
             } else {
                 mSetStartDateTextView.visibility = View.GONE
-                mSetEndDateTextView.visibility = View.GONE
                 mSetRepeatTextView.visibility = View.GONE
                 mStartDateTextView.visibility = View.GONE
                 mEndDateTextView.visibility = View.GONE
@@ -216,6 +213,47 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     }
 
     override fun onSendMoneySuccessful(wallet: Wallet) {
+        if (mScheduleRepeatSwitch.isChecked) {
+            val request = arguments?.getParcelable<SendMoneyRequest>(REQUEST)
+            val data = HashMap<String, Any>()
+
+            val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+
+            val end: Date = dateFormat.parse(mEndDateTextView.text.toString())
+            val start: Date = dateFormat.parse(mStartDateTextView.text.toString())
+
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+
+            val endDate = formatter.format(end)
+            val startDate = formatter.format(start)
+
+            data["interval"] = when (mRepeatTextView.text.toString().toLowerCase()) {
+                "daily" -> 1
+                "weekly" -> 2
+                "monthly" -> 3
+                "yearly" -> 4
+                else -> 0
+            }
+            data["amount"] = mAmountEditText.text.toString()
+            data["narration"] = mAmountReferenceEditText.text.toString()
+            data["payment_ref"] = System.currentTimeMillis().toString()
+            data["beneficiary"] = (request?.email?.isValidEmail()!!) then request.email ?: request.phone
+            data["end_date"] = endDate
+            data["start_date"] = startDate
+            mPresenter.schedulePayment(data)
+        } else {
+            val contact = arguments?.getParcelable<PayliteContact>(CONTACT)!!
+            if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
+            eventBus.post(UpdateWallet())
+            (baseActivity as DashboardActivity).mNavController.clearStack()
+        }
+    }
+
+    override fun onSchedulePaymentFailed() {
+        show("An error occurred while processing the transaction", true)
+    }
+
+    override fun onSchedulePaymentSuccessful() {
         val contact = arguments?.getParcelable<PayliteContact>(CONTACT)!!
         if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
         eventBus.post(UpdateWallet())

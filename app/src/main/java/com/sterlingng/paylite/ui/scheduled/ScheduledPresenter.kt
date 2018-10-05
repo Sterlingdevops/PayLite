@@ -23,8 +23,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
         mvpView.showLoading()
         compositeDisposable.add(
                 dataManager
-                        .getSchedulePayments("08039322440",//dataManager.getCurrentUser()?.phoneNumber!!,
-                                "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
+                        .getSchedulePayments(dataManager.getCurrentUser()?.phoneNumber!!, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
