@@ -19,6 +19,11 @@ class ScheduledPresenter<V : ScheduledMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ScheduledMvpContract<V> {
 
+    override fun onViewInitialized() {
+        super.onViewInitialized()
+        dataManager.getWallet()?.let { mvpView.initView(it, dataManager.getScheduledPayments()) }
+    }
+
     override fun loadScheduledPayments() {
         mvpView.showLoading()
         compositeDisposable.add(
@@ -52,6 +57,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             if (it.response != null && it.response == "00") {
                                 val type = object : TypeToken<ArrayList<ScheduledPayment>>() {}.type
                                 val payments: ArrayList<ScheduledPayment> = gson.fromJson(gson.toJson(it.data), type)
+                                dataManager.saveScheduledPayments(payments)
                                 mvpView.onScheduledPaymentsSuccessful(payments)
                             } else {
                                 if (it.code == 401) {

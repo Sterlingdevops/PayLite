@@ -63,4 +63,5 @@
     <color name="light_grey_green">#b6da90</color>
     <color name="darkish_pink">#d54694</color>
     <color name="icon_disabled">#FF63727B</color>
+    <color name="deep_orange">#d03602</color>
 </resources>

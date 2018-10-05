@@ -24,6 +24,7 @@ import com.sterlingng.paylite.ui.getcash.GetCashFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
+import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.splitamount.SplitAmountFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -43,8 +44,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mRequestMoneyImageView: ImageView
     private lateinit var mAirTimeDataImageView: ImageView
     private lateinit var mSendMoneyImageView: ImageView
-    private lateinit var mScheduledImageView: ImageView
     private lateinit var mSplitCostImageView: ImageView
+    private lateinit var mUpComingImageView: ImageView
     private lateinit var mPayBillsImageView: ImageView
     private lateinit var mCashOutImageView: ImageView
     private lateinit var mGetCashImageView: ImageView
@@ -52,8 +53,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mRequestMoneyTextView: TextView
     private lateinit var mAirTimeDataTextView: TextView
     private lateinit var mSendMoneyTextView: TextView
-    private lateinit var mScheduledTextView: TextView
     private lateinit var mSplitCostTextView: TextView
+    private lateinit var mUpComingTextView: TextView
     private lateinit var mPayBillsTextView: TextView
     private lateinit var mGetCashTextView: TextView
     private lateinit var mCashOutTextView: TextView
@@ -82,14 +83,14 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mSendMoneyImageView = view.findViewById(R.id.send_money)
         mSendMoneyTextView = view.findViewById(R.id.send_money_text)
 
+        mUpComingImageView = view.findViewById(R.id.upcoming)
+        mUpComingTextView = view.findViewById(R.id.upcoming_text)
+
         mRequestMoneyImageView = view.findViewById(R.id.payment_request)
         mRequestMoneyTextView = view.findViewById(R.id.payment_request_text)
 
         mCashOutImageView = view.findViewById(R.id.cash_out)
         mCashOutTextView = view.findViewById(R.id.cash_out_text)
-
-        mScheduledImageView = view.findViewById(R.id.scheduled)
-        mScheduledTextView = view.findViewById(R.id.scheduled_text)
 
         mMainAmountTextView = view.findViewById(R.id.main_amount)
         mFundButton = view.findViewById(R.id.fund)
@@ -176,6 +177,14 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         mGetCashTextView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(GetCashFragment.newInstance())
+        }
+
+        mUpComingImageView.setOnClickListener {
+            (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
+        }
+
+        mUpComingTextView.setOnClickListener {
+            (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
         }
     }
 

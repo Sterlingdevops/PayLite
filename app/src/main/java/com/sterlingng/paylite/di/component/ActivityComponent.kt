@@ -5,9 +5,9 @@ import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.authpin.AuthPinFragment
 import com.sterlingng.paylite.ui.banktransfers.BankTransferFragment
+import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountFragment
 import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsFragment
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferFragment
-import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
@@ -37,6 +37,7 @@ import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.security.LoginAndSecurityFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
+import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.ui.signup.bvn.BvnFragment
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
@@ -164,4 +165,6 @@ interface ActivityComponent {
     fun inject(helpFragment: HelpFragment)
 
     fun inject(bankTransferAmountFragment: BankTransferAmountFragment)
+
+    fun inject(scheduledTransactionFragment: ScheduledTransactionFragment)
 }

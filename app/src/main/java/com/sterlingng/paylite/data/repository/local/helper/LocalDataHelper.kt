@@ -4,7 +4,6 @@ import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.data.model.realms.*
 import com.sterlingng.paylite.data.repository.local.Migrations
 import com.sterlingng.paylite.data.repository.local.interfaces.LocalDataInterface
-import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.Log
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -16,6 +15,38 @@ import javax.inject.Inject
 
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
+
+    override fun deleteScheduledPayment(payment: ScheduledPayment) {
+        getRealm().beginTransaction()
+        try {
+            getRealm()
+                    .where(ScheduledRealm::class.java)
+                    .equalTo("reference", payment.reference)
+                    .findAll()
+                    .deleteAllFromRealm()
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->deleteScheduledPayment")
+        } finally {
+            getRealm().commitTransaction()
+        }
+    }
+
+    override fun getScheduledPayments(): ArrayList<ScheduledPayment> {
+        val payments = getRealm().where(ScheduledRealm::class.java).findAll()
+        return if (payments.size > 0) payments.asSequence().map { it.asScheduledPayment() }.toList() as ArrayList<ScheduledPayment>
+        else ArrayList()
+    }
+
+    override fun saveScheduledPayments(payments: ArrayList<ScheduledPayment>) {
+        getRealm().beginTransaction()
+        try {
+            getRealm().copyToRealmOrUpdate(payments.map { it.asScheduledRealm() })
+        } catch (e: IllegalArgumentException) {
+            Log.e(e, "LocalDataHelper->saveScheduledPayments")
+        } finally {
+            getRealm().commitTransaction()
+        }
+    }
 
     override fun getContacts(): ArrayList<PayliteContact> {
         val contacts =
@@ -54,12 +85,8 @@ constructor() : LocalDataInterface {
     }
 
     override fun getCards(): ArrayList<Card> {
-        val cards =
-                getRealm().where(CardRealm::class.java).findAll()
-        return if (cards.size > 0)
-            cards.map {
-                it.asCard()
-            } as ArrayList<Card>
+        val cards = getRealm().where(CardRealm::class.java).findAll()
+        return if (cards.size > 0) cards.map { it.asCard() } as ArrayList<Card>
         else ArrayList()
     }
 
@@ -109,12 +136,8 @@ constructor() : LocalDataInterface {
     }
 
     override fun getBanks(): ArrayList<Bank> {
-        val banks =
-                getRealm().where(BankRealm::class.java).findAll()
-        return if (banks.size > 0)
-            banks.map {
-                it.asBank()
-            } as ArrayList<Bank>
+        val banks = getRealm().where(BankRealm::class.java).findAll()
+        return if (banks.size > 0) banks.map { it.asBank() } as ArrayList<Bank>
         else ArrayList()
     }
 
@@ -318,7 +341,7 @@ constructor() : LocalDataInterface {
     }
 
     private val config: RealmConfiguration = RealmConfiguration.Builder()
-            .schemaVersion(12).migration(Migrations()).build()
+            .schemaVersion(13).migration(Migrations()).build()
     private val realm: Realm
 
     init {

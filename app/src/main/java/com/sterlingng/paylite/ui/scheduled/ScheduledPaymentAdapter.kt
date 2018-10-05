@@ -12,6 +12,8 @@ import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import com.sterlingng.paylite.utils.RecyclerViewLongClickListener
 import com.sterlingng.paylite.utils.initials
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ScheduledPaymentAdapter(private val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
@@ -107,13 +109,17 @@ class ScheduledPaymentAdapter(private val mContext: Context) : RecyclerView.Adap
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
 
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+
             with(payments[adapterPosition]) {
+                val date = formatter.parse(endDate)
                 contactNameTextView.text = beneficiaryId
                 contactRateTextView.text = when (interval) {
-                    1 -> "Daily"
-                    2 -> "Weekly"
-                    3 -> "Monthly"
-                    4 -> "Yearly"
+                    1 -> "Daily till ${dateFormat.format(date)}"
+                    2 -> "Weekly till ${dateFormat.format(date)}"
+                    3 -> "Monthly till ${dateFormat.format(date)}"
+                    4 -> "Yearly till ${dateFormat.format(date)}"
                     else -> "Never"
                 }
                 contactAmountTextView.text = mContext.getString(R.string.amount_in_naira, amount.toString())

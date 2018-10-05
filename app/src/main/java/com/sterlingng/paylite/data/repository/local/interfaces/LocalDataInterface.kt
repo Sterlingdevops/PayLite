@@ -33,9 +33,9 @@ interface LocalDataInterface {
 
     // pin
 
-    fun getPinRealm(phone: String): PinRealm?
-    fun getPin(phone: String): Pin?
     fun savePin(pin: Pin)
+    fun getPin(phone: String): Pin?
+    fun getPinRealm(phone: String): PinRealm?
 
     // wallet
 
@@ -46,21 +46,27 @@ interface LocalDataInterface {
 
     // card
 
-    fun getCards(): ArrayList<Card>
     fun saveCard(card: Card)
     fun setCardDefault(card: Card)
+    fun getCards(): ArrayList<Card>
     fun deleteCard(cardNumber: String)
 
     // bank
 
-    fun getBanks(): ArrayList<Bank>
     fun saveBank(bank: Bank)
     fun setBankDefault(bank: Bank)
+    fun getBanks(): ArrayList<Bank>
     fun deleteBank(accountNumber: String)
 
     // contacts
 
-    fun getContacts(): ArrayList<PayliteContact>
     fun saveContact(contact: PayliteContact)
     fun deleteContact(contact: PayliteContact)
+    fun getContacts(): ArrayList<PayliteContact>
+
+    // scheduled payments
+
+    fun deleteScheduledPayment(payment: ScheduledPayment)
+    fun getScheduledPayments(): ArrayList<ScheduledPayment>
+    fun saveScheduledPayments(payments: ArrayList<ScheduledPayment>)
 }

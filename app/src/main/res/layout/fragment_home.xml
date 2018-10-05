@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitish_gray"
+    android:background="@color/white"
     tools:context=".ui.home.HomeFragment">
 
     <ImageView
         android:id="@+id/payment_request"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="32dp"
         android:layout_marginStart="32dp"
         android:contentDescription="@string/payment_request"
@@ -23,14 +23,14 @@
         app:layout_constraintTop_toTopOf="@+id/cash_out"/>
 
     <ImageView
-        android:id="@+id/scheduled"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:id="@+id/upcoming"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="32dp"
         android:layout_marginStart="32dp"
-        android:contentDescription="@string/scheduled"
+        android:contentDescription="@string/upcoming"
         android:scaleType="centerInside"
-        android:src="@drawable/icon_scheduled"
+        android:src="@drawable/icon_upcoming_payments"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/airtime_data"
@@ -38,11 +38,11 @@
 
     <ImageView
         android:id="@+id/get_cash"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/get_cash"
         android:scaleType="centerInside"
         android:src="@drawable/icon_cash"
@@ -66,8 +66,8 @@
 
     <ImageView
         android:id="@+id/split_bill"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:contentDescription="@string/split_cost"
         android:scaleType="centerInside"
         android:src="@drawable/icon_split_bill"
@@ -91,8 +91,8 @@
 
     <ImageView
         android:id="@+id/nothing"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="32dp"
         android:layout_marginStart="32dp"
         android:contentDescription="@null"
@@ -105,11 +105,11 @@
 
     <ImageView
         android:id="@+id/send_money"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/send_money"
         android:scaleType="centerInside"
         android:src="@drawable/icon_send_money"
@@ -147,11 +147,11 @@
 
     <ImageView
         android:id="@+id/bill_payment"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/pay_bills"
         android:scaleType="centerInside"
         android:src="@drawable/icon_bills"
@@ -162,8 +162,8 @@
 
     <ImageView
         android:id="@+id/cash_out"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:contentDescription="@string/cash_out"
         android:scaleType="centerInside"
         android:src="@drawable/icon_my_bank"
@@ -186,16 +186,16 @@
         app:layout_constraintTop_toBottomOf="@+id/payment_request"/>
 
     <TextView
-        android:id="@+id/scheduled_text"
+        android:id="@+id/upcoming_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/upcoming"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/scheduled"
-        app:layout_constraintStart_toStartOf="@+id/scheduled"
-        app:layout_constraintTop_toBottomOf="@+id/scheduled"/>
+        app:layout_constraintEnd_toEndOf="@+id/upcoming"
+        app:layout_constraintStart_toStartOf="@+id/upcoming"
+        app:layout_constraintTop_toBottomOf="@+id/upcoming"/>
 
     <TextView
         android:id="@+id/send_money_text"
@@ -212,12 +212,12 @@
 
     <ImageView
         android:id="@+id/airtime_data"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:contentDescription="@string/payment_request"
         android:scaleType="centerInside"
         android:src="@drawable/icon_airtime"
-        app:layout_constraintEnd_toStartOf="@+id/scheduled"
+        app:layout_constraintEnd_toStartOf="@+id/upcoming"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bill_payment"
         app:layout_constraintTop_toTopOf="@+id/bill_payment"/>

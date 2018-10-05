@@ -27,6 +27,12 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun deleteScheduledPayment(payment: ScheduledPayment) = mLocalDataHelper.deleteScheduledPayment(payment)
+
+    override fun getScheduledPayments(): ArrayList<ScheduledPayment> = mLocalDataHelper.getScheduledPayments()
+
+    override fun saveScheduledPayments(payments: ArrayList<ScheduledPayment>) = mLocalDataHelper.saveScheduledPayments(payments)
+
     override fun getSchedulePayments(mobile: String, authorization: String): Observable<Response> = mRemoteServiceHelper.getSchedulePayments(mobile, authorization)
 
     override fun deleteSchedulePayments(mobile: String, reference: String, authorization: String): Observable<Response> = mRemoteServiceHelper.deleteSchedulePayments(mobile, reference, authorization)

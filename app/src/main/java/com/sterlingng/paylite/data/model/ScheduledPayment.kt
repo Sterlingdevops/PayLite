@@ -3,6 +3,7 @@ package com.sterlingng.paylite.data.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.sterlingng.paylite.data.model.realms.ScheduledRealm
 import com.sterlingng.paylite.utils.AppUtils.gson
 
 class ScheduledPayment() : Parcelable {
@@ -47,6 +48,25 @@ class ScheduledPayment() : Parcelable {
 
     @SerializedName("ActiveStatus")
     var active: String = ""
+
+    fun asScheduledRealm(): ScheduledRealm {
+        val scheduledRealm = ScheduledRealm()
+        scheduledRealm.userid = userId
+        scheduledRealm.status = status
+        scheduledRealm.active = active
+        scheduledRealm.amount = amount
+        scheduledRealm.enddate = endDate
+        scheduledRealm.interval = interval
+        scheduledRealm.dateadded = dateAdded
+        scheduledRealm.narration = narration
+        scheduledRealm.reference = reference
+        scheduledRealm.startdate = startDate
+        scheduledRealm.paymentref = paymentRef
+        scheduledRealm.datelastpaid = datelastPaid
+        scheduledRealm.beneficiaryid = beneficiaryId
+        scheduledRealm.numberoftimespaidout = numberOfTimesPaidOut
+        return scheduledRealm
+    }
 
     constructor(parcel: Parcel) : this() {
         reference = parcel.readInt()

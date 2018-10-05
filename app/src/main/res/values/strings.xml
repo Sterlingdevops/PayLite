@@ -119,7 +119,8 @@
     <string name="project_name_charity">Project Name / Charity</string>
     <string name="amount">Amount</string>
     <string name="schedule">Schedule Payment</string>
-    <string name="standing_order">Create a Standing Order</string>
+    <string name="create_a_standing_order">Create a Standing Order</string>
+    <string name="standing_order">Standing Order</string>
     <string name="payment_date">Start date</string>
     <string name="_22_jun_2018">22 Jun, 2018</string>
     <string name="never">Never</string>
@@ -299,5 +300,6 @@
     <string name="bank_transfer">Bank Transfer</string>
     <string name="choose_a_bank">Choose a bank</string>
     <string name="weekly_on_thursdays">Weekly on Thursdays</string>
-    <string name="amount_in_naira">₦%1$s</string>
+    <string name="amount_in_naira">₦%1$s.00</string>
+    <string name="edit_payment">Edit Payment</string>
 </resources>

@@ -21,15 +21,15 @@ import com.sterlingng.paylite.ui.authpin.AuthPinPresenter
 import com.sterlingng.paylite.ui.banktransfers.BankTransferMvpContract
 import com.sterlingng.paylite.ui.banktransfers.BankTransferMvpView
 import com.sterlingng.paylite.ui.banktransfers.BankTransferPresenter
+import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountMvpContract
+import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountMvpView
+import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountPresenter
 import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsMvpContract
 import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsMvpView
 import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsPresenter
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferMvpContract
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferMvpView
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferPresenter
-import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountMvpContract
-import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountMvpView
-import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAmountPresenter
 import com.sterlingng.paylite.ui.bills.BillsMvpContract
 import com.sterlingng.paylite.ui.bills.BillsMvpView
 import com.sterlingng.paylite.ui.bills.BillsPresenter
@@ -108,6 +108,7 @@ import com.sterlingng.paylite.ui.request.custom.CustomRequestMvpView
 import com.sterlingng.paylite.ui.request.custom.CustomRequestPresenter
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpContract
 import com.sterlingng.paylite.ui.scheduled.ScheduledMvpView
+import com.sterlingng.paylite.ui.scheduled.ScheduledPaymentAdapter
 import com.sterlingng.paylite.ui.scheduled.ScheduledPresenter
 import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpContract
 import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpView
@@ -118,6 +119,9 @@ import com.sterlingng.paylite.ui.send.SendMoneyPresenter
 import com.sterlingng.paylite.ui.settings.SettingsMvpContract
 import com.sterlingng.paylite.ui.settings.SettingsMvpView
 import com.sterlingng.paylite.ui.settings.SettingsPresenter
+import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionMvpContract
+import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionMvpView
+import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionPresenter
 import com.sterlingng.paylite.ui.signup.SignUpMvpContract
 import com.sterlingng.paylite.ui.signup.SignUpMvpView
 import com.sterlingng.paylite.ui.signup.SignUpPresenter
@@ -208,6 +212,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideGridLayoutManager(activity: AppCompatActivity): GridLayoutManager = GridLayoutManager(activity, 2)
+
+    @Provides
+    internal fun provideScheduledPaymentAdapter(activity: AppCompatActivity): ScheduledPaymentAdapter = ScheduledPaymentAdapter(activity)
 
     @Provides
     internal fun provideCustomPagerAdapter(activity: AppCompatActivity): CustomPagerAdapter = CustomPagerAdapter(activity.supportFragmentManager)
@@ -378,4 +385,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideBankTransferAmountPresenter(presenter: BankTransferAmountPresenter<BankTransferAmountMvpView>): BankTransferAmountMvpContract<BankTransferAmountMvpView> = presenter
+
+    @Provides
+    internal fun provideScheduledTransactionPresenter(presenter: ScheduledTransactionPresenter<ScheduledTransactionMvpView>): ScheduledTransactionMvpContract<ScheduledTransactionMvpView> = presenter
 }

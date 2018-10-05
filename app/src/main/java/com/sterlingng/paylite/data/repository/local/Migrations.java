@@ -175,5 +175,27 @@ public class Migrations implements RealmMigration {
             ;
             ++oldVersion;
         }
+
+        //version 13
+        if (oldVersion == 12) {
+            schema.create("ScheduledRealm")
+                    .addField("amount", int.class)
+                    .addField("interval", int.class)
+                    .addField("reference", int.class)
+                    .addField("numberoftimespaidout", int.class)
+                    .addField("active", String.class).setRequired("active", true)
+                    .addField("status", String.class).setRequired("status", true)
+                    .addField("userid", String.class).setRequired("userid", true)
+                    .addField("enddate", String.class).setRequired("enddate", true)
+                    .addField("narration", String.class).setRequired("narration", true)
+                    .addField("startdate", String.class).setRequired("startdate", true)
+                    .addField("dateadded", String.class).setRequired("dateadded", true)
+                    .addField("paymentref", String.class).setRequired("paymentref", true)
+                    .addField("datelastpaid", String.class).setRequired("datelastpaid", true)
+                    .addField("beneficiaryid", String.class).setRequired("beneficiaryid", true)
+                    .addPrimaryKey("reference")
+            ;
+            ++oldVersion;
+        }
     }
 }

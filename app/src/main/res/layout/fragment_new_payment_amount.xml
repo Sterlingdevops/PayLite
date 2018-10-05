@@ -106,7 +106,7 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
         android:paddingStart="0dp"
-        android:text="@string/standing_order"
+        android:text="@string/create_a_standing_order"
         android:textColor="@color/gray"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/schedule_payment"

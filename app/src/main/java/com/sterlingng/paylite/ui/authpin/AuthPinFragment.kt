@@ -90,7 +90,7 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
                 if (mPinView.value == extra) {
                     mPresenter.savePin(extra)
                     (baseActivity as DashboardActivity)
-                            .mNavController.clearStack()
+                            .mNavController.popFragments(2)
                     hideKeyboard()
                 } else {
                     show("The PINs you entered do not match", true)
