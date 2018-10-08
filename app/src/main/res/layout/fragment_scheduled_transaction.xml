@@ -70,10 +70,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/amount_naira"
+        android:text="@string/amount_in_naira"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/white"
-        android:textSize="36sp"
+        android:textSize="32sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/rate_of_payment"/>
@@ -185,9 +185,13 @@
         app:layout_constraintGuide_end="56dp"/>
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3">
 
     </android.support.v4.widget.NestedScrollView>
 

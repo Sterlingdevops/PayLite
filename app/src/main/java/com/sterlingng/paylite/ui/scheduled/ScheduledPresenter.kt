@@ -25,7 +25,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     }
 
     override fun loadScheduledPayments() {
-        mvpView.showLoading()
         compositeDisposable.add(
                 dataManager
                         .getSchedulePayments(dataManager.getCurrentUser()?.phoneNumber!!, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}")
@@ -66,7 +65,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                     mvpView.onScheduledPaymentsFailed(it)
                                 }
                             }
-                            mvpView.hideLoading()
                         }
         )
     }

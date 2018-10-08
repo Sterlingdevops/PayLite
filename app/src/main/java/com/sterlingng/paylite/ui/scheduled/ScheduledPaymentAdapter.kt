@@ -110,16 +110,19 @@ class ScheduledPaymentAdapter(private val mContext: Context) : RecyclerView.Adap
             super.onBind(adapterPosition)
 
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-            val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+            val dailyDateFormat = SimpleDateFormat("d MMMM, yyyy", Locale.ENGLISH)
+            val yearlyDateFormat = SimpleDateFormat("MMMM", Locale.ENGLISH)
+            val weeklyDateFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
+            val monthlyDateFormat = SimpleDateFormat("MMMM yyyy", Locale.ENGLISH)
 
             with(payments[adapterPosition]) {
                 val date = formatter.parse(endDate)
                 contactNameTextView.text = beneficiaryId
                 contactRateTextView.text = when (interval) {
-                    1 -> "Daily till ${dateFormat.format(date)}"
-                    2 -> "Weekly till ${dateFormat.format(date)}"
-                    3 -> "Monthly till ${dateFormat.format(date)}"
-                    4 -> "Yearly till ${dateFormat.format(date)}"
+                    1 -> "Daily till ${dailyDateFormat.format(date)}"
+                    2 -> "Weekly on ${weeklyDateFormat.format(date)}s"
+                    3 -> "Every month till ${monthlyDateFormat.format(date)}"
+                    4 -> "Every ${yearlyDateFormat.format(date)}"
                     else -> "Never"
                 }
                 contactAmountTextView.text = mContext.getString(R.string.amount_in_naira, amount.toString())
