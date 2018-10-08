@@ -302,4 +302,7 @@
     <string name="weekly_on_thursdays">Weekly on Thursdays</string>
     <string name="amount_in_naira">₦%1$s.00</string>
     <string name="edit_payment">Edit Payment</string>
+    <string name="details">Details</string>
+    <string name="payment_info">Payment info</string>
+    <string name="payment_history">Payment History</string>
 </resources>

@@ -79,7 +79,7 @@ class ScheduledFragment : BaseFragment(), ScheduledMvpView {
     override fun recyclerViewItemClicked(v: View, position: Int) {
         (baseActivity as DashboardActivity)
                 .mNavController
-                .pushFragment(ScheduledTransactionFragment.newInstance())
+                .pushFragment(ScheduledTransactionFragment.newInstance(mScheduledPaymentAdapter.get(position)))
     }
 
     companion object {

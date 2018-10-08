@@ -6,5 +6,5 @@ import com.sterlingng.paylite.ui.base.MvpView
 
 interface SendMoneyMvpView : MvpView {
     fun updateContacts(it: ArrayList<PayliteContact>)
-    fun initView(wallet: Wallet?)
+    fun initView(wallet: Wallet?, count: String)
 }

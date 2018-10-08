@@ -5,6 +5,11 @@
     <attr name="label" format="string"/>
     <attr name="hint" format="string"/>
 
+    <declare-styleable name="TitleLabelTextView">
+        <attr name="title"/>
+        <attr name="label"/>
+    </declare-styleable>
+
     <declare-styleable name="LargeLabelEditText">
         <attr name="maxLength" format="integer"/>
         <attr name="android:inputType"/>

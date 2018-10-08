@@ -1,5 +1,6 @@
 package com.sterlingng.paylite.ui.send
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -93,6 +94,7 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClic
             (baseActivity as DashboardActivity).mNavController.pushFragment(BankTransferFragment.newInstance())
         }
 
+
         mScheduledRefTextView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
         }
@@ -127,8 +129,10 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClic
         mBalanceTextView = view.findViewById(R.id.balance)
     }
 
-    override fun initView(wallet: Wallet?) {
+    @SuppressLint("SetTextI18n")
+    override fun initView(wallet: Wallet?, count: String) {
         mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet?.balance?.toFloat())
+        mScheduledRefTextView.text = "$count standing orders"
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

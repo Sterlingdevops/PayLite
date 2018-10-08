@@ -46,7 +46,7 @@ interface RemoteServiceApi {
 
     // DELETE
 
-    @DELETE("api/Paylite/GetUserTransactions")
+    @DELETE("api/Paylite/DeleteSchedulePayments")
     @Headers("X-CID: 42aec90f-0142-48de-a66b-e637596fc7b8")
     fun deleteSchedulePayments(@Query("UserMobile") mobile: String,
                                @Query("Paymentrefid") reference: String,

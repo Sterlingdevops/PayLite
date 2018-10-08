@@ -17,7 +17,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     }
 
     override fun loadCachedWallet() {
-        mvpView.initView(dataManager.getWallet())
+        mvpView.initView(dataManager.getWallet(), dataManager.getScheduledPayments().size.toString())
     }
 
     override fun loadContacts() {

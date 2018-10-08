@@ -13,8 +13,8 @@ import android.widget.TextView
 
 class LargeLabelClickToSelectEditText<T>(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
-    var mLabelTextView: TextView
-    var mTextEditText: ClickToSelectEditText<T>
+    private var mLabelTextView: TextView
+    private var mTextEditText: ClickToSelectEditText<T>
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.LargeLabelClickToSelectEditText, 0, 0)
