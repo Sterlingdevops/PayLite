@@ -32,10 +32,10 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun doLogIn(data: HashMap<String, String>) {
         val initializationVector: String = RandomString(length = 16).nextString()
 
-//        if (dataManager.getCurrentUser() == null) {
-//            mvpView.onUserNotRegistered()
-//            return
-//        }
+        if (dataManager.getCurrentUser() == null) {
+            mvpView.onUserNotRegistered()
+            return
+        }
         dataManager.getCurrentUser()?.email?.let { data["username"] = it }
         // data["username"] = "ejiro.akhibi@gmail.com" // "bsrtukpe@gmail.com"
 

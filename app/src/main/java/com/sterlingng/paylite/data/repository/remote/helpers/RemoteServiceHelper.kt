@@ -13,6 +13,10 @@ import javax.inject.Inject
 class RemoteServiceHelper @Inject
 internal constructor() : BaseHelper(), RemoteServiceApi {
 
+    override fun cashOutViaPayCode(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.cashOutViaPayCode(data, authorization, hash)
+
+    override fun cashOutViaBranch(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.cashOutViaBranch(data, authorization, hash)
+
     override fun getSchedulePayments(mobile: String, authorization: String): Observable<Response> = mRemoteServiceApi.getSchedulePayments(mobile, authorization)
 
     override fun deleteSchedulePayments(mobile: String, reference: String, authorization: String): Observable<Response> = mRemoteServiceApi.deleteSchedulePayments(mobile, reference, authorization)

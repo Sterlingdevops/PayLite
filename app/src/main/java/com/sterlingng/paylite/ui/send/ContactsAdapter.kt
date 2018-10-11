@@ -14,6 +14,7 @@ import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import com.sterlingng.paylite.utils.RecyclerViewLongClickListener
 import com.sterlingng.paylite.utils.initials
+import com.sterlingng.paylite.utils.toSentenceCase
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapter<BaseViewHolder>() {
@@ -59,8 +60,11 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
 
         clear()
 
-        contactsSet.forEach {
-            if (contacts.size < 3) contacts += it
+        when (type) {
+            0 -> contactsSet.forEach {
+                if (contacts.size < 3) contacts += it
+            }
+            else -> contacts += contactsSet
         }
         notifyDataSetChanged()
     }
@@ -74,8 +78,11 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
 
         clear()
 
-        contactsSet.forEach {
-            if (contacts.size < 3) contacts += it
+        when (type) {
+            0 -> contactsSet.forEach {
+                if (contacts.size < 3) contacts += it
+            }
+            else -> contacts += contactsSet
         }
         notifyDataSetChanged()
     }
@@ -123,9 +130,12 @@ class ContactsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapt
             super.onBind(adapterPosition)
 
             with(contacts[adapterPosition]) {
-                contactNameTextView.text = name
+                contactNameTextView.text = name.toSentenceCase()
                 contactInitialsTextView?.text = name.initials()
-                contactLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.color.apple_green))
+                when (type) {
+                    0 -> contactLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.color.apple_green))
+                    else -> contactLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.color.light_blue))
+                }
                 if (name == "See All") contactLogoImageView.scaleType = ImageView.ScaleType.CENTER_CROP
             }
 

@@ -235,7 +235,7 @@
     <string name="new_payment">New payment</string>
     <string name="scheduled_payments">Scheduled Payments</string>
     <string name="_2_standing_orders">2 standing orders</string>
-    <string name="paylite_contacts">PAYLITE CONTACTS</string>
+    <string name="paylite_contacts">SEND TO PAYLITE CONTACTS</string>
     <string name="recent">RECENT</string>
     <string name="some_header">Some Header</string>
     <string name="save_recipient">Save recipient</string>

@@ -4,7 +4,6 @@ import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Bank
 import com.sterlingng.paylite.data.model.Notification
-import com.sterlingng.paylite.data.model.PayliteContact
 import com.sterlingng.paylite.data.model.PaymentCategory
 import com.sterlingng.paylite.utils.AppUtils.gson
 import java.util.*
@@ -124,14 +123,6 @@ internal constructor() : MockerInterface {
     override fun mockBanks(): ArrayList<Bank> {
         val type = object : TypeToken<ArrayList<Bank>>() {}.type
         return gson.fromJson(banks, type)
-    }
-
-    override fun mockContacts(): ArrayList<PayliteContact> {
-        val contacts = ArrayList<PayliteContact>()
-        contacts += PayliteContact("Tukpe Raymond", R.color.light_green)
-        contacts += PayliteContact("Oluyebi Dara", R.color.light_blue)
-        contacts += PayliteContact("See all", R.drawable.phone_book)
-        return contacts
     }
 
     override fun mockNotifications(): ArrayList<Notification> {

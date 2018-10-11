@@ -128,17 +128,15 @@
         app:textColor="@color/blue_black_dark"
         tools:targetApi="m"/>
 
-    <EditText
+    <TextView
         android:id="@+id/provider"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/background_light_blue_outline"
-        android:clickable="false"
         android:drawableEnd="@drawable/chevron_down"
         android:drawableRight="@drawable/chevron_down"
         android:drawableTint="@color/light_gray"
-        android:editable="false"
         android:gravity="center_vertical"
         android:hint="@string/network_provider"
         android:inputType="none"

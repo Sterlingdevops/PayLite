@@ -197,5 +197,16 @@ public class Migrations implements RealmMigration {
             ;
             ++oldVersion;
         }
+
+        // version 14
+        if (oldVersion == 13) {
+            schema.get("ContactRealm")
+                    .addField("accountname", String.class)
+                    .addField("accountnumber", String.class)
+                    .setRequired("accountname", true)
+                    .setRequired("accountnumber", true)
+            ;
+            ++oldVersion;
+        }
     }
 }

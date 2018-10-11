@@ -27,6 +27,10 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun cashOutViaPayCode(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.cashOutViaPayCode(data, authorization, hash)
+
+    override fun cashOutViaBranch(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.cashOutViaBranch(data, authorization, hash)
+
     override fun deleteScheduledPayment(payment: ScheduledPayment) = mLocalDataHelper.deleteScheduledPayment(payment)
 
     override fun getScheduledPayments(): ArrayList<ScheduledPayment> = mLocalDataHelper.getScheduledPayments()
@@ -112,8 +116,6 @@ internal constructor(@param:ApplicationContext val context: Context,
     override fun getCurrentUser(): User? = mLocalDataHelper.getCurrentUser()
 
     override fun getUserRealm(): UserRealm? = mLocalDataHelper.getUserRealm()
-
-    override fun mockContacts(): ArrayList<PayliteContact> = mMockHelper.mockContacts()
 
     override fun mockCategories(): ArrayList<PaymentCategory> = mMockHelper.mockCategories()
 

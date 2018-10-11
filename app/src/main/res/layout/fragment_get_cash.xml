@@ -250,20 +250,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amount_other"/>
 
-            <EditText
-                android:id="@+id/reference_other"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/background_light_blue_outline"
-                android:hint="@string/reference"
-                android:inputType="text"
-                android:padding="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/password_other"/>
-
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -310,20 +296,6 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amount"/>
-
-            <EditText
-                android:id="@+id/reference"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/background_light_blue_outline"
-                android:hint="@string/reference"
-                android:inputType="text"
-                android:padding="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/password"/>
 
         </android.support.constraint.ConstraintLayout>
 

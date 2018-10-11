@@ -11,11 +11,15 @@ open class ContactRealm : RealmObject() {
     lateinit var name: String
     lateinit var phone: String
     lateinit var email: String
+    lateinit var accountname: String
+    lateinit var accountnumber: String
 
     fun asPayliteContact(): PayliteContact {
         val contact = PayliteContact()
-        contact.email = email
+        contact.accountnumber = accountnumber
+        contact.accountname = accountname
         contact.phone = phone
+        contact.email = email
         contact.name = name
         contact.id = id
         return contact

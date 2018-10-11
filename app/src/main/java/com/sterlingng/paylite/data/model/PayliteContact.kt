@@ -5,30 +5,25 @@ import android.os.Parcelable
 import com.sterlingng.paylite.data.model.realms.ContactRealm
 import com.sterlingng.paylite.utils.AppUtils.gson
 
-class PayliteContact : Parcelable {
+class PayliteContact() : Parcelable {
     var id: String = ""
     var name: String = ""
     var phone: String = ""
     var email: String = ""
-    var image: Int = 0
+    var accountname: String = ""
+    var accountnumber: String = ""
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readString()
         name = parcel.readString()
         phone = parcel.readString()
         email = parcel.readString()
-        image = parcel.readInt()
     }
-
-    constructor(name: String, image: Int) {
-        this.name = name
-        this.image = image
-    }
-
-    constructor()
 
     fun asContactRealm(): ContactRealm {
         val contactRealm = ContactRealm()
+        contactRealm.accountnumber = accountnumber
+        contactRealm.accountname = accountname
         contactRealm.email = email
         contactRealm.phone = phone
         contactRealm.name = name
@@ -45,7 +40,6 @@ class PayliteContact : Parcelable {
         parcel.writeString(name)
         parcel.writeString(phone)
         parcel.writeString(email)
-        parcel.writeInt(image)
     }
 
     override fun describeContents(): Int {
@@ -61,4 +55,5 @@ class PayliteContact : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }
