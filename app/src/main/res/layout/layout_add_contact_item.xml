@@ -132,7 +132,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/contact_amount"
             app:layout_constraintStart_toStartOf="@+id/contact_amount"
             app:layout_constraintTop_toTopOf="@id/contact_amount"
-            app:srcCompat="@drawable/icon_cash"/>
+            app:srcCompat="@drawable/cash"/>
 
     </android.support.constraint.ConstraintLayout>
 

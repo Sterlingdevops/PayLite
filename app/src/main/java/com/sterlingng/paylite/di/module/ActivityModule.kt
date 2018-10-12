@@ -257,7 +257,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideDashboardPresenter(presenter: DashboardPresenter<DashboardMvpView>): DashboardMvpContract<DashboardMvpView> = presenter
 
     @Provides
-    @PerActivity
     internal fun provideNotificationPresenter(presenter: NotificationPresenter<NotificationMvpView>): NotificationMvpContract<NotificationMvpView> = presenter
 
     @Provides

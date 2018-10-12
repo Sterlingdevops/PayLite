@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
 import javax.inject.Inject
 
 class ProfileFragment : BaseFragment(), ProfileMvpView {
@@ -38,11 +37,13 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }
+
         editProfile.setOnClickListener {
 
         }
+
         notifications.setOnClickListener {
-            startActivity(NotificationActivity.getStartIntent(baseActivity))
+
         }
     }
 

@@ -6,9 +6,6 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import java.util.*
 
 class Contact(var id: String, var name: String) : SearchSuggestion {
-    override fun getBody(): String {
-        return name
-    }
 
     var emails: ArrayList<ContactEmail> = ArrayList()
     var numbers: ArrayList<ContactPhone> = ArrayList()
@@ -26,6 +23,10 @@ class Contact(var id: String, var name: String) : SearchSuggestion {
             result += " [$address - $type]"
         }
         return result
+    }
+
+    override fun getBody(): String {
+        return name
     }
 
     fun addEmail(address: String, type: String) {

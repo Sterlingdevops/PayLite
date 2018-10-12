@@ -22,6 +22,7 @@ import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.getcash.GetCashFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
+import com.sterlingng.paylite.ui.profile.notifications.NotificationsFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
@@ -142,7 +143,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         }
 
         mNotificationsImageView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(ProfileFragment.newInstance())
+            (baseActivity as DashboardActivity).mNavController.pushFragment(NotificationsFragment.newInstance())
         }
 
         mFundButton.setOnClickListener {

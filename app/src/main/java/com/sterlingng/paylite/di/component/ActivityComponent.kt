@@ -30,7 +30,7 @@ import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.profile.edit.EditProfileFragment
-import com.sterlingng.paylite.ui.profile.notifications.NotificationActivity
+import com.sterlingng.paylite.ui.profile.notifications.NotificationsFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.request.custom.CustomRequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
@@ -88,7 +88,7 @@ interface ActivityComponent {
 
     fun inject(transactionsFragment: TransactionsFragment)
 
-    fun inject(notificationActivity: NotificationActivity)
+    fun inject(notificationsFragment: NotificationsFragment)
 
     // Fragments
 

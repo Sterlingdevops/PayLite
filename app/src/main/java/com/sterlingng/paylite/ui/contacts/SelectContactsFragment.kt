@@ -42,8 +42,8 @@ class SelectContactsFragment : BaseFragment(), SelectContactsMvpView, RecyclerVi
     lateinit var mLinearLayoutManager: LinearLayoutManager
 
     lateinit var mContacts: List<Contact>
-
     lateinit var mContactsClone: List<Contact>
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_select_contact, container, false)
         val component = activityComponent
