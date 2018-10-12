@@ -65,9 +65,15 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
 
     override fun onPinCorrect() {
         val data = HashMap<String, Any>()
-        data["NetworkProvider"] = provider.text.toString()
-        data["amount"] = mAmountEditText.text.toString()
-        data["PhoneNumber"] = "0${phone.text}"
+        data["NetworkProvider"] = when (provider.text.toString()) {
+            "AIRTEL" -> "3"
+            "GLO" -> "2"
+            "MTN" -> "4"
+            "9 MOBILE" -> "1"
+            else -> "0"
+        }
+        data["Amount"] = mAmountEditText.text.toString()
+        data["BeneficiaryPhoneNumber"] = "0${phone.text}"
         mPresenter.buyAirtime(data)
         hideKeyboard()
     }
@@ -129,7 +135,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 0
             filterBottomSheetFragment.title = "Network provider"
-            filterBottomSheetFragment.items = listOf("Airtel", "Glo", "MTN", "9 Mobile", "nTel")
+            filterBottomSheetFragment.items = listOf("AIRTEL", "GLO", "MTN", "9 MOBILE")
             filterBottomSheetFragment.show(childFragmentManager, "filter")
         }
 
@@ -190,7 +196,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
         when (selector) {
             1 -> bundle.setText(s)
-            0 -> provider.setText(s)
+            0 -> provider.text = s
             2 -> {
                 when (s) {
                     "Mobile Top-up" -> {

@@ -20,7 +20,7 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
 
     override fun buyAirtime(data: HashMap<String, Any>) {
         dataManager.getCurrentUser()?.phoneNumber?.let {
-            data["PhoneNumber"] = it
+            data["UserAcct"] = it
         }
         mvpView.showLoading()
         compositeDisposable.add(
