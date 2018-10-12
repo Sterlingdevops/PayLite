@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -12,10 +13,13 @@
         android:id="@+id/transaction_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/transaction_type"
+        android:elevation="8dp"
         android:tint="@color/scarlet"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"
-        app:srcCompat="@drawable/arrow_top_right"/>
+        app:srcCompat="@drawable/arrow_top_right"
+        tools:targetApi="lollipop"/>
 
     <TextView
         android:id="@+id/transaction_name"

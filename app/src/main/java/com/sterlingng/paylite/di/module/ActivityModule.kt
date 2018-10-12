@@ -232,10 +232,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
-    internal fun provideEditPresenter(presenter: EditPresenter<EditMvpView>): EditMvpContract<EditMvpView> = presenter
-
-    @Provides
-    @PerActivity
     internal fun provideMainPresenter(presenter: MainPresenter<MainMvpView>): MainMvpContract<MainMvpView> = presenter
 
     @Provides
@@ -333,10 +329,13 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideNewBankTransferPresenter(presenter: NewBankTransferPresenter<NewBankTransferMvpView>): NewBankTransferMvpContract<NewBankTransferMvpView> = presenter
 
     @Provides
-    internal fun providePhonePresenter(presenter: PhonePresenter<PhoneMvpView>): PhoneMvpContract<PhoneMvpView> = presenter
+    internal fun provideEditPresenter(presenter: EditPresenter<EditMvpView>): EditMvpContract<EditMvpView> = presenter
 
     @Provides
     internal fun provideEmailPresenter(presenter: EmailPresenter<EmailMvpView>): EmailMvpContract<EmailMvpView> = presenter
+
+    @Provides
+    internal fun providePhonePresenter(presenter: PhonePresenter<PhoneMvpView>): PhoneMvpContract<PhoneMvpView> = presenter
 
     @Provides
     internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter

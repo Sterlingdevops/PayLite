@@ -16,6 +16,17 @@ import javax.inject.Inject
 class LocalDataHelper @Inject
 constructor() : LocalDataInterface {
 
+    override fun deleteAllScheduledPayments() {
+        getRealm().beginTransaction()
+        try {
+            getRealm().delete(ScheduledRealm::class.java)
+        } catch (e: IllegalStateException) {
+            Log.e(e, "LocalDataHelper->deleteAllScheduledPayments")
+        } finally {
+            getRealm().commitTransaction()
+        }
+    }
+
     override fun deleteScheduledPayment(payment: ScheduledPayment) {
         getRealm().beginTransaction()
         try {

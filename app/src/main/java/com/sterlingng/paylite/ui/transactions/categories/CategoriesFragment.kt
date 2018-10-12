@@ -13,7 +13,7 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import javax.inject.Inject
 
-class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter.OnCreateNewClicked {
+class CategoriesFragment : BaseFragment(), CategoriesMvpView {
 
     @Inject
     lateinit var mPresenter: CategoriesMvpContract<CategoriesMvpView>
@@ -38,7 +38,6 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter
         mPresenter.onViewInitialized()
 
         mTransactionAdapter.mRecyclerViewClickListener = this
-        mTransactionAdapter.onCreateNewClickedListener = this
 
         recyclerView.adapter = mTransactionAdapter
         recyclerView.layoutManager = mLinearLayoutManager
@@ -90,11 +89,6 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView, TransactionAdapter
 
         mTransactionAdapter.add(newTransactions)
         recyclerView.scrollToPosition(0)
-    }
-
-    override fun onCreateNew() {
-        show("Loading transactions", true)
-        mPresenter.loadTransactions()
     }
 
     override fun logout() {

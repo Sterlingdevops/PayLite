@@ -24,7 +24,6 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
 
     private lateinit var exit: ImageView
     private lateinit var mNameTextView: TextView
-    private lateinit var mRateTextView: TextView
     private lateinit var mAmountTextView: TextView
     private lateinit var mCancelImageView: CircleImageView
     private lateinit var mRepeatTitleLabelTextView: TitleLabelTextView
@@ -56,14 +55,6 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
             val monthlyDateFormat = SimpleDateFormat("MMMM yyyy", Locale.ENGLISH)
 
             val date: Date = formatter.parse(endDate)
-            mRateTextView.text = when (interval) {
-                1 -> "Daily till ${dailyDateFormat.format(date)}"
-                2 -> "Weekly on ${weeklyDateFormat.format(date)}s"
-                3 -> "Every month till ${monthlyDateFormat.format(date)}"
-                4 -> "Every ${yearlyDateFormat.format(date)}"
-                else -> "Never"
-            }
-
             mRepeatTitleLabelTextView.label = when (interval) {
                 1 -> "Daily till ${dailyDateFormat.format(date)}"
                 2 -> "Weekly on ${weeklyDateFormat.format(date)}s"
@@ -87,7 +78,6 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
         mNameTextView = view.findViewById(R.id.name)
         mAmountTextView = view.findViewById(R.id.amount)
         mCancelImageView = view.findViewById(R.id.cancel)
-        mRateTextView = view.findViewById(R.id.rate_of_payment)
         mRepeatTitleLabelTextView = view.findViewById(R.id.repeat)
         mPaymentInfoTitleLabelTextView = view.findViewById(R.id.payment_info)
     }

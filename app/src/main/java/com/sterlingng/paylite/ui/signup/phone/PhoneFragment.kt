@@ -51,13 +51,13 @@ class PhoneFragment : BaseFragment(), PhoneMvpView {
 
     override fun setUp(view: View) {
         next.setOnClickListener {
-            if (mPhoneEditText.text().isEmpty() || mPhoneEditText.text().length != 10) {
+            if (mPhoneEditText.text.isEmpty() || mPhoneEditText.text.length != 10) {
                 show("Phone number is required", true)
                 return@setOnClickListener
             }
 
             val data = HashMap<String, Any>()
-            data["mobile"] = "0${mPhoneEditText.text()}"
+            data["mobile"] = "0${mPhoneEditText.text}"
             mPresenter.sendOtp(data)
         }
 
@@ -71,7 +71,7 @@ class PhoneFragment : BaseFragment(), PhoneMvpView {
     }
 
     override fun onSendOTPSuccessful(it: Response) {
-        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPhoneEditText.text())
+        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPhoneEditText.text)
     }
 
 

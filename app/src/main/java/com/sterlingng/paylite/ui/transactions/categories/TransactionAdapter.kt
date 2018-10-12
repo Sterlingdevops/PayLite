@@ -23,7 +23,6 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
 
     val transactions: ArrayList<Transaction> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
-    lateinit var onCreateNewClickedListener: OnCreateNewClicked
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View?
@@ -33,11 +32,11 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
                 ViewHolder(view, mRecyclerViewClickListener)
             }
             VIEW_TYPE_EMPTY -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_transactions_empty_view, parent, false)
                 EmptyViewHolder(view)
             }
             else -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_transactions_empty_view, parent, false)
                 EmptyViewHolder(view)
             }
         }
@@ -164,19 +163,7 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
         var headerName: TextView = itemView.findViewById(R.id.header_name)
     }
 
-    inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView) {
-
-        private var createCreditTransaction: TextView = itemView.findViewById(R.id.retry)
-
-        override fun onBind(position: Int) {
-            super.onBind(position)
-            createCreditTransaction.setOnClickListener { onCreateNewClickedListener.onCreateNew() }
-        }
-    }
-
-    interface OnCreateNewClicked {
-        fun onCreateNew()
-    }
+    inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView)
 
     companion object {
 

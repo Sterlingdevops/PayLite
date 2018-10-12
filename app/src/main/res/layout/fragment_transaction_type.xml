@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:background="@color/denim"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/upcoming"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -33,12 +35,12 @@
         android:layout_height="wrap_content"
         android:text="@string/apr"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toStartOf="@+id/textView17"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView19"
-        app:layout_constraintTop_toTopOf="@+id/view8"
-        />
+        app:layout_constraintTop_toTopOf="@+id/view8"/>
 
     <TextView
         android:id="@+id/textView19"
@@ -46,6 +48,7 @@
         android:layout_height="wrap_content"
         android:text="@string/mar"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toStartOf="@+id/textView18"
         app:layout_constraintHorizontal_bias="0.5"
@@ -58,12 +61,12 @@
         android:layout_height="wrap_content"
         android:text="@string/feb"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toStartOf="@+id/textView19"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView21"
-        app:layout_constraintTop_toTopOf="@+id/view8"
-        />
+        app:layout_constraintTop_toTopOf="@+id/view8"/>
 
     <TextView
         android:id="@+id/textView21"
@@ -71,13 +74,13 @@
         android:layout_height="wrap_content"
         android:text="@string/jan"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toStartOf="@+id/textView20"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@+id/view8"
-        app:layout_constraintTop_toTopOf="@+id/view8"
-        />
+        app:layout_constraintTop_toTopOf="@+id/view8"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

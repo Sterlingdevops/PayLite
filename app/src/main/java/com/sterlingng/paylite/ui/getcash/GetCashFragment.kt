@@ -39,7 +39,6 @@ class GetCashFragment : BaseFragment(), GetCashMvpView {
     private lateinit var mAmountTextView: TextView
     private lateinit var mPasswordTextView: TextView
 
-    private lateinit var mOtherNameTextView: TextView
     private lateinit var mOtherPhoneTextView: TextView
     private lateinit var mOtherAmountTextView: TextView
     private lateinit var mOtherPasswordTextView: TextView
@@ -109,7 +108,6 @@ class GetCashFragment : BaseFragment(), GetCashMvpView {
         mAmountTextView = view.findViewById(R.id.amount)
         mPasswordTextView = view.findViewById(R.id.password)
 
-        mOtherNameTextView = view.findViewById(R.id.name_other)
         mOtherPhoneTextView = view.findViewById(R.id.phone_other)
         mOtherAmountTextView = view.findViewById(R.id.amount_other)
         mOtherPasswordTextView = view.findViewById(R.id.password_other)

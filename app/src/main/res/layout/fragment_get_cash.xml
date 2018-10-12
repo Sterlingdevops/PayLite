@@ -184,7 +184,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -195,32 +195,20 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/name_other"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/background_light_blue_outline"
-                android:hint="@string/name"
-                android:inputType="textPersonName"
-                android:padding="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <EditText
                 android:id="@+id/phone_other"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/background_light_blue_outline"
+                android:drawableEnd="@drawable/phone_book"
+                android:drawableRight="@drawable/phone_book"
                 android:hint="@string/phone_number"
                 android:inputType="phone"
                 android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/name_other"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <EditText
                 android:id="@+id/amount_other"
@@ -242,13 +230,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/background_light_blue_outline"
-                android:hint="@string/password"
-                android:inputType="textVisiblePassword"
+                android:hint="@string/_4_digit_pin"
+                android:inputType="phone"
+                android:maxLength="4"
                 android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amount_other"/>
+                app:layout_constraintTop_toBottomOf="@id/amount_other"
+                tools:ignore="TextFields"/>
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
@@ -289,13 +279,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/background_light_blue_outline"
-                android:hint="@string/password"
-                android:inputType="textVisiblePassword"
+                android:hint="@string/_4_digit_pin"
+                android:inputType="phone"
+                android:maxLength="4"
                 android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amount"/>
+                app:layout_constraintTop_toBottomOf="@id/amount"
+                tools:ignore="TextFields"/>
 
         </android.support.constraint.ConstraintLayout>
 

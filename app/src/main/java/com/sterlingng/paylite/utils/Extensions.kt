@@ -21,18 +21,25 @@ fun List<String>.asString(): String {
 infix fun <T> Boolean.then(param: T): T? = if (this) param else null
 
 fun String.toSentenceCase(): String {
+    if (this.isEmpty()) return ""
+
     val stringBuilder = StringBuilder()
-    for (str in split(" ")) {
+    for (str in trim().split(" ")) {
         stringBuilder.append(str.substring(0, 1).toUpperCase())
         stringBuilder.append(str.substring(1).toLowerCase())
         stringBuilder.append(" ")
     }
-    return stringBuilder.toString()
+    return stringBuilder.toString().trim()
 }
 
 fun String.initials(): String {
+    if (this.isEmpty()) return ""
+
     val parts = this.trim().split(" ")
-    return if (parts.size > 1) "${parts[0][0]}${parts[1][0]}".toUpperCase() else "${parts[0][0]}".toUpperCase()
+    return when {
+        parts.size > 1 -> "${parts[0][0]}${parts[1][0]}".toUpperCase()
+        else -> "${parts[0][0]}".toUpperCase()
+    }
 }
 
 fun String.sha256(): String {

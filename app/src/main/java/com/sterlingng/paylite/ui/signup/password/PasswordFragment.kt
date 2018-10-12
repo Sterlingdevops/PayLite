@@ -57,7 +57,7 @@ class PasswordFragment : BaseFragment(), PasswordMvpView {
             }
 
             val signUpRequest = (baseActivity as SignUpActivity).signUpRequest
-            signUpRequest.password = mPasswordEditText.text()
+            signUpRequest.password = mPasswordEditText.text
             mPresenter.doSignUp(signUpRequest.toHashMap())
             hideKeyboard()
         }

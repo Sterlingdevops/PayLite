@@ -305,4 +305,6 @@
     <string name="details">Details</string>
     <string name="payment_info">Payment info</string>
     <string name="payment_history">Payment History</string>
+    <string name="_4_digit_pin">4 digit PIN</string>
+    <string name="transaction_type">Transaction type</string>
 </resources>

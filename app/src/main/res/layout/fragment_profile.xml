@@ -44,7 +44,7 @@
             android:contentDescription="@string/profile_image"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/spartan"
+            android:src="@drawable/share_link"
             app:layout_constraintEnd_toEndOf="@+id/textView"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView"/>

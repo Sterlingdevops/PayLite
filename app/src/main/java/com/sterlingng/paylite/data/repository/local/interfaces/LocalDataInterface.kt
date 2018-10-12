@@ -69,4 +69,5 @@ interface LocalDataInterface {
     fun deleteScheduledPayment(payment: ScheduledPayment)
     fun getScheduledPayments(): ArrayList<ScheduledPayment>
     fun saveScheduledPayments(payments: ArrayList<ScheduledPayment>)
+    fun deleteAllScheduledPayments()
 }

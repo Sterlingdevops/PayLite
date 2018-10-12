@@ -53,18 +53,18 @@ class BvnFragment : BaseFragment(), BvnMvpView {
 
     override fun setUp(view: View) {
         next.setOnClickListener {
-            if (mBvnEditText.text().isEmpty()) {
+            if (mBvnEditText.text.isEmpty()) {
                 show("BVN is required", true)
                 return@setOnClickListener
             }
 
-            if (mBvnEditText.text().length != 11) {
+            if (mBvnEditText.text.length != 11) {
                 show("BVN should be 11 characters long", true)
                 return@setOnClickListener
             }
 
             val data = (baseActivity as SignUpActivity).signUpRequest.toHashMap()
-            data["bvn"] = mBvnEditText.text()
+            data["bvn"] = mBvnEditText.text
             mPresenter.doSignUp(data)
             hideKeyboard()
         }

@@ -48,23 +48,23 @@ class ResetFragment : BaseFragment(), ResetMvpView {
         }
 
         next.setOnClickListener {
-            if (mPasswordTextInputEditText.text().isEmpty() || mConfirmPasswordTextInputEditText.text().isEmpty()) {
+            if (mPasswordTextInputEditText.text.isEmpty() || mConfirmPasswordTextInputEditText.text.isEmpty()) {
                 show("Password fields cannot be empty", false)
                 return@setOnClickListener
             }
 
-            if (mPasswordTextInputEditText.text().length < 6 || mConfirmPasswordTextInputEditText.text().length < 6) {
+            if (mPasswordTextInputEditText.text.length < 6 || mConfirmPasswordTextInputEditText.text.length < 6) {
                 show("The passwords should be 6 or more characters long", false)
                 return@setOnClickListener
             }
 
-            if (mPasswordTextInputEditText.text() != mConfirmPasswordTextInputEditText.text()) {
+            if (mPasswordTextInputEditText.text != mConfirmPasswordTextInputEditText.text) {
                 show("Passwords do not match", false)
                 return@setOnClickListener
             }
 
             val data = (baseActivity as ForgotActivity).forgotPasswordRequest.toHashMap()
-            data["NewPassword"] = mPasswordTextInputEditText.text()
+            data["NewPassword"] = mPasswordTextInputEditText.text
             mPresenter.resetPassword(data)
         }
     }

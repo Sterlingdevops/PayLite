@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/exit"
@@ -44,6 +45,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:clickable="true"
         android:contentDescription="@string/profile_image"
         android:focusable="true"
@@ -62,85 +64,52 @@
         android:contentDescription="@string/profile_image"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:src="@drawable/spartan"
+        android:src="@drawable/share_link"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/firstNameTextInputLayout"
+    <com.sterlingng.views.LargeLabelEditText
+        android:id="@+id/first_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:inputType="textPersonName"
+        android:textColor="@color/blue_black_dark"
+        app:label="First Name"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image">
+        app:layout_constraintTop_toBottomOf="@+id/profile_image"/>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/first_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:hint="@string/first_name"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            android:textColor="@color/blue_black_dark"
-            android:textSize="16sp"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/lastNameTextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameTextInputLayout">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/last_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:hint="@string/last_name"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            android:textColor="@color/blue_black_dark"
-            android:textSize="16sp"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <com.lamudi.phonefield.PhoneInputLayout
-        android:id="@+id/phone_input_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:imeOptions="actionDone"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/lastNameTextInputLayout"/>
-
-    <EditText
-        android:id="@+id/input_dob"
+    <com.sterlingng.views.LargeLabelEditText
+        android:id="@+id/last_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:editable="false"
-        android:gravity="center_vertical"
-        android:hint="@string/dob"
-        android:inputType="none"
+        android:inputType="textPersonName"
         android:textColor="@color/blue_black_dark"
-        android:textSize="16sp"
+        app:label="Last Name"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/phone_input_layout"/>
+        app:layout_constraintTop_toBottomOf="@+id/first_name"/>
+
+    <com.sterlingng.views.LargeLabelEditText
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/blue_black_dark"
+        android:textSize="16sp"
+        app:label="Email          "
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/last_name"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"

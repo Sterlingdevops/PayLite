@@ -44,9 +44,9 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
 
     private lateinit var next: Button
     private lateinit var exit: ImageView
-    private lateinit var mAmountEditText: EditText
     private lateinit var bundle: EditText
-    private lateinit var provider: EditText
+    private lateinit var provider: TextView
+    private lateinit var mAmountEditText: EditText
     private lateinit var phone: LargeLabelEditText
     private lateinit var mBalanceTextView: TextView
     private lateinit var category: LargeLabelEditText
@@ -67,7 +67,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
         val data = HashMap<String, Any>()
         data["NetworkProvider"] = provider.text.toString()
         data["amount"] = mAmountEditText.text.toString()
-        data["PhoneNumber"] = "0${phone.text()}"
+        data["PhoneNumber"] = "0${phone.text}"
         mPresenter.buyAirtime(data)
         hideKeyboard()
     }
@@ -90,7 +90,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
                 if (amount < 100) throw java.lang.NumberFormatException()
 
                 val pattern = Pattern.compile("[0-9]{10}")
-                val matcher = pattern.matcher(phone.text())
+                val matcher = pattern.matcher(phone.text)
                 if (matcher.matches()) {
                     val confirmFragment = ConfirmFragment.newInstance()
                     confirmFragment.onPinValidatedListener = this

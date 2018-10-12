@@ -38,13 +38,13 @@ class EmailForgotFragment : BaseFragment(), EmailForgotMvpView {
         }
 
         next.setOnClickListener {
-            if (mPhoneEditText.text().isEmpty() || mPhoneEditText.text().length != 10) {
+            if (mPhoneEditText.text.isEmpty() || mPhoneEditText.text.length != 10) {
                 show("Phone number is required", true)
                 return@setOnClickListener
             }
 
             val data = HashMap<String, Any>()
-            data["mobile"] = "0${mPhoneEditText.text()}"
+            data["mobile"] = "0${mPhoneEditText.text}"
             mPresenter.sendPasswordResetToken(data)
         }
     }
@@ -55,7 +55,7 @@ class EmailForgotFragment : BaseFragment(), EmailForgotMvpView {
     }
 
     override fun onPasswordResetTokenSuccessful(response: Response) {
-        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPhoneEditText.text())
+        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPhoneEditText.text)
         hideKeyboard()
     }
 

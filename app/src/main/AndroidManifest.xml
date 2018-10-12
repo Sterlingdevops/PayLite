@@ -30,7 +30,7 @@
         <activity android:name=".ui.dashboard.DashboardActivity"/>
         <activity android:name=".ui.login.LogInActivity"/>
         <activity android:name=".ui.signup.SignUpActivity"/>
-        <activity android:name=".ui.profile.edit.EditActivity"/>
+        <activity android:name=".ui.profile.edit.EditProfileFragment"/>
         <activity android:name=".ui.bills.BillsActivity"/>
         <activity android:name=".ui.profile.notifications.NotificationActivity"/>
         <activity android:name=".ui.forgot.ForgotActivity"/>

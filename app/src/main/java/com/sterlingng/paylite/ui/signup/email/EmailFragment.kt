@@ -46,12 +46,12 @@ class EmailFragment : BaseFragment(), EmailMvpView {
         }
 
         next.setOnClickListener {
-            if (mEmailEditText.text().isEmpty() || !mEmailEditText.text().isValidEmail()) {
+            if (mEmailEditText.text.isEmpty() || !mEmailEditText.text.isValidEmail()) {
                 show("A valid email address is required", true)
                 return@setOnClickListener
             }
 
-            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mEmailEditText.text())
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mEmailEditText.text)
         }
     }
 

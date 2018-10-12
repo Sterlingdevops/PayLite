@@ -76,13 +76,13 @@ android {
         ktlint
     }
 
-//    splits {
-//        abi {
-//            enable true
-//            reset()
-//            include 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
-//        }
-//    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
+        }
+    }
 }
 
 dependencies {
@@ -162,9 +162,8 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.7.1'
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
-    implementation files('libs/bcprov-jdk15on-160.jar')
+    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.8'
 }
-
 /*
 Resolves dependency versions across test and production APKs, specifically, transitive
 dependencies. This is required since Espresso internally has a dependency on support-annotations.
