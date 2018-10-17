@@ -48,7 +48,6 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:contentDescription="@string/exit"
-        app:layout_constraintBottom_toBottomOf="@+id/balance"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/title2"
         app:srcCompat="@drawable/chevron_left"/>

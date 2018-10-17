@@ -34,7 +34,7 @@ class NewBankTransferFragment : BaseFragment(), NewBankTransferMvpView,
     private lateinit var next: Button
 
     private var bankCode: String = ""
-    var cashOutRequest = CashOutToBankAccountRequest()
+    private var cashOutRequest = CashOutToBankAccountRequest()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_new_bank_transfer, container, false)

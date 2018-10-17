@@ -57,7 +57,6 @@
         android:contentDescription="@string/exit"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:layout_constraintBottom_toBottomOf="@+id/balance"
         app:layout_constraintStart_toStartOf="@+id/backdrop"
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:srcCompat="@drawable/chevron_left"/>

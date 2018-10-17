@@ -307,4 +307,7 @@
     <string name="payment_history">Payment History</string>
     <string name="_4_digit_pin">4 digit PIN</string>
     <string name="transaction_type">Transaction type</string>
+    <string name="notification_placeholder">Notifications message or something like that</string>
+    <string name="you_have_no_transactions">You have no transactions</string>
+    <string name="you_have_no_notifications">You have no notifications</string>
 </resources>

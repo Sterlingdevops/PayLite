@@ -5,13 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Notification
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
-import me.chensir.expandabletextview.ExpandableTextView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,11 +27,11 @@ class NotificationsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
                 ViewHolder(view, mRecyclerViewClickListener)
             }
             VIEW_TYPE_EMPTY -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_notification_empty_view, parent, false)
                 EmptyViewHolder(view)
             }
             else -> {
-                view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
+                view = LayoutInflater.from(mContext).inflate(R.layout.layout_notification_empty_view, parent, false)
                 EmptyViewHolder(view)
             }
         }
@@ -86,21 +84,21 @@ class NotificationsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
 
     inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
 
-        private val notificationNameTextView: ExpandableTextView = itemView.findViewById(R.id.notification_text)
+        private val notificationNameTextView: TextView = itemView.findViewById(R.id.notification_text)
         private val notificationTypeTextView: TextView = itemView.findViewById(R.id.notification_date)
-        private val notificationLogoImageView: ImageView = itemView.findViewById(R.id.notification_logo)
+//        private val notificationLogoImageView: ImageView = itemView.findViewById(R.id.notification_logo)
 
         override fun onBind(position: Int) {
-            super.onBind(position)
+            super.onBind(adapterPosition)
 
             val simpleDateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.US)
-            with(notifications[position]) {
+            with(notifications[adapterPosition]) {
                 notificationTypeTextView.text = simpleDateFormat.format(date)
-                notificationNameTextView.text = mContext.getString(R.string.placeholder)
+                notificationNameTextView.text = mContext.getString(R.string.notification_placeholder)
 //                notificationLogoImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.button_light_green))
             }
             itemView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewItemClicked(it, position)
+                recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
             }
         }
     }

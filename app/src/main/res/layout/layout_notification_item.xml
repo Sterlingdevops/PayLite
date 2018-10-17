@@ -5,53 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/notification_logo"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:src="@color/gray"
-        app:layout_constraintStart_toStartOf="@+id/notification_text"
-        app:layout_constraintTop_toTopOf="@+id/notification_text"/>
-
-    <me.chensir.expandabletextview.ExpandableTextView
-        android:id="@+id/notification_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="top"
-        android:paddingEnd="44dp"
-        android:paddingLeft="56dp"
-        android:paddingRight="44dp"
-        android:paddingStart="56dp"
-        android:paddingTop="8dp"
-        android:text="@string/notifications_message_or_something_like_that"
-        android:textColor="@color/blue_black_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:maxCollapsedLines="2"/>
-
-    <TextView
-        android:id="@+id/notification_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingEnd="0dp"
-        android:paddingLeft="56dp"
-        android:paddingRight="0dp"
-        android:paddingStart="56dp"
-        android:text="@string/_4_days_ago"
-        android:textColor="@color/gray"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/notification_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"/>
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="32dp"
@@ -64,16 +17,57 @@
         android:layout_marginTop="12dp"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="@+id/notification_text"
-        app:layout_constraintTop_toTopOf="@+id/notification_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/chevron_right"/>
 
-    <View
-        android:id="@+id/view4"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/notification_logo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/notification_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/notification_text"/>
+
+    <TextView
+        android:id="@+id/notification_text"
         android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/light_gray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/send_money"
-        app:layout_constraintStart_toStartOf="@+id/notification_logo"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="top"
+        android:paddingBottom="16dp"
+        android:paddingEnd="44dp"
+        android:paddingLeft="56dp"
+        android:paddingRight="44dp"
+        android:paddingStart="56dp"
+        android:paddingTop="16dp"
+        android:text="@string/notifications_message_or_something_like_that"
+        android:textColor="@color/blue_black_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/notification_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_settings_item"
+        android:paddingBottom="8dp"
+        android:paddingEnd="0dp"
+        android:paddingLeft="56dp"
+        android:paddingRight="0dp"
+        android:paddingStart="56dp"
+        android:text="@string/_4_days_ago"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/notification_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notification_text"/>
+
 </android.support.constraint.ConstraintLayout>

@@ -104,6 +104,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mUserGreetingTextView = view.findViewById(R.id.user_greeting)
     }
 
+    @SuppressLint("CheckResult")
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
         mPresenter.loadCachedWallet()
