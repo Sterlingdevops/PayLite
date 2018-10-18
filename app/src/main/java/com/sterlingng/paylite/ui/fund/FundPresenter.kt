@@ -207,8 +207,4 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                         }
         )
     }
-
-    override fun loadBanks() {
-        mvpView.onLoadBanksSuccessful(dataManager.mockBanks())
-    }
 }

@@ -27,6 +27,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun mockMenuItems(): ArrayList<MenuItem> = mMockHelper.mockMenuItems()
+
     override fun updateUserDetails(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.updateUserDetails(data, authorization, hash)
 
     override fun deleteAllScheduledPayments() = mLocalDataHelper.deleteAllScheduledPayments()
@@ -100,8 +102,6 @@ internal constructor(@param:ApplicationContext val context: Context,
     override fun savePin(pin: Pin) = mLocalDataHelper.savePin(pin)
 
     override fun getWallet(): Wallet? = mLocalDataHelper.getWallet()
-
-    override fun mockBanks(): ArrayList<Bank> = mMockHelper.mockBanks()
 
     override fun deleteAllWallets() = mLocalDataHelper.deleteAllWallets()
 

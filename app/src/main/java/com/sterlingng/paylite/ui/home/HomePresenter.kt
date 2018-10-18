@@ -6,7 +6,6 @@ import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils
-import com.sterlingng.paylite.utils.Log
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -28,7 +27,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
 
     override fun onViewInitialized() {
         super.onViewInitialized()
-        mvpView.initView(dataManager.getCurrentUser())
+        mvpView.initView(dataManager.getCurrentUser(), dataManager.mockMenuItems())
     }
 
     override fun loadCachedWallet() {
