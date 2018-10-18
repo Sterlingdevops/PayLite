@@ -17,7 +17,7 @@ internal constructor() : MockerInterface {
         items += MenuItem(R.drawable.icon_request_money, "Request Money", "Send Money")
         items += MenuItem(R.drawable.icon_get_cash, "Get Cash", "Send Money")
         items += MenuItem(R.drawable.icon_split_cost_color, "Split Cost", "Send Money")
-        items += MenuItem(R.drawable.icon_scheduled_payments, "Scheduled\nPayments", "Send Money")
+        items += MenuItem(R.drawable.icon_scheduled_payments, "Scheduled Payments", "Send Money")
         items += MenuItem(R.drawable.icon_services_color, "Services", "Send Money")
         return items
     }

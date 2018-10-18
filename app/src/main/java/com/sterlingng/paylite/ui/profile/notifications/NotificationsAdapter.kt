@@ -17,7 +17,6 @@ class NotificationsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
 
     val notifications: ArrayList<Notification> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
-    lateinit var onRetryClickedListener: OnRetryClicked
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View?
@@ -41,18 +40,17 @@ class NotificationsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
 
     fun add(notification: Notification) {
         notifications.add(notification)
-        notifyItemInserted(this.notifications.size - 1)
+        notifyDataSetChanged()
     }
 
     fun add(notifications: Collection<Notification>) {
-        val index = this.notifications.size - 1
         this.notifications.addAll(notifications)
-        notifyItemRangeInserted(index, notifications.size - 1)
+        notifyDataSetChanged()
     }
 
     fun remove(index: Int) {
         this.notifications.removeAt(index)
-        notifyItemRemoved(index)
+        notifyDataSetChanged()
     }
 
     fun clear() {
@@ -103,30 +101,7 @@ class NotificationsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVie
         }
     }
 
-    inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView) {
-
-        private var errorText: TextView = itemView.findViewById(R.id.error_text)
-        private var retry: TextView = itemView.findViewById(R.id.retry)
-
-        override fun onBind(position: Int) {
-            super.onBind(position)
-            checkConnection()
-            retry.setOnClickListener { retryClicked() }
-        }
-
-        private fun checkConnection() {
-            errorText.text = mContext.resources.getString(R.string.offline)
-        }
-
-        private fun retryClicked() {
-            checkConnection()
-            onRetryClickedListener.onRetryClicked()
-        }
-    }
-
-    interface OnRetryClicked {
-        fun onRetryClicked()
-    }
+    inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView)
 
     companion object {
 

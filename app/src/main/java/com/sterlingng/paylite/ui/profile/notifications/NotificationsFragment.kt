@@ -13,7 +13,7 @@ import com.sterlingng.paylite.data.model.Notification
 import com.sterlingng.paylite.ui.base.BaseFragment
 import javax.inject.Inject
 
-class NotificationsFragment : BaseFragment(), NotificationMvpView, NotificationsAdapter.OnRetryClicked {
+class NotificationsFragment : BaseFragment(), NotificationMvpView {
 
     @Inject
     lateinit var mPresenter: NotificationMvpContract<NotificationMvpView>
@@ -24,8 +24,8 @@ class NotificationsFragment : BaseFragment(), NotificationMvpView, Notifications
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mSearchView: FloatingSearchView
 
-    lateinit var mNotifications: List<Notification>
-    lateinit var mNotificationsClone: List<Notification>
+    var mNotifications = ArrayList<Notification>()
+    var mNotificationsClone = ArrayList<Notification>()
 
     @Inject
     lateinit var mLinearLayoutManager: LinearLayoutManager
@@ -40,13 +40,9 @@ class NotificationsFragment : BaseFragment(), NotificationMvpView, Notifications
 
     override fun setUp(view: View) {
         mNotificationsAdapter.mRecyclerViewClickListener = this
-        mNotificationsAdapter.onRetryClickedListener = this
         mRecyclerView.adapter = mNotificationsAdapter
         mRecyclerView.layoutManager = mLinearLayoutManager
         mRecyclerView.scrollToPosition(0)
-
-        mNotifications = mNotificationsAdapter.notifications
-        mNotificationsClone = mNotificationsAdapter.notifications
 
         mPresenter.loadNotifications()
         initSearchView()
@@ -55,6 +51,8 @@ class NotificationsFragment : BaseFragment(), NotificationMvpView, Notifications
     override fun updateNotifications(it: ArrayList<Notification>) {
         mNotificationsAdapter.add(it)
         mRecyclerView.scrollToPosition(0)
+        mNotifications.addAll(mNotificationsAdapter.notifications)
+        mNotificationsClone.addAll(mNotificationsAdapter.notifications)
     }
 
     override fun bindViews(view: View) {
@@ -125,10 +123,6 @@ class NotificationsFragment : BaseFragment(), NotificationMvpView, Notifications
         //listen for when suggestion list expands/shrinks in order to move down/up the
         //search results list
         mSearchView.setOnSuggestionsListHeightChanged { newHeight -> mRecyclerView.translationY = newHeight }
-    }
-
-    override fun onRetryClicked() {
-
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

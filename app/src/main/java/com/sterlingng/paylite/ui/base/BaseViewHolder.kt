@@ -14,6 +14,6 @@ abstract class BaseViewHolder(itemView: View) :
         private set
 
     open fun onBind(position: Int) {
-        currentPosition = position
+        currentPosition = adapterPosition
     }
 }
