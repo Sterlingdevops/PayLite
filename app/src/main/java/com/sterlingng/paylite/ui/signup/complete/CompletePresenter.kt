@@ -17,7 +17,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CompleteMvpContract<V> {
 
     override fun initView() {
-        mvpView.setUsername(dataManager.getCurrentUser()?.firstName!!)
+        mvpView.setWelcomeText()
     }
 
     override fun doLogIn(data: HashMap<String, String>) {

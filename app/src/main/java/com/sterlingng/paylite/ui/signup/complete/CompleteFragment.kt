@@ -1,7 +1,6 @@
 package com.sterlingng.paylite.ui.signup.complete
 
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -36,12 +35,13 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
         mWelcomeTextView = view.findViewById(R.id.welcome_text)
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun setUsername(firstName: String) {
-        mWelcomeTextView.text = "Welcome to Paylite"
+    override fun setWelcomeText() {
+        mWelcomeTextView.text = arguments?.getString(WELCOME_TEXT)
     }
 
     override fun setUp(view: View) {
+        mPresenter.initView()
+
         next.setOnClickListener {
             val data = HashMap<String, String>()
             data["username"] = (baseActivity as SignUpActivity).signUpRequest.email
@@ -69,9 +69,13 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
 
     companion object {
 
-        fun newInstance(): CompleteFragment {
+        const val WELCOME_TEXT = "CompleteFragment.WELCOME_TEXT"
+
+        @JvmOverloads
+        fun newInstance(welcomeText: String = "Welcome to Paylite"): CompleteFragment {
             val fragment = CompleteFragment()
             val args = Bundle()
+            args.putString(WELCOME_TEXT, welcomeText)
             fragment.arguments = args
             return fragment
         }

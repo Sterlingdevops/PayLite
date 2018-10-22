@@ -6,14 +6,12 @@ import android.os.Bundle
 import android.view.View
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.ForgotPasswordRequest
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.forgot.email.EmailForgotFragment
 import com.sterlingng.paylite.ui.forgot.reset.ResetFragment
 import com.sterlingng.paylite.ui.forgot.token.TokenFragment
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.views.CustomViewPager
 import javax.inject.Inject
@@ -50,7 +48,7 @@ class ForgotActivity : BaseActivity(), ForgotMvpView, OnChildDidClickNext {
         val resetFragment = ResetFragment.newInstance(3)
         resetFragment.mDidClickNext = this
 
-        val completeFragment = CompleteFragment.newInstance()
+        val completeFragment = CompleteFragment.newInstance(welcomeText = "Welcome back to Paylite")
 
         mPagerAdapter = CustomPagerAdapter(supportFragmentManager)
         mPagerAdapter.addFragment(emailForgotFragment, "email")
@@ -85,13 +83,9 @@ class ForgotActivity : BaseActivity(), ForgotMvpView, OnChildDidClickNext {
             2 -> {
                 forgotPasswordRequest.token = data as String
             }
-            3 -> {
-                val response = data as Response
-            }
         }
         mViewPager.currentItem = index % mPagerAdapter.count
     }
-
 
     companion object {
 

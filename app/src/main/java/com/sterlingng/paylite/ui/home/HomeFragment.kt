@@ -2,6 +2,7 @@ package com.sterlingng.paylite.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -9,15 +10,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
+import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.authpin.AuthPinFragment
 import com.sterlingng.paylite.ui.authpin.OpenPinMode
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.getcash.GetCashFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
+import com.sterlingng.paylite.ui.profile.notifications.NotificationsFragment
+import com.sterlingng.paylite.ui.request.RequestFragment
+import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
+import com.sterlingng.paylite.ui.send.SendMoneyFragment
+import com.sterlingng.paylite.ui.splitamount.SplitAmountFragment
+import com.sterlingng.paylite.utils.SpacesItemDecoration
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -31,9 +41,13 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     @Inject
     lateinit var eventBus: EventBus
 
+    var listMode: Boolean = true
+
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mListMenuItemsAdpater: MenuItemsAdapter
-    private lateinit var mGridMenuItemsAdpater: MenuItemsAdapter
+    private lateinit var mListModeImageView: ImageView
+    private lateinit var mNotificationsImageView: ImageView
+    private lateinit var mListMenuItemsAdapter: MenuItemsAdapter
+    private lateinit var mGridMenuItemsAdapter: MenuItemsAdapter
 
     @Inject
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -41,7 +55,6 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     @Inject
     lateinit var gridLayoutManager: GridLayoutManager
 
-//    private lateinit var mNotificationsImageView: ImageView
 //    private lateinit var mRequestMoneyImageView: ImageView
 //    private lateinit var mAirTimeDataImageView: ImageView
 //    private lateinit var mSendMoneyImageView: ImageView
@@ -76,10 +89,10 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mFundButton = view.findViewById(R.id.fund)
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mMainAmountTextView = view.findViewById(R.id.main_amount)
+        mListModeImageView = view.findViewById(R.id.list_mode_icon)
         mUserGreetingTextView = view.findViewById(R.id.user_greeting)
+        mNotificationsImageView = view.findViewById(R.id.notifications_icon)
 
-//        mNotificationsImageView = view.findViewById(R.id.notifications_icon)
-//
 //        mAirTimeDataImageView = view.findViewById(R.id.airtime_data)
 //        mAirTimeDataTextView = view.findViewById(R.id.airtime_data_text)
 //
@@ -107,15 +120,15 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     @SuppressLint("CheckResult")
     override fun setUp(view: View) {
-        mListMenuItemsAdpater = MenuItemsAdapter(baseActivity, 0)
-        mGridMenuItemsAdpater = MenuItemsAdapter(baseActivity, 1)
-        mGridMenuItemsAdpater.mRecyclerViewClickListener = this
-        mListMenuItemsAdpater.mRecyclerViewClickListener = this
-//        mRecyclerView.addItemDecoration(SpacesItemDecoration(8))
-//        mRecyclerView.layoutManager = gridLayoutManager
-        mRecyclerView.layoutManager = linearLayoutManager
-//        mRecyclerView.adapter = mGridMenuItemsAdpater
-        mRecyclerView.adapter = mListMenuItemsAdpater
+        mListMenuItemsAdapter = MenuItemsAdapter(baseActivity, 0)
+        mGridMenuItemsAdapter = MenuItemsAdapter(baseActivity, 1)
+        mGridMenuItemsAdapter.mRecyclerViewClickListener = this
+        mListMenuItemsAdapter.mRecyclerViewClickListener = this
+        mRecyclerView.addItemDecoration(SpacesItemDecoration(8))
+        mRecyclerView.layoutManager = gridLayoutManager
+        mRecyclerView.adapter = mGridMenuItemsAdapter
+
+        listMode = false
 
         mPresenter.onViewInitialized()
         mPresenter.loadCachedWallet()
@@ -136,6 +149,27 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 else -> (baseActivity as DashboardActivity)
                         .mNavController
                         .pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name))
+            }
+        }
+
+        mNotificationsImageView.setOnClickListener {
+            (baseActivity as DashboardActivity).mNavController.pushFragment(NotificationsFragment.newInstance())
+        }
+
+        mListModeImageView.setOnClickListener {
+            when (listMode) {
+                true -> {
+                    mListModeImageView.setImageDrawable(ContextCompat.getDrawable(baseActivity, R.drawable.icon_list))
+                    mRecyclerView.layoutManager = gridLayoutManager
+                    mRecyclerView.adapter = mGridMenuItemsAdapter
+                    listMode = false
+                }
+                false -> {
+                    mListModeImageView.setImageDrawable(ContextCompat.getDrawable(baseActivity, R.drawable.icon_grid))
+                    mRecyclerView.layoutManager = linearLayoutManager
+                    mRecyclerView.adapter = mListMenuItemsAdapter
+                    listMode = true
+                }
             }
         }
 
@@ -163,9 +197,6 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 //            (baseActivity as DashboardActivity).mNavController.pushFragment(SendMoneyFragment.newInstance())
 //        }
 //
-//        mNotificationsImageView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(NotificationsFragment.newInstance())
-//        }
 //        mCashOutImageView.setOnClickListener {
 //            (baseActivity as DashboardActivity).mNavController.pushFragment(CashOutFragment.newInstance())
 //        }
@@ -210,12 +241,31 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     @SuppressLint("SetTextI18n")
     override fun initView(currentUser: User?, mockMenuItems: ArrayList<MenuItem>) {
         mUserGreetingTextView.text = "Hi ${currentUser?.firstName!!}"
-        mGridMenuItemsAdpater.items = mockMenuItems
-        mListMenuItemsAdpater.items = mockMenuItems
+        mGridMenuItemsAdapter.items = mockMenuItems
+        mListMenuItemsAdapter.items = mockMenuItems
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
-
+        when (position) {
+            0 -> {
+                (baseActivity as DashboardActivity).mNavController.pushFragment(SendMoneyFragment.newInstance())
+            }
+            1 -> {
+                (baseActivity as DashboardActivity).mNavController.pushFragment(RequestFragment.newInstance())
+            }
+            2 -> {
+                (baseActivity as DashboardActivity).mNavController.pushFragment(GetCashFragment.newInstance())
+            }
+            3 -> {
+                (baseActivity as DashboardActivity).mNavController.pushFragment(SplitAmountFragment.newInstance())
+            }
+            4 -> {
+                (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
+            }
+            5 -> {
+                (baseActivity as DashboardActivity).mNavController.pushFragment(AirTimeFragment.newInstance())
+            }
+        }
     }
 
     override fun logout() {

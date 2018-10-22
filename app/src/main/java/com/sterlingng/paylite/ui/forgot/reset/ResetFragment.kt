@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
 import com.sterlingng.paylite.utils.OnChildDidClickNext
@@ -69,12 +68,12 @@ class ResetFragment : BaseFragment(), ResetMvpView {
         }
     }
 
-    override fun onResetPasswordFailed(response: Response) {
-        show("An error occurres, please try again", false)
+    override fun onUpdatePasswordFailed() {
+        show("An error occurred, please try again", false)
     }
 
-    override fun onResetPasswordSuccessful(response: Response) {
-        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, response)
+    override fun onUpdatePasswordSuccessful() {
+        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
         hideKeyboard()
     }
 
