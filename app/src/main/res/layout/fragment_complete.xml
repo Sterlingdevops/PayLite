@@ -39,10 +39,11 @@
 
     <TextView
         android:id="@+id/welcome_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/welcome_to_paylite"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="28sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -75,6 +76,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="32dp"/>
+        app:layout_constraintGuide_end="60dp"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -11,6 +11,7 @@ import com.sterlingng.paylite.ui.authpin.AuthPinFragment
 import com.sterlingng.paylite.ui.authpin.OpenPinMode
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.forgot.reset.ResetFragment
 import javax.inject.Inject
 
 class LoginAndSecurityFragment : BaseFragment(), LoginAndSecurityMvpView {
@@ -44,13 +45,13 @@ class LoginAndSecurityFragment : BaseFragment(), LoginAndSecurityMvpView {
         mChangeLoginPinTextView.setOnClickListener {
             (baseActivity as DashboardActivity)
                     .mNavController
-                    .pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name))
+                    .pushFragment(ResetFragment.newInstance(-1))
         }
 
         mChangeTransactionPinTextView.setOnClickListener {
             (baseActivity as DashboardActivity)
                     .mNavController
-                    .pushFragment(AuthPinFragment.newInstance(OpenPinMode.VALIDATE_FOR_CHANGE.name))
+                    .pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name))
         }
     }
 

@@ -21,7 +21,9 @@ class ResetPresenter<V : ResetMvpView>
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ResetMvpContract<V> {
 
-    override fun resetPassword(data: HashMap<String, Any>) {
+    override fun resetPassword(data: HashMap<String, Any>, type: Int) {
+        if (type == -1) data["PhoneNumber"] = dataManager.getCurrentUser()?.phoneNumber!!
+
         mvpView.showLoading()
         compositeDisposable.add(
                 dataManager.updateForgotPassword(data, gson.toJson(data).sha256())
@@ -51,9 +53,10 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         }
                         .subscribe {
                             if (it.response != null && it.response == "00") {
-                                dataManager.deleteAll()
-                                val type = object : TypeToken<HashMap<String, Any>>() {}.type
-                                val d = gson.fromJson<HashMap<String, Any>>(gson.toJson(it.data), type)
+                                if (type != -1) dataManager.deleteAll()
+
+                                val dataType = object : TypeToken<HashMap<String, Any>>() {}.type
+                                val d = gson.fromJson<HashMap<String, Any>>(gson.toJson(it.data), dataType)
 
                                 val user = User()
                                 user.accessToken = ""

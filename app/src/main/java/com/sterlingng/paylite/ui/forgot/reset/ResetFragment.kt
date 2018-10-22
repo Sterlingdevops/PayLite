@@ -9,7 +9,9 @@ import android.widget.Button
 import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
+import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.views.LargeLabelEditText
 import javax.inject.Inject
@@ -64,8 +66,10 @@ class ResetFragment : BaseFragment(), ResetMvpView {
 
             val data = HashMap<String, Any>()
             data["Password"] = mPasswordTextInputEditText.text
-            data["PhoneNumber"] = "0${(baseActivity as ForgotActivity).forgotPasswordRequest.mobile}"
-            mPresenter.resetPassword(data)
+            if (arguments?.getInt(INDEX)!! != -1)
+                data["PhoneNumber"] = "0${(baseActivity as ForgotActivity)
+                        .forgotPasswordRequest.mobile}"
+            mPresenter.resetPassword(data, arguments?.getInt(INDEX)!!)
         }
     }
 
@@ -74,8 +78,14 @@ class ResetFragment : BaseFragment(), ResetMvpView {
     }
 
     override fun onUpdatePasswordSuccessful() {
-        mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
-        hideKeyboard()
+        if (arguments?.getInt(INDEX)!! == -1) {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(CompleteFragment.newInstance("Your login PIN has been changed"))
+        } else {
+            mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, "")
+            hideKeyboard()
+        }
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

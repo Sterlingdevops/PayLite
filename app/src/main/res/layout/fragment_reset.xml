@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:imeOptions="actionNext"
-        android:inputType="number"
+        android:inputType="numberPassword"
         android:textColor="@color/blue_black_dark"
         app:label="Password"
         app:layout_constraintBottom_toTopOf="@+id/confirm_password"
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:imeOptions="actionNext"
-        android:inputType="number"
+        android:inputType="numberPassword"
         android:textColor="@color/blue_black_dark"
         app:label="Confirm   "
         app:layout_constraintBottom_toTopOf="@+id/next_password"
@@ -122,6 +122,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="32dp"/>
+        app:layout_constraintGuide_end="60dp"/>
 
 </android.support.constraint.ConstraintLayout>

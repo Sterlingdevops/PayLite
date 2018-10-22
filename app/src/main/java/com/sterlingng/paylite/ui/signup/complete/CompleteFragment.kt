@@ -43,13 +43,15 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
         mPresenter.initView()
 
         next.setOnClickListener {
-            if (arguments?.getString(WELCOME_TEXT) == "Welcome back to Paylite") {
-                baseActivity.finish()
-            } else {
-                val data = HashMap<String, String>()
-                data["username"] = (baseActivity as SignUpActivity).signUpRequest.email
-                data["password"] = (baseActivity as SignUpActivity).signUpRequest.password
-                mPresenter.doLogIn(data)
+            when (arguments?.getString(WELCOME_TEXT)) {
+                "Welcome back to Paylite" -> baseActivity.finish()
+                "Your login PIN has been changed" -> (baseActivity as DashboardActivity).mNavController.clearStack()
+                else -> {
+                    val data = HashMap<String, String>()
+                    data["username"] = (baseActivity as SignUpActivity).signUpRequest.email
+                    data["password"] = (baseActivity as SignUpActivity).signUpRequest.password
+                    mPresenter.doLogIn(data)
+                }
             }
         }
     }
