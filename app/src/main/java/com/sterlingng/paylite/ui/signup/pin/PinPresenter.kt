@@ -23,7 +23,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun doSignUp(data: HashMap<String, Any>) {
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.signup(data, AppUtils.gson.toJson(data).sha256())
+                dataManager.signup(data, gson.toJson(data).sha256())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {

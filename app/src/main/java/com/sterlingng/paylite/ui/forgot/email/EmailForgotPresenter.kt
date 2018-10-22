@@ -22,8 +22,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun sendPasswordResetToken(data: HashMap<String, Any>) {
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.sendOtpForgotPassword(data,
-                        "Bearer ${dataManager.getCurrentUser()?.accessToken!!}", gson.toJson(data).sha256())
+                dataManager.sendOtpForgotPassword(data, gson.toJson(data).sha256())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {

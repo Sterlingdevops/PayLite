@@ -1,7 +1,9 @@
 package com.sterlingng.paylite.ui.forgot.reset
 
+import com.google.gson.reflect.TypeToken
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
 import com.sterlingng.paylite.utils.AppUtils
@@ -22,7 +24,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     override fun resetPassword(data: HashMap<String, Any>) {
         mvpView.showLoading()
         compositeDisposable.add(
-                dataManager.updateForgotPassword(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}", gson.toJson(data).sha256())
+                dataManager.updateForgotPassword(data, gson.toJson(data).sha256())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .onErrorReturn {
@@ -49,6 +51,18 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         }
                         .subscribe {
                             if (it.response != null && it.response == "00") {
+                                dataManager.deleteAll()
+                                val type = object : TypeToken<HashMap<String, Any>>() {}.type
+                                val d = gson.fromJson<HashMap<String, Any>>(gson.toJson(it.data), type)
+
+                                val user = User()
+                                user.accessToken = ""
+                                user.email = d["Email"] as String
+                                user.lastName = d["LastName"] as String
+                                user.phoneNumber = d["Mobile"] as String
+                                user.firstName = d["FirstName"] as String
+
+                                dataManager.saveUser(user)
                                 mvpView.onUpdatePasswordSuccessful()
                             } else {
                                 mvpView.onUpdatePasswordFailed()

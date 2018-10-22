@@ -52,8 +52,8 @@ class ResetFragment : BaseFragment(), ResetMvpView {
                 return@setOnClickListener
             }
 
-            if (mPasswordTextInputEditText.text.length < 6 || mConfirmPasswordTextInputEditText.text.length < 6) {
-                show("The passwords should be 6 or more characters long", false)
+            if (mPasswordTextInputEditText.text.length != 4 || mConfirmPasswordTextInputEditText.text.length != 4) {
+                show("The passwords should be 4 characters long", false)
                 return@setOnClickListener
             }
 
@@ -62,8 +62,9 @@ class ResetFragment : BaseFragment(), ResetMvpView {
                 return@setOnClickListener
             }
 
-            val data = (baseActivity as ForgotActivity).forgotPasswordRequest.toHashMap()
-            data["NewPassword"] = mPasswordTextInputEditText.text
+            val data = HashMap<String, Any>()
+            data["Password"] = mPasswordTextInputEditText.text
+            data["PhoneNumber"] = "0${(baseActivity as ForgotActivity).forgotPasswordRequest.mobile}"
             mPresenter.resetPassword(data)
         }
     }

@@ -13,6 +13,8 @@ import javax.inject.Inject
 class RemoteServiceHelper @Inject
 internal constructor() : BaseHelper(), RemoteServiceApi {
 
+    override fun updateForgotPassword(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceApi.updateForgotPassword(data, hash)
+
     override fun updateUserDetails(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.updateUserDetails(data, authorization, hash)
 
     override fun cashOutViaPayCode(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.cashOutViaPayCode(data, authorization, hash)
@@ -39,7 +41,7 @@ internal constructor() : BaseHelper(), RemoteServiceApi {
 
     override fun fundWalletWithBankAccount(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.fundWalletWithBankAccount(data, authorization, hash)
 
-    override fun sendOtpForgotPassword(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.sendOtpForgotPassword(data, authorization, hash)
+    override fun sendOtpForgotPassword(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceApi.sendOtpForgotPassword(data, hash)
 
     override fun requestPaymentLink(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.requestPaymentLink(data, authorization, hash)
 

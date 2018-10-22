@@ -81,7 +81,6 @@ interface RemoteServiceApi {
     @POST("api/Paylite/SendForgotPasswordTokenForMail")
     @Headers("X-CID: $CLIENT_ID")
     fun sendOtpForgotPassword(@Body data: HashMap<String, Any>,
-                              @Header("Authorization") authorization: String,
                               @Header("X-CS") hash: String): Observable<Response>
 
     @POST("api/Paylite/SendMoneyViaUserHandle")
@@ -166,6 +165,5 @@ interface RemoteServiceApi {
     @PUT("api/Paylite/UpdateForgotPassword")
     @Headers("X-CID: $CLIENT_ID")
     fun updateForgotPassword(@Body data: HashMap<String, Any>,
-                             @Header("Authorization") authorization: String,
                              @Header("X-CS") hash: String): Observable<Response>
 }

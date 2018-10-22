@@ -44,7 +44,7 @@ constructor() : LocalDataInterface {
 
     override fun getScheduledPayments(): ArrayList<ScheduledPayment> {
         val payments = getRealm().where(ScheduledRealm::class.java).findAll()
-        return if (payments.size > 0) payments.asSequence().map { it.asScheduledPayment() }.toList() as ArrayList<ScheduledPayment>
+        return if (payments.size > 0) payments.map { it.asScheduledPayment() } as ArrayList<ScheduledPayment>
         else ArrayList()
     }
 

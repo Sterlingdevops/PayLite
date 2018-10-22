@@ -125,9 +125,6 @@ import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionPresent
 import com.sterlingng.paylite.ui.signup.SignUpMvpContract
 import com.sterlingng.paylite.ui.signup.SignUpMvpView
 import com.sterlingng.paylite.ui.signup.SignUpPresenter
-import com.sterlingng.paylite.ui.signup.bvn.BvnMvpContract
-import com.sterlingng.paylite.ui.signup.bvn.BvnMvpView
-import com.sterlingng.paylite.ui.signup.bvn.BvnPresenter
 import com.sterlingng.paylite.ui.signup.complete.CompleteMvpContract
 import com.sterlingng.paylite.ui.signup.complete.CompleteMvpView
 import com.sterlingng.paylite.ui.signup.complete.CompletePresenter
@@ -302,9 +299,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideAuthPinPresenter(presenter: AuthPinPresenter<AuthPinMvpView>): AuthPinMvpContract<AuthPinMvpView> = presenter
-
-    @Provides
-    internal fun provideBvnPresenter(presenter: BvnPresenter<BvnMvpView>): BvnMvpContract<BvnMvpView> = presenter
 
     @Provides
     internal fun provideHelpPresenter(presenter: HelpPresenter<HelpMvpView>): HelpMvpContract<HelpMvpView> = presenter

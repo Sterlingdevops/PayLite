@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:imeOptions="actionNext"
-        android:inputType="textPassword"
+        android:inputType="number"
         android:textColor="@color/blue_black_dark"
         app:label="Password"
         app:layout_constraintBottom_toTopOf="@+id/confirm_password"
@@ -59,7 +59,8 @@
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintVertical_chainStyle="packed"
+        app:maxLength="4"/>
 
     <com.sterlingng.views.LargeLabelEditText
         android:id="@+id/confirm_password"
@@ -67,14 +68,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:imeOptions="actionNext"
-        android:inputType="textPassword"
+        android:inputType="number"
         android:textColor="@color/blue_black_dark"
         app:label="Confirm   "
         app:layout_constraintBottom_toTopOf="@+id/next_password"
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/password"/>
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:maxLength="4"/>
 
     <Button
         android:id="@+id/next_password"

@@ -27,6 +27,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun updateForgotPassword(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.updateForgotPassword(data, hash)
+
     override fun mockMenuItems(): ArrayList<MenuItem> = mMockHelper.mockMenuItems()
 
     override fun updateUserDetails(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.updateUserDetails(data, authorization, hash)
@@ -147,7 +149,7 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun signIn(username: String, password: String, initializationVector: String, grantType: String): Observable<HashMap<String, Any>> = mRemoteServiceHelper.signIn(username, password, initializationVector, grantType)
 
-    override fun sendOtpForgotPassword(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.sendOtpForgotPassword(data, authorization, hash)
+    override fun sendOtpForgotPassword(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.sendOtpForgotPassword(data, hash)
 
     override fun fundWalletWithBankAccount(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.fundWalletWithBankAccount(data, authorization, hash)
 

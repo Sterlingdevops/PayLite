@@ -39,7 +39,6 @@ import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
-import com.sterlingng.paylite.ui.signup.bvn.BvnFragment
 import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
 import com.sterlingng.paylite.ui.signup.email.EmailFragment
 import com.sterlingng.paylite.ui.signup.name.NameFragment
@@ -117,8 +116,6 @@ interface ActivityComponent {
     fun inject(onBoardingFragment: OnBoardingFragment)
 
     // Dialogs
-
-    fun inject(bvnFragment: BvnFragment)
 
     fun inject(tokenFragment: TokenFragment)
 
