@@ -13,9 +13,9 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
-import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.utils.isValidEmail
 import com.sterlingng.paylite.utils.then
 import com.tsongkha.spinnerdatepicker.DatePicker
@@ -28,7 +28,7 @@ import kotlin.collections.HashMap
 
 
 class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,
-        FilterBottomSheetFragment.OnFilterItemSelected {
+        FilterBottomSheetFragment.OnFilterItemSelected, ConfirmFragment.OnPinValidated {
 
     @Inject
     lateinit var mPresenter: NewPaymentAmountMvpContract<NewPaymentAmountMvpView>
@@ -60,6 +60,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     private lateinit var mAmountEditText: TextView
 
     private lateinit var mBalanceTextView: TextView
+    private var request = SendMoneyRequest()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_new_payment_amount, container, false)
@@ -94,8 +95,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
 
     override fun setUp(view: View) {
         mPresenter.loadCachedWallet()
-
-        val request = arguments?.getParcelable<SendMoneyRequest>(REQUEST)
+        request = arguments?.getParcelable(REQUEST)!!
 
         exit.setOnClickListener {
             baseActivity.onBackPressed()
@@ -113,10 +113,12 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
                 show("Amount should be more than NGN100", true)
             }
 
-            request?.paymentReference = mAmountReferenceEditText.text.toString()
+            request.paymentReference = mAmountReferenceEditText.text.toString()
 
-            if (request?.amount?.toInt()!! >= 100) {
-                mPresenter.sendMoney(request.toHashMap())
+            if (request.amount.toInt() >= 100) {
+                val confirmFragment = ConfirmFragment.newInstance()
+                confirmFragment.onPinValidatedListener = this
+                (baseActivity as DashboardActivity).mNavController.showDialogFragment(confirmFragment)
             } else {
                 show("Amount should be more than NGN100", true)
             }
@@ -136,6 +138,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         mScheduleTextView.setOnClickListener {
             mScheduleRepeatSwitch.toggle()
             if (mScheduleRepeatSwitch.isChecked) {
+                mSetEndDateTextView.visibility = (mRepeatTextView.text.toString().toLowerCase() == "never") then View.GONE ?: View.VISIBLE
                 mSetStartDateTextView.visibility = View.VISIBLE
                 mStartDateTextView.visibility = View.VISIBLE
                 mSetRepeatTextView.visibility = View.VISIBLE
@@ -143,6 +146,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
                 mRepeatTextView.visibility = View.VISIBLE
             } else {
                 mSetStartDateTextView.visibility = View.GONE
+                mSetEndDateTextView.visibility = View.GONE
                 mSetRepeatTextView.visibility = View.GONE
                 mStartDateTextView.visibility = View.GONE
                 mEndDateTextView.visibility = View.GONE
@@ -153,6 +157,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         mScheduleReferenceTextView.setOnClickListener {
             mScheduleRepeatSwitch.toggle()
             if (mScheduleRepeatSwitch.isChecked) {
+                mSetEndDateTextView.visibility = (mRepeatTextView.text.toString().toLowerCase() == "never") then View.GONE ?: View.VISIBLE
                 mSetStartDateTextView.visibility = View.VISIBLE
                 mStartDateTextView.visibility = View.VISIBLE
                 mSetRepeatTextView.visibility = View.VISIBLE
@@ -160,6 +165,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
                 mRepeatTextView.visibility = View.VISIBLE
             } else {
                 mSetStartDateTextView.visibility = View.GONE
+                mSetEndDateTextView.visibility = View.GONE
                 mSetRepeatTextView.visibility = View.GONE
                 mStartDateTextView.visibility = View.GONE
                 mEndDateTextView.visibility = View.GONE
@@ -187,6 +193,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
 
         mScheduleRepeatSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                mSetEndDateTextView.visibility = (mRepeatTextView.text.toString().toLowerCase() == "never") then View.GONE ?: View.VISIBLE
                 mSetStartDateTextView.visibility = View.VISIBLE
                 mStartDateTextView.visibility = View.VISIBLE
                 mSetRepeatTextView.visibility = View.VISIBLE
@@ -194,6 +201,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
                 mRepeatTextView.visibility = View.VISIBLE
             } else {
                 mSetStartDateTextView.visibility = View.GONE
+                mSetEndDateTextView.visibility = View.GONE
                 mSetRepeatTextView.visibility = View.GONE
                 mStartDateTextView.visibility = View.GONE
                 mEndDateTextView.visibility = View.GONE
@@ -203,9 +211,15 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     }
 
     override fun logout() {
-        show("Session has timed out", true)
-        startActivity(MainActivity.getStartIntent(baseActivity))
-        baseActivity.finish()
+        baseActivity.logout()
+    }
+
+    override fun onPinCorrect() {
+        mPresenter.sendMoney(request.toHashMap())
+    }
+
+    override fun onPinIncorrect() {
+        show("The PIN entered is incorrect", true)
     }
 
     override fun initView(wallet: Wallet) {
@@ -246,6 +260,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
             if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
             eventBus.post(UpdateWallet())
             (baseActivity as DashboardActivity).mNavController.clearStack()
+            hideKeyboard()
         }
     }
 
@@ -258,6 +273,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
         eventBus.post(UpdateWallet())
         (baseActivity as DashboardActivity).mNavController.clearStack()
+        hideKeyboard()
     }
 
     override fun onSendMoneyFailed(response: Response) {

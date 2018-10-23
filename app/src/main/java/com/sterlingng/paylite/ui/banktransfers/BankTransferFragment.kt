@@ -50,7 +50,6 @@ class BankTransferFragment : BaseFragment(), BankTransferMvpView {
 
         mViewPager.isPagingEnabled = true
         mViewPager.adapter = mPagerAdapter
-        mViewPager.offscreenPageLimit = 2
 
         mSmartTabLayout.setViewPager(mViewPager)
     }

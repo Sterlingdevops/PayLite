@@ -51,7 +51,7 @@ class LoginAndSecurityFragment : BaseFragment(), LoginAndSecurityMvpView {
         mChangeTransactionPinTextView.setOnClickListener {
             (baseActivity as DashboardActivity)
                     .mNavController
-                    .pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name))
+                    .pushFragment(AuthPinFragment.newInstance(OpenPinMode.VALIDATE_FOR_CHANGE.name))
         }
     }
 

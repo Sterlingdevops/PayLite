@@ -10,14 +10,14 @@ import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.CashOutToBankAccountRequest
-import com.sterlingng.paylite.data.model.Response
-import com.sterlingng.paylite.data.model.Wallet
+import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.main.MainActivity
+import com.sterlingng.paylite.utils.then
 import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
@@ -27,7 +27,7 @@ import javax.inject.Inject
 
 class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
         DatePickerDialog.OnDateSetListener,
-        FilterBottomSheetFragment.OnFilterItemSelected {
+        FilterBottomSheetFragment.OnFilterItemSelected, ConfirmFragment.OnPinValidated {
 
     @Inject
     lateinit var mPresenter: BankTransferAmountMvpContract<BankTransferAmountMvpView>
@@ -60,6 +60,8 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
 
     private lateinit var mBalanceTextView: TextView
 
+    private var cashOutRequest = CashOutToBankAccountRequest()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_bank_transfer_amount, container, false)
         val component = activityComponent
@@ -69,7 +71,7 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
     }
 
     override fun setUp(view: View) {
-        val cashOutRequest: CashOutToBankAccountRequest = arguments?.getParcelable(CASH_OUT_REQUEST)!!
+        cashOutRequest = arguments?.getParcelable(CASH_OUT_REQUEST)!!
         mPresenter.loadCachedWallet()
 
         exit.setOnClickListener {
@@ -91,9 +93,9 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
             cashOutRequest.paymentReference = mAmountReferenceEditText.text.toString()
 
             if (cashOutRequest.amount >= 100) {
-                if (cashOutRequest.destinationBankCode == "000001")
-                    mPresenter.bankTransferSterling(cashOutRequest.toHashMap())
-                else mPresenter.bankTransfer(cashOutRequest.toHashMap())
+                val confirmFragment = ConfirmFragment.newInstance()
+                confirmFragment.onPinValidatedListener = this
+                (baseActivity as DashboardActivity).mNavController.showDialogFragment(confirmFragment)
             } else {
                 show("Amount should be more than NGN100", true)
             }
@@ -111,16 +113,17 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
         mEndDateTextView.text = simpleDateFormat.format(Date())
 
         mScheduleTextView.setOnClickListener {
+            mScheduleRepeatSwitch.toggle()
             if (mScheduleRepeatSwitch.isChecked) {
+                mSetEndDateTextView.visibility = (mRepeatTextView.text.toString().toLowerCase() == "never") then View.GONE ?: View.VISIBLE
                 mSetStartDateTextView.visibility = View.VISIBLE
-                mSetEndDateTextView.visibility = View.VISIBLE
                 mStartDateTextView.visibility = View.VISIBLE
                 mSetRepeatTextView.visibility = View.VISIBLE
                 mEndDateTextView.visibility = View.VISIBLE
                 mRepeatTextView.visibility = View.VISIBLE
             } else {
-                mSetStartDateTextView.visibility = View.GONE
                 mSetEndDateTextView.visibility = View.GONE
+                mSetStartDateTextView.visibility = View.GONE
                 mSetRepeatTextView.visibility = View.GONE
                 mStartDateTextView.visibility = View.GONE
                 mEndDateTextView.visibility = View.GONE
@@ -129,9 +132,10 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
         }
 
         mScheduleReferenceTextView.setOnClickListener {
+            mScheduleRepeatSwitch.toggle()
             if (mScheduleRepeatSwitch.isChecked) {
+                mSetEndDateTextView.visibility = (mRepeatTextView.text.toString().toLowerCase() == "never") then View.GONE ?: View.VISIBLE
                 mSetStartDateTextView.visibility = View.VISIBLE
-                mSetEndDateTextView.visibility = View.VISIBLE
                 mStartDateTextView.visibility = View.VISIBLE
                 mSetRepeatTextView.visibility = View.VISIBLE
                 mEndDateTextView.visibility = View.VISIBLE
@@ -166,8 +170,8 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
 
         mScheduleRepeatSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                mSetEndDateTextView.visibility = (mRepeatTextView.text.toString().toLowerCase() == "never") then View.GONE ?: View.VISIBLE
                 mSetStartDateTextView.visibility = View.VISIBLE
-                mSetEndDateTextView.visibility = View.VISIBLE
                 mStartDateTextView.visibility = View.VISIBLE
                 mSetRepeatTextView.visibility = View.VISIBLE
                 mEndDateTextView.visibility = View.VISIBLE
@@ -181,6 +185,16 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
                 mRepeatTextView.visibility = View.GONE
             }
         }
+    }
+
+    override fun onPinCorrect() {
+        if (cashOutRequest.destinationBankCode == "000001")
+            mPresenter.bankTransferSterling(cashOutRequest.toHashMap())
+        else mPresenter.bankTransfer(cashOutRequest.toHashMap())
+    }
+
+    override fun onPinIncorrect() {
+        show("The PIN entered is incorrect", true)
     }
 
     override fun initView(wallet: Wallet) {
@@ -250,8 +264,53 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
     }
 
     override fun onBankTransferSuccessful() {
-        show("Transaction successful", true)
+        if (mScheduleRepeatSwitch.isChecked) {
+            val data = HashMap<String, Any>()
+
+            val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+
+            val end: Date = dateFormat.parse(mEndDateTextView.text.toString())
+            val start: Date = dateFormat.parse(mStartDateTextView.text.toString())
+
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+
+            val endDate = formatter.format(end)
+            val startDate = formatter.format(start)
+
+            data["interval"] = when (mRepeatTextView.text.toString().toLowerCase()) {
+                "daily" -> 1
+                "weekly" -> 2
+                "monthly" -> 3
+                "yearly" -> 4
+                else -> 0
+            }
+            data["amount"] = mAmountEditText.text.toString()
+            data["narration"] = mAmountReferenceEditText.text.toString()
+            data["payment_ref"] = System.currentTimeMillis().toString()
+            data["beneficiary"] = "" //(request?.email?.isValidEmail()!!) then request.email ?: request.phone
+            data["end_date"] = endDate
+            data["start_date"] = startDate
+            mPresenter.schedulePayment(data)
+        } else {
+            val contact = arguments?.getParcelable<PayliteContact>(CONTACT)!!
+            if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
+            eventBus.post(UpdateWallet())
+            show("Transaction successful", true)
+            (baseActivity as DashboardActivity).mNavController.clearStack()
+            hideKeyboard()
+        }
+    }
+
+    override fun onSchedulePaymentFailed() {
+        show("An error occurred while processing the transaction", true)
+    }
+
+    override fun onSchedulePaymentSuccessful() {
+        val contact = arguments?.getParcelable<PayliteContact>(CONTACT)!!
+        if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
+        eventBus.post(UpdateWallet())
         (baseActivity as DashboardActivity).mNavController.clearStack()
+        hideKeyboard()
     }
 
     override fun onBankTransferFailed(response: Response) {
@@ -259,8 +318,28 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
     }
 
     override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
-        // 0-daily, 1-weekly, 2-monthly, 3-yearly
         mRepeatTextView.text = s
+        when (s.toLowerCase()) {
+            "never" -> {
+                mSetEndDateTextView.visibility = View.GONE
+            }
+
+            "daily" -> {
+                mSetEndDateTextView.visibility = View.VISIBLE
+            }
+
+            "weekly" -> {
+                mSetEndDateTextView.visibility = View.VISIBLE
+            }
+
+            "monthly" -> {
+                mSetEndDateTextView.visibility = View.VISIBLE
+            }
+
+            "yearly" -> {
+                mSetEndDateTextView.visibility = View.VISIBLE
+            }
+        }
         dialog.dismiss()
     }
 
@@ -270,11 +349,14 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
 
     companion object {
 
+        private const val CONTACT = "BankTransferAmountFragment.CONTACT"
         private const val CASH_OUT_REQUEST = "BankTransferAmountFragment.CASH_OUT_REQUEST"
 
-        fun newInstance(cashOutRequest: CashOutToBankAccountRequest): BankTransferAmountFragment {
+        @JvmOverloads
+        fun newInstance(cashOutRequest: CashOutToBankAccountRequest, contact: PayliteContact = PayliteContact()): BankTransferAmountFragment {
             val fragment = BankTransferAmountFragment()
             val args = Bundle()
+            args.putParcelable(CONTACT, contact)
             args.putParcelable(CASH_OUT_REQUEST, cashOutRequest)
             fragment.arguments = args
             return fragment

@@ -298,6 +298,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         show("Successfully funded wallet", true)
         eventBus.post(UpdateWallet())
         (baseActivity as DashboardActivity).mNavController.clearStack()
+        hideKeyboard()
     }
 
     private inner class AccountNumberTextWatcher : TextWatcher {
