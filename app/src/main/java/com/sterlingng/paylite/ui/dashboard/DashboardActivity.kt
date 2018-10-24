@@ -28,7 +28,6 @@ import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.asString
 import java.util.HashMap
 import javax.inject.Inject
@@ -183,11 +182,11 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
 
         while (cursor.moveToNext()) {
             val contactId = cursor.getString(idIndex)
-            val contactDisplayName = cursor.getString(nameIndex)
-            val contact = Contact(contactId, contactDisplayName)
+            val contactDisplayName: String? = cursor.getString(nameIndex)
+            val contact = contactDisplayName?.let { Contact(contactId, it) }
 
-            contactsMap[contactId] = contact
-            contacts += contact
+            contact?.let { contactsMap[contactId] = it }
+            contact?.let { contacts.add(it) }
         }
 
         cursor.close()

@@ -23,6 +23,7 @@ class RequestFragment : BaseFragment(), RequestMvpView {
 
     private lateinit var mFullNameTextView: TextView
     private lateinit var mLinkTextView: TextView
+    private lateinit var mShareButton: Button
     private lateinit var exit: ImageView
     private lateinit var next: Button
 
@@ -41,6 +42,12 @@ class RequestFragment : BaseFragment(), RequestMvpView {
             baseActivity.onBackPressed()
         }
 
+        mShareButton.setOnClickListener {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(CustomRequestFragment.newInstance())
+        }
+
         next.setOnClickListener {
             (baseActivity as DashboardActivity)
                     .mNavController
@@ -51,6 +58,7 @@ class RequestFragment : BaseFragment(), RequestMvpView {
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next)
+        mShareButton = view.findViewById(R.id.share)
         mLinkTextView = view.findViewById(R.id.link)
         mFullNameTextView = view.findViewById(R.id.full_name)
     }

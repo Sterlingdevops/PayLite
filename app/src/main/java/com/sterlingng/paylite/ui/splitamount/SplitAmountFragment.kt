@@ -58,7 +58,7 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
         mPresenter.onViewInitialized()
 
         next.setOnClickListener {
-            if (mSplitAmountEditText.text.isEmpty()) {
+            if (mSplitAmountEditText.text.isEmpty() || mNoteEditText.text.isEmpty()) {
                 show("SplitAmount number is required", true)
                 return@setOnClickListener
             }
