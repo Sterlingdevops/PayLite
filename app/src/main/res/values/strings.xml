@@ -274,7 +274,8 @@
     <string name="others">Others</string>
     <string name="name">Name</string>
     <string name="phone_number">Phone number</string>
-    <string name="recepient_s_email">Recipient\'s Email</string>
+    <string name="recepient_s_email">Recipient\'s Email (optional)</string>
+    <string name="recepient_s_phone">Recipient\'s Phone</string>
     <string name="input_the_amount_you_want">Input the amount you want</string>
     <string name="add_a_custom_message">Add a custom message</string>
     <string name="to_bank">To Bank</string>

@@ -13,6 +13,7 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.utils.isValidEmail
+import java.util.regex.Pattern
 import javax.inject.Inject
 import kotlin.collections.set
 
@@ -27,12 +28,14 @@ class CustomRequestFragment : BaseFragment(), CustomRequestMvpView {
     private lateinit var mMessageEditText: EditText
     private lateinit var mAmountEditText: EditText
     private lateinit var mEmailEditText: EditText
+    private lateinit var mPhoneEditText: EditText
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next)
 
         mEmailEditText = view.findViewById(R.id.email)
+        mPhoneEditText = view.findViewById(R.id.phone)
         mAmountEditText = view.findViewById(R.id.amount)
         mMessageEditText = view.findViewById(R.id.message)
     }
@@ -58,13 +61,21 @@ class CustomRequestFragment : BaseFragment(), CustomRequestMvpView {
                 return@setOnClickListener
             }
 
-            if (!mEmailEditText.text.toString().isValidEmail()) {
+            val pattern = Pattern.compile("[0-9]{11}")
+            val matcher = pattern.matcher(mPhoneEditText.text.toString())
+            if (mPhoneEditText.text.length != 11 || !matcher.matches()) {
+                show("Please enter a valid phone number", true)
+                return@setOnClickListener
+            }
+
+            if (!mEmailEditText.text.isEmpty() && !mEmailEditText.text.toString().isValidEmail()) {
                 show("Email isn't properly formatted", true)
                 return@setOnClickListener
             }
 
             val data = HashMap<String, Any>()
             data["email"] = mEmailEditText.text.toString()
+            data["phone"] = mPhoneEditText.text.toString()
             data["amount"] = mAmountEditText.text.toString()
             data["message"] = mMessageEditText.text.toString()
             mPresenter.requestPaymentLink(data)
