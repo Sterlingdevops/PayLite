@@ -60,12 +60,14 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                             if (it.response != null && it.response == "00") {
                                 Log.d(it.toString())
                                 mvpView.hideLoading()
+                                mvpView.hideKeyboard()
                                 mvpView.onSchedulePaymentSuccessful()
                             } else {
                                 if (it.code == 401) {
                                     mvpView.logout()
                                 } else {
                                     mvpView.hideLoading()
+                                    mvpView.hideKeyboard()
                                     mvpView.onSchedulePaymentFailed()
                                 }
                             }
@@ -109,12 +111,14 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 val wallet = gson.fromJson(gson.toJson(it.data), Wallet::class.java)
                                 dataManager.saveWallet(wallet)
                                 mvpView.hideLoading()
+                                mvpView.hideKeyboard()
                                 mvpView.onSendMoneySuccessful(wallet)
                             } else {
                                 if (it.code == 401) {
                                     mvpView.logout()
                                 } else {
                                     mvpView.hideLoading()
+                                    mvpView.hideKeyboard()
                                     mvpView.onSendMoneyFailed(it)
                                 }
                             }

@@ -19,7 +19,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CustomRequestMvpContract<V> {
 
     override fun requestPaymentLink(data: HashMap<String, Any>) {
-        dataManager.getCurrentUser()?.firstName?.let { data["SenderID"] = it }
+        dataManager.getCurrentUser()?.phoneNumber?.let { data["SenderID"] = it }
 
         mvpView.showLoading()
         compositeDisposable.add(

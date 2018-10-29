@@ -78,6 +78,7 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView {
             (baseActivity as DashboardActivity).mNavController.clearDialogFragment()
         }
 
+        mPinView.requestPinEntryFocus()
         mPinView.setPinViewEventListener { _, _ ->
             mPresenter.validatePin(mPinView.value)
         }
@@ -88,6 +89,7 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView {
     }
 
     override fun onPinEnteredCorrect() {
+        hideKeyboard()
         onPinValidatedListener?.onPinCorrect()
         (baseActivity as DashboardActivity).mNavController.clearDialogFragment()
     }
@@ -98,6 +100,7 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView {
     }
 
     override fun onPinEnteredIncorrect() {
+        hideKeyboard()
         onPinValidatedListener?.onPinIncorrect()
     }
 

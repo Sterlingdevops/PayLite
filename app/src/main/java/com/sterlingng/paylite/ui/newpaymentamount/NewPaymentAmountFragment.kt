@@ -24,7 +24,6 @@ import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 
 class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,
@@ -215,7 +214,35 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     }
 
     override fun onPinCorrect() {
-        mPresenter.sendMoney(request.toHashMap())
+        if (mScheduleRepeatSwitch.isChecked) {
+            val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+            var end: Date = dateFormat.parse(mEndDateTextView.text.toString())
+            val start: Date = dateFormat.parse(mStartDateTextView.text.toString())
+            val interval = when (mRepeatTextView.text.toString().toLowerCase()) {
+                "daily" -> 1
+                "weekly" -> 2
+                "monthly" -> 3
+                "yearly" -> 4
+                "never" -> 0
+                else -> 0
+            }
+
+            if (interval == 0) end = start
+
+            if (end.time - start.time >= 0) {
+                // The start date is not today
+                if (Date().time - start.time < 0) {
+                    schedulePayment()
+                } else {
+                    mPresenter.sendMoney(request.toHashMap())
+                }
+            } else {
+                show("End date cannot come before start date", true)
+                return
+            }
+        } else {
+            mPresenter.sendMoney(request.toHashMap())
+        }
     }
 
     override fun onPinIncorrect() {
@@ -228,33 +255,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
 
     override fun onSendMoneySuccessful(wallet: Wallet) {
         if (mScheduleRepeatSwitch.isChecked) {
-            val request = arguments?.getParcelable<SendMoneyRequest>(REQUEST)
-            val data = HashMap<String, Any>()
-
-            val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
-
-            val end: Date = dateFormat.parse(mEndDateTextView.text.toString())
-            val start: Date = dateFormat.parse(mStartDateTextView.text.toString())
-
-            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-
-            val endDate = formatter.format(end)
-            val startDate = formatter.format(start)
-
-            data["interval"] = when (mRepeatTextView.text.toString().toLowerCase()) {
-                "daily" -> 1
-                "weekly" -> 2
-                "monthly" -> 3
-                "yearly" -> 4
-                else -> 0
-            }
-            data["amount"] = mAmountEditText.text.toString()
-            data["narration"] = mAmountReferenceEditText.text.toString()
-            data["payment_ref"] = System.currentTimeMillis().toString()
-            data["beneficiary"] = (request?.email?.isValidEmail()!!) then request.email ?: request.phone
-            data["end_date"] = endDate
-            data["start_date"] = startDate
-            mPresenter.schedulePayment(data)
+            schedulePayment()
         } else {
             val contact = arguments?.getParcelable<PayliteContact>(CONTACT)!!
             if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
@@ -273,11 +274,43 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
         eventBus.post(UpdateWallet())
         (baseActivity as DashboardActivity).mNavController.clearStack()
-        hideKeyboard()
     }
 
     override fun onSendMoneyFailed(response: Response) {
         show("An error occurred while processing the transaction", true)
+    }
+
+    private fun schedulePayment() {
+        val request = arguments?.getParcelable<SendMoneyRequest>(REQUEST)
+        val data = HashMap<String, Any>()
+
+        val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+
+        var end: Date = dateFormat.parse(mEndDateTextView.text.toString())
+        val start: Date = dateFormat.parse(mStartDateTextView.text.toString())
+
+        data["interval"] = when (mRepeatTextView.text.toString().toLowerCase()) {
+            "daily" -> 1
+            "weekly" -> 2
+            "monthly" -> 3
+            "yearly" -> 4
+            "never" -> 0
+            else -> 0
+        }
+
+        if (data["interval"] == 0) end = start
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+
+        val endDate = formatter.format(end)
+        val startDate = formatter.format(start)
+
+        data["amount"] = mAmountEditText.text.toString()
+        data["narration"] = mAmountReferenceEditText.text.toString()
+        data["payment_ref"] = System.currentTimeMillis().toString()
+        data["beneficiary"] = (request?.email?.isValidEmail()!!) then request.email ?: request.phone
+        data["end_date"] = endDate
+        data["start_date"] = startDate
+        mPresenter.schedulePayment(data)
     }
 
     private fun showDatePicker(type: Int) {
