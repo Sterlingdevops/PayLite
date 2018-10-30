@@ -1,7 +1,6 @@
 package com.sterlingng.paylite.ui.sheduledtransaction
 
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import com.sterlingng.paylite.data.model.ScheduledPayment
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.views.NoScrollingLinearLayoutManager
 import com.sterlingng.views.TitleLabelTextView
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
@@ -27,6 +25,9 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
 
     @Inject
     lateinit var mPresenter: ScheduledTransactionMvpContract<ScheduledTransactionMvpView>
+
+    @Inject
+    lateinit var linearLayoutManager: LinearLayoutManager
 
     private lateinit var exit: ImageView
     private lateinit var mNameTextView: TextView
@@ -47,7 +48,6 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
 
     override fun setUp(view: View) {
         mScheduledTransactionAdapter = ScheduledTransactionAdapter(baseActivity)
-        val linearLayoutManager = LinearLayoutManager(baseActivity)
         mScheduledTransactionAdapter.mRecyclerViewClickListener = this
 
         recyclerView.adapter = mScheduledTransactionAdapter
@@ -126,10 +126,6 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
 
     override fun logout() {
         baseActivity.logout()
-    }
-
-    inner class NestedLinearLayoutManager(override val context: Context) : NoScrollingLinearLayoutManager(context) {
-        override fun isAutoMeasureEnabled(): Boolean = true
     }
 
     companion object {
