@@ -74,7 +74,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                     mvpView.logout()
                                 } else {
                                     mvpView.onGetWalletFailed(it)
-
                                 }
                             }
                         }

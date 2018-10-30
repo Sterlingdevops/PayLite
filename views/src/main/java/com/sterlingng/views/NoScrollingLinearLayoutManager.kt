@@ -3,7 +3,7 @@ package com.sterlingng.views
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 
-class NoScrollingLinearLayoutManager(val context: Context) : LinearLayoutManager(context) {
+open class NoScrollingLinearLayoutManager(open val context: Context) : LinearLayoutManager(context) {
     var isScrollEnabled = false
 
     override fun canScrollVertically(): Boolean {

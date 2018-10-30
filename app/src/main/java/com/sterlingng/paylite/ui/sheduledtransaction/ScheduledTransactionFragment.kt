@@ -1,7 +1,11 @@
 package com.sterlingng.paylite.ui.sheduledtransaction
 
 
+import android.content.Context
 import android.os.Bundle
+import android.support.v4.view.ViewCompat
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +13,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.ScheduledPayment
+import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.views.NoScrollingLinearLayoutManager
 import com.sterlingng.views.TitleLabelTextView
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
@@ -25,9 +31,11 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
     private lateinit var exit: ImageView
     private lateinit var mNameTextView: TextView
     private lateinit var mAmountTextView: TextView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var mCancelImageView: CircleImageView
     private lateinit var mRepeatTitleLabelTextView: TitleLabelTextView
     private lateinit var mPaymentInfoTitleLabelTextView: TitleLabelTextView
+    private lateinit var mScheduledTransactionAdapter: ScheduledTransactionAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_scheduled_transaction, container, false)
@@ -38,9 +46,17 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
     }
 
     override fun setUp(view: View) {
-        mPresenter.onViewInitialized()
+        mScheduledTransactionAdapter = ScheduledTransactionAdapter(baseActivity)
+        val linearLayoutManager = LinearLayoutManager(baseActivity)
+        mScheduledTransactionAdapter.mRecyclerViewClickListener = this
+
+        recyclerView.adapter = mScheduledTransactionAdapter
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.isNestedScrollingEnabled = false
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false)
 
         val scheduledPayment: ScheduledPayment = arguments?.getParcelable(SCHEDULED_PAYMENT)!!
+        mPresenter.getTransactions(scheduledPayment.beneficiaryId, scheduledPayment.paymentRef)
 
         with(scheduledPayment) {
             mAmountTextView.text = String.format("₦%,.2f", amount.toFloat())
@@ -73,11 +89,16 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
         }
     }
 
+    override fun initView(transactions: ArrayList<Transaction>) {
+        mScheduledTransactionAdapter.add(transactions)
+    }
+
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
         mNameTextView = view.findViewById(R.id.name)
         mAmountTextView = view.findViewById(R.id.amount)
         mCancelImageView = view.findViewById(R.id.cancel)
+        recyclerView = view.findViewById(R.id.recyclerView)
         mRepeatTitleLabelTextView = view.findViewById(R.id.repeat)
         mPaymentInfoTitleLabelTextView = view.findViewById(R.id.payment_info)
     }
@@ -95,13 +116,25 @@ class ScheduledTransactionFragment : BaseFragment(), ScheduledTransactionMvpView
         (baseActivity as DashboardActivity).mNavController.popFragments(1)
     }
 
+    override fun onGetUserRelativeTransactionsSuccessful() {
+
+    }
+
+    override fun onGetUserRelativeTransactionsFailed() {
+
+    }
+
     override fun logout() {
         baseActivity.logout()
     }
 
+    inner class NestedLinearLayoutManager(override val context: Context) : NoScrollingLinearLayoutManager(context) {
+        override fun isAutoMeasureEnabled(): Boolean = true
+    }
+
     companion object {
 
-        private const val SCHEDULED_PAYMENT = "ScheduledTransactionFragment.ScheduledPayment"
+        private const val SCHEDULED_PAYMENT = "ScheduledTransactionFragment.SCHEDULED_PAYMENT"
 
         fun newInstance(scheduledPayment: ScheduledPayment): ScheduledTransactionFragment {
             val fragment = ScheduledTransactionFragment()

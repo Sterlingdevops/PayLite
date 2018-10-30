@@ -311,4 +311,5 @@
     <string name="notification_placeholder">Some message or something like that</string>
     <string name="you_have_no_transactions">You have no transactions</string>
     <string name="you_have_no_notifications">You have no notifications \uE419</string>
+    <string name="no_payments_have_been_made_yet">No payments have been made yet.</string>
 </resources>

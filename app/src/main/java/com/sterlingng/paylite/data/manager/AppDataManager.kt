@@ -27,6 +27,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun getUserRelativeTransactions(primaryAcct: String, secondaryAcct: String, authorization: String): Observable<Response> = mRemoteServiceHelper.getUserRelativeTransactions(primaryAcct, secondaryAcct, authorization)
+
     override fun updateForgotPassword(data: HashMap<String, Any>, hash: String): Observable<Response> = mRemoteServiceHelper.updateForgotPassword(data, hash)
 
     override fun mockMenuItems(): ArrayList<MenuItem> = mMockHelper.mockMenuItems()
