@@ -120,11 +120,11 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     @SuppressLint("CheckResult")
     override fun setUp(view: View) {
-        mListMenuItemsAdapter = MenuItemsAdapter(baseActivity, 0)
-        mGridMenuItemsAdapter = MenuItemsAdapter(baseActivity, 1)
+        mListMenuItemsAdapter = MenuItemsAdapter(baseActivity, MenuItemsAdapter.Mode.LIST)
+        mGridMenuItemsAdapter = MenuItemsAdapter(baseActivity, MenuItemsAdapter.Mode.GRID)
         mGridMenuItemsAdapter.mRecyclerViewClickListener = this
         mListMenuItemsAdapter.mRecyclerViewClickListener = this
-        mRecyclerView.addItemDecoration(SpacesItemDecoration(8))
+        mRecyclerView.addItemDecoration(SpacesItemDecoration(0))
         mRecyclerView.layoutManager = gridLayoutManager
         mRecyclerView.adapter = mGridMenuItemsAdapter
 

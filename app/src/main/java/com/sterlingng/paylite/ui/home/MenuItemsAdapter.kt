@@ -12,9 +12,10 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.MenuItem
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import com.sterlingng.paylite.utils.then
 import java.util.*
 
-class MenuItemsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adapter<BaseViewHolder>() {
+class MenuItemsAdapter(val mContext: Context, val type: Mode) : RecyclerView.Adapter<BaseViewHolder>() {
 
     var items: ArrayList<MenuItem> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
@@ -24,11 +25,11 @@ class MenuItemsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adap
         return when (viewType) {
             VIEW_TYPE_NORMAL -> {
                 when (type) {
-                    0 -> {
+                    Mode.LIST -> {
                         view = LayoutInflater.from(mContext).inflate(R.layout.home_list_view_item, parent, false)
                         ViewHolder(view, mRecyclerViewClickListener)
                     }
-                    else -> {
+                    Mode.GRID -> {
                         view = LayoutInflater.from(mContext).inflate(R.layout.home_grid_view_item, parent, false)
                         ViewHolder(view, mRecyclerViewClickListener)
                     }
@@ -94,6 +95,17 @@ class MenuItemsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adap
 
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
+            when (type) {
+                Mode.GRID -> {
+                    itemView.setBackgroundResource((adapterPosition % 2 == 0) then
+                    R.drawable.background_home_left_item ?: R.drawable.background_home_right_item)
+                }
+
+                Mode.LIST -> {
+                    itemView.setBackgroundResource(0)
+                }
+            }
+
             with(items[adapterPosition]) {
                 titleTextView.text = title
                 subTitleTextView.text = subTitle
@@ -103,6 +115,10 @@ class MenuItemsAdapter(val mContext: Context, val type: Int) : RecyclerView.Adap
                 recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
             }
         }
+    }
+
+    enum class Mode {
+        GRID, LIST
     }
 
     inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView)
