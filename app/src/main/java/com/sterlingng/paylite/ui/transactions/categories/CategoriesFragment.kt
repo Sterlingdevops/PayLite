@@ -10,6 +10,8 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailFragment
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import javax.inject.Inject
 
@@ -36,7 +38,6 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
 
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
-
         mTransactionAdapter.mRecyclerViewClickListener = this
 
         recyclerView.adapter = mTransactionAdapter
@@ -56,7 +57,9 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
-
+        (baseActivity as DashboardActivity)
+                .mNavController
+                .pushFragment(TransactionDetailFragment.newInstance(mTransactionAdapter.get(position)))
     }
 
     override fun initView(transactions: ArrayList<Transaction>) {

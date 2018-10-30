@@ -142,7 +142,7 @@ class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<B
                 val dateFormat = SimpleDateFormat("hh:mm aaa", Locale.ENGLISH)
 
                 with(transactions[adapterPosition]) {
-                    transactionAmount.text = (credit == "11") then "+ ${mContext.getString(R.string.naira)}$amount" ?: "- ${mContext.getString(R.string.naira)}$amount"
+                    transactionAmount.text = (credit == "11") then String.format("+ ₦%,.2f", amount.toFloat()) ?: String.format("- ₦%,.2f", amount.toFloat())
                     transactionName.text = (credit == "11") then senderName ?: recipientName
                     transactionDate.text = dateFormat.format(date.time)
 

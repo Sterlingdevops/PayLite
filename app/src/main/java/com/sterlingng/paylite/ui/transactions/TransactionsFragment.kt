@@ -12,11 +12,6 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.views.CustomViewPager
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class TransactionsFragment : BaseFragment(), TransactionsMvpView {
@@ -24,9 +19,7 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
     @Inject
     lateinit var mPresenter: TransactionsMvpContract<TransactionsMvpView>
 
-    lateinit var mPagerAdapter: CustomPagerAdapter
-
-    private lateinit var disposable: Disposable
+    private lateinit var mPagerAdapter: CustomPagerAdapter
 
     private lateinit var mBalanceTextView: TextView
     private lateinit var mViewPager: CustomViewPager
@@ -41,6 +34,7 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
     }
 
     override fun setUp(view: View) {
+        mPresenter.onViewInitialized()
         mPagerAdapter = CustomPagerAdapter(childFragmentManager)
 
         mPagerAdapter.addFragment(CategoriesFragment.newInstance("ALL"), "ALL")
@@ -52,14 +46,6 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
         mViewPager.offscreenPageLimit = 3
 
         mSmartTabLayout.setViewPager(mViewPager)
-
-        disposable = Observable.timer(1L, TimeUnit.SECONDS)
-                .repeat()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    mPresenter.onViewInitialized()
-                }
     }
 
     override fun initView(wallet: Wallet) {
@@ -74,16 +60,6 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
 
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        disposable.dispose()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.dispose()
     }
 
     companion object {

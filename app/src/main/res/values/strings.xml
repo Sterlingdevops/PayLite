@@ -65,6 +65,7 @@
     <string name="paylite">Paylite</string>
     <string name="available_balance">Available Balance</string>
     <string name="amount_naira">₦0.00</string>
+    <string name="amount_naira_20_000">+ ₦20,000.00</string>
     <string name="amount_0">0.00</string>
     <string name="top_up">Top Up</string>
     <string name="view_history">View History</string>
@@ -312,4 +313,10 @@
     <string name="you_have_no_transactions">You have no transactions</string>
     <string name="you_have_no_notifications">You have no notifications \uE419</string>
     <string name="no_payments_have_been_made_yet">No payments have been made yet.</string>
+    <string name="history_title_place_holder">History with Abubakar Suleiman</string>
+    <string name="number_of_transactions">Number of transactions</string>
+    <string name="total_sent">Total Sent</string>
+    <string name="total_received">Total received</string>
+    <string name="_8_00_am_8_june">8:00 AM 8 June</string>
+    <string name="completed_transaction">Completed Transaction</string>
 </resources>

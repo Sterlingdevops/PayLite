@@ -51,6 +51,7 @@ import com.sterlingng.paylite.ui.splitcontacts.SplitContactFragment
 import com.sterlingng.paylite.ui.successful.SuccessfulActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
+import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailFragment
 import dagger.Component
 
 /**
@@ -164,4 +165,6 @@ interface ActivityComponent {
     fun inject(bankTransferAmountFragment: BankTransferAmountFragment)
 
     fun inject(scheduledTransactionFragment: ScheduledTransactionFragment)
+
+    fun inject(transactionDetailFragment: TransactionDetailFragment)
 }
