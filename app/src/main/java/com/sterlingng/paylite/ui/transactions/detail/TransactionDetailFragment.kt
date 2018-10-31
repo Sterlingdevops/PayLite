@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Transaction
+import com.sterlingng.paylite.data.model.UpdateTransaction
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.utils.then
 import com.sterlingng.views.TitleLabelTextView
@@ -20,6 +22,9 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
 
     @Inject
     lateinit var mPresenter: TransactionDetailMvpContract<TransactionDetailMvpView>
+
+    @Inject
+    lateinit var eventBus: EventBus
 
     private lateinit var mReceivedTitleLabelTextView: TitleLabelTextView
     private lateinit var mCountTitleLabelTextView: TitleLabelTextView
@@ -55,7 +60,9 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
 
     override fun setUp(view: View) {
         mPresenter.getTransactions()
+
         exit.setOnClickListener {
+            eventBus.post(UpdateTransaction(arguments?.getInt(POSITION)!!))
             baseActivity.onBackPressed()
         }
     }
@@ -80,7 +87,7 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
             } as ArrayList<Transaction>).size.toString()
 
             val countTransactions = transactions.filter {
-                it.senderName == (credit == "11") then senderName ?: recipientName
+                it.recipientName == (credit == "00") then recipientName ?: senderName || it.senderName == (credit == "11") then senderName ?: recipientName
             } as ArrayList<Transaction>
             val count = countTransactions.isEmpty() then Transaction()
                     ?: countTransactions.reduce { acc, transaction ->
@@ -90,7 +97,7 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
             mReceivedTitleLabelTextView.label = String.format("₦%,.2f", count.amountInt.toFloat())
 
             val sentTransactions = transactions.filter {
-                it.recipientName == (credit == "00") then recipientName ?: senderName
+                it.recipientName == (credit == "00") then recipientName ?: senderName || it.senderName == (credit == "11") then senderName ?: recipientName
             } as ArrayList<Transaction>
             val label = sentTransactions.isEmpty() then Transaction()
                     ?: sentTransactions.reduce { acc, transaction ->
@@ -108,11 +115,13 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
     companion object {
 
         private const val TRANSACTION = "TransactionDetailFragment.Transaction"
+        private const val POSITION = "TransactionDetailFragment.POSITION"
 
-        fun newInstance(transaction: Transaction): TransactionDetailFragment {
+        fun newInstance(transaction: Transaction, position: Int): TransactionDetailFragment {
             val fragment = TransactionDetailFragment()
             val args = Bundle()
             args.putParcelable(TRANSACTION, transaction)
+            args.putInt(POSITION, position)
             fragment.arguments = args
             return fragment
         }

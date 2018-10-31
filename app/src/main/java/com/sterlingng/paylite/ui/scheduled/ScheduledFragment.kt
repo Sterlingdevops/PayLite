@@ -64,7 +64,7 @@ class ScheduledFragment : BaseFragment(), ScheduledMvpView {
     }
 
     override fun onScheduledPaymentsFailed(response: Response) {
-        show("Failed getting transactions", true)
+//        show("Failed getting transactions", true)
     }
 
     override fun logout() {

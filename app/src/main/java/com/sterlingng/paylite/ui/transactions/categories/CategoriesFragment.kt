@@ -1,6 +1,8 @@
 package com.sterlingng.paylite.ui.transactions.categories
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,10 +11,15 @@ import android.view.ViewGroup
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Transaction
+import com.sterlingng.paylite.data.model.UpdateTransaction
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailFragment
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class CategoriesFragment : BaseFragment(), CategoriesMvpView {
@@ -26,6 +33,10 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     @Inject
     lateinit var mTransactionAdapter: TransactionAdapter
 
+    @Inject
+    lateinit var eventBus: EventBus
+
+    lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
     lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,6 +47,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
         return view
     }
 
+    @SuppressLint("CheckResult")
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
         mTransactionAdapter.mRecyclerViewClickListener = this
@@ -44,7 +56,20 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
         recyclerView.layoutManager = mLinearLayoutManager
         recyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(mTransactionAdapter))
 
+        eventBus.observe(UpdateTransaction::class.java)
+                .delay(1L, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    recyclerView.scrollToPosition(it.position)
+                }
+
         mPresenter.loadTransactions()
+        mSwipeRefreshLayout.isRefreshing = true
+
+        mSwipeRefreshLayout.setOnRefreshListener {
+            mPresenter.loadTransactions()
+        }
     }
 
     override fun updateCategories(it: ArrayList<Transaction>) {
@@ -54,12 +79,13 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
 
     override fun bindViews(view: View) {
         recyclerView = view.findViewById(R.id.recyclerView)
+        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh)
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
         (baseActivity as DashboardActivity)
                 .mNavController
-                .pushFragment(TransactionDetailFragment.newInstance(mTransactionAdapter.get(position)))
+                .pushFragment(TransactionDetailFragment.newInstance(mTransactionAdapter.get(position), position))
     }
 
     override fun initView(transactions: ArrayList<Transaction>) {
@@ -77,6 +103,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     }
 
     override fun onGetUserTransactionsFailed(response: Response) {
+        mSwipeRefreshLayout.isRefreshing = false
         show("Failed getting transactions", true)
     }
 
@@ -92,6 +119,8 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
 
         mTransactionAdapter.add(newTransactions)
         recyclerView.scrollToPosition(0)
+
+        mSwipeRefreshLayout.isRefreshing = false
     }
 
     override fun logout() {

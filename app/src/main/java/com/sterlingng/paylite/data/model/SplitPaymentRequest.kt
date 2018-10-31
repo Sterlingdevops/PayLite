@@ -11,14 +11,3 @@ class SplitPaymentRequest {
     }
 }
 
-class SplitPerson {
-    var note: String = ""
-    var email: String = ""
-    var phone: String = ""
-    var username: String = ""
-    var amount: Int = 0
-
-    override fun toString(): String {
-        return gson.toJson(this)
-    }
-}

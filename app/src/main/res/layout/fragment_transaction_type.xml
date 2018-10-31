@@ -11,7 +11,6 @@
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:background="@color/denim"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -22,7 +21,6 @@
         android:layout_height="wrap_content"
         android:text="@string/upcoming"
         android:textColor="@color/white"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -35,7 +33,6 @@
         android:layout_height="wrap_content"
         android:text="@string/apr"
         android:textColor="@color/white"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toStartOf="@+id/textView17"
         app:layout_constraintHorizontal_bias="0.5"
@@ -48,7 +45,6 @@
         android:layout_height="wrap_content"
         android:text="@string/mar"
         android:textColor="@color/white"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toStartOf="@+id/textView18"
         app:layout_constraintHorizontal_bias="0.5"
@@ -61,7 +57,6 @@
         android:layout_height="wrap_content"
         android:text="@string/feb"
         android:textColor="@color/white"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toStartOf="@+id/textView19"
         app:layout_constraintHorizontal_bias="0.5"
@@ -74,7 +69,6 @@
         android:layout_height="wrap_content"
         android:text="@string/jan"
         android:textColor="@color/white"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view8"
         app:layout_constraintEnd_toStartOf="@+id/textView20"
         app:layout_constraintHorizontal_bias="0.5"
@@ -82,19 +76,25 @@
         app:layout_constraintStart_toStartOf="@+id/view8"
         app:layout_constraintTop_toTopOf="@+id/view8"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="56dp"
-        android:clipToPadding="false"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view8"
-        app:spanCount="2"
-        tools:listitem="@layout/layout_transaction_item"/>
+        app:layout_constraintTop_toBottomOf="@+id/view8">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            tools:itemCount="2"
+            tools:listitem="@layout/layout_transaction_item"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>
 
