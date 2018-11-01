@@ -24,10 +24,15 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
     var contacts: ArrayList<ContactItem> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
+    lateinit var onDeleteContactWatcher: OnDeleteContactWatcher
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(mContext).inflate(R.layout.layout_add_contact_item, parent, false)
-        return ViewHolder(view, mRecyclerViewClickListener, ContactNameTextWatcher(), ContactAmountTextWatcher())
+        return ViewHolder(view,
+                mRecyclerViewClickListener,
+                onDeleteContactWatcher,
+                ContactNameTextWatcher(),
+                ContactAmountTextWatcher())
     }
 
     override fun getSwipeLayoutResourceId(adapterPosition: Int): Int = R.id.swipe
@@ -73,6 +78,7 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
     inner class ViewHolder(itemView: View,
                            recyclerViewClickListener: RecyclerViewClickListener,
+                           onDeleteContactWatcher: OnDeleteContactWatcher,
                            contactNameTextWatcher: ContactNameTextWatcher,
                            contactAmountTextWatcher: ContactAmountTextWatcher) : RecyclerView.ViewHolder(itemView) {
 
@@ -100,12 +106,17 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
             deleteContactTextView.setOnClickListener {
                 remove(adapterPosition)
+                onDeleteContactWatcher.onContactDeleted()
             }
         }
     }
 
     companion object {
         const val DRAWABLE_RIGHT = 2
+    }
+
+    interface OnDeleteContactWatcher {
+        fun onContactDeleted()
     }
 
     inner class ContactNameTextWatcher : TextWatcher {

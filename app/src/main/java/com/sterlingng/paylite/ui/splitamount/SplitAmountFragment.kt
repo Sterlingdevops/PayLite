@@ -25,7 +25,7 @@ class SplitAmountFragment : BaseFragment(), SplitAmountMvpView {
     private lateinit var mEqualCheckBox: CheckBox
     private lateinit var mNoteEditText: EditText
 
-    private var isEqual: Boolean = false
+    private var isEqual: Boolean = true
 
     lateinit var exit: ImageView
     lateinit var next: Button

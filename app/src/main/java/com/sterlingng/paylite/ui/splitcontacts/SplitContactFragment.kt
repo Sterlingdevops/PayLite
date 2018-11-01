@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.ui.splitcontacts
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -25,13 +26,14 @@ import com.sterlingng.paylite.ui.contacts.SelectContactsFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.isValidEmail
+import com.sterlingng.paylite.utils.then
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 import javax.inject.Inject
 
-class SplitContactFragment : BaseFragment(), SplitContactMvpView {
+class SplitContactFragment : BaseFragment(), SplitContactMvpView, SplitContactsAdapter.OnDeleteContactWatcher {
 
     @Inject
     lateinit var mPresenter: SplitContactMvpContract<SplitContactMvpView>
@@ -48,6 +50,9 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
     private lateinit var mBalanceTextView: TextView
     private lateinit var exit: ImageView
     private lateinit var next: Button
+
+    private var isEqual: Boolean = false
+    private var splitAmount: Int = 0
 
     private lateinit var mSplitContactsAdapter: SplitContactsAdapter
 
@@ -69,21 +74,32 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
         mAddContactTextView = view.findViewById(R.id.add_contact)
     }
 
+    @SuppressLint("CheckResult")
     override fun setUp(view: View) {
+        exit.setOnClickListener {
+            baseActivity.onBackPressed()
+        }
+
+        isEqual = arguments?.getBoolean(EQUAL)!!
+
         arguments?.getString(AMOUNT)?.let {
+            splitAmount = it.toInt()
             mSplitCostTextView.text = baseActivity.resources.getString(R.string.split_ngn, it.toInt().toString())
         }
 
         mSplitContactsAdapter = SplitContactsAdapter(baseActivity)
         mSplitContactsAdapter.mRecyclerViewClickListener = this
+        mSplitContactsAdapter.onDeleteContactWatcher = this
         mRecyclerView.layoutManager = mLinearLayoutManager
         mRecyclerView.adapter = mSplitContactsAdapter
 
         mSplitContactsAdapter.add(ContactItem())
         mSplitContactsAdapter.add(ContactItem())
 
+        calculateSplitCost()
         mAddContactTextView.setOnClickListener {
             mSplitContactsAdapter.add(ContactItem())
+            calculateSplitCost()
         }
 
         next.setOnClickListener {
@@ -128,10 +144,6 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
             mPresenter.splitPayment(data)
         }
 
-        exit.setOnClickListener {
-            baseActivity.onBackPressed()
-        }
-
         // listen for the event when a user selects a contact, then update the list of contacts
         eventBus.observe(ChosenContact::class.java)
                 .delay(1L, TimeUnit.MILLISECONDS)
@@ -162,6 +174,16 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView {
                                 )
                     }
                 }).check()
+    }
+
+    fun calculateSplitCost() {
+        mSplitContactsAdapter.contacts.forEach { contact ->
+            contact.amount = isEqual then (splitAmount / mSplitContactsAdapter.contacts.size).toString() ?: "0"
+        }
+    }
+
+    override fun onContactDeleted() {
+        calculateSplitCost()
     }
 
     override fun onSplitPaymentSuccessful() {
