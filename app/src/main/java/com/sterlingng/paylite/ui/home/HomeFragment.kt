@@ -143,12 +143,20 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                     mPresenter.loadCachedWallet()
                 }
 
+        eventBus.observe(OpenFundWallet::class.java)
+                .delay(1L, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
+                }
+
         mFundButton.setOnClickListener {
             when {
                 mPresenter.getAuthPin() -> (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
                 else -> (baseActivity as DashboardActivity)
                         .mNavController
-                        .pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name))
+                        .pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name, openFund = true))
             }
         }
 

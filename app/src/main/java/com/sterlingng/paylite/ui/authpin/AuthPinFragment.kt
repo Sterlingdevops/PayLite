@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.data.model.OpenFundWallet
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import javax.inject.Inject
@@ -17,6 +19,9 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
 
     @Inject
     lateinit var mPresenter: AuthPinMvpContract<AuthPinMvpView>
+
+    @Inject
+    lateinit var eventBus: EventBus
 
     private lateinit var mSubTitleTextView: TextView
     private lateinit var mTitleTextView: TextView
@@ -84,13 +89,21 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
             OpenPinMode.ENTER_NEW -> {
                 (baseActivity as DashboardActivity)
                         .mNavController
-                        .pushFragment(AuthPinFragment.newInstance(OpenPinMode.CONFIRM_NEW.name, mPinView.value))
+                        .pushFragment(AuthPinFragment.newInstance(OpenPinMode.CONFIRM_NEW.name,
+                                openFund = arguments?.getBoolean(OPEN_FRAGMENT)!!,
+                                extra = mPinView.value))
             }
             OpenPinMode.CONFIRM_NEW -> {
                 if (mPinView.value == extra) {
                     mPresenter.savePin(extra)
+
+                    if (arguments?.getBoolean(OPEN_FRAGMENT)!!) {
+                        eventBus.post(OpenFundWallet())
+                    }
+
                     (baseActivity as DashboardActivity)
-                            .mNavController.popFragments(2)
+                            .mNavController
+                            .popFragments(2)
                     hideKeyboard()
                 } else {
                     show("The PINs you entered do not match", true)
@@ -117,15 +130,17 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
 
     companion object {
 
-        private const val OPEN_PIN_MODE = "MODE"
-        private const val PIN_EXTRA = "PIN_EXTRA"
+        private const val OPEN_PIN_MODE = "AuthPinFragment.MODE"
+        private const val PIN_EXTRA = "AuthPinFragment.PIN_EXTRA"
+        private const val OPEN_FRAGMENT = "AuthPinFragment.OPEN_FRAGMENT"
 
         @JvmOverloads
-        fun newInstance(mode: String, extra: String = ""): AuthPinFragment {
+        fun newInstance(mode: String, openFund: Boolean = false, extra: String = ""): AuthPinFragment {
             val fragment = AuthPinFragment()
             val args = Bundle()
-            args.putString(OPEN_PIN_MODE, mode)
             args.putString(PIN_EXTRA, extra)
+            args.putString(OPEN_PIN_MODE, mode)
+            args.putBoolean(OPEN_FRAGMENT, openFund)
             fragment.arguments = args
             return fragment
         }

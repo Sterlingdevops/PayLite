@@ -1,6 +1,5 @@
 package com.sterlingng.paylite.ui.settings
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
