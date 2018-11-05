@@ -36,7 +36,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     @Inject
     lateinit var eventBus: EventBus
 
-    lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
     lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

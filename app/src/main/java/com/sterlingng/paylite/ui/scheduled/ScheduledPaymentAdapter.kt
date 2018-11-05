@@ -142,6 +142,8 @@ class ScheduledPaymentAdapter(private val mContext: Context) : RecyclerView.Adap
 
     inner class EmptyViewHolder(itemView: View) : BaseViewHolder(itemView)
 
+    interface On
+
     companion object {
 
         private const val VIEW_TYPE_NORMAL = 1

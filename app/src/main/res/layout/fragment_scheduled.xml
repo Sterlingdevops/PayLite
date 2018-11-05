@@ -19,7 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
         android:layout_width="wrap_content"
@@ -52,8 +51,8 @@
         android:id="@+id/exit"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:clickable="true"
         android:contentDescription="@string/exit"
         android:focusable="true"
@@ -86,14 +85,26 @@
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop"
-        tools:listitem="@layout/layout_scheduled_transaction_item"/>
+        app:layout_constraintTop_toBottomOf="@+id/backdrop">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backdrop"
+
+            tools:listitem="@layout/layout_scheduled_transaction_item"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>

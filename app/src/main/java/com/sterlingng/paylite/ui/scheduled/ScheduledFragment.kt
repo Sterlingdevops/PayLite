@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.ui.scheduled
 
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -31,6 +32,7 @@ class ScheduledFragment : BaseFragment(), ScheduledMvpView {
     private lateinit var exit: ImageView
     private lateinit var mBalanceTextView: TextView
     private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_scheduled, container, false)
@@ -49,22 +51,31 @@ class ScheduledFragment : BaseFragment(), ScheduledMvpView {
         mRecyclerView.adapter = mScheduledPaymentAdapter
         mRecyclerView.layoutManager = mLayoutManager
 
-        mPresenter.loadScheduledPayments()
         mPresenter.onViewInitialized()
+
+        mPresenter.loadScheduledPayments()
+        mSwipeRefreshLayout.isRefreshing = true
+
+        mSwipeRefreshLayout.setOnRefreshListener {
+            mPresenter.loadScheduledPayments()
+        }
     }
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
         mBalanceTextView = view.findViewById(R.id.balance)
+        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh)
         mRecyclerView = view.findViewById(R.id.recyclerView)
     }
 
     override fun onScheduledPaymentsSuccessful(payments: ArrayList<ScheduledPayment>) {
         mScheduledPaymentAdapter.add(payments)
+        mSwipeRefreshLayout.isRefreshing = false
     }
 
     override fun onScheduledPaymentsFailed(response: Response) {
-//        show("Failed getting transactions", true)
+        show("Failed getting transactions", true)
+        mSwipeRefreshLayout.isRefreshing = false
     }
 
     override fun logout() {
