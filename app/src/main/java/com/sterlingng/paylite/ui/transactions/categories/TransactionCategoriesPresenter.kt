@@ -42,18 +42,30 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                                 response.response = "failed"
                                 return@onErrorReturn response
                             } else {
-                                val raw = (it as HttpException).response().errorBody()?.string()
-                                if (AppUtils.isJSONValid(raw!!)) {
-                                    val response = gson.fromJson(raw, Response::class.java)
-                                    response.code = it.code()
-                                    return@onErrorReturn response
+                                when (it) {
+                                    it as HttpException -> {
+                                        val raw = it.response().errorBody()?.string()
+                                        if (AppUtils.isJSONValid(raw!!)) {
+                                            val response = gson.fromJson(raw, Response::class.java)
+                                            response.code = it.code()
+                                            return@onErrorReturn response
+                                        }
+                                        val response = Response()
+                                        response.data = HttpException(retrofit2.Response.error<String>(500,
+                                                ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
+                                        response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                        response.response = "failed"
+                                        return@onErrorReturn response
+                                    }
+                                    else -> {
+                                        val response = Response()
+                                        response.data = HttpException(retrofit2.Response.error<String>(500,
+                                                ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), "")))
+                                        response.message = "Error!!! The server didn't respond fast enough and the request timed out"
+                                        response.response = "failed"
+                                        return@onErrorReturn response
+                                    }
                                 }
-                                val response = Response()
-                                response.data = HttpException(retrofit2.Response.error<String>(500,
-                                        ResponseBody.create(MediaType.parse("text/html; charset=utf-8"), raw)))
-                                response.message = "Error!!! The server didn't respond fast enough and the request timed out"
-                                response.response = "failed"
-                                return@onErrorReturn response
                             }
                         }
                         .subscribe { response ->

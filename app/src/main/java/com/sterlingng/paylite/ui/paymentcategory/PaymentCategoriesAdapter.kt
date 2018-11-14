@@ -1,12 +1,15 @@
 package com.sterlingng.paylite.ui.paymentcategory
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
@@ -109,6 +112,7 @@ class PaymentCategoriesAdapter(private val mContext: Context) : RecyclerView.Ada
     inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
         private val categoryName: TextView = itemView.findViewById(R.id.category_name)
         private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
+        private val categoryItem: CardView = itemView as CardView
 
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
@@ -119,9 +123,18 @@ class PaymentCategoriesAdapter(private val mContext: Context) : RecyclerView.Ada
             }
 
             if (selectedItems.get(adapterPosition)) {
-                itemView.setBackgroundResource(R.drawable.background_pin_view)
+//                categoryItem.setBackgroundResource(R.drawable.background_pin_view)
+                val valueAnimator = ValueAnimator.ofFloat(categoryItem.cardElevation, 16f)
+                valueAnimator.addUpdateListener {
+                    val value = it.animatedValue as Float
+                    categoryItem.cardElevation = value
+                }
+                valueAnimator.interpolator = LinearInterpolator()
+                valueAnimator.duration = 100L
+                valueAnimator.start()
             } else {
-                itemView.background = null
+                categoryItem.cardElevation = 0f
+//                categoryItem.background = null
             }
 
             itemView.setOnClickListener {

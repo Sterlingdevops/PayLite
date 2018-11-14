@@ -12,6 +12,9 @@ import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.data.model.UpdateTransaction
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesFragment
+import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.then
 import com.sterlingng.views.TitleLabelTextView
 import java.text.SimpleDateFormat
@@ -35,6 +38,8 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
     private lateinit var mNameTextView: TextView
     private lateinit var mDateTextView: TextView
 
+    private lateinit var mEditCategoryImageView: ImageView
+    private lateinit var mSendMoneyImageView: ImageView
     private lateinit var exit: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -55,6 +60,8 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
         mDateTextView = view.findViewById(R.id.date)
         mNameTextView = view.findViewById(R.id.name)
 
+        mSendMoneyImageView = view.findViewById(R.id.send_money)
+        mEditCategoryImageView = view.findViewById(R.id.edit)
         exit = view.findViewById(R.id.exit)
     }
 
@@ -65,11 +72,22 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
             eventBus.post(UpdateTransaction(arguments?.getInt(POSITION)!!))
             baseActivity.onBackPressed()
         }
+
+        mSendMoneyImageView.setOnClickListener {
+
+        }
+
+        mEditCategoryImageView.setOnClickListener {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(PaymentCategoriesFragment.newInstance())
+        }
     }
 
     @SuppressLint("SetTextI18n")
     override fun initView(transactions: ArrayList<Transaction>) {
         val transaction: Transaction = arguments?.getParcelable(TRANSACTION)!!
+        Log.d(transaction.toString())
 
         with(transaction) {
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
@@ -91,7 +109,7 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
             } as ArrayList<Transaction>
             val count = countTransactions.isEmpty() then Transaction()
                     ?: countTransactions.reduce { acc, transaction ->
-                        acc.amountInt += transaction.amount.toFloat().toInt()
+                        acc.amountInt += transaction.amount.trim().split(".")[0].toFloat().toInt()
                         return@reduce acc
                     }
             mReceivedTitleLabelTextView.label = String.format("₦%,.2f", count.amountInt.toFloat())
@@ -101,7 +119,7 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
             } as ArrayList<Transaction>
             val label = sentTransactions.isEmpty() then Transaction()
                     ?: sentTransactions.reduce { acc, transaction ->
-                        acc.amountInt += transaction.amount.toFloat().toInt()
+                        acc.amountInt += transaction.amount.trim().split(".")[0].toFloat().toInt()
                         return@reduce acc
                     }
             mSentTitleLabelTextView.label = String.format("₦%,.2f", label.amountInt.toFloat())

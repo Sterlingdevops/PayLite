@@ -320,4 +320,6 @@
     <string name="_8_00_am_8_june">8:00 AM 8 June</string>
     <string name="completed_transaction">Completed Transaction</string>
     <string name="this_is_used_to_provide_you_with_spending">This is used to provide you with spending insights. Choose the right category for accurate results.</string>
+    <string name="edit_transaction_category">Edit Transaction\n Category</string>
+    <string name="transfers">Transfers</string>
 </resources>
