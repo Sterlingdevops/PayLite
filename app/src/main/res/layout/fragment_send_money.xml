@@ -209,7 +209,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/to_bank_ref"
         app:layout_constraintStart_toStartOf="@+id/to_bank"
         app:layout_constraintTop_toTopOf="@+id/to_bank"
-        app:srcCompat="@drawable/cashout_bank"/>
+        app:srcCompat="@drawable/icon_cashout_bank"/>
 
     <TextView
         android:id="@+id/scheduled_payments"

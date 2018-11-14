@@ -4,7 +4,7 @@ import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.ui.base.MvpView
 
-interface CategoriesMvpView : MvpView {
+interface TransactionCategoriesMvpView : MvpView {
     fun updateCategories(it: ArrayList<Transaction>)
     fun initView(transactions: ArrayList<Transaction>)
     fun onGetUserTransactionsFailed(response: Response)

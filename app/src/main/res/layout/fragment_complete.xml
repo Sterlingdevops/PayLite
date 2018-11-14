@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"
-        app:srcCompat="@drawable/welcome"/>
+        app:srcCompat="@drawable/icon_welcome"/>
 
     <Button
         android:id="@+id/next_complete"

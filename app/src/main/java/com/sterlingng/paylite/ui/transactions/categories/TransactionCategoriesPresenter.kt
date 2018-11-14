@@ -17,9 +17,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class CategoriesPresenter<V : CategoriesMvpView> @Inject
+class TransactionCategoriesPresenter<V : TransactionCategoriesMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CategoriesMvpContract<V> {
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), TransactionCategoriesMvpContract<V> {
 
     override fun onViewInitialized() {
         super.onViewInitialized()

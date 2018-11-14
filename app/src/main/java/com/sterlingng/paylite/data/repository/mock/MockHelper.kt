@@ -37,18 +37,20 @@ internal constructor() : MockerInterface {
         return notifications
     }
 
-    override fun mockCategories(): ArrayList<PaymentCategory> {
+    override fun mockPaymentCategories(): ArrayList<PaymentCategory> {
         val categories: ArrayList<PaymentCategory> = ArrayList()
-        categories += PaymentCategory("Bills", R.color.black_effective)
-        categories += PaymentCategory("Shopping", R.color.yellow)
-        categories += PaymentCategory("Transportation", R.color.light_red)
-        categories += PaymentCategory("Education", R.color.scarlet_dark)
-        categories += PaymentCategory("Investments", R.color.scarlet)
-        categories += PaymentCategory("Groceries", R.color.light_green)
-        categories += PaymentCategory("Eating Out", R.color.blue_grey)
-        categories += PaymentCategory("Travel", R.color.gray)
-        categories += PaymentCategory("Income", R.color.greenish_grey)
-        categories += PaymentCategory("Charity", R.color.blueberry)
+        categories += PaymentCategory("Transfers", R.drawable.icon_transfers)
+        categories += PaymentCategory("Bills", R.drawable.icon_bills2)
+        categories += PaymentCategory("Income", R.drawable.icon_income)
+        categories += PaymentCategory("Travel", R.drawable.icon_travel)
+        categories += PaymentCategory("Eating Out", R.drawable.icon_eating)
+        categories += PaymentCategory("Shopping", R.drawable.icon_shopping)
+        categories += PaymentCategory("Education", R.drawable.icon_education)
+        categories += PaymentCategory("give", R.drawable.icon_give)
+        categories += PaymentCategory("Groceries", R.drawable.icon_groceries)
+        categories += PaymentCategory("Investments", R.drawable.icon_investment)
+        categories += PaymentCategory("Entertainment", R.drawable.icon_entertainment)
+        categories += PaymentCategory("Transportation", R.drawable.icon_transportation)
         return categories
     }
 }

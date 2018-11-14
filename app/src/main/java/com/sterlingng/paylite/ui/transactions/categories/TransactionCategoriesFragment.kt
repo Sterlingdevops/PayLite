@@ -22,16 +22,16 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class CategoriesFragment : BaseFragment(), CategoriesMvpView {
+class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpView {
 
     @Inject
-    lateinit var mPresenter: CategoriesMvpContract<CategoriesMvpView>
+    lateinit var mPresenter: TransactionCategoriesMvpContract<TransactionCategoriesMvpView>
 
     @Inject
     lateinit var mLinearLayoutManager: LinearLayoutManager
 
     @Inject
-    lateinit var mTransactionAdapter: TransactionAdapter
+    lateinit var mTransactionCategoriesAdapter: TransactionCategoriesAdapter
 
     @Inject
     lateinit var eventBus: EventBus
@@ -50,11 +50,11 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     @SuppressLint("CheckResult")
     override fun setUp(view: View) {
         mPresenter.onViewInitialized()
-        mTransactionAdapter.mRecyclerViewClickListener = this
+        mTransactionCategoriesAdapter.mRecyclerViewClickListener = this
 
-        recyclerView.adapter = mTransactionAdapter
+        recyclerView.adapter = mTransactionCategoriesAdapter
         recyclerView.layoutManager = mLinearLayoutManager
-        recyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(mTransactionAdapter))
+        recyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(mTransactionCategoriesAdapter))
 
         eventBus.observe(UpdateTransaction::class.java)
                 .delay(1L, TimeUnit.MILLISECONDS)
@@ -73,7 +73,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     }
 
     override fun updateCategories(it: ArrayList<Transaction>) {
-        mTransactionAdapter.add(it)
+        mTransactionCategoriesAdapter.add(it)
         recyclerView.scrollToPosition(0)
     }
 
@@ -85,7 +85,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
     override fun recyclerViewItemClicked(v: View, position: Int) {
         (baseActivity as DashboardActivity)
                 .mNavController
-                .pushFragment(TransactionDetailFragment.newInstance(mTransactionAdapter.get(position), position))
+                .pushFragment(TransactionDetailFragment.newInstance(mTransactionCategoriesAdapter.get(position), position))
     }
 
     override fun initView(transactions: ArrayList<Transaction>) {
@@ -98,7 +98,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
             else -> transactions
         }
 
-        mTransactionAdapter.add(newTransactions)
+        mTransactionCategoriesAdapter.add(newTransactions)
         recyclerView.scrollToPosition(0)
     }
 
@@ -117,7 +117,7 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
             else -> transactions
         }
 
-        mTransactionAdapter.add(newTransactions)
+        mTransactionCategoriesAdapter.add(newTransactions)
         recyclerView.scrollToPosition(0)
 
         mSwipeRefreshLayout.isRefreshing = false
@@ -129,10 +129,10 @@ class CategoriesFragment : BaseFragment(), CategoriesMvpView {
 
     companion object {
 
-        private const val TYPE = "CategoriesFragment.TYPE"
+        private const val TYPE = "TransactionCategoriesFragment.TYPE"
 
-        fun newInstance(type: String): CategoriesFragment {
-            val fragment = CategoriesFragment()
+        fun newInstance(type: String): TransactionCategoriesFragment {
+            val fragment = TransactionCategoriesFragment()
             val args = Bundle()
             args.putString(TYPE, type)
             fragment.arguments = args

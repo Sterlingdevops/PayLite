@@ -28,6 +28,7 @@ import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
 import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
+import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesFragment
 import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.profile.edit.EditProfileFragment
 import com.sterlingng.paylite.ui.profile.notifications.NotificationsFragment
@@ -50,7 +51,7 @@ import com.sterlingng.paylite.ui.splitamount.SplitAmountFragment
 import com.sterlingng.paylite.ui.splitcontacts.SplitContactFragment
 import com.sterlingng.paylite.ui.successful.SuccessfulActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
-import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
+import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesFragment
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailFragment
 import dagger.Component
 
@@ -112,7 +113,7 @@ interface ActivityComponent {
 
     fun inject(scheduledFragment: ScheduledFragment)
 
-    fun inject(categoriesFragment: CategoriesFragment)
+    fun inject(transactionCategoriesFragment: TransactionCategoriesFragment)
 
     fun inject(onBoardingFragment: OnBoardingFragment)
 
@@ -167,4 +168,5 @@ interface ActivityComponent {
     fun inject(scheduledTransactionFragment: ScheduledTransactionFragment)
 
     fun inject(transactionDetailFragment: TransactionDetailFragment)
+    fun inject(paymentCategoriesFragment: PaymentCategoriesFragment)
 }

@@ -90,6 +90,10 @@ import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountPresenter
 import com.sterlingng.paylite.ui.payment.PaymentMvpContract
 import com.sterlingng.paylite.ui.payment.PaymentMvpView
 import com.sterlingng.paylite.ui.payment.PaymentPresenter
+import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesAdapter
+import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesMvpContract
+import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesMvpView
+import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesPresenter
 import com.sterlingng.paylite.ui.profile.ProfileMvpContract
 import com.sterlingng.paylite.ui.profile.ProfileMvpView
 import com.sterlingng.paylite.ui.profile.ProfilePresenter
@@ -159,10 +163,10 @@ import com.sterlingng.paylite.ui.successful.SuccessfulPresenter
 import com.sterlingng.paylite.ui.transactions.TransactionsMvpContract
 import com.sterlingng.paylite.ui.transactions.TransactionsMvpView
 import com.sterlingng.paylite.ui.transactions.TransactionsPresenter
-import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpContract
-import com.sterlingng.paylite.ui.transactions.categories.CategoriesMvpView
-import com.sterlingng.paylite.ui.transactions.categories.CategoriesPresenter
-import com.sterlingng.paylite.ui.transactions.categories.TransactionAdapter
+import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesAdapter
+import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesMvpContract
+import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesMvpView
+import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesPresenter
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailMvpContract
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailMvpView
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailPresenter
@@ -202,7 +206,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideCategoriesAdapter(activity: AppCompatActivity): CategoriesAdapter = CategoriesAdapter(activity)
 
     @Provides
-    internal fun provideTransactionAdapter(activity: AppCompatActivity): TransactionAdapter = TransactionAdapter(activity)
+    internal fun providePaymentCategoriesAdapter(activity: AppCompatActivity): PaymentCategoriesAdapter = PaymentCategoriesAdapter(activity)
+
+    @Provides
+    internal fun provideTransactionAdapter(activity: AppCompatActivity): TransactionCategoriesAdapter = TransactionCategoriesAdapter(activity)
 
     @Provides
     internal fun provideLinearLayoutManager(activity: AppCompatActivity): LinearLayoutManager = LinearLayoutManager(activity)
@@ -236,6 +243,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideFundPresenter(presenter: FundPresenter<FundMvpView>): FundMvpContract<FundMvpView> = presenter
+
+    @Provides
+    internal fun providePaymentCategoriesPresenter(presenter: PaymentCategoriesPresenter<PaymentCategoriesMvpView>): PaymentCategoriesMvpContract<PaymentCategoriesMvpView> = presenter
 
     @Provides
     internal fun provideBillsPresenter(presenter: BillsPresenter<BillsMvpView>): BillsMvpContract<BillsMvpView> = presenter
@@ -352,7 +362,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideOnBoardingPresenter(presenter: OnBoardingPresenter<OnBoardingMvpView>): OnBoardingMvpContract<OnBoardingMvpView> = presenter
 
     @Provides
-    internal fun provideCategoriesPresenter(presenter: CategoriesPresenter<CategoriesMvpView>): CategoriesMvpContract<CategoriesMvpView> = presenter
+    internal fun provideCategoriesPresenter(presenter: TransactionCategoriesPresenter<TransactionCategoriesMvpView>): TransactionCategoriesMvpContract<TransactionCategoriesMvpView> = presenter
 
     @Provides
     internal fun provideSplitAmountPresenter(presenter: SplitAmountPresenter<SplitAmountMvpView>): SplitAmountMvpContract<SplitAmountMvpView> = presenter

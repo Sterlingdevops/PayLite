@@ -18,8 +18,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TransactionAdapter(private val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>(),
-        StickyRecyclerHeadersAdapter<TransactionAdapter.HeaderViewHolder> {
+class TransactionCategoriesAdapter(private val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>(),
+        StickyRecyclerHeadersAdapter<TransactionCategoriesAdapter.HeaderViewHolder> {
 
     val transactions: ArrayList<Transaction> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener

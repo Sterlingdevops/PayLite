@@ -7,5 +7,5 @@ import com.sterlingng.paylite.data.model.PaymentCategory
 interface MockerInterface {
     fun mockMenuItems(): ArrayList<MenuItem>
     fun mockNotifications(): ArrayList<Notification>
-    fun mockCategories(): ArrayList<PaymentCategory>
+    fun mockPaymentCategories(): ArrayList<PaymentCategory>
 }

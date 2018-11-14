@@ -11,6 +11,6 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SuccessfulMvpContract<V> {
 
     override fun loadCategories() {
-        mvpView.updateCategories(dataManager.mockCategories())
+        mvpView.updateCategories(dataManager.mockPaymentCategories())
     }
 }

@@ -125,7 +125,7 @@ internal constructor(@param:ApplicationContext val context: Context,
 
     override fun getUserRealm(): UserRealm? = mLocalDataHelper.getUserRealm()
 
-    override fun mockCategories(): ArrayList<PaymentCategory> = mMockHelper.mockCategories()
+    override fun mockPaymentCategories(): ArrayList<PaymentCategory> = mMockHelper.mockPaymentCategories()
 
     override fun mockNotifications(): ArrayList<Notification> = mMockHelper.mockNotifications()
 

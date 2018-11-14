@@ -242,7 +242,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/help_and_feedback"
         app:layout_constraintStart_toStartOf="@+id/help_and_feedback"
         app:layout_constraintTop_toTopOf="@+id/help_and_feedback"
-        app:srcCompat="@drawable/help"/>
+        app:srcCompat="@drawable/icon_help"/>
 
     <TextView
         android:id="@+id/invite_a_friend"
@@ -335,7 +335,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/log_out"
         app:layout_constraintStart_toStartOf="@+id/log_out"
         app:layout_constraintTop_toTopOf="@+id/log_out"
-        app:srcCompat="@drawable/logout"/>
+        app:srcCompat="@drawable/icon_logout"/>
 
     <TextView
         android:id="@+id/log_out"

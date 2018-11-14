@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"
-        app:srcCompat="@drawable/fund_wallet"/>
+        app:srcCompat="@drawable/icon_fund_wallet"/>
 
     <Button
         android:id="@+id/add_payment_method"

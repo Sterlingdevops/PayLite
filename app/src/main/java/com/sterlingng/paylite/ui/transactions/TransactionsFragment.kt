@@ -9,7 +9,7 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.transactions.categories.CategoriesFragment
+import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.views.CustomViewPager
 import javax.inject.Inject
@@ -37,9 +37,9 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
         mPresenter.onViewInitialized()
         mPagerAdapter = CustomPagerAdapter(childFragmentManager)
 
-        mPagerAdapter.addFragment(CategoriesFragment.newInstance("ALL"), "ALL")
-        mPagerAdapter.addFragment(CategoriesFragment.newInstance("IN"), "IN")
-        mPagerAdapter.addFragment(CategoriesFragment.newInstance("OUT"), "OUT")
+        mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance("ALL"), "ALL")
+        mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance("IN"), "IN")
+        mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance("OUT"), "OUT")
 
         mViewPager.isPagingEnabled = true
         mViewPager.adapter = mPagerAdapter

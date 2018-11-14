@@ -191,7 +191,7 @@
     <string name="enter_your_security_code">Enter your card\'s security code</string>
     <string name="enter_the_amount_to_fund_your_account_with">Enter the amount to fund\n your account with</string>
     <string name="ngn">NGN</string>
-    <string name="choose_a_category_for_this_payment">Choose a category for this payment</string>
+    <string name="choose_a_category_for_this_payment">Choose a category for this\n payment</string>
     <string name="this_is_used_to_provide">This is used to provide you with spending insights.\n Please fill appropriately for accurate results</string>
     <string name="payment_category">Payment Project</string>
     <string name="settings">Settings</string>
@@ -319,4 +319,5 @@
     <string name="total_received">Total received</string>
     <string name="_8_00_am_8_june">8:00 AM 8 June</string>
     <string name="completed_transaction">Completed Transaction</string>
+    <string name="this_is_used_to_provide_you_with_spending">This is used to provide you with spending insights. Choose the right category for accurate results.</string>
 </resources>
