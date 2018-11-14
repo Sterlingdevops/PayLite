@@ -9,11 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Transaction
-import com.sterlingng.paylite.data.model.UpdateTransaction
-import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesFragment
+import com.sterlingng.paylite.utils.AppUtils.gson
 import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.then
 import com.sterlingng.views.TitleLabelTextView
@@ -25,9 +24,6 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
 
     @Inject
     lateinit var mPresenter: TransactionDetailMvpContract<TransactionDetailMvpView>
-
-    @Inject
-    lateinit var eventBus: EventBus
 
     private lateinit var mReceivedTitleLabelTextView: TitleLabelTextView
     private lateinit var mCountTitleLabelTextView: TitleLabelTextView
@@ -69,7 +65,6 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
         mPresenter.getTransactions()
 
         exit.setOnClickListener {
-            eventBus.post(UpdateTransaction(arguments?.getInt(POSITION)!!))
             baseActivity.onBackPressed()
         }
 
@@ -87,7 +82,6 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
     @SuppressLint("SetTextI18n")
     override fun initView(transactions: ArrayList<Transaction>) {
         val transaction: Transaction = arguments?.getParcelable(TRANSACTION)!!
-        Log.d(transaction.toString())
 
         with(transaction) {
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
@@ -105,11 +99,12 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
             } as ArrayList<Transaction>).size.toString()
 
             val countTransactions = transactions.filter {
-                it.recipientName == (credit == "00") then recipientName ?: senderName || it.senderName == (credit == "11") then senderName ?: recipientName
+                it.senderName == (credit == "11") then senderName ?: recipientName|| it.recipientName == (credit == "00") then recipientName ?: senderName
             } as ArrayList<Transaction>
+            Log.d(gson.toJson(countTransactions))
             val count = countTransactions.isEmpty() then Transaction()
                     ?: countTransactions.reduce { acc, transaction ->
-                        acc.amountInt += transaction.amount.trim().split(".")[0].toFloat().toInt()
+                        acc.amountInt += transaction.amount.toFloat().toInt()
                         return@reduce acc
                     }
             mReceivedTitleLabelTextView.label = String.format("₦%,.2f", count.amountInt.toFloat())
@@ -119,7 +114,7 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
             } as ArrayList<Transaction>
             val label = sentTransactions.isEmpty() then Transaction()
                     ?: sentTransactions.reduce { acc, transaction ->
-                        acc.amountInt += transaction.amount.trim().split(".")[0].toFloat().toInt()
+                        acc.amountInt += transaction.amount.toFloat().toInt()
                         return@reduce acc
                     }
             mSentTitleLabelTextView.label = String.format("₦%,.2f", label.amountInt.toFloat())

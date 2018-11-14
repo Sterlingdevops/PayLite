@@ -23,6 +23,8 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Bank
 import com.sterlingng.paylite.data.model.Contact
 import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.UpdateTransaction
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.main.MainActivity
@@ -50,6 +52,9 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
 
     var contacts = ArrayList<Contact>()
     var banks = ArrayList<Bank>()
+
+    @Inject
+    lateinit var eventBus: EventBus
 
     override fun onResume() {
         super.onResume()
@@ -137,7 +142,10 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         when (item.itemId) {
             R.id.nav_home -> mNavController.switchTab(INDEX_HOME)
             R.id.nav_settings -> mNavController.switchTab(INDEX_SETTINGS)
-            R.id.nav_transactions -> mNavController.switchTab(INDEX_TRANSACTIONS)
+            R.id.nav_transactions -> {
+                eventBus.post(UpdateTransaction())
+                mNavController.switchTab(INDEX_TRANSACTIONS)
+            }
         }
         return true
     }

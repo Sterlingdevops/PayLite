@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PaymentCategory
 import com.sterlingng.paylite.ui.base.BaseFragment
@@ -18,12 +19,13 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
     @Inject
     lateinit var mPresenter: PaymentCategoriesMvpContract<PaymentCategoriesMvpView>
 
-    lateinit var mGridLayoutManager: GridLayoutManager
+    private lateinit var mGridLayoutManager: GridLayoutManager
 
     @Inject
     lateinit var mPaymentCategoriesAdapter: PaymentCategoriesAdapter
 
     private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mDoneTextView: TextView
     private lateinit var exit: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,11 +41,15 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
             baseActivity.onBackPressed()
         }
 
+        mDoneTextView.setOnClickListener {
+
+        }
+
         mPresenter.onViewInitialized()
         mPaymentCategoriesAdapter.mRecyclerViewClickListener = this
 
         mGridLayoutManager = GridLayoutManager(baseActivity, 3)
-        mRecyclerView.addItemDecoration(SpacesItemDecoration(0))
+        mRecyclerView.addItemDecoration(SpacesItemDecoration(1))
         mRecyclerView.adapter = mPaymentCategoriesAdapter
         mRecyclerView.layoutManager = mGridLayoutManager
 
@@ -56,10 +62,12 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
+        mDoneTextView = view.findViewById(R.id.done)
         mRecyclerView = view.findViewById(R.id.recyclerView)
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
+        mDoneTextView.visibility = View.VISIBLE
         mPaymentCategoriesAdapter.toggleSelection(position)
     }
 

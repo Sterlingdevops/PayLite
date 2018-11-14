@@ -57,7 +57,7 @@ class ForgotActivity : BaseActivity(), ForgotMvpView, OnChildDidClickNext {
         mPagerAdapter.addFragment(completeFragment, "complete")
 
         mViewPager.adapter = mPagerAdapter
-        mViewPager.isPagingEnabled = true
+        mViewPager.isPagingEnabled = false
     }
 
     override fun onBackPressed() {

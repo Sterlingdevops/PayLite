@@ -61,11 +61,9 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    recyclerView.scrollToPosition(it.position)
+                    mPresenter.loadTransactions()
+                    mSwipeRefreshLayout.isRefreshing = true
                 }
-
-        mPresenter.loadTransactions()
-        mSwipeRefreshLayout.isRefreshing = true
 
         mSwipeRefreshLayout.setOnRefreshListener {
             mPresenter.loadTransactions()
@@ -119,7 +117,6 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
 
         mTransactionCategoriesAdapter.add(newTransactions)
         recyclerView.scrollToPosition(0)
-
         mSwipeRefreshLayout.isRefreshing = false
     }
 
