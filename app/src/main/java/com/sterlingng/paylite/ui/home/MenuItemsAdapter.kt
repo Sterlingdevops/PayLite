@@ -100,9 +100,7 @@ class MenuItemsAdapter(val mContext: Context, val type: Mode) : RecyclerView.Ada
                     itemView.setBackgroundResource((adapterPosition % 2 == 0) then
                     R.drawable.background_home_left_item ?: R.drawable.background_home_right_item)
                 }
-                Mode.LIST -> {
-
-                }
+                Mode.LIST -> return
             }
 
             with(items[adapterPosition]) {

@@ -147,7 +147,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/notifications"
         app:layout_constraintStart_toStartOf="@+id/notifications"
         app:layout_constraintTop_toTopOf="@+id/notifications"
-        app:srcCompat="@drawable/notifications"/>
+        app:srcCompat="@drawable/notification"/>
 
     <TextView
         android:id="@+id/notifications"

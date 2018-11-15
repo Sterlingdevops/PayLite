@@ -3,13 +3,11 @@ package com.sterlingng.paylite.ui.home
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
@@ -28,6 +26,7 @@ import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.splitamount.SplitAmountFragment
 import com.sterlingng.paylite.utils.SpacesItemDecoration
+import com.sterlingng.views.NoScrollingGridLayoutManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -53,29 +52,11 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     lateinit var linearLayoutManager: LinearLayoutManager
 
     @Inject
-    lateinit var gridLayoutManager: GridLayoutManager
-
-//    private lateinit var mRequestMoneyImageView: ImageView
-//    private lateinit var mAirTimeDataImageView: ImageView
-//    private lateinit var mSendMoneyImageView: ImageView
-//    private lateinit var mSplitCostImageView: ImageView
-//    private lateinit var mUpComingImageView: ImageView
-//    private lateinit var mPayBillsImageView: ImageView
-//    private lateinit var mCashOutImageView: ImageView
-//    private lateinit var mGetCashImageView: ImageView
-//
-//    private lateinit var mRequestMoneyTextView: TextView
-//    private lateinit var mAirTimeDataTextView: TextView
-//    private lateinit var mSendMoneyTextView: TextView
-//    private lateinit var mSplitCostTextView: TextView
-//    private lateinit var mUpComingTextView: TextView
-//    private lateinit var mPayBillsTextView: TextView
-//    private lateinit var mGetCashTextView: TextView
-//    private lateinit var mCashOutTextView: TextView
+    lateinit var gridLayoutManager: NoScrollingGridLayoutManager
 
     private lateinit var mUserGreetingTextView: TextView
     private lateinit var mMainAmountTextView: TextView
-    private lateinit var mFundButton: Button
+    private lateinit var mFundButton: ImageView
 
     override fun onSaveInstanceState(outState: Bundle) {
         //No call for super(). Bug on API Level > 11.
@@ -90,36 +71,12 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     }
 
     override fun bindViews(view: View) {
-        mFundButton = view.findViewById(R.id.fund)
+        mFundButton = view.findViewById(R.id.fund_outline)
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mMainAmountTextView = view.findViewById(R.id.main_amount)
         mListModeImageView = view.findViewById(R.id.list_mode_icon)
         mUserGreetingTextView = view.findViewById(R.id.user_greeting)
         mNotificationsImageView = view.findViewById(R.id.notifications_icon)
-
-//        mAirTimeDataImageView = view.findViewById(R.id.airtime_data)
-//        mAirTimeDataTextView = view.findViewById(R.id.airtime_data_text)
-//
-//        mPayBillsImageView = view.findViewById(R.id.bill_payment)
-//        mPayBillsTextView = view.findViewById(R.id.pay_bills_text)
-//
-//        mSendMoneyImageView = view.findViewById(R.id.send_money)
-//        mSendMoneyTextView = view.findViewById(R.id.send_money_text)
-//
-//        mUpComingImageView = view.findViewById(R.id.upcoming)
-//        mUpComingTextView = view.findViewById(R.id.upcoming_text)
-//
-//        mRequestMoneyImageView = view.findViewById(R.id.payment_request)
-//        mRequestMoneyTextView = view.findViewById(R.id.payment_request_text)
-//
-//        mCashOutImageView = view.findViewById(R.id.cash_out)
-//        mCashOutTextView = view.findViewById(R.id.cash_out_text)
-
-//        mGetCashImageView = view.findViewById(R.id.get_cash)
-//        mGetCashTextView = view.findViewById(R.id.get_cash_text)
-//
-//        mSplitCostImageView = view.findViewById(R.id.split_bill)
-//        mSplitCostTextView = view.findViewById(R.id.split_bill_text)
     }
 
     @SuppressLint("CheckResult")
@@ -129,6 +86,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mGridMenuItemsAdapter.mRecyclerViewClickListener = this
         mListMenuItemsAdapter.mRecyclerViewClickListener = this
         mRecyclerView.addItemDecoration(SpacesItemDecoration(0))
+        gridLayoutManager.spanCount = 2
         mRecyclerView.layoutManager = gridLayoutManager
         mRecyclerView.adapter = mGridMenuItemsAdapter
 
@@ -184,62 +142,6 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 }
             }
         }
-
-//        mAirTimeDataImageView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(AirTimeFragment.newInstance())
-//        }
-//
-//        mAirTimeDataTextView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(AirTimeFragment.newInstance())
-//        }
-//
-//        mRequestMoneyImageView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(RequestFragment.newInstance())
-//        }
-//
-//        mRequestMoneyTextView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(RequestFragment.newInstance())
-//        }
-//
-//        mSendMoneyImageView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(SendMoneyFragment.newInstance())
-//        }
-//
-//        mSendMoneyTextView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(SendMoneyFragment.newInstance())
-//        }
-//
-//        mCashOutImageView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(CashOutFragment.newInstance())
-//        }
-//
-//        mCashOutTextView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(CashOutFragment.newInstance())
-//        }
-//
-//        mSplitCostImageView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(SplitAmountFragment.newInstance())
-//        }
-//
-//        mSplitCostTextView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(SplitAmountFragment.newInstance())
-//        }
-//
-//        mGetCashImageView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(GetCashFragment.newInstance())
-//        }
-//
-//        mGetCashTextView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(GetCashFragment.newInstance())
-//        }
-//
-//        mUpComingImageView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
-//        }
-//
-//        mUpComingTextView.setOnClickListener {
-//            (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
-//        }
     }
 
     override fun onGetWalletSuccessful(wallet: Wallet) {
@@ -252,7 +154,6 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     @SuppressLint("SetTextI18n")
     override fun initView(currentUser: User?, mockMenuItems: ArrayList<MenuItem>) {
-        mUserGreetingTextView.text = "Hi ${currentUser?.firstName!!}"
         mGridMenuItemsAdapter.items = mockMenuItems
         mListMenuItemsAdapter.items = mockMenuItems
     }
