@@ -199,11 +199,21 @@ class Migrations : RealmMigration {
             ++version
         }
 
-        // version 15
+        // version 16
         if (version == 15L) {
             schema.get("TransactionRealm")!!
                     .addField("category", String::class.java)
                     .setRequired("category", true)
+            ++version
+        }
+
+        // version 17
+        if (version == 16L) {
+            schema.get("UserRealm")!!
+                    .addField("dob", String::class.java)
+                    .addField("gender", String::class.java)
+                    .setRequired("dob", true)
+                    .setRequired("gender", true)
             ++version
         }
     }

@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PaymentCategory
+import com.sterlingng.paylite.data.model.UpdateTransaction
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
@@ -97,7 +98,7 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
     }
 
     override fun onUpdateTransactionCategorySuccessful() {
-//        eventBus.post(UpdateTransaction())
+        eventBus.post(UpdateTransaction())
         show("Transaction category updated", true)
         (baseActivity as DashboardActivity).mNavController.popFragment()
     }

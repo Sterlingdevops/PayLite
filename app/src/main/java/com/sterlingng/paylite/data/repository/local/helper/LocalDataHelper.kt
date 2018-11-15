@@ -352,7 +352,7 @@ constructor() : LocalDataInterface {
     }
 
     private val config: RealmConfiguration = RealmConfiguration.Builder()
-            .schemaVersion(16).migration(Migrations()).build()
+            .schemaVersion(17).migration(Migrations()).build()
     private val realm: Realm
 
     init {

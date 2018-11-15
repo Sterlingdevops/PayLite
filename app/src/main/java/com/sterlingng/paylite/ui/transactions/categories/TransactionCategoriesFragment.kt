@@ -102,7 +102,6 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
 
     override fun onGetUserTransactionsFailed(response: Response) {
         mSwipeRefreshLayout.isRefreshing = false
-        show("Failed getting transactions", true)
     }
 
     override fun onGetUserTransactionsSuccessful(transactions: ArrayList<Transaction>) {

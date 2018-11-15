@@ -10,14 +10,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Transaction
+import com.sterlingng.paylite.data.model.UpdateTransaction
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesFragment
+import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.then
 import com.sterlingng.views.TitleLabelTextView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
@@ -74,13 +79,15 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
         val transaction: Transaction = arguments?.getParcelable(TRANSACTION)!!
         mPresenter.getTransactions()
 
-//        eventBus.observe(UpdateTransaction::class.java)
-//                .delay(1L, TimeUnit.MILLISECONDS)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe {
-//
-//                }
+        Log.d(transaction.toString())
+
+        eventBus.observe(UpdateTransaction::class.java)
+                .delay(1L, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+
+                }
 
         exit.setOnClickListener {
             baseActivity.onBackPressed()

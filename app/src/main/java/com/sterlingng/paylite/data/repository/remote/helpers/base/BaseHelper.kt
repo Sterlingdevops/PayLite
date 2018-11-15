@@ -27,7 +27,7 @@ open class BaseHelper {
         okHttpCBuilder.connectTimeout(30, TimeUnit.SECONDS)
         okHttpCBuilder.networkInterceptors().add(httpLoggingInterceptor)
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        okHttpCBuilder.retryOnConnectionFailure(true)
+        okHttpCBuilder.retryOnConnectionFailure(false)
         val client: OkHttpClient = okHttpCBuilder.build()
 
         builder.client(client)

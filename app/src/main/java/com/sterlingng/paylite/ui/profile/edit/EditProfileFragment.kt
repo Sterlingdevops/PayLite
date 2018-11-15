@@ -19,6 +19,8 @@ class EditProfileFragment : BaseFragment(), EditMvpView {
 
     private lateinit var exit: ImageView
     private lateinit var mDoneTextView: TextView
+    private lateinit var mDobTextView: LargeLabelEditText
+    private lateinit var mGenderTextView: LargeLabelEditText
     private lateinit var mLastNameTextView: LargeLabelEditText
     private lateinit var mFirstNameTextView: LargeLabelEditText
     private lateinit var mEmailNameTextView: LargeLabelEditText
@@ -64,7 +66,9 @@ class EditProfileFragment : BaseFragment(), EditMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
+        mDobTextView = view.findViewById(R.id.dob)
         mDoneTextView = view.findViewById(R.id.done)
+        mGenderTextView = view.findViewById(R.id.gender)
         mEmailNameTextView = view.findViewById(R.id.email)
         mLastNameTextView = view.findViewById(R.id.last_name)
         mFirstNameTextView = view.findViewById(R.id.first_name)
@@ -74,6 +78,8 @@ class EditProfileFragment : BaseFragment(), EditMvpView {
         mFirstNameTextView.text = user.firstName
         mLastNameTextView.text = user.lastName
         mEmailNameTextView.text = user.email
+        mGenderTextView.text = user.gender
+        mDobTextView.text = user.dob
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

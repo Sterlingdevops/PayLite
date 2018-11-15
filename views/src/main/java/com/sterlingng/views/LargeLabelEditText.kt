@@ -21,11 +21,12 @@ class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayo
         val a = context.obtainStyledAttributes(attrs, R.styleable.LargeLabelEditText, 0, 0)
         val color = a.getColor(R.styleable.LargeLabelEditText_textColor, ContextCompat.getColor(context, R.color.black))
         val type = a.getInt(R.styleable.LargeLabelEditText_android_inputType, EditorInfo.TYPE_TEXT_VARIATION_NORMAL)
+        val enabled = a.getBoolean(R.styleable.LargeLabelEditText_android_enabled, true)
         val plainText: String? = a.getString(R.styleable.LargeLabelClickToSelectEditText_android_text)
         val textLength = a.getInt(R.styleable.LargeLabelEditText_maxLength, Int.MAX_VALUE)
         val drawable = a.getDrawable(R.styleable.LargeLabelEditText_drawable)
-        val hint = a.getString(R.styleable.LargeLabelEditText_hint)
         val text = a.getString(R.styleable.LargeLabelEditText_label)
+        val hint = a.getString(R.styleable.LargeLabelEditText_hint)
 
         LayoutInflater.from(context).inflate(R.layout.large_label_edit_text, this, true)
         val root = this[0] as ConstraintLayout
@@ -37,8 +38,9 @@ class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayo
         mTextEditText = root[0] as EditText
         mTextEditText.hint = hint
         mTextEditText.inputType = type
-        plainText?.let { mTextEditText.setText(it) }
+        mTextEditText.isEnabled = enabled
         mTextEditText.setTextColor(color)
+        plainText?.let { mTextEditText.setText(it) }
         mTextEditText.filters = listOf<InputFilter>(InputFilter.LengthFilter(textLength)).toTypedArray()
         mTextEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
 

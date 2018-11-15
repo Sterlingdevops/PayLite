@@ -17,6 +17,12 @@ open class User {
     @SerializedName("Mobile")
     var phoneNumber: String = ""
 
+    @SerializedName("dob")
+    var dob: String = ""
+
+    @SerializedName("Gender")
+    var gender: String = ""
+
     @SerializedName("access_token")
     var accessToken: String = ""
 
@@ -30,7 +36,9 @@ open class User {
 
     fun asUserRealm(): UserRealm {
         val userRealm = UserRealm()
+        userRealm.dob = dob
         userRealm.email = email
+        userRealm.gender = gender
         userRealm.phone = phoneNumber
         userRealm.lastname = lastName
         userRealm.firstname = firstName
@@ -40,7 +48,9 @@ open class User {
 
     override fun hashCode(): Int {
         var result = phoneNumber.hashCode()
+        result = 31 * result + dob.hashCode()
         result = 31 * result + email.hashCode()
+        result = 31 * result + gender.hashCode()
         result = 31 * result + lastName.hashCode()
         result = 31 * result + firstName.hashCode()
         result = 31 * result + accessToken.hashCode()

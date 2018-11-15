@@ -13,6 +13,7 @@
     <declare-styleable name="LargeLabelEditText">
         <attr name="maxLength" format="integer"/>
         <attr name="android:inputType"/>
+        <attr name="android:enabled"/>
         <attr name="android:text"/>
         <attr name="textColor"/>
         <attr name="drawable"/>
