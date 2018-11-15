@@ -134,6 +134,7 @@
         app:layout_constraintTop_toTopOf="@+id/view3"/>
 
     <ImageView
+        android:id="@+id/transaction_category"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:contentDescription="@string/edit_payment"
@@ -157,7 +158,7 @@
         app:srcCompat="@drawable/icon_send_money2"/>
 
     <TextView
-        android:id="@+id/edit_text"
+        android:id="@+id/transaction_category_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

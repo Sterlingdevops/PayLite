@@ -31,11 +31,17 @@ class Transaction() : Parcelable {
     @SerializedName("SenderName")
     var senderName: String = ""
 
+    @SerializedName("SenderNumber")
+    var senderNumber: String = ""
+
     @SerializedName("ReceiverName")
     var recipientName: String = ""
 
     @SerializedName("RecipientEmail")
     var recipientEmail: String = ""
+
+    @SerializedName("TransactionCategory")
+    var category: String = ""
 
     @SerializedName("PaymentReference")
     var reference: String = ""
@@ -46,13 +52,16 @@ class Transaction() : Parcelable {
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         amount = parcel.readString()
+        amountInt = parcel.readInt()
         mobile = parcel.readString()
         type = parcel.readInt()
         credit = parcel.readString()
         date = parcel.readString()
         senderName = parcel.readString()
+        senderNumber = parcel.readString()
         recipientName = parcel.readString()
         recipientEmail = parcel.readString()
+        category = parcel.readString()
         reference = parcel.readString()
         recipientPhoneNumber = parcel.readString()
     }
@@ -62,9 +71,11 @@ class Transaction() : Parcelable {
         transactionRealm.recipientphone = recipientPhoneNumber
         transactionRealm.recipientemail = recipientEmail
         transactionRealm.recipientname = recipientName
+        transactionRealm.sendernumber = senderNumber
         transactionRealm.sendername = senderName
         transactionRealm.type = type.toString()
         transactionRealm.reference = reference
+        transactionRealm.category = category
         transactionRealm.id = id.toString()
         transactionRealm.amount = amount
         transactionRealm.credit = credit
@@ -80,13 +91,16 @@ class Transaction() : Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(amount)
+        parcel.writeInt(amountInt)
         parcel.writeString(mobile)
         parcel.writeInt(type)
         parcel.writeString(credit)
         parcel.writeString(date)
         parcel.writeString(senderName)
+        parcel.writeString(senderNumber)
         parcel.writeString(recipientName)
         parcel.writeString(recipientEmail)
+        parcel.writeString(category)
         parcel.writeString(reference)
         parcel.writeString(recipientPhoneNumber)
     }
@@ -104,4 +118,5 @@ class Transaction() : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }

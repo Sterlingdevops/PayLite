@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.paymentcategory
+package com.sterlingng.paylite.ui.transactions.paymentcategory
 
 import android.animation.ValueAnimator
 import android.content.Context

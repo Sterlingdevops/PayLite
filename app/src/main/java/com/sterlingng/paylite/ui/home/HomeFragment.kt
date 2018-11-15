@@ -77,6 +77,10 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mMainAmountTextView: TextView
     private lateinit var mFundButton: Button
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        //No call for super(). Bug on API Level > 11.
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val component = activityComponent

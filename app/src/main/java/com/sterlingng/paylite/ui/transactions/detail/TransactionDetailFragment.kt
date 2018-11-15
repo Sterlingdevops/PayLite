@@ -2,6 +2,7 @@ package com.sterlingng.paylite.ui.transactions.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Transaction
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesFragment
-import com.sterlingng.paylite.utils.AppUtils.gson
-import com.sterlingng.paylite.utils.Log
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesFragment
 import com.sterlingng.paylite.utils.then
 import com.sterlingng.views.TitleLabelTextView
 import java.text.SimpleDateFormat
@@ -25,10 +25,14 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
     @Inject
     lateinit var mPresenter: TransactionDetailMvpContract<TransactionDetailMvpView>
 
+    @Inject
+    lateinit var eventBus: EventBus
+
     private lateinit var mReceivedTitleLabelTextView: TitleLabelTextView
     private lateinit var mCountTitleLabelTextView: TitleLabelTextView
     private lateinit var mSentTitleLabelTextView: TitleLabelTextView
 
+    private lateinit var mCategoryTextView: TextView
     private lateinit var mHistoryTextView: TextView
     private lateinit var mAmountTextView: TextView
     private lateinit var mNameTextView: TextView
@@ -36,6 +40,7 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
 
     private lateinit var mEditCategoryImageView: ImageView
     private lateinit var mSendMoneyImageView: ImageView
+    private lateinit var mCategoryImageView: ImageView
     private lateinit var exit: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,18 +61,49 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
         mDateTextView = view.findViewById(R.id.date)
         mNameTextView = view.findViewById(R.id.name)
 
+        mCategoryTextView = view.findViewById(R.id.transaction_category_text)
+        mCategoryImageView = view.findViewById(R.id.transaction_category)
+
         mSendMoneyImageView = view.findViewById(R.id.send_money)
         mEditCategoryImageView = view.findViewById(R.id.edit)
         exit = view.findViewById(R.id.exit)
     }
 
+    @SuppressLint("CheckResult")
     override fun setUp(view: View) {
+        val transaction: Transaction = arguments?.getParcelable(TRANSACTION)!!
         mPresenter.getTransactions()
+
+//        eventBus.observe(UpdateTransaction::class.java)
+//                .delay(1L, TimeUnit.MILLISECONDS)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe {
+//
+//                }
 
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }
 
+        mCategoryTextView.text = transaction.category.isNotEmpty() then transaction.category ?: "Transfers"
+        mCategoryImageView.setImageDrawable(ContextCompat.getDrawable(baseActivity, when (mCategoryTextView.text) {
+            "Bills" -> R.drawable.icon_bills2
+            "Income" -> R.drawable.icon_income
+            "Travel" -> R.drawable.icon_travel
+            "Health Care" -> R.drawable.icon_give
+            "Eating Out" -> R.drawable.icon_eating
+            "Shopping" -> R.drawable.icon_shopping
+            "Charity" -> R.drawable.icon_education
+            "Payroll" -> R.drawable.icon_investment
+            "Transfers" -> R.drawable.icon_transfers
+            "Groceries" -> R.drawable.icon_groceries
+            "Education" -> R.drawable.icon_education
+            "Investments" -> R.drawable.icon_investment
+            "Entertainment" -> R.drawable.icon_entertainment
+            "Transportation" -> R.drawable.icon_transportation
+            else -> R.drawable.icon_transfers
+        }))
         mSendMoneyImageView.setOnClickListener {
 
         }
@@ -75,7 +111,7 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
         mEditCategoryImageView.setOnClickListener {
             (baseActivity as DashboardActivity)
                     .mNavController
-                    .pushFragment(PaymentCategoriesFragment.newInstance())
+                    .pushFragment(PaymentCategoriesFragment.newInstance(transaction.id.toString()))
         }
     }
 
@@ -95,29 +131,30 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
                     ?: senderName}"
 
             mCountTitleLabelTextView.label = (transactions.filter {
-                it.recipientName == (credit == "00") then recipientName ?: senderName || it.senderName == (credit == "11") then senderName ?: recipientName
+                it.recipientPhoneNumber == (credit == "00") then recipientPhoneNumber ?: senderNumber || it.senderNumber == (credit == "11") then senderNumber ?: recipientPhoneNumber
             } as ArrayList<Transaction>).size.toString()
 
-            val countTransactions = transactions.filter {
-                it.senderName == (credit == "11") then senderName ?: recipientName|| it.recipientName == (credit == "00") then recipientName ?: senderName
+            val receivedTransactions = transactions.filter {
+                it.credit == "11" && it.senderNumber == senderNumber
             } as ArrayList<Transaction>
-            Log.d(gson.toJson(countTransactions))
-            val count = countTransactions.isEmpty() then Transaction()
-                    ?: countTransactions.reduce { acc, transaction ->
-                        acc.amountInt += transaction.amount.toFloat().toInt()
-                        return@reduce acc
-                    }
-            mReceivedTitleLabelTextView.label = String.format("₦%,.2f", count.amountInt.toFloat())
+
+            val received = if (receivedTransactions.isEmpty()) Transaction()
+            else receivedTransactions.reduce { acc, t ->
+                acc.amountInt += t.amount.toFloat().toInt()
+                return@reduce acc
+            }
+            mReceivedTitleLabelTextView.label = String.format("₦%,.2f", received.amountInt.toFloat())
 
             val sentTransactions = transactions.filter {
-                it.recipientName == (credit == "00") then recipientName ?: senderName || it.senderName == (credit == "11") then senderName ?: recipientName
+                it.credit == "00" && it.recipientPhoneNumber == senderNumber
             } as ArrayList<Transaction>
-            val label = sentTransactions.isEmpty() then Transaction()
-                    ?: sentTransactions.reduce { acc, transaction ->
-                        acc.amountInt += transaction.amount.toFloat().toInt()
-                        return@reduce acc
-                    }
-            mSentTitleLabelTextView.label = String.format("₦%,.2f", label.amountInt.toFloat())
+
+            val sent = if (sentTransactions.isEmpty()) Transaction()
+            else sentTransactions.reduce { acc, t ->
+                acc.amountInt += t.amount.toFloat().toInt()
+                return@reduce acc
+            }
+            mSentTitleLabelTextView.label = String.format("₦%,.2f", sent.amountInt.toFloat())
         }
     }
 

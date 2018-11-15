@@ -12,8 +12,10 @@ open class TransactionRealm : RealmObject() {
     lateinit var amount: String
     lateinit var mobile: String
     lateinit var credit: String
+    lateinit var category: String
     lateinit var reference: String
     lateinit var sendername: String
+    lateinit var sendernumber: String
     lateinit var recipientname: String
     lateinit var recipientemail: String
     lateinit var recipientphone: String
@@ -24,9 +26,11 @@ open class TransactionRealm : RealmObject() {
         transaction.recipientEmail = recipientemail
         transaction.type = type.toDouble().toInt()
         transaction.recipientName = recipientname
+        transaction.senderNumber = sendernumber
         transaction.id = id.toDouble().toInt()
         transaction.senderName = sendername
         transaction.reference = reference
+        transaction.category = category
         transaction.credit = credit
         transaction.amount = amount
         transaction.mobile = mobile

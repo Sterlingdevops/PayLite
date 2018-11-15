@@ -12,9 +12,8 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SettingsMvpContract<V> {
 
     override fun logOut() {
-//        dataManager.deleteAllScheduledPayments()
-//        dataManager.deleteAllTransactions()
-        dataManager.deleteAll()
+        dataManager.deleteAllScheduledPayments()
+        dataManager.deleteAllTransactions()
         mvpView.onLogOutComplete()
     }
 }

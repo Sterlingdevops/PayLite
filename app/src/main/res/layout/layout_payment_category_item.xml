@@ -20,6 +20,7 @@
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/payment_category"
+            android:tint="@color/denim"
             app:layout_constraintEnd_toEndOf="@+id/category_name"
             app:layout_constraintStart_toStartOf="@+id/category_name"
             app:layout_constraintTop_toTopOf="parent"

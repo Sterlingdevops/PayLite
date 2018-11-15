@@ -90,10 +90,10 @@ import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountPresenter
 import com.sterlingng.paylite.ui.payment.PaymentMvpContract
 import com.sterlingng.paylite.ui.payment.PaymentMvpView
 import com.sterlingng.paylite.ui.payment.PaymentPresenter
-import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesAdapter
-import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesMvpContract
-import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesMvpView
-import com.sterlingng.paylite.ui.paymentcategory.PaymentCategoriesPresenter
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesAdapter
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesMvpContract
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesMvpView
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesPresenter
 import com.sterlingng.paylite.ui.profile.ProfileMvpContract
 import com.sterlingng.paylite.ui.profile.ProfileMvpView
 import com.sterlingng.paylite.ui.profile.ProfilePresenter

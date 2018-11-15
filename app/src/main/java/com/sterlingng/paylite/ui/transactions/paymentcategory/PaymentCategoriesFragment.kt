@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.paymentcategory
+package com.sterlingng.paylite.ui.transactions.paymentcategory
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
@@ -10,7 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PaymentCategory
+import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.utils.SpacesItemDecoration
 import javax.inject.Inject
 
@@ -24,8 +26,12 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
     @Inject
     lateinit var mPaymentCategoriesAdapter: PaymentCategoriesAdapter
 
+    @Inject
+    lateinit var eventBus: EventBus
+
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mDoneTextView: TextView
+    private lateinit var category: String
     private lateinit var exit: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,7 +48,10 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
         }
 
         mDoneTextView.setOnClickListener {
-
+            val data = HashMap<String, Any>()
+            data["TransactionID"] = arguments?.getString(TRANSACTION)!!
+            data["Category"] = category
+            mPresenter.updateTransactionCategory(data)
         }
 
         mPresenter.onViewInitialized()
@@ -52,8 +61,6 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
         mRecyclerView.addItemDecoration(SpacesItemDecoration(1))
         mRecyclerView.adapter = mPaymentCategoriesAdapter
         mRecyclerView.layoutManager = mGridLayoutManager
-
-        mPresenter.loadTransactions()
     }
 
     override fun initView(paymentCategory: ArrayList<PaymentCategory>) {
@@ -69,6 +76,7 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
     override fun recyclerViewItemClicked(v: View, position: Int) {
         mDoneTextView.visibility = View.VISIBLE
         mPaymentCategoriesAdapter.toggleSelection(position)
+        category = mPaymentCategoriesAdapter.get(position).name
     }
 
     override fun logout() {
@@ -86,5 +94,15 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
             fragment.arguments = args
             return fragment
         }
+    }
+
+    override fun onUpdateTransactionCategorySuccessful() {
+//        eventBus.post(UpdateTransaction())
+        show("Transaction category updated", true)
+        (baseActivity as DashboardActivity).mNavController.popFragment()
+    }
+
+    override fun onUpdateTransactionCategoryFailed() {
+        show("An error occurred", true)
     }
 }
