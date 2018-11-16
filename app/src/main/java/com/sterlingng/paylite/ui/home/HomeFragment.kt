@@ -148,7 +148,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mMainAmountTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
     }
 
-    override fun onGetWalletFailed(response: Response) {
+    override fun onGetWalletFailed() {
 
     }
 

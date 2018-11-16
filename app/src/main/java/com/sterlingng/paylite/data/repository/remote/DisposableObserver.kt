@@ -14,9 +14,9 @@ import java.net.UnknownHostException
 
 abstract class DisposableObserver : DisposableObserver<Response>() {
 
-    abstract fun onRequestSuccessful(response: Any, message: String)
+    abstract fun onRequestSuccessful(response: Response, message: String)
 
-    abstract fun onRequestFailed(failureReason: String)
+    abstract fun onRequestFailed(code: Int, failureReason: String)
 
     override fun onComplete() {
 
@@ -28,24 +28,24 @@ abstract class DisposableObserver : DisposableObserver<Response>() {
             it
         } ?: "Message from server is null. So we are using this for now. "
         if (t.data == null || t.data is String || (t.data is List<*> && (t.data as List<*>).isEmpty())) {
-            onRequestFailed(message)
+            onRequestFailed(t.code, message)
             return
         }
-        onRequestSuccessful(t.data!!, message)
+        onRequestSuccessful(t, message)
     }
 
     override fun onError(e: Throwable) {
 //        Crashlytics.logException(e)
         if (e is ConnectException) {
-            onRequestFailed(AppConstants.CONNECT_EXCEPTION)
+            onRequestFailed(400, AppConstants.CONNECT_EXCEPTION)
             return
         }
         if (e is UnknownHostException) {
-            onRequestFailed(AppConstants.UNKNOWN_HOST_EXCEPTION)
+            onRequestFailed(400, AppConstants.UNKNOWN_HOST_EXCEPTION)
             return
         }
         if (e is SocketTimeoutException) {
-            onRequestFailed(AppConstants.SOCKET_TIME_OUT_EXCEPTION)
+            onRequestFailed(400, AppConstants.SOCKET_TIME_OUT_EXCEPTION)
             return
         }
         if (e is HttpException) {
@@ -53,18 +53,22 @@ abstract class DisposableObserver : DisposableObserver<Response>() {
                 val response = e.response()
                 val json = JSONObject(response.errorBody()?.string())
                 val errorMessage = json.getString("message")
-                onRequestFailed(errorMessage)
-            } catch (e1: JSONException) {
-                Log.e("JSON Exception", e1.localizedMessage)
-//                Crashlytics.logException(e1)
-                onRequestFailed(AppConstants.UNKNOWN_NETWORK_EXCEPTION)
-            } catch (e1: IOException) {
-                Log.e("Network IO Exception", e1.localizedMessage)
-//                Crashlytics.logException(e1)
-                onRequestFailed(AppConstants.UNKNOWN_NETWORK_EXCEPTION)
+                onRequestFailed(400, errorMessage)
+            } catch (err: JSONException) {
+                Log.e("JSON Exception", err.localizedMessage)
+//                Crashlytics.logException(err)
+                onRequestFailed(400, AppConstants.UNKNOWN_NETWORK_EXCEPTION)
+            } catch (err: IOException) {
+                Log.e("Network IO Exception", err.localizedMessage)
+//                Crashlytics.logException(err)
+                onRequestFailed(400, AppConstants.UNKNOWN_NETWORK_EXCEPTION)
+            } catch (err: javax.net.ssl.SSLException) {
+                Log.e("Network IO Exception", err.localizedMessage)
+//                Crashlytics.logException(err)
+                onRequestFailed(400, AppConstants.SSL_EXCEPTION)
             }
             return
         }
-        onRequestFailed(AppConstants.UNKNOWN_NETWORK_EXCEPTION)
+        onRequestFailed(400, AppConstants.UNKNOWN_NETWORK_EXCEPTION)
     }
 }

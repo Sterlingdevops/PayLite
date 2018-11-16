@@ -5,11 +5,11 @@ apply plugin: 'realm-android'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.sterlingng.paylite"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "0.1"
         multiDexEnabled true
@@ -99,7 +99,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'javax.inject:javax.inject:1'
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
-    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.2'
     implementation 'com.github.AndroidDeveloperLB:AutoFitTextView:4'
     implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.0@aar'
     implementation 'com.android.support:multidex:1.0.3'

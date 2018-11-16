@@ -106,7 +106,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         }
 
         next.setOnClickListener {
-            if (isCard && (mCardNameEditText.text.isEmpty() || mCardExpiryEditText.text.isEmpty() || mCardCvvEditText.text.isEmpty() || mCardNumberEditCredit.text.isEmpty())) {
+            if (isCard && (mCardNameEditText.text.isEmpty() || mCardExpiryEditText.text.isEmpty() || mCardCvvEditText.text.isEmpty() || mCardNumberEditCredit.text?.isEmpty()!!)) {
                 show("Please fill in the required fields", true)
                 return@setOnClickListener
             }
