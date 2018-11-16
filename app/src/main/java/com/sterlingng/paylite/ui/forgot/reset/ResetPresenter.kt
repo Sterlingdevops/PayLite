@@ -43,6 +43,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
 
                         dataManager.saveUser(user)
                         mvpView.onUpdatePasswordSuccessful()
+                        mvpView.hideLoading()
                     }
 
                     override fun onRequestFailed(code: Int, failureReason: String) {

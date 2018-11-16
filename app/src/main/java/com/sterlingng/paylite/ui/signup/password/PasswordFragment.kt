@@ -1,13 +1,11 @@
 package com.sterlingng.paylite.ui.signup.password
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.utils.OnChildDidClickNext
@@ -63,12 +61,12 @@ class PasswordFragment : BaseFragment(), PasswordMvpView {
         }
     }
 
-    override fun onDoSignUpSuccessful(response: Response) {
+    override fun onDoSignUpSuccessful() {
         mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPasswordEditText.mTextEditText.text.toString())
     }
 
-    override fun onDoSignUpFailed(response: Response) {
-        show(response.message!!, true)
+    override fun onDoSignUpFailed() {
+
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

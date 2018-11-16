@@ -44,7 +44,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
 
                     override fun onRequestFailed(code: Int, failureReason: String) {
                         mvpView.onGetUserTransactionsFailed()
-                        mvpView.hideLoading()
                     }
                 })
     }

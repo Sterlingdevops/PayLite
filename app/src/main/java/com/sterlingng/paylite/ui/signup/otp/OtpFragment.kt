@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.ImageView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.utils.OnChildDidClickNext
@@ -64,12 +63,12 @@ class OtpFragment : BaseFragment(), OtpMvpView {
         }
     }
 
-    override fun onValidateOtpFailed(it: Response) {
+    override fun onValidateOtpFailed() {
         show("An error occurred validating the OTP, please try again", true)
         mPinView.clearValue()
     }
 
-    override fun onValidateOtpSuccessful(it: Response) {
+    override fun onValidateOtpSuccessful() {
         mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPinView.value)
     }
 
@@ -78,9 +77,7 @@ class OtpFragment : BaseFragment(), OtpMvpView {
     }
 
     companion object {
-
         private const val INDEX = "OtpFragment.INDEX"
-
         fun newInstance(index: Int): OtpFragment {
             val fragment = OtpFragment()
             val args = Bundle()

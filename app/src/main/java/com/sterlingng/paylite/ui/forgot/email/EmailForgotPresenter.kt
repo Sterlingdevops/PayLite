@@ -23,7 +23,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                 .subscribe(object : DisposableObserver() {
                     override fun onAuthorizationError() {
                         mvpView.logout()
-                        mvpView.hideLoading()
                     }
 
                     override fun onRequestSuccessful(response: Response, message: String) {

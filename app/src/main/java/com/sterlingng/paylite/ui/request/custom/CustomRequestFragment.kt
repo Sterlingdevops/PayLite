@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.main.MainActivity
@@ -82,12 +81,12 @@ class CustomRequestFragment : BaseFragment(), CustomRequestMvpView {
         }
     }
 
-    override fun onRequestPaymentLinkSent(response: Response) {
+    override fun onRequestPaymentLinkSent() {
         show("Request Sent", true)
         (baseActivity as DashboardActivity).mNavController.popFragment()
     }
 
-    override fun onSendRequestPaymentLinkFailed(response: Response) {
+    override fun onSendRequestPaymentLinkFailed() {
         show("Something went wrong and your request wasn't successfully processed, please try again", true)
     }
 

@@ -15,13 +15,10 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), AirTimeMvpContract<V> {
 
     override fun buyAirtime(data: HashMap<String, Any>) {
-        dataManager.getCurrentUser()?.phoneNumber?.let {
-            data["UserAcct"] = it
-        }
+        dataManager.getCurrentUser()?.phoneNumber?.let { data["UserAcct"] = it }
         mvpView.showLoading()
         dataManager
-                .buyAirtime(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}",
-                        gson.toJson(data).sha256())
+                .buyAirtime(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}", gson.toJson(data).sha256())
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(object : DisposableObserver() {

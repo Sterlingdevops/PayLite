@@ -10,7 +10,10 @@ import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.*
+import com.sterlingng.paylite.data.model.PayliteContact
+import com.sterlingng.paylite.data.model.SendMoneyRequest
+import com.sterlingng.paylite.data.model.UpdateWallet
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
@@ -254,7 +257,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet.balance.toFloat())
     }
 
-    override fun onSendMoneySuccessful(wallet: Wallet) {
+    override fun onSendMoneySuccessful() {
         if (mScheduleRepeatSwitch.isChecked) {
             schedulePayment()
         } else {
@@ -281,7 +284,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
                 .pushFragment(PaymentCategoriesFragment.newInstance())
     }
 
-    override fun onSendMoneyFailed(response: Response) {
+    override fun onSendMoneyFailed() {
         show("An error occurred while processing the transaction", true)
     }
 

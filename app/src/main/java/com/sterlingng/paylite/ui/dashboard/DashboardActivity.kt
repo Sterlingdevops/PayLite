@@ -119,8 +119,6 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         mPresenter.loadBanks()
 
         mBottomNavigationView.apply {
-//            setSmallTextSize(8f)
-//            setLargeTextSize(14f)
             labelVisibilityMode = 1
             itemIconTintList = null
             enableAnimation(true)

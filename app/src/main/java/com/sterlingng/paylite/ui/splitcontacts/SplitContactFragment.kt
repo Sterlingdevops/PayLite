@@ -19,7 +19,10 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.*
+import com.sterlingng.paylite.data.model.ChosenContact
+import com.sterlingng.paylite.data.model.ContactItem
+import com.sterlingng.paylite.data.model.SplitPaymentRequest
+import com.sterlingng.paylite.data.model.SplitPerson
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.contacts.SelectContactsFragment
@@ -176,7 +179,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView, SplitContactsA
                 }).check()
     }
 
-    fun calculateSplitCost() {
+    private fun calculateSplitCost() {
         mSplitContactsAdapter.contacts.forEach { contact ->
             contact.amount = isEqual then (splitAmount / mSplitContactsAdapter.contacts.size).toString() ?: "0"
         }
@@ -194,7 +197,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView, SplitContactsA
         baseActivity.logout()
     }
 
-    override fun onSplitPaymentFailed(response: Response) {
+    override fun onSplitPaymentFailed() {
         show("An error occurred while processing the transaction", true)
     }
 

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.ScheduledPayment
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
@@ -73,7 +72,7 @@ class ScheduledFragment : BaseFragment(), ScheduledMvpView {
         mSwipeRefreshLayout.isRefreshing = false
     }
 
-    override fun onScheduledPaymentsFailed(response: Response) {
+    override fun onScheduledPaymentsFailed() {
         show("Failed getting transactions", true)
         mSwipeRefreshLayout.isRefreshing = false
     }

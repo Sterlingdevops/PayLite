@@ -116,9 +116,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mFundButton.setOnClickListener {
             when {
                 mPresenter.getAuthPin() -> (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
-                else -> (baseActivity as DashboardActivity)
-                        .mNavController
-                        .pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name, openFund = true))
+                else -> (baseActivity as DashboardActivity).mNavController.pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name, openFund = true))
             }
         }
 

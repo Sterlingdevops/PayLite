@@ -8,10 +8,8 @@ import android.widget.Button
 import android.widget.ImageView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import javax.inject.Inject
 
@@ -81,12 +79,11 @@ class PinFragment : BaseFragment(), PinMvpView {
 
     }
 
-    override fun onDoSignUpFailed(response: Response) {
-        Log.d(response.toString())
+    override fun onDoSignUpFailed() {
         show("An error occurred while processing your request", true)
     }
 
-    override fun onDoSignUpSuccessful(response: Response) {
+    override fun onDoSignUpSuccessful() {
         mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, pinView.value)
     }
 

@@ -47,12 +47,10 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                         val wallet = gson.fromJson(gson.toJson(response.data), Wallet::class.java)
                         dataManager.saveWallet(wallet)
                         mvpView.onGetWalletSuccessful(wallet)
-                        mvpView.hideLoading()
                     }
 
                     override fun onRequestFailed(code: Int, failureReason: String) {
                         mvpView.onGetWalletFailed()
-                        mvpView.hideLoading()
                     }
                 })
     }
@@ -123,12 +121,10 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
 
                     override fun onRequestSuccessful(response: Response, message: String) {
                         mvpView.onResolveCardNumberSuccessful(response)
-                        mvpView.hideLoading()
                     }
 
                     override fun onRequestFailed(code: Int, failureReason: String) {
                         mvpView.onResolveCardNumberFailed()
-                        mvpView.hideLoading()
                     }
                 })
     }
