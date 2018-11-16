@@ -92,6 +92,10 @@ class ResetFragment : BaseFragment(), ResetMvpView {
 
     }
 
+    override fun logout() {
+        baseActivity.logout()
+    }
+
     companion object {
 
         private const val INDEX = "ResetFragment.INDEX"

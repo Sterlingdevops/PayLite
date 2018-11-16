@@ -22,7 +22,6 @@ import com.ncapdevi.fragnav.FragNavController
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Bank
 import com.sterlingng.paylite.data.model.Contact
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.UpdateTransaction
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseActivity
@@ -120,8 +119,8 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         mPresenter.loadBanks()
 
         mBottomNavigationView.apply {
-            setSmallTextSize(8f)
-            setLargeTextSize(14f)
+//            setSmallTextSize(8f)
+//            setLargeTextSize(14f)
             labelVisibilityMode = 1
             itemIconTintList = null
             enableAnimation(true)
@@ -273,7 +272,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         this.banks.addAll(banks)
     }
 
-    override fun onGetBanksFailed(response: Response) {
+    override fun onGetBanksFailed() {
 
     }
 

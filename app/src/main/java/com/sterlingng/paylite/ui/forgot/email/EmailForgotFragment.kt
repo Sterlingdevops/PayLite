@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.utils.Log
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.views.LargeLabelEditText
 import javax.inject.Inject
@@ -49,12 +47,11 @@ class EmailForgotFragment : BaseFragment(), EmailForgotMvpView {
         }
     }
 
-    override fun onPasswordResetTokenFailed(response: Response) {
-        Log.e(response.message!!, "EmailForgotFragment->onPasswordResetTokenFailed()")
+    override fun onPasswordResetTokenFailed() {
         show("An error occurred, please try again", false)
     }
 
-    override fun onPasswordResetTokenSuccessful(response: Response) {
+    override fun onPasswordResetTokenSuccessful() {
         mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPhoneEditText.text)
         hideKeyboard()
     }
@@ -67,6 +64,10 @@ class EmailForgotFragment : BaseFragment(), EmailForgotMvpView {
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
 
+    }
+
+    override fun logout() {
+        baseActivity.logout()
     }
 
     companion object {

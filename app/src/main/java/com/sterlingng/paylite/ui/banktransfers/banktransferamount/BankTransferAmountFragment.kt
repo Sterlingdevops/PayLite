@@ -10,7 +10,10 @@ import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.*
+import com.sterlingng.paylite.data.model.CashOutToBankAccountRequest
+import com.sterlingng.paylite.data.model.PayliteContact
+import com.sterlingng.paylite.data.model.UpdateWallet
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
@@ -313,7 +316,7 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
         hideKeyboard()
     }
 
-    override fun onBankTransferFailed(response: Response) {
+    override fun onBankTransferFailed() {
         show("Server timed out, please try again", true)
     }
 

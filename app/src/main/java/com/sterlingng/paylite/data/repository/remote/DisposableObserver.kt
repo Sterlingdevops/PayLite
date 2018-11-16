@@ -1,8 +1,8 @@
 package com.sterlingng.paylite.data.repository.remote
 
-import android.util.Log
 import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.utils.AppConstants
+import com.sterlingng.paylite.utils.Log
 import io.reactivex.observers.DisposableObserver
 import org.json.JSONException
 import org.json.JSONObject
@@ -11,6 +11,7 @@ import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.net.ssl.SSLException
 
 abstract class DisposableObserver : DisposableObserver<Response>() {
 
@@ -18,20 +19,25 @@ abstract class DisposableObserver : DisposableObserver<Response>() {
 
     abstract fun onRequestFailed(code: Int, failureReason: String)
 
+    abstract fun onAuthorizationError()
+
     override fun onComplete() {
 
     }
 
     override fun onNext(t: Response) {
-        Log.e("Request Response ----> ", t.toString())
+        Log.d("Request Response ----> " + t.toString())
         val message = t.message?.let {
             it
-        } ?: "Message from server is null. So we are using this for now. "
+        } ?: "The server didn't return a valid response"
         if (t.data == null || t.data is String || (t.data is List<*> && (t.data as List<*>).isEmpty())) {
+            if (t.code == 401) onAuthorizationError()
             onRequestFailed(t.code, message)
             return
         }
-        onRequestSuccessful(t, message)
+        if (t.status || t.response != null && t.response == "00") {
+            onRequestSuccessful(t, message)
+        }
     }
 
     override fun onError(e: Throwable) {
@@ -62,7 +68,7 @@ abstract class DisposableObserver : DisposableObserver<Response>() {
                 Log.e("Network IO Exception", err.localizedMessage)
 //                Crashlytics.logException(err)
                 onRequestFailed(400, AppConstants.UNKNOWN_NETWORK_EXCEPTION)
-            } catch (err: javax.net.ssl.SSLException) {
+            } catch (err: SSLException) {
                 Log.e("Network IO Exception", err.localizedMessage)
 //                Crashlytics.logException(err)
                 onRequestFailed(400, AppConstants.SSL_EXCEPTION)

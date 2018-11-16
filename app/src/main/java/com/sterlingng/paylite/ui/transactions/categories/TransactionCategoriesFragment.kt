@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.data.model.UpdateTransaction
 import com.sterlingng.paylite.rx.EventBus
@@ -100,7 +99,7 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
         recyclerView.scrollToPosition(0)
     }
 
-    override fun onGetUserTransactionsFailed(response: Response) {
+    override fun onGetUserTransactionsFailed() {
         mSwipeRefreshLayout.isRefreshing = false
     }
 

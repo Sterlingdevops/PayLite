@@ -138,7 +138,10 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
 
     protected abstract fun setUp()
 
-    open fun logout() {}
+    open fun logout() {
+        hideLoading()
+        hideKeyboard()
+    }
 
     interface OnBackClicked {
         fun onBackClicked()

@@ -41,7 +41,7 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
         mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance("IN"), "IN")
         mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance("OUT"), "OUT")
 
-        mViewPager.isPagingEnabled = true
+        mViewPager.isPagingEnabled = false
         mViewPager.adapter = mPagerAdapter
         mViewPager.offscreenPageLimit = 3
 

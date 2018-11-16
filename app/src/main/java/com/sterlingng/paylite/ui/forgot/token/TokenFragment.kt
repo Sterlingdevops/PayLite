@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.ImageView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
 import com.sterlingng.paylite.utils.OnChildDidClickNext
@@ -66,18 +65,21 @@ class TokenFragment : BaseFragment(), TokenMvpView {
         }
     }
 
-    override fun onValidateOtpFailed(it: Response) {
+    override fun onValidateOtpFailed() {
         show("An error occurred validating the OTP, please try again", true)
         mPinView.clearValue()
     }
 
-    override fun onValidateOtpSuccessful(it: Response) {
+    override fun onValidateOtpSuccessful() {
         mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPinView.value)
     }
 
-
     override fun recyclerViewItemClicked(v: View, position: Int) {
 
+    }
+
+    override fun logout() {
+        baseActivity.logout()
     }
 
     companion object {

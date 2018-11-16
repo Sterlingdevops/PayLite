@@ -24,7 +24,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
@@ -169,7 +168,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
         }
     }
 
-    override fun onBuyAirtimeFailed(response: Response) {
+    override fun onBuyAirtimeFailed() {
         show("An error occurred while processing the transaction", true)
     }
 

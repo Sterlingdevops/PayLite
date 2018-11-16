@@ -202,8 +202,8 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         mFundCardNestedScrollView = view.findViewById(R.id.fund_card)
     }
 
-    override fun onLoadBanksFailed(it: Throwable) {
-        show(it.localizedMessage, true)
+    override fun onLoadBanksFailed() {
+        show("An error occurred", true)
     }
 
     override fun onLoadBanksSuccessful(it: ArrayList<Bank>) {
@@ -214,7 +214,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet.balance.toFloat())
     }
 
-    override fun onResolveAccountNumberFailed(it: Throwable) {
+    override fun onResolveAccountNumberFailed() {
         show("Could not resolve account name.", true)
         mAccountNameTextView.text = ""
         hideKeyboard()
@@ -226,7 +226,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         hideKeyboard()
     }
 
-    override fun onResolveCardNumberFailed(response: Response?) {
+    override fun onResolveCardNumberFailed() {
         show("An error occurred while processing the transaction", true)
     }
 
@@ -248,7 +248,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
 
     }
 
-    override fun onGetWalletFailed(response: Response?) {
+    override fun onGetWalletFailed() {
         show("An error occurred while processing the transaction", true)
     }
 
@@ -290,7 +290,7 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
         show("The PIN entered is incorrect", true)
     }
 
-    override fun onFundWalletFailed(it: Response) {
+    override fun onFundWalletFailed() {
         show("An error occurred while processing the transaction", true)
     }
 

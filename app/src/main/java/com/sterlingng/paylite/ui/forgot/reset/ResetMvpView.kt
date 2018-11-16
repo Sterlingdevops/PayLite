@@ -5,4 +5,5 @@ import com.sterlingng.paylite.ui.base.MvpView
 interface ResetMvpView : MvpView {
     fun onUpdatePasswordFailed()
     fun onUpdatePasswordSuccessful()
+    fun logout()
 }

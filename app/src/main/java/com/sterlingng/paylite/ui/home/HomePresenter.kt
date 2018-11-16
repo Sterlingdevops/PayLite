@@ -16,9 +16,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), HomeMvpContract<V> {
 
     override fun getAuthPin(): Boolean {
-        dataManager.getPin(dataManager.getCurrentUser()?.phoneNumber!!)?.let {
-            return true
-        }
+        dataManager.getPin(dataManager.getCurrentUser()?.phoneNumber!!)?.let { return true }
         return false
     }
 
@@ -39,20 +37,18 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(object : DisposableObserver() {
+                    override fun onAuthorizationError() {
+                        mvpView.logout()
+                    }
+
                     override fun onRequestSuccessful(response: Response, message: String) {
-                        if (response.response != null && response.response == "00") {
-                            val wallet = AppUtils.gson.fromJson(AppUtils.gson.toJson(response.data), Wallet::class.java)
-                            dataManager.saveWallet(wallet)
-                            mvpView.onGetWalletSuccessful(wallet)
-                        }
+                        val wallet = AppUtils.gson.fromJson(AppUtils.gson.toJson(response.data), Wallet::class.java)
+                        dataManager.saveWallet(wallet)
+                        mvpView.onGetWalletSuccessful(wallet)
                     }
 
                     override fun onRequestFailed(code: Int, failureReason: String) {
-                        if (code == 401) {
-                            mvpView.logout()
-                        } else {
-                            mvpView.onGetWalletFailed()
-                        }
+                        mvpView.onGetWalletFailed()
                     }
                 })
     }
