@@ -7,21 +7,21 @@
         android:id="@+id/nav_home"
         android:icon="@drawable/icon_home"
         android:orderInCategory="100"
-        android:title=""
+        android:title="@string/home"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/nav_transactions"
         android:icon="@drawable/icon_transactions"
         android:orderInCategory="101"
-        android:title=""
-        app:showAsAction="ifRoom"/>
+        android:title="@string/transactions"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/nav_settings"
         android:icon="@drawable/icon_settings"
         android:orderInCategory="102"
-        android:title=""
-        app:showAsAction="ifRoom"/>
+        android:title="@string/settings"
+        app:showAsAction="always"/>
 
 </menu>

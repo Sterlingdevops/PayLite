@@ -120,13 +120,12 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         mPresenter.loadBanks()
 
         mBottomNavigationView.apply {
-            setTextVisibility(false)
-//            setLargeTextSize(14f)
-//            setSmallTextSize(10f)
-            setIconSize(36f, 36f)
+            setSmallTextSize(8f)
+            setLargeTextSize(14f)
+            labelVisibilityMode = 1
+            itemIconTintList = null
             enableAnimation(true)
-            enableShiftingMode(false)
-            enableItemShiftingMode(false)
+            isItemHorizontalTranslationEnabled = false
             onNavigationItemSelectedListener = this@DashboardActivity
         }
     }
