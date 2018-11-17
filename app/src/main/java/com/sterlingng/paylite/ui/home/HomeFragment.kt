@@ -11,7 +11,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.*
+import com.sterlingng.paylite.data.model.MenuItem
+import com.sterlingng.paylite.data.model.UpdateWallet
+import com.sterlingng.paylite.data.model.User
+import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.airtime.AirTimeFragment
 import com.sterlingng.paylite.ui.authpin.AuthPinFragment
@@ -58,10 +61,6 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private lateinit var mMainAmountTextView: TextView
     private lateinit var mFundButton: ImageView
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        //No call for super(). Bug on API Level > 11.
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val component = activityComponent
@@ -103,14 +102,6 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     mPresenter.loadCachedWallet()
-                }
-
-        eventBus.observe(OpenFundWallet::class.java)
-                .delay(1L, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
                 }
 
         mFundButton.setOnClickListener {

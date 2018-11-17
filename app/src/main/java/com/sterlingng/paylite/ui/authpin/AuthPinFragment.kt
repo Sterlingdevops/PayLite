@@ -9,10 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.OpenFundWallet
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.payment.PaymentFragment
 import javax.inject.Inject
 
 class AuthPinFragment : BaseFragment(), AuthPinMvpView {
@@ -97,14 +97,13 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
                 if (mPinView.value == extra) {
                     mPresenter.savePin(extra)
 
-                    if (arguments?.getBoolean(OPEN_FRAGMENT)!!) {
-                        eventBus.post(OpenFundWallet())
-                    }
-
                     (baseActivity as DashboardActivity)
                             .mNavController
-                            .popFragments(2)
+                            .clearStack()
                     hideKeyboard()
+
+                    if (arguments?.getBoolean(OPEN_FRAGMENT)!!)
+                        (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
                 } else {
                     show("The PINs you entered do not match", true)
                 }

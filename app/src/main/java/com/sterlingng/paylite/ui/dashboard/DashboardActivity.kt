@@ -35,6 +35,7 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.set
 
+
 class DashboardActivity : BaseActivity(), DashboardMvpView,
         BottomNavigationView.OnNavigationItemSelectedListener,
         FragNavController.RootFragmentListener {
@@ -47,7 +48,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
 
     lateinit var mNavController: FragNavController
     override val numberOfRootFragments: Int
-        get() = 3
+        get() = 4
 
     var contacts = ArrayList<Contact>()
     var banks = ArrayList<Bank>()
@@ -125,12 +126,17 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
             isItemHorizontalTranslationEnabled = false
             onNavigationItemSelectedListener = this@DashboardActivity
         }
+        for (i in 0 until mBottomNavigationView.itemCount) {
+            val view = mBottomNavigationView.getLargeLabelAt(i)
+            view.setPadding(0, 0, 0, 0)
+        }
     }
 
     override fun getRootFragment(index: Int): Fragment {
         return when (index) {
             INDEX_HOME -> HomeFragment.newInstance()
-            INDEX_SETTINGS -> SettingsFragment.newInstance()
+            INDEX_PROFILE -> SettingsFragment.newInstance()
+            INDEX_SERVICES -> SettingsFragment.newInstance()
             INDEX_TRANSACTIONS -> TransactionsFragment.newInstance()
             else -> throw IllegalStateException("Need to send an index that we know")
         }
@@ -139,7 +145,8 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> mNavController.switchTab(INDEX_HOME)
-            R.id.nav_settings -> mNavController.switchTab(INDEX_SETTINGS)
+            R.id.nav_profile -> mNavController.switchTab(INDEX_PROFILE)
+            R.id.nav_services -> mNavController.switchTab(INDEX_SERVICES)
             R.id.nav_transactions -> {
                 eventBus.post(UpdateTransaction())
                 mNavController.switchTab(INDEX_TRANSACTIONS)
@@ -286,7 +293,8 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
 
     companion object {
         private const val INDEX_HOME = FragNavController.TAB1
-        private const val INDEX_SETTINGS = FragNavController.TAB3
+        private const val INDEX_PROFILE = FragNavController.TAB4
+        private const val INDEX_SERVICES = FragNavController.TAB3
         private const val INDEX_TRANSACTIONS = FragNavController.TAB2
         const val SELECTED_ITEM = "arg_selected_item"
 

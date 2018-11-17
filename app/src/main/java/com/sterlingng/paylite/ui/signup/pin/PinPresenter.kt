@@ -18,7 +18,9 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
 
     override fun doSignUp(data: HashMap<String, Any>) {
         mvpView.showLoading()
-        dataManager.signup(data, gson.toJson(data).sha256()).subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
+        dataManager.signup(data, gson.toJson(data).sha256())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe(object : DisposableObserver() {
                     override fun onRequestSuccessful(response: Response, message: String) {
                         val type = object : TypeToken<HashMap<String, Any>>() {}.type

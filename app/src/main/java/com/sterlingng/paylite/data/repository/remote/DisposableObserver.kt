@@ -30,8 +30,8 @@ abstract class DisposableObserver : DisposableObserver<Response>() {
         val message = t.message?.let {
             it
         } ?: "The server didn't return a valid response"
+        if (t.code == 401) onAuthorizationError()
         if (t.data == null || t.data is String || (t.data is List<*> && (t.data as List<*>).isEmpty())) {
-            if (t.code == 401) onAuthorizationError()
             onRequestFailed(t.code, message)
             return
         }

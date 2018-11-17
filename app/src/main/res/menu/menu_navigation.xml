@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/nav_home"
@@ -15,13 +14,20 @@
         android:icon="@drawable/icon_transactions"
         android:orderInCategory="101"
         android:title="@string/transactions"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/nav_settings"
+        android:id="@+id/nav_services"
+        android:icon="@drawable/icon_services"
+        android:orderInCategory="102"
+        android:title="@string/profile"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/nav_profile"
         android:icon="@drawable/icon_settings"
         android:orderInCategory="102"
-        android:title="@string/settings"
-        app:showAsAction="always"/>
+        android:title="@string/profile"
+        app:showAsAction="ifRoom"/>
 
 </menu>
