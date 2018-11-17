@@ -135,6 +135,7 @@
         android:id="@+id/user_greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_bold"
         android:text="@string/welcome_yinka"
         android:textColor="@color/dark_blue_grey"
         android:textSize="22sp"

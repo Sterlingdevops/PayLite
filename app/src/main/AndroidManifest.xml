@@ -35,6 +35,10 @@
         <activity android:name=".ui.signup.SignUpActivity"/>
         <activity android:name=".ui.bills.BillsActivity"/>
         <activity android:name=".ui.forgot.ForgotActivity"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts"/>
     </application>
 
 </manifest>

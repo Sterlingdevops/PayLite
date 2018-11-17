@@ -122,6 +122,8 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         mBottomNavigationView.apply {
             labelVisibilityMode = 1
             itemIconTintList = null
+            setSmallTextSize(12f)
+            setLargeTextSize(14f)
             enableAnimation(true)
             isItemHorizontalTranslationEnabled = false
             onNavigationItemSelectedListener = this@DashboardActivity

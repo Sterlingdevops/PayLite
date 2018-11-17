@@ -22,7 +22,7 @@
             android:id="@+id/icon"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="32dp"
             android:src="@drawable/icon_send_money"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,18 +31,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"/>
 
-        <TextView
+        <com.lb.auto_fit_textview.AutoResizeTextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:textAlignment="center"
             android:textColor="@color/denim"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/icon"
+            app:autoSizeMinTextSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/icon"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/icon"
-            tools:text="@string/send_money"/>
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="@string/scheduled_payments"/>
 
         <TextView
             android:id="@+id/sub_title"
