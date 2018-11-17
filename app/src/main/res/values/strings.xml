@@ -324,4 +324,7 @@
     <string name="transfers">Transfers</string>
     <string name="welcome_yinka">Welcome Yinka</string>
     <string name="services">Services</string>
+    <string name="pay_staff">Pay Staff</string>
+    <string name="pay_domestic_staff">Pay domestic staff, recurrent servcies etc.</string>
+    <string name="value_added_services">Value added Services</string>
 </resources>

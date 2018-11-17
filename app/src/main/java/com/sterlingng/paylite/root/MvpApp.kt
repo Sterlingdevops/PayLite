@@ -1,20 +1,15 @@
 package com.sterlingng.paylite.root
 
-
 import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import com.sterlingng.paylite.R
 import com.sterlingng.paylite.di.component.ApplicationComponent
 import com.sterlingng.paylite.di.component.DaggerApplicationComponent
 import com.sterlingng.paylite.di.module.ApplicationModule
 import com.sterlingng.paylite.utils.Log
 import io.realm.Realm
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig
-
-
 
 class MvpApp : Application() {
 
@@ -36,10 +31,5 @@ class MvpApp : Application() {
 
         //App logger
         Log.init()
-
-        CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        )
     }
 }

@@ -27,6 +27,7 @@ import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.home.HomeFragment
 import com.sterlingng.paylite.ui.main.MainActivity
+import com.sterlingng.paylite.ui.services.ServicesFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import com.sterlingng.paylite.utils.asString
@@ -122,8 +123,8 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         mBottomNavigationView.apply {
             labelVisibilityMode = 1
             itemIconTintList = null
-            setSmallTextSize(12f)
-            setLargeTextSize(14f)
+            setSmallTextSize(10f)
+            setLargeTextSize(12f)
             enableAnimation(true)
             isItemHorizontalTranslationEnabled = false
             onNavigationItemSelectedListener = this@DashboardActivity
@@ -138,7 +139,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         return when (index) {
             INDEX_HOME -> HomeFragment.newInstance()
             INDEX_PROFILE -> SettingsFragment.newInstance()
-            INDEX_SERVICES -> SettingsFragment.newInstance()
+            INDEX_SERVICES -> ServicesFragment.newInstance()
             INDEX_TRANSACTIONS -> TransactionsFragment.newInstance()
             else -> throw IllegalStateException("Need to send an index that we know")
         }

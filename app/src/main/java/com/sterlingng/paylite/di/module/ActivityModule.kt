@@ -90,10 +90,6 @@ import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountPresenter
 import com.sterlingng.paylite.ui.payment.PaymentMvpContract
 import com.sterlingng.paylite.ui.payment.PaymentMvpView
 import com.sterlingng.paylite.ui.payment.PaymentPresenter
-import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesAdapter
-import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesMvpContract
-import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesMvpView
-import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesPresenter
 import com.sterlingng.paylite.ui.profile.ProfileMvpContract
 import com.sterlingng.paylite.ui.profile.ProfileMvpView
 import com.sterlingng.paylite.ui.profile.ProfilePresenter
@@ -120,6 +116,9 @@ import com.sterlingng.paylite.ui.security.LoginAndSecurityPresenter
 import com.sterlingng.paylite.ui.send.SendMoneyMvpContract
 import com.sterlingng.paylite.ui.send.SendMoneyMvpView
 import com.sterlingng.paylite.ui.send.SendMoneyPresenter
+import com.sterlingng.paylite.ui.services.ServicesMvpContract
+import com.sterlingng.paylite.ui.services.ServicesMvpView
+import com.sterlingng.paylite.ui.services.ServicesPresenter
 import com.sterlingng.paylite.ui.settings.SettingsMvpContract
 import com.sterlingng.paylite.ui.settings.SettingsMvpView
 import com.sterlingng.paylite.ui.settings.SettingsPresenter
@@ -170,6 +169,10 @@ import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesPr
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailMvpContract
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailMvpView
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailPresenter
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesAdapter
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesMvpContract
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesMvpView
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesPresenter
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.views.NoScrollingGridLayoutManager
 import com.sterlingng.views.NoScrollingLinearLayoutManager
@@ -298,6 +301,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideTransactionsPresenter(presenter: TransactionsPresenter<TransactionsMvpView>): TransactionsMvpContract<TransactionsMvpView> = presenter
+
+    @Provides
+    internal fun provideServicesPresenter(presenter: ServicesPresenter<ServicesMvpView>): ServicesMvpContract<ServicesMvpView> = presenter
 
     @Provides
     internal fun provideNewPaymentAmountPresenter(presenter: NewPaymentAmountPresenter<NewPaymentAmountMvpView>): NewPaymentAmountMvpContract<NewPaymentAmountMvpView> = presenter

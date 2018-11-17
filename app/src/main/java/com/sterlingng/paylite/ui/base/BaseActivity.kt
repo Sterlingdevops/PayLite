@@ -22,7 +22,6 @@ import com.sterlingng.paylite.root.MvpApp
 import com.sterlingng.paylite.utils.CommonUtils
 import com.sterlingng.paylite.utils.NetworkUtils
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 /**
  * Created by rtukpe on 13/03/2018.
@@ -43,10 +42,6 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
         activityComponent = DaggerActivityComponent.builder()
                 .activityModule(ActivityModule(this))
                 .applicationComponent((application as MvpApp).component).build()
-    }
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

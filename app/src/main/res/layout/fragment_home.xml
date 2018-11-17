@@ -138,11 +138,10 @@
         android:fontFamily="@font/open_sans_bold"
         android:text="@string/welcome_yinka"
         android:textColor="@color/dark_blue_grey"
-        android:textSize="22sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
-
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
