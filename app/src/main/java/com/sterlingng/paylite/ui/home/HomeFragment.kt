@@ -2,8 +2,6 @@ package com.sterlingng.paylite.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -43,16 +41,10 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     @Inject
     lateinit var eventBus: EventBus
 
-    var listMode: Boolean = true
-
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mListModeImageView: ImageView
     private lateinit var mNotificationsImageView: ImageView
-    private lateinit var mListMenuItemsAdapter: MenuItemsAdapter
     private lateinit var mGridMenuItemsAdapter: MenuItemsAdapter
-
-    @Inject
-    lateinit var linearLayoutManager: LinearLayoutManager
 
     @Inject
     lateinit var gridLayoutManager: NoScrollingGridLayoutManager
@@ -80,16 +72,12 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     @SuppressLint("CheckResult")
     override fun setUp(view: View) {
-        mListMenuItemsAdapter = MenuItemsAdapter(baseActivity, MenuItemsAdapter.Mode.LIST)
         mGridMenuItemsAdapter = MenuItemsAdapter(baseActivity, MenuItemsAdapter.Mode.GRID)
         mGridMenuItemsAdapter.mRecyclerViewClickListener = this
-        mListMenuItemsAdapter.mRecyclerViewClickListener = this
         mRecyclerView.addItemDecoration(SpacesItemDecoration(0))
         gridLayoutManager.spanCount = 2
         mRecyclerView.layoutManager = gridLayoutManager
         mRecyclerView.adapter = mGridMenuItemsAdapter
-
-        listMode = false
 
         mPresenter.onViewInitialized()
         mPresenter.loadCachedWallet()
@@ -114,27 +102,10 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         mNotificationsImageView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(NotificationsFragment.newInstance())
         }
-
-        mListModeImageView.setOnClickListener {
-            when (listMode) {
-                true -> {
-                    mListModeImageView.setImageDrawable(ContextCompat.getDrawable(baseActivity, R.drawable.icon_list))
-                    mRecyclerView.layoutManager = gridLayoutManager
-                    mRecyclerView.adapter = mGridMenuItemsAdapter
-                    listMode = false
-                }
-                false -> {
-                    mListModeImageView.setImageDrawable(ContextCompat.getDrawable(baseActivity, R.drawable.icon_grid))
-                    mRecyclerView.layoutManager = linearLayoutManager
-                    mRecyclerView.adapter = mListMenuItemsAdapter
-                    listMode = true
-                }
-            }
-        }
     }
 
     override fun onGetWalletSuccessful(wallet: Wallet) {
-        mMainAmountTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
+        mMainAmountTextView.text = String.format("₦%,.0f", wallet.balance.toFloat())
     }
 
     override fun onGetWalletFailed() {
@@ -143,8 +114,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     @SuppressLint("SetTextI18n")
     override fun initView(currentUser: User?, mockMenuItems: ArrayList<MenuItem>) {
+        mUserGreetingTextView.text = "Welcome ${currentUser?.firstName!!}"
         mGridMenuItemsAdapter.items = mockMenuItems
-        mListMenuItemsAdapter.items = mockMenuItems
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

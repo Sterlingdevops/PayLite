@@ -38,7 +38,6 @@ class MvpApp : Application() {
         Log.init()
 
         CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
-                .setDefaultFontPath("font/Roboto-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         )

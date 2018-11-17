@@ -20,7 +20,7 @@
         android:id="@+id/nav_services"
         android:icon="@drawable/icon_services"
         android:orderInCategory="102"
-        android:title="@string/profile"
+        android:title="@string/services"
         app:showAsAction="ifRoom"/>
 
     <item
