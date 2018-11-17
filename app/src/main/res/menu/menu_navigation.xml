@@ -4,28 +4,28 @@
 
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/icon_home"
+        android:icon="@drawable/icon_home_selector"
         android:orderInCategory="100"
         android:title="@string/home"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/nav_transactions"
-        android:icon="@drawable/icon_transactions"
+        android:icon="@drawable/icon_transactions_selector"
         android:orderInCategory="101"
         android:title="@string/transactions"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/nav_services"
-        android:icon="@drawable/icon_services"
+        android:icon="@drawable/icon_services_selector"
         android:orderInCategory="102"
         android:title="@string/services"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/icon_settings"
+        android:icon="@drawable/icon_profile_selector"
         android:orderInCategory="102"
         android:title="@string/profile"
         app:showAsAction="ifRoom"/>
