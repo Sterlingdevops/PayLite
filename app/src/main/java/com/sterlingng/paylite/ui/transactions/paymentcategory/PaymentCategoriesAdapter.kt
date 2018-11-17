@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
@@ -112,6 +113,7 @@ class PaymentCategoriesAdapter(private val mContext: Context) : RecyclerView.Ada
     inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
         private val categoryName: TextView = itemView.findViewById(R.id.category_name)
         private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
+        private val categoryCheckBox: CheckBox = itemView.findViewById(R.id.category_check)
         private val categoryItem: CardView = itemView as CardView
 
         override fun onBind(position: Int) {
@@ -123,7 +125,8 @@ class PaymentCategoriesAdapter(private val mContext: Context) : RecyclerView.Ada
             }
 
             if (selectedItems.get(adapterPosition)) {
-//                categoryItem.setBackgroundResource(R.drawable.background_pin_view)
+                categoryCheckBox.visibility = View.VISIBLE
+                categoryCheckBox.isChecked = true
                 val valueAnimator = ValueAnimator.ofFloat(categoryItem.cardElevation, 16f)
                 valueAnimator.addUpdateListener {
                     val value = it.animatedValue as Float
@@ -133,8 +136,9 @@ class PaymentCategoriesAdapter(private val mContext: Context) : RecyclerView.Ada
                 valueAnimator.duration = 100L
                 valueAnimator.start()
             } else {
+                categoryCheckBox.visibility = View.GONE
+                categoryCheckBox.isChecked = false
                 categoryItem.cardElevation = 0f
-//                categoryItem.background = null
             }
 
             itemView.setOnClickListener {
