@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Response
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.ui.base.BaseActivity
-import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import javax.inject.Inject
@@ -51,16 +49,6 @@ class MainActivity : BaseActivity(), MainMvpView {
         }
 
         mPresenter.onViewInitialized()
-    }
-
-    override fun onDoSignInSuccessful(it: Response) {
-        val intent = DashboardActivity.getStartIntent(this)
-                .putExtra(DashboardActivity.SELECTED_ITEM, 0)
-        startActivity(intent)
-    }
-
-    override fun onDoSignInFailed(it: Response) {
-        show(it.message!!, true)
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

@@ -20,7 +20,7 @@ constructor(protected val dataManager: DataManager,
             protected val compositeDisposable: CompositeDisposable) : MvpPresenter<V> {
     protected lateinit var mvpView: V
 
-    override fun onViewInitialized() {
+    override fun  onViewInitialized() {
 
     }
 
