@@ -36,8 +36,8 @@ class LargeLabelClickToSelectEditText<T>(context: Context, attrs: AttributeSet) 
         mTextEditText.hint = hint
         plainText?.let { mTextEditText.setText(it) }
         mTextEditText.setTextColor(color)
-        drawable = DrawableCompat.wrap(drawable)
-        DrawableCompat.setTint(drawable, tint)
+        drawable = DrawableCompat.wrap(drawable!!)
+        DrawableCompat.setTint(drawable!!, tint)
         DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_IN)
         mTextEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
 

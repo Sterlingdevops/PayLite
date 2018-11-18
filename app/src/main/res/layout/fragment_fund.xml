@@ -312,12 +312,12 @@
         android:layout_height="32dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:contentDescription="@string/payment_methods"
+        android:contentDescription="@string/card"
         app:layout_constraintBottom_toBottomOf="@+id/card_text"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintStart_toStartOf="@+id/card_text"
         app:layout_constraintTop_toTopOf="@+id/card_text"
-        app:srcCompat="@drawable/payment_methods"/>
+        app:srcCompat="@drawable/icon_card"/>
 
     <CheckBox
         android:id="@+id/card_checkBox"
@@ -454,12 +454,12 @@
         android:layout_height="32dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:contentDescription="@string/payment_methods"
+        android:contentDescription="@string/bank"
         app:layout_constraintBottom_toBottomOf="@+id/bank_text"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintStart_toStartOf="@+id/bank_text"
         app:layout_constraintTop_toTopOf="@+id/bank_text"
-        app:srcCompat="@drawable/icon_cashout_bank"/>
+        app:srcCompat="@drawable/icon_bank"/>
 
     <CheckBox
         android:id="@+id/bank_checkBox"

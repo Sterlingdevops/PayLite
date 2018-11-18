@@ -10,6 +10,12 @@
         <attr name="label"/>
     </declare-styleable>
 
+    <declare-styleable name="TitleLabelIconView">
+        <attr name="drawable"/>
+        <attr name="title"/>
+        <attr name="label"/>
+    </declare-styleable>
+
     <declare-styleable name="LargeLabelEditText">
         <attr name="maxLength" format="integer"/>
         <attr name="android:inputType"/>
@@ -32,11 +38,6 @@
 
     <declare-styleable name="BottomNavigationBehavior_Params">
         <attr name="tabLayoutId" format="reference"/>
-    </declare-styleable>
-
-    <declare-styleable name="CustomTextInputLayout">
-        <attr name="helperText" format="string"/>
-        <attr name="helperTextColor" format="color|reference"/>
     </declare-styleable>
 
     <style name="HelperTextAppearance" parent="TextAppearance.Design.Error">

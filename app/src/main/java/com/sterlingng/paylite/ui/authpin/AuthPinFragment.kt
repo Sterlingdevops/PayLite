@@ -12,7 +12,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.payment.PaymentFragment
+import com.sterlingng.paylite.ui.fund.FundFragment
 import javax.inject.Inject
 
 class AuthPinFragment : BaseFragment(), AuthPinMvpView {
@@ -103,7 +103,7 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
                     hideKeyboard()
 
                     if (arguments?.getBoolean(OPEN_FRAGMENT)!!)
-                        (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
+                        (baseActivity as DashboardActivity).mNavController.pushFragment(FundFragment.newInstance())
                 } else {
                     show("The PINs you entered do not match", true)
                 }

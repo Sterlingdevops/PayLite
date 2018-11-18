@@ -2,6 +2,7 @@ package com.sterlingng.paylite.ui.send
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -19,8 +20,8 @@ import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.utils.RecyclerViewLongClickListener
-import com.sterlingng.paylite.utils.then
 import com.sterlingng.views.NoScrollingLinearLayoutManager
+import com.sterlingng.views.TitleLabelIconView
 import javax.inject.Inject
 
 class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClickListener {
@@ -30,17 +31,10 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClic
 
     private lateinit var exit: ImageView
 
-    private lateinit var mNewPaymentTextView: TextView
-    private lateinit var mNewPaymentRefTextView: TextView
-
-    private lateinit var mScheduledTextView: TextView
-    private lateinit var mScheduledRefTextView: TextView
-
-    private lateinit var mSeeAllTextView: TextView
-    private lateinit var mSeeAllImageView: ImageView
-
-    private lateinit var mBankTransferTextView: TextView
-    private lateinit var mBankTransferRefTextView: TextView
+    private lateinit var mScheduledRefView: TitleLabelIconView
+    private lateinit var mBankTransferTextView: CardView
+    private lateinit var mNewPaymentTextView: CardView
+    private lateinit var mScheduledTextView: CardView
 
     private lateinit var mContactsAdapter: ContactsAdapter
     private lateinit var mContactsRecyclerView: RecyclerView
@@ -82,29 +76,13 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClic
             (baseActivity as DashboardActivity).mNavController.pushFragment(NewPaymentFragment.newInstance())
         }
 
-        mNewPaymentRefTextView.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(NewPaymentFragment.newInstance())
-        }
-
         mBankTransferTextView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(BankTransferFragment.newInstance())
-        }
-
-        mBankTransferRefTextView.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(BankTransferFragment.newInstance())
-        }
-
-
-        mScheduledRefTextView.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
         }
 
         mScheduledTextView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(ScheduledFragment.newInstance())
         }
-
-        mSeeAllTextView.visibility = (mContactsAdapter.contacts.size == 0) then View.GONE ?: View.VISIBLE
-        mSeeAllImageView.visibility = (mContactsAdapter.contacts.size == 0) then View.GONE ?: View.VISIBLE
 
         mPresenter.loadCachedWallet()
         mPresenter.loadContacts()
@@ -113,18 +91,10 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClic
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
         mContactsRecyclerView = view.findViewById(R.id.recyclerView)
-
-        mSeeAllTextView = view.findViewById(R.id.see_all)
-        mSeeAllImageView = view.findViewById(R.id.see_all_image)
-
         mNewPaymentTextView = view.findViewById(R.id.new_payment)
-        mNewPaymentRefTextView = view.findViewById(R.id.new_payment_ref)
-
-        mScheduledTextView = view.findViewById(R.id.scheduled_payments)
-        mScheduledRefTextView = view.findViewById(R.id.scheduled_payments_ref)
-
+        mScheduledTextView = view.findViewById(R.id.schedule_payment)
+        mScheduledRefView = view.findViewById(R.id.schedule_payment_ref)
         mBankTransferTextView = view.findViewById(R.id.to_bank)
-        mBankTransferRefTextView = view.findViewById(R.id.to_bank_ref)
 
         mBalanceTextView = view.findViewById(R.id.balance)
     }
@@ -132,7 +102,7 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClic
     @SuppressLint("SetTextI18n")
     override fun initView(wallet: Wallet?, count: String) {
         mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet?.balance?.toFloat())
-        mScheduledRefTextView.text = "$count standing orders"
+        mScheduledRefView.label = "$count standing orders"
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

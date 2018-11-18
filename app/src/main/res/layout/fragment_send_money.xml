@@ -80,243 +80,103 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_end="56dp"/>
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/new_payment"
-        app:layout_constraintBottom_toBottomOf="@+id/new_payment_ref"
-        app:layout_constraintStart_toStartOf="@+id/new_payment"
-        app:layout_constraintTop_toTopOf="@+id/new_payment"
-        app:srcCompat="@drawable/send"/>
-
-    <TextView
+    <android.support.v7.widget.CardView
         android:id="@+id/new_payment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:paddingEnd="0dp"
-        android:paddingLeft="48dp"
-        android:paddingRight="0dp"
-        android:paddingStart="48dp"
-        android:text="@string/to_phone_or_email"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@id/backdrop"
-        tools:layout_editor_absoluteY="209dp"/>
-
-    <TextView
-        android:id="@+id/new_payment_ref"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_settings_item"
-        android:padding="8dp"
-        android:paddingEnd="0dp"
-        android:paddingLeft="48dp"
-        android:paddingRight="0dp"
-        android:paddingStart="48dp"
-        android:text="@string/send_money_to_contacts_on_your_phone"
-        android:textColor="@color/gray"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/new_payment"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:background="@color/transparent"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/new_payment"/>
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/backdrop">
 
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/new_payment_ref"
-        app:layout_constraintEnd_toEndOf="@+id/new_payment"
-        app:layout_constraintTop_toTopOf="@+id/new_payment"
-        app:srcCompat="@drawable/chevron_right"/>
+        <com.sterlingng.views.TitleLabelIconView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:drawable="@drawable/icon_send"
+            app:label="@string/send_money_to_contacts_on_your_phone"
+            app:title="@string/to_phone_or_email"/>
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/new_payment"
-        app:layout_constraintBottom_toBottomOf="@+id/scheduled_payments_ref"
-        app:layout_constraintStart_toStartOf="@+id/scheduled_payments"
-        app:layout_constraintTop_toTopOf="@+id/scheduled_payments"
-        app:srcCompat="@drawable/scheduled_payments"/>
+    </android.support.v7.widget.CardView>
 
-    <TextView
+
+    <android.support.v7.widget.CardView
         android:id="@+id/to_bank"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:padding="8dp"
-        android:paddingEnd="0dp"
-        android:paddingLeft="48dp"
-        android:paddingRight="0dp"
-        android:paddingStart="48dp"
-        android:text="@string/to_bank"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/transparent"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@id/new_payment_ref"
-        />
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/new_payment">
 
-    <TextView
-        android:id="@+id/to_bank_ref"
+        <com.sterlingng.views.TitleLabelIconView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:drawable="@drawable/icon_bank"
+            app:label="@string/send_money_to_bank_accounts"
+            app:title="@string/to_bank"/>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/schedule_payment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_settings_item"
-        android:padding="8dp"
-        android:paddingEnd="0dp"
-        android:paddingLeft="48dp"
-        android:paddingRight="0dp"
-        android:paddingStart="48dp"
-        android:text="@string/send_money_to_bank_accounts"
-        android:textColor="@color/gray"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/to_bank"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:background="@color/transparent"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/to_bank"/>
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/to_bank">
 
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/to_bank_ref"
-        app:layout_constraintEnd_toEndOf="@+id/to_bank"
-        app:layout_constraintTop_toTopOf="@+id/to_bank"
-        app:srcCompat="@drawable/chevron_right"/>
+        <com.sterlingng.views.TitleLabelIconView
+            android:id="@+id/schedule_payment_ref"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:drawable="@drawable/icon_scheduled"
+            app:label="@string/_2_standing_orders"
+            app:title="@string/scheduled_payments"/>
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/new_payment"
-        app:layout_constraintBottom_toBottomOf="@+id/to_bank_ref"
-        app:layout_constraintStart_toStartOf="@+id/to_bank"
-        app:layout_constraintTop_toTopOf="@+id/to_bank"
-        app:srcCompat="@drawable/icon_cashout_bank"/>
+    </android.support.v7.widget.CardView>
 
     <TextView
-        android:id="@+id/scheduled_payments"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:paddingEnd="0dp"
-        android:paddingLeft="48dp"
-        android:paddingRight="0dp"
-        android:paddingStart="48dp"
-        android:text="@string/scheduled_payments"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@id/to_bank_ref"
-        tools:layout_editor_absoluteY="248dp"/>
-
-    <TextView
-        android:id="@+id/scheduled_payments_ref"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_settings_item"
-        android:padding="8dp"
-        android:paddingEnd="0dp"
-        android:paddingLeft="48dp"
-        android:paddingRight="0dp"
-        android:paddingStart="48dp"
-        android:text="@string/_2_standing_orders"
-        android:textColor="@color/gray"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/scheduled_payments"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/scheduled_payments"/>
-
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/scheduled_payments_ref"
-        app:layout_constraintEnd_toEndOf="@+id/scheduled_payments"
-        app:layout_constraintTop_toTopOf="@+id/scheduled_payments"
-        app:srcCompat="@drawable/chevron_right"/>
-
-    <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/textView26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/paylite_contacts"
-        android:textColor="@color/dark_gray"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@id/scheduled_payments_ref"/>
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/schedule_payment"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         android:scrollbars="none"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toStartOf="@+id/see_all"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView27"
-        tools:listitem="@layout/layout_contact_item"/>
-
-    <ImageView
-        android:id="@+id/see_all_image"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="48dp"
-        android:contentDescription="@string/phone"
-        android:src="@drawable/phone_book_2"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="@+id/see_all"
-        app:layout_constraintStart_toStartOf="@+id/see_all"
-        app:layout_constraintTop_toTopOf="@+id/recyclerView"/>
-
-    <TextView
-        android:id="@+id/see_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/see_all"
-        android:textAlignment="center"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintTop_toBottomOf="@+id/see_all_image"/>
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
+        tools:listitem="@layout/layout_contact_item"/>
 
     <TextView
         android:id="@+id/textView31"
