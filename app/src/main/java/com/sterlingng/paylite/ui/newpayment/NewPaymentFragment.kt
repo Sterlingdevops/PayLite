@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -28,6 +29,7 @@ import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
 import com.sterlingng.paylite.utils.isValidEmail
 import java.util.regex.Pattern
 import javax.inject.Inject
+
 
 class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
 
@@ -114,6 +116,10 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
                         .pushFragment(NewPaymentAmountFragment.newInstance(request))
             }
         }
+
+        val drawable = ContextCompat.getDrawable(baseActivity, R.drawable.icon_phone_book)
+        drawable?.setBounds(0, 0, (drawable.intrinsicWidth * 0.7).toInt(), (drawable.intrinsicHeight * 0.7).toInt())
+        mPhoneEmailEditText.setCompoundDrawables(null, null, drawable, null)
 
         mPhoneEmailEditText.setOnTouchListener { _, event ->
 

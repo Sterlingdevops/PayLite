@@ -53,8 +53,6 @@
             android:layout_width="0dp"
             android:layout_height="53dp"
             android:background="@drawable/background_light_down_blue_outline"
-            android:drawableEnd="@drawable/phone_book"
-            android:drawableRight="@drawable/phone_book"
             android:drawablePadding="8dp"
             android:hint="@string/choose_contact"
             android:importantForAutofill="no"

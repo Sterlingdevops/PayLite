@@ -195,7 +195,6 @@
         android:layout_marginTop="8dp"
         android:imeOptions="actionNext"
         android:inputType="number"
-        app:drawable="@drawable/phone_book"
         app:hint="@string/_9075755888"
         app:label="@string/ng_234"
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"

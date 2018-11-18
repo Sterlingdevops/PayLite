@@ -221,8 +221,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/background_light_blue_outline"
-                android:drawableEnd="@drawable/phone_book"
-                android:drawableRight="@drawable/phone_book"
                 android:hint="@string/phone_number"
                 android:inputType="phone"
                 android:padding="16dp"

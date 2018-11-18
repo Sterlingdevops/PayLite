@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.NestedScrollView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -103,6 +104,9 @@ class GetCashFragment : BaseFragment(), GetCashMvpView {
             mSelfNestedScrollView.visibility = View.GONE
         }
 
+        val drawable = ContextCompat.getDrawable(baseActivity, R.drawable.icon_phone_book)
+        drawable?.setBounds(0, 0, (drawable.intrinsicWidth * 0.7).toInt(), (drawable.intrinsicHeight * 0.7).toInt())
+        mOtherPhoneTextView.setCompoundDrawables(null, null, drawable, null)
         mOtherPhoneTextView.setOnTouchListener { _, event ->
 
             if (event.action == MotionEvent.ACTION_UP) {

@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.ui.splitcontacts
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
@@ -95,6 +96,9 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
             chooseContactEditText.addTextChangedListener(contactNameTextWatcher)
             swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
 
+            val drawable = ContextCompat.getDrawable(mContext, R.drawable.icon_phone_book)
+            drawable?.setBounds(0, 0, (drawable.intrinsicWidth * 0.7).toInt(), (drawable.intrinsicHeight * 0.7).toInt())
+            chooseContactEditText.setCompoundDrawables(null, null, drawable, null)
             chooseContactEditText.setOnTouchListener { view, event ->
                 if (event.action == MotionEvent.ACTION_UP &&
                         event.rawX >= (chooseContactEditText.right - chooseContactEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {

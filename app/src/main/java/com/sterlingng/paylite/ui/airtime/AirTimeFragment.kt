@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -138,6 +139,9 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
             filterBottomSheetFragment.show(childFragmentManager, "filter")
         }
 
+        val drawable = ContextCompat.getDrawable(baseActivity, R.drawable.icon_phone_book)
+        drawable?.setBounds(0, 0, (drawable.intrinsicWidth * 0.7).toInt(), (drawable.intrinsicHeight * 0.7).toInt())
+        phone.mTextEditText.setCompoundDrawables(null, null, drawable, null)
         phone.mTextEditText.setOnTouchListener { _, event ->
 
             if (event.action == MotionEvent.ACTION_UP) {
@@ -186,8 +190,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_SELECT_CONTACT -> {
-                if (data != null)
-                    handleContactPickerResult(data.data)
+                data?.data?.let { handleContactPickerResult(it) }
             }
         }
     }
