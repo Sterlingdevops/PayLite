@@ -10,7 +10,7 @@
         android:id="@+id/service_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_bold"
+        android:fontFamily="@font/open_sans"
         android:text="@string/airtime_and_data"
         android:textColor="@color/dark_blue_grey"
         android:textSize="16sp"
@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/service_image"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:contentDescription="@string/services"
         android:src="@drawable/icon_airtime_data"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"

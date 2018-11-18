@@ -22,7 +22,6 @@ class ServicesAdapter(private val mContext: Context) : RecyclerView.Adapter<Base
     val services: ArrayList<VAService> = ArrayList()
     private var recycledViewPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool()
     lateinit var serviceItemClickedListener: ServiceItemClickedListener
-    private var snapHelper: SnapHelper = GravitySnapHelper(Gravity.START)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View?
@@ -106,6 +105,7 @@ class ServicesAdapter(private val mContext: Context) : RecyclerView.Adapter<Base
         private var serviceName: TextView = itemView.findViewById(R.id.service_name)
         private var serviceImage: ImageView = itemView.findViewById(R.id.service_image)
         private var recyclerView: RecyclerView = itemView.findViewById(R.id.recyclerView)
+        private var snapHelper: SnapHelper = GravitySnapHelper(Gravity.START)
 
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)

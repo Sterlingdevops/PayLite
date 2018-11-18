@@ -49,7 +49,7 @@ class ServicesFragment : BaseFragment(), ServicesMvpView, ServiceItemClickedList
     }
 
     override fun onServicesLoaded(services: ArrayList<VAService>) {
-        servicesAdapter.add(services)
+        services.sortedByDescending { it.name }.forEach { servicesAdapter.add(it) }
     }
 
     override fun logout() {

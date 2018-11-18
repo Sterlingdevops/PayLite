@@ -38,8 +38,8 @@
         android:id="@+id/exit"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:clickable="true"
         android:contentDescription="@string/exit"
         android:focusable="true"
@@ -84,16 +84,27 @@
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintTop_toTopOf="@+id/self"/>
 
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:contentDescription="@string/payment_methods"
+        app:layout_constraintBottom_toBottomOf="@+id/self"
+        app:layout_constraintStart_toStartOf="@+id/self"
+        app:layout_constraintTop_toTopOf="@+id/self"
+        app:srcCompat="@drawable/icon_request_money"/>
+
     <TextView
         android:id="@+id/self"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:padding="16dp"
+        android:paddingStart="56dp"
+        android:paddingLeft="56dp"
         android:paddingEnd="0dp"
-        android:paddingLeft="16dp"
         android:paddingRight="0dp"
-        android:paddingStart="16dp"
         android:text="@string/self"
         android:textColor="@color/black_effective"
         android:textSize="16sp"
@@ -107,8 +118,8 @@
         android:id="@+id/view10"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginLeft="32dp"
         android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:background="@color/denim_light"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,15 +136,26 @@
         app:layout_constraintEnd_toEndOf="@+id/others"
         app:layout_constraintTop_toTopOf="@+id/others"/>
 
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:contentDescription="@string/payment_methods"
+        app:layout_constraintBottom_toBottomOf="@+id/others"
+        app:layout_constraintStart_toStartOf="@+id/others"
+        app:layout_constraintTop_toTopOf="@+id/others"
+        app:srcCompat="@drawable/icon_get_cash_others"/>
+
     <TextView
         android:id="@+id/others"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:paddingStart="56dp"
+        android:paddingLeft="56dp"
         android:paddingEnd="0dp"
-        android:paddingLeft="16dp"
         android:paddingRight="0dp"
-        android:paddingStart="16dp"
         android:text="@string/others"
         android:textColor="@color/black_effective"
         android:textSize="16sp"
@@ -158,11 +180,11 @@
         android:id="@+id/next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"
@@ -181,9 +203,9 @@
         android:id="@+id/others_scrollview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:visibility="visible"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -210,6 +232,20 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <EditText
+                android:id="@+id/name_other"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/name"
+                android:inputType="text"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phone_other"/>
+
+            <EditText
                 android:id="@+id/amount_other"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -221,7 +257,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phone_other"/>
+                app:layout_constraintTop_toBottomOf="@id/name_other"/>
 
             <EditText
                 android:id="@+id/password_other"
@@ -229,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/background_light_blue_outline"
-                android:hint="@string/_4_digit_pin"
+                android:hint="@string/password"
                 android:inputType="phone"
                 android:maxLength="4"
                 android:padding="16dp"
@@ -239,6 +275,21 @@
                 app:layout_constraintTop_toBottomOf="@id/amount_other"
                 tools:ignore="TextFields"/>
 
+            <EditText
+                android:id="@+id/reference_other"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/reference"
+                android:inputType="text"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/password_other"
+                tools:ignore="TextFields"/>
+
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -246,9 +297,9 @@
         android:id="@+id/self_scrollview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -278,7 +329,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/background_light_blue_outline"
-                android:hint="@string/_4_digit_pin"
+                android:hint="@string/password"
                 android:inputType="phone"
                 android:maxLength="4"
                 android:padding="16dp"
@@ -286,6 +337,21 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/amount"
+                tools:ignore="TextFields"/>
+
+            <EditText
+                android:id="@+id/reference"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_light_blue_outline"
+                android:hint="@string/reference"
+                android:inputType="text"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/password"
                 tools:ignore="TextFields"/>
 
         </android.support.constraint.ConstraintLayout>

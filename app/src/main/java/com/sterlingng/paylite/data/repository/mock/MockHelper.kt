@@ -17,9 +17,27 @@ internal constructor() : MockerInterface {
         airtimeProviders += VasProvider("Glo", R.drawable.icon_glo)
         airtimeProviders += VasProvider("9mobile", R.drawable.icon_9_mobile)
         vas += VAService("Airtime & mobile data ", R.drawable.icon_airtime_data, airtimeProviders)
-//        vas += VAService("Internet Bill", R.drawable.icon_internet)
-//        vas += VAService("Utility Bill", R.drawable.icon_utilities)
-//        vas += VAService("Tv Bills", R.drawable.icon_tv)
+
+        val internetProviders = ArrayList<VasProvider>()
+        internetProviders += VasProvider("Airtel", R.drawable.icon_airtel)
+        internetProviders += VasProvider("MTN", R.drawable.icon_mtn)
+        internetProviders += VasProvider("Glo", R.drawable.icon_glo)
+        internetProviders += VasProvider("9mobile", R.drawable.icon_9_mobile)
+        vas += VAService("Internet Bill", R.drawable.icon_internet, internetProviders)
+
+        val utilityProviders = ArrayList<VasProvider>()
+        utilityProviders += VasProvider("Airtel", R.drawable.icon_airtel)
+        utilityProviders += VasProvider("MTN", R.drawable.icon_mtn)
+        utilityProviders += VasProvider("Glo", R.drawable.icon_glo)
+        utilityProviders += VasProvider("9mobile", R.drawable.icon_9_mobile)
+        vas += VAService("Utility Bill", R.drawable.icon_utilities, utilityProviders)
+
+        val tvProviders = ArrayList<VasProvider>()
+        tvProviders += VasProvider("Airtel", R.drawable.icon_airtel)
+        tvProviders += VasProvider("MTN", R.drawable.icon_mtn)
+        tvProviders += VasProvider("Glo", R.drawable.icon_glo)
+        tvProviders += VasProvider("9mobile", R.drawable.icon_9_mobile)
+        vas += VAService("Tv Bills", R.drawable.icon_tv, tvProviders)
         return vas
     }
 
