@@ -88,10 +88,8 @@ class MenuItemsAdapter(val mContext: Context, val type: Mode) : RecyclerView.Ada
     }
 
     inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
-
         private val titleTextView: TextView = itemView.findViewById(R.id.title)
         private val iconImageView: ImageView = itemView.findViewById(R.id.icon)
-        private val subTitleTextView: TextView = itemView.findViewById(R.id.sub_title)
 
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
@@ -105,7 +103,6 @@ class MenuItemsAdapter(val mContext: Context, val type: Mode) : RecyclerView.Ada
 
             with(items[adapterPosition]) {
                 titleTextView.text = title
-                subTitleTextView.text = subTitle
                 iconImageView.setImageDrawable(ContextCompat.getDrawable(mContext, icon))
             }
             itemView.setOnClickListener {

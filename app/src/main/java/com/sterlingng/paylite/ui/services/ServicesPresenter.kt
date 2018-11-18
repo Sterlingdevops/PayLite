@@ -9,4 +9,9 @@ import javax.inject.Inject
 class ServicesPresenter<V : ServicesMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ServicesMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ServicesMvpContract<V> {
+
+    override fun loadServices() {
+        mvpView.onServicesLoaded(dataManager.mockVAS())
+    }
+}

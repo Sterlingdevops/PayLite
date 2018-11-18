@@ -9,3 +9,7 @@ interface RecyclerViewClickListener {
 interface RecyclerViewLongClickListener {
     fun recyclerViewItemLongClicked(v: View, position: Int)
 }
+
+interface ServiceItemClickedListener {
+    fun serviceItemClicked(v: View, sectionIndex: Int, position: Int)
+}

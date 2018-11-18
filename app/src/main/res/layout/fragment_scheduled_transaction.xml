@@ -190,7 +190,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/background_settings_item"
                 app:label="2"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineRight2"
                 app:layout_constraintStart_toStartOf="@+id/guidelineLeft2"
                 app:layout_constraintTop_toBottomOf="@+id/textView6"
                 app:title="@string/payment_info"/>
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_settings_item"
                 app:label="@string/weekly_on_thursdays"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineRight2"
                 app:layout_constraintStart_toStartOf="@+id/guidelineLeft2"
                 app:layout_constraintTop_toBottomOf="@+id/payment_info"
                 app:title="@string/repeats"/>

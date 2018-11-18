@@ -1,24 +1,35 @@
 package com.sterlingng.paylite.data.repository.mock
 
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.MenuItem
-import com.sterlingng.paylite.data.model.Notification
-import com.sterlingng.paylite.data.model.PaymentCategory
+import com.sterlingng.paylite.data.model.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 class MockHelper @Inject
 internal constructor() : MockerInterface {
+    override fun mockVAS(): ArrayList<VAService> {
+        val vas = ArrayList<VAService>()
+
+        val airtimeProviders = ArrayList<VasProvider>()
+        airtimeProviders += VasProvider("Airtel", R.drawable.icon_airtel)
+        airtimeProviders += VasProvider("MTN", R.drawable.icon_mtn)
+        airtimeProviders += VasProvider("Glo", R.drawable.icon_glo)
+        airtimeProviders += VasProvider("9mobile", R.drawable.icon_9_mobile)
+        vas += VAService("Airtime & mobile data ", R.drawable.icon_airtime_data, airtimeProviders)
+//        vas += VAService("Internet Bill", R.drawable.icon_internet)
+//        vas += VAService("Utility Bill", R.drawable.icon_utilities)
+//        vas += VAService("Tv Bills", R.drawable.icon_tv)
+        return vas
+    }
 
     override fun mockMenuItems(): ArrayList<MenuItem> {
         val items = ArrayList<MenuItem>()
-        items += MenuItem(R.drawable.icon_send_money, "Send Money", "")
-        items += MenuItem(R.drawable.icon_request_money, "Request Money", "")
-        items += MenuItem(R.drawable.icon_get_cash, "Get Cash", "")
-        items += MenuItem(R.drawable.icon_split_cost, "Split Cost", "")
-        items += MenuItem(R.drawable.icon_scheduled, "Scheduled Payments", "Send Money")
-//        items += MenuItem(R.drawable.icon_services_color, "Services", "Send Money")
+        items += MenuItem(R.drawable.icon_send_money, "Send Money")
+        items += MenuItem(R.drawable.icon_request_money, "Request Money")
+        items += MenuItem(R.drawable.icon_get_cash, "Get Cash")
+        items += MenuItem(R.drawable.icon_split_cost, "Split Cost")
+        items += MenuItem(R.drawable.icon_scheduled, "Scheduled Payments")
         return items
     }
 
