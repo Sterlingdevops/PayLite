@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.User
@@ -22,6 +23,7 @@ class MainActivity : BaseActivity(), MainMvpView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
         activityComponent.inject(this)
         mPresenter.onAttach(this)

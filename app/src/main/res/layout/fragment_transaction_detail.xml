@@ -198,7 +198,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/background_settings_item"
         app:label="2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/history_title"
         app:title="@string/number_of_transactions"/>
@@ -209,7 +209,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_settings_item"
         app:label="₦1000"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/count"
         app:title="@string/total_sent"/>
@@ -220,7 +220,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_settings_item"
         app:label="₦1000"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/sent"

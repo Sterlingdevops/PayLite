@@ -328,4 +328,7 @@
     <string name="pay_domestic_staff">Pay domestic staff, recurrent servcies etc.</string>
     <string name="value_added_services">Value added Services</string>
     <string name="mtn">MTN</string>
+    <string name="gopay">GoPay</string>
+    <string name="anywhere_anytime">anywhere, anytime</string>
+    <string name="create_an_account">Create an account</string>
 </resources>
