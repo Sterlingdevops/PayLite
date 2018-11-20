@@ -56,18 +56,18 @@ android {
         ktlint
     }
 
-//    splits {
-//        abi {
-//            enable true
-//            reset()
-//            include 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
-//        }
-//    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
+        }
+    }
 }
 
 dependencies {
     implementation "com.android.support:support-v4:$rootProject.supportVersion"
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-v4:28.0.0'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'org.mockito:mockito-all:1.10.19'
@@ -88,6 +88,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-accessibility:3.0.2'
     androidTestImplementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
     implementation project(':pinview')
+    implementation project(':numberkeyboard')
     implementation project(':editcredit')
     implementation project(':currencyedittext')
     implementation project(':expandabletextview')
@@ -142,6 +143,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.8'
+    def appCenterSdkVersion = '1.10.0'
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 }
 /*
 Resolves dependency versions across test and production APKs, specifically, transitive

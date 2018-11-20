@@ -174,7 +174,7 @@ constructor() : LocalDataInterface {
                     .findAll().map { it.asBank() }
             cards.forEach { it.default = false }
             banks.forEach { it.default = it.accountnumber == bank.accountnumber }
-            val items = getRealm().copyToRealmOrUpdate(banks.map { it.asBankRealm() })
+            getRealm().copyToRealmOrUpdate(banks.map { it.asBankRealm() })
         } catch (e: IllegalArgumentException) {
             Log.e(e, "LocalDataHelper->setBankDefault")
         } finally {

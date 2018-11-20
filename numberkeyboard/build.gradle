@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+
+ext.versionMajor = 2 // API Changes, adding big new feature, redesign the App
+ext.versionMinor = 0 // New features in a backwards-compatible manner
+ext.versionPatch = 1 // Backwards-compatible bug fixes
+ext.versionClassifier = null // Pre-releases (alpha, beta, rc, SNAPSHOT...)
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode generateVersionCode()
+        versionName generateVersionName()
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    api 'com.android.support.constraint:constraint-layout:1.1.3'
+}
+
+/**
+ * Build number (currently not available in JitPack).
+ */
+private static Integer getBuildNumber() {
+    return System.getenv()["buildNumber"] as Integer ?: 0
+}
+
+/**
+ * Version code: MMMmmppbbb
+ */
+private Integer generateVersionCode() {
+    Integer versionCode = ext.versionMajor * 10000000 +
+            ext.versionMinor * 100000 +
+            ext.versionPatch * 1000 +
+            (getBuildNumber() % 1000)
+    println "Version code: " + versionCode
+    return versionCode
+}
+
+/**
+ * Version name: <major>.<minor>.<patch>
+ */
+private String generateVersionName() {
+    String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
+    if (ext.versionClassifier != null) {
+        versionName += "-" + ext.versionClassifier
+    }
+    println "Version name: " + versionName
+    return versionName
+}

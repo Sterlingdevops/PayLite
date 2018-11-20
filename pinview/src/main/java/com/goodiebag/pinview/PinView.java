@@ -23,18 +23,17 @@ package com.goodiebag.pinview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
+import android.os.Handler;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.text.method.TransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -65,9 +64,8 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
     private final float DENSITY = getContext().getResources().getDisplayMetrics().density;
     OnClickListener mClickListener;
     View currentFocus = null;
-    View ripple = null;
     InputFilter filters[] = new InputFilter[1];
-    LinearLayout.LayoutParams params;
+    LayoutParams params;
     /**
      * Attributes
      */
@@ -126,7 +124,6 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
             for (EditText editText : editTextList) {
                 if (editText.length() == 0) {
                     editText.requestFocus();
-                    openKeyboard();
                     focused = true;
                     break;
                 }
@@ -139,17 +136,9 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
             }
         });
         // Bring up the keyboard
-        final View firstEditText = editTextList.get(0);
-        if (firstEditText != null)
-            firstEditText.postDelayed(this::openKeyboard, 200);
+//        final View firstEditText = editTextList.get(0);
+//        if (firstEditText != null) firstEditText.postDelayed(this::openKeyboard, 200);
         updateEnabledState();
-
-        //Custom
-        ripple = new View(context);
-        ripple.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.background_round_pin_view));
-        ripple.setX(firstEditText.getX());
-        ripple.setY(firstEditText.getY());
-        ripple.setLayoutParams(params);
     }
 
     /**
@@ -225,7 +214,8 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
         styleEditText.setBackgroundResource(mPinBackground);
         styleEditText.setPadding(0, 0, 0, 0);
         styleEditText.setTag(tag);
-        styleEditText.setInputType(getKeyboardInputType());
+        styleEditText.setInputType(android.text.InputType.TYPE_NULL);
+        styleEditText.setTextIsSelectable(true);
         styleEditText.addTextChangedListener(this);
         styleEditText.setOnFocusChangeListener(this);
         styleEditText.setOnKeyListener(this);
@@ -308,18 +298,18 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
         if (currentEditText != null) {
             currentEditText.requestFocus();
         }
-        openKeyboard();
+//        openKeyboard();
         return currentEditText;
     }
 
-    private void openKeyboard() {
-        if (mForceKeyboard) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (inputMethodManager != null) {
-                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-            }
-        }
-    }
+//    private void openKeyboard() {
+//        if (mForceKeyboard) {
+//            InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//            if (inputMethodManager != null) {
+//                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+//            }
+//        }
+//    }
 
     /**
      * Clears the values in the Pinview
@@ -365,7 +355,7 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
         if (mPassword) {
             for (EditText editText : editTextList) {
                 editText.removeTextChangedListener(this);
-                editText.setTransformationMethod(new PinTransformationMethod());
+                editText.setTransformationMethod(new CustomPasswordTransformationMethod());
                 editText.addTextChangedListener(this);
             }
         } else {
@@ -393,12 +383,19 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
      */
     @Override
     public void onTextChanged(CharSequence charSequence, int start, int i1, int count) {
+        appendText(charSequence);
+    }
+
+    public void append(String text) {
+        editTextList.get(getIndexOfCurrentFocus()).append(text);
+    }
+
+    public void appendText(CharSequence charSequence) {
         if (charSequence.length() == 1 && currentFocus != null) {
             final int currentTag = getIndexOfCurrentFocus();
             if (currentTag < mPinLength - 1) {
                 long delay = 1;
-                if (mPassword)
-                    delay = 25;
+                if (mPassword) delay = 25;
                 this.postDelayed(() -> {
                     if (mSwapBackground) {
                         EditText currentEditText = editTextList.get(currentTag);
@@ -463,38 +460,40 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
      */
     @Override
     public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
         if ((keyEvent.getAction() == KeyEvent.ACTION_UP) && (i == KeyEvent.KEYCODE_DEL)) {
-            // Perform action on Del press
-            int currentTag = getIndexOfCurrentFocus();
-            //Last tile of the number pad. Clear the edit text without changing the focus.
-            if (inputType == InputType.NUMBER && currentTag == mPinLength - 1 && finalNumberPin ||
-                    (mPassword && currentTag == mPinLength - 1 && finalNumberPin)) {
-                if (editTextList.get(currentTag).length() > 0) {
-                    editTextList.get(currentTag).setText("");
-                }
-                finalNumberPin = false;
-            } else if (currentTag > 0) {
-                mDelPressed = true;
-                if (editTextList.get(currentTag).length() == 0) {
-                    //Takes it back one tile
-                    editTextList.get(currentTag - 1).requestFocus();
-                    //Clears the tile it just got to
-                    editTextList.get(currentTag).setText("");
-                } else {
-                    //If it has some content clear it first
-                    editTextList.get(currentTag).setText("");
-                }
-            } else {
-                //For the first cell
-                if (editTextList.get(currentTag).getText().length() > 0)
-                    editTextList.get(currentTag).setText("");
-            }
-            editTextList.get(currentTag).setBackgroundResource(mPinBackground);
+            backSpaceClicked();
             return true;
         }
-
         return false;
+    }
+
+    public void backSpaceClicked() {
+        // Perform action on Del press
+        int currentTag = getIndexOfCurrentFocus();
+        //Last tile of the number pad. Clear the edit text without changing the focus.
+        if (inputType == InputType.NUMBER && currentTag == mPinLength - 1 && finalNumberPin ||
+                (mPassword && currentTag == mPinLength - 1 && finalNumberPin)) {
+            if (editTextList.get(currentTag).length() > 0) {
+                editTextList.get(currentTag).setText("");
+            }
+            finalNumberPin = false;
+        } else if (currentTag > 0) {
+            mDelPressed = true;
+            if (editTextList.get(currentTag).length() == 0) {
+                //Takes it back one tile
+                editTextList.get(currentTag - 1).requestFocus();
+                //Clears the tile it just got to
+                editTextList.get(currentTag).setText("");
+            } else {
+                //If it has some content clear it first
+                editTextList.get(currentTag).setText("");
+            }
+        } else {
+            //For the first cell
+            if (editTextList.get(currentTag).getText().length() > 0)
+                editTextList.get(currentTag).setText("");
+        }
+        editTextList.get(currentTag).setBackgroundResource(mPinBackground);
     }
 
     /**
@@ -618,43 +617,69 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
     /**
      * A class to implement the transformation mechanism
      */
-    private class PinTransformationMethod implements TransformationMethod {
+    public class CustomPasswordTransformationMethod extends PasswordTransformationMethod {
+
+        PasswordCharSequence passwordCharSequence;
+        View view;
+        Handler handler;
+        Runnable runnable;
 
         private char BULLET = '\u2022';
         private char SPACE = ' ';
+        private int timeBeforeMask = 100;
 
         @Override
-        public CharSequence getTransformation(CharSequence source, final View view) {
-            return new PasswordCharSequence(source);
+        public CharSequence getTransformation(CharSequence source, View view) {
+            passwordCharSequence = new PasswordCharSequence(source);
+            handler = new Handler();
+            this.view = view;
+            return passwordCharSequence;
         }
 
         @Override
-        public void onFocusChanged(final View view, final CharSequence sourceText, final boolean focused, final int direction, final Rect previouslyFocusedRect) {
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            super.onTextChanged(s, start, before, count);
+            if (before <= 0) {
+                passwordCharSequence.showLast = true;
+                handler.removeCallbacks(runnable);
 
+                runnable = () -> {
+                    passwordCharSequence.showLast = false;
+                    view.requestLayout();
+                };
+
+                handler.postDelayed(runnable, timeBeforeMask);
+            } else {
+                handler.removeCallbacks(runnable);
+
+                passwordCharSequence.showLast = false;
+                view.requestLayout();
+            }
         }
 
         private class PasswordCharSequence implements CharSequence {
-            private final CharSequence source;
+            boolean showLast = true;
+            private CharSequence mSource;
 
-            PasswordCharSequence(@NonNull CharSequence source) {
-                this.source = source;
+            PasswordCharSequence(CharSequence source) {
+                mSource = source;
             }
 
-            @Override
-            public int length() {
-                return source.length();
-            }
-
-            @Override
             public char charAt(int index) {
-                return mSwapBackground ? SPACE : BULLET;
+                //This is the check which makes sure the last character is shown
+                if (index != mSource.length() - 1)
+                    return mSwapBackground ? SPACE : BULLET;
+                else if (showLast) return mSource.charAt(index);
+                else return mSwapBackground ? SPACE : BULLET;
             }
 
-            @Override
+            public int length() {
+                return mSource.length();
+            }
+
             public CharSequence subSequence(int start, int end) {
-                return new PasswordCharSequence(this.source.subSequence(start, end));
+                return mSource.subSequence(start, end); // Return default
             }
-
         }
     }
 }
