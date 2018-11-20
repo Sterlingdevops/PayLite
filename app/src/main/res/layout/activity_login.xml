@@ -2,71 +2,70 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:keyboard="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MainActivity">
+    tools:context=".ui.login.LogInActivity">
 
     <ImageView
         android:id="@+id/backdrop"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/backdrop"
-        android:scaleType="fitXY"
+        android:scaleType="fitStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/bg_splash"/>
+        app:srcCompat="@color/white"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="28dp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_bank"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
     <TextView
-        android:id="@+id/pay_text"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/pay"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="@string/gopay"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/white"
-        android:textSize="36sp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/lite_text"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/backdrop"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
-
-    <TextView
-        android:id="@+id/lite_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/lite"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/white"
+        android:textColor="@color/denim"
         android:textSize="36sp"
         android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/pay_text"
-        app:layout_constraintTop_toTopOf="@+id/pay_text"/>
-
-    <TextView
-        android:id="@+id/easy_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/payments_but_simpler"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/lite_text"
-        app:layout_constraintStart_toStartOf="@+id/pay_text"
-        app:layout_constraintTop_toBottomOf="@+id/pay_text"/>
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/backdrop"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineLeft"
@@ -87,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="64dp"/>
+        app:layout_constraintGuide_begin="16dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineBottom"
@@ -97,35 +96,36 @@
         app:layout_constraintGuide_end="64dp"/>
 
     <TextView
+        android:id="@+id/textView27"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/enter_your_pin"
-        android:textColor="@color/white"
+        android:textColor="@color/denim"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/pin_view"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"/>
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
 
     <com.goodiebag.pinview.PinView
         android:id="@+id/pin_view"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:forceKeyboard="true"
+        android:layout_marginTop="8dp"
+        app:forceKeyboard="false"
         app:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView27"
         app:password="true"
         app:pinBackground="@drawable/background_blue_outline"
         app:pinHeight="16dp"
         app:pinLength="4"
-        app:pinTextBackground="@drawable/background_light_blue_outline"
+        app:pinTextBackground="@drawable/background_pin_view_text"
         app:pinWidth="16dp"
         app:swapBackground="true"/>
 
@@ -133,16 +133,31 @@
         android:id="@+id/forgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/forgot_password"
-        android:textColor="@color/white"
+        android:textColor="@color/denim"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/pin_view"/>
+
+    <com.davidmiguel.numberkeyboard.NumberKeyboard
+        android:id="@+id/numberKeyboard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="-1dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/forgot"
+        keyboard:keyboardType="integer"
+        keyboard:layout_constraintBottom_toBottomOf="parent"
+        keyboard:layout_constraintEnd_toEndOf="parent"
+        keyboard:layout_constraintStart_toStartOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -23,6 +23,7 @@ package com.goodiebag.pinview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -30,6 +31,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -355,7 +357,7 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
         if (mPassword) {
             for (EditText editText : editTextList) {
                 editText.removeTextChangedListener(this);
-                editText.setTransformationMethod(new CustomPasswordTransformationMethod());
+                editText.setTransformationMethod(mSwapBackground ? new PinTransformationMethod() : new CustomPasswordTransformationMethod());
                 editText.addTextChangedListener(this);
             }
         } else {
@@ -617,6 +619,47 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
     /**
      * A class to implement the transformation mechanism
      */
+
+    private class PinTransformationMethod implements TransformationMethod {
+
+        private char BULLET = '\u2022';
+        private char SPACE = ' ';
+
+        @Override
+        public CharSequence getTransformation(CharSequence source, final View view) {
+            return new PasswordCharSequence(source);
+        }
+
+        @Override
+        public void onFocusChanged(final View view, final CharSequence sourceText, final boolean focused, final int direction, final Rect previouslyFocusedRect) {
+
+        }
+
+        private class PasswordCharSequence implements CharSequence {
+            private final CharSequence source;
+
+            PasswordCharSequence(@NonNull CharSequence source) {
+                this.source = source;
+            }
+
+            @Override
+            public int length() {
+                return source.length();
+            }
+
+            @Override
+            public char charAt(int index) {
+                return mSwapBackground ? SPACE : BULLET;
+            }
+
+            @Override
+            public CharSequence subSequence(int start, int end) {
+                return new PasswordCharSequence(this.source.subSequence(start, end));
+            }
+
+        }
+    }
+
     public class CustomPasswordTransformationMethod extends PasswordTransformationMethod {
 
         PasswordCharSequence passwordCharSequence;

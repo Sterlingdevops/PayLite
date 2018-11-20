@@ -5,21 +5,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import com.davidmiguel.numberkeyboard.NumberKeyboard
+import com.davidmiguel.numberkeyboard.NumberKeyboardListener
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
 import com.sterlingng.paylite.utils.AppUtils.hasInternetConnection
+import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
-class LogInActivity : BaseActivity(), LogInMvpView {
+class LogInActivity : BaseActivity(), LogInMvpView, NumberKeyboardListener {
 
     @Inject
     lateinit var mPresenter: LogInMvpContract<LogInMvpView>
 
     private lateinit var mPinView: PinView
     private lateinit var mForgotPinTextView: TextView
+    private lateinit var mNumberKeyboard: NumberKeyboard
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +35,12 @@ class LogInActivity : BaseActivity(), LogInMvpView {
     override fun bindViews() {
         mPinView = findViewById(R.id.pin_view)
         mForgotPinTextView = findViewById(R.id.forgot)
+        mNumberKeyboard = findViewById(R.id.numberKeyboard)
     }
 
     override fun setUp() {
+        numberKeyboard.setListener(this)
+
         mPinView.setOnClickListener {
             mPinView.requestPinEntryFocus()
         }
@@ -52,6 +59,18 @@ class LogInActivity : BaseActivity(), LogInMvpView {
                 show("Internet connection required", true)
             }
         }
+    }
+
+    override fun onNumberClicked(number: Int) {
+        mPinView.append(number.toString())
+    }
+
+    override fun onLeftAuxButtonClicked() {
+
+    }
+
+    override fun onRightAuxButtonClicked() {
+        mPinView.backSpaceClicked()
     }
 
     override fun onUserNotRegistered() {
