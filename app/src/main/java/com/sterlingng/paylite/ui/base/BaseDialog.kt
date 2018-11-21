@@ -81,12 +81,11 @@ abstract class BaseDialog : AppCompatDialogFragment(), DialogMvpView {
         val dialog = Dialog(baseActivity)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(root)
-        if (dialog.window != null) {
-            dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.window.setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT)
+
         dialog.setCanceledOnTouchOutside(false)
 
         return dialog

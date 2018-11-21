@@ -8,7 +8,6 @@ import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
 import com.davidmiguel.numberkeyboard.NumberKeyboard
 import com.davidmiguel.numberkeyboard.NumberKeyboardListener
 import com.goodiebag.pinview.PinView
@@ -21,10 +20,9 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView, NumberKeyboardListener {
     @Inject
     lateinit var mPresenter: ConfirmMvpContract<ConfirmMvpView>
 
-    private lateinit var exit: ImageView
     private lateinit var mPinView: PinView
-    private lateinit var mNumberKeyboard: NumberKeyboard
     var onPinValidatedListener: OnPinValidated? = null
+    private lateinit var mNumberKeyboard: NumberKeyboard
 
     private val mBottomSheetBehaviorCallback =
             object : BottomSheetBehavior.BottomSheetCallback() {
@@ -60,6 +58,13 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView, NumberKeyboardListener {
 
         if (behavior != null && behavior is BottomSheetBehavior<*>) {
             behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
+
+            val displayMetrics = baseActivity.resources.displayMetrics
+            val height = displayMetrics.heightPixels
+
+            val maxHeight = (height * 0.88).toInt()
+            val mBehavior = BottomSheetBehavior.from(view.parent as View)
+            mBehavior.peekHeight = maxHeight
         }
 
         if (onPinValidatedListener == null) throw IllegalStateException("onPinValidatedListener not implemented")
@@ -69,17 +74,12 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView, NumberKeyboardListener {
     }
 
     override fun bindViews(view: View) {
-        exit = view.findViewById(R.id.exit)
         mPinView = view.findViewById(R.id.pin_view)
         mNumberKeyboard = view.findViewById(R.id.numberKeyboard)
     }
 
     override fun setUp(view: View) {
         mNumberKeyboard.setListener(this)
-
-        exit.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.clearDialogFragment()
-        }
 
         mPinView.requestPinEntryFocus()
         mPinView.setPinViewEventListener { _, _ ->

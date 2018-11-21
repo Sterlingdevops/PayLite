@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
+import com.davidmiguel.numberkeyboard.NumberKeyboard
+import com.davidmiguel.numberkeyboard.NumberKeyboardListener
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
@@ -13,15 +14,15 @@ import com.sterlingng.paylite.ui.signup.SignUpActivity
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import javax.inject.Inject
 
-class OtpFragment : BaseFragment(), OtpMvpView {
+class OtpFragment : BaseFragment(), OtpMvpView, NumberKeyboardListener {
 
     @Inject
     lateinit var mPresenter: OtpMvpContract<OtpMvpView>
 
+    private lateinit var mNumberKeyboard: NumberKeyboard
     lateinit var mDidClickNext: OnChildDidClickNext
     private lateinit var mPinView: PinView
     private lateinit var exit: ImageView
-    private lateinit var next: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_otp, container, false)
@@ -33,26 +34,18 @@ class OtpFragment : BaseFragment(), OtpMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
-        next = view.findViewById(R.id.next_otp)
         mPinView = view.findViewById(R.id.pin_view)
+        mNumberKeyboard = view.findViewById(R.id.numberKeyboard)
     }
 
     override fun setUp(view: View) {
+        mNumberKeyboard.setListener(this)
+
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }
 
         mPinView.setPinViewEventListener { _, _ ->
-            val data = HashMap<String, Any>()
-            with((baseActivity as SignUpActivity).signUpRequest) {
-                data["mobile"] = phoneNumber
-                data["Otp"] = mPinView.value
-            }
-            mPresenter.validateOtp(data)
-            hideKeyboard()
-        }
-
-        next.setOnClickListener {
             val data = HashMap<String, Any>()
             with((baseActivity as SignUpActivity).signUpRequest) {
                 data["mobile"] = phoneNumber
@@ -74,6 +67,18 @@ class OtpFragment : BaseFragment(), OtpMvpView {
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
 
+    }
+
+    override fun onNumberClicked(number: Int) {
+        mPinView.append(number.toString())
+    }
+
+    override fun onLeftAuxButtonClicked() {
+
+    }
+
+    override fun onRightAuxButtonClicked() {
+        mPinView.backSpaceClicked()
     }
 
     companion object {

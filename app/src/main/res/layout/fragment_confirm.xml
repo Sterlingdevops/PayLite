@@ -4,24 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:keyboard="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/lighter_gray">
-
-    <ImageView
-        android:id="@+id/exit"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:contentDescription="@string/exit"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:tint="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/close"/>
 
     <TextView
         android:id="@+id/textView4"
@@ -57,9 +41,9 @@
     <com.davidmiguel.numberkeyboard.NumberKeyboard
         android:id="@+id/numberKeyboard"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/pin_view"
@@ -85,12 +69,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="32dp"/>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guidelineBottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="56dp"/>
 
 </android.support.constraint.ConstraintLayout>
