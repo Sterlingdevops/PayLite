@@ -27,6 +27,7 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -396,14 +397,13 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
         if (charSequence.length() == 1 && currentFocus != null) {
             final int currentTag = getIndexOfCurrentFocus();
             if (currentTag < mPinLength - 1) {
+                if (mSwapBackground) {
+                    editTextList.get(currentTag).setBackground(ContextCompat.getDrawable(getContext(), mPinTextBackground));
+                }
+
                 long delay = 1;
                 if (mPassword) delay = 25;
                 this.postDelayed(() -> {
-                    if (mSwapBackground) {
-                        EditText currentEditText = editTextList.get(currentTag);
-                        currentEditText.setBackgroundResource(mPinTextBackground);
-                    }
-
                     EditText nextEditText = editTextList.get(currentTag + 1);
                     nextEditText.setEnabled(true);
                     nextEditText.requestFocus();
@@ -411,8 +411,7 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
             } else {
                 //Last Pin box has been reached.
                 if (mSwapBackground) {
-                    EditText currentEditText = editTextList.get(currentTag);
-                    currentEditText.setBackgroundResource(mPinTextBackground);
+                    editTextList.get(currentTag).setBackground(ContextCompat.getDrawable(getContext(), mPinTextBackground));
                 }
             }
             if (currentTag == mPinLength - 1 && inputType == InputType.NUMBER || currentTag == mPinLength - 1 && mPassword) {
@@ -477,6 +476,7 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
                 (mPassword && currentTag == mPinLength - 1 && finalNumberPin)) {
             if (editTextList.get(currentTag).length() > 0) {
                 editTextList.get(currentTag).setText("");
+                editTextList.get(currentTag).setBackground(ContextCompat.getDrawable(getContext(), mPinBackground));
             }
             finalNumberPin = false;
         } else if (currentTag > 0) {
@@ -486,16 +486,20 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
                 editTextList.get(currentTag - 1).requestFocus();
                 //Clears the tile it just got to
                 editTextList.get(currentTag).setText("");
+                editTextList.get(currentTag - 1).setBackground(ContextCompat.getDrawable(getContext(), mPinBackground));
             } else {
                 //If it has some content clear it first
                 editTextList.get(currentTag).setText("");
+                editTextList.get(currentTag - 1).setBackground(ContextCompat.getDrawable(getContext(), mPinBackground));
             }
         } else {
             //For the first cell
-            if (editTextList.get(currentTag).getText().length() > 0)
+            if (editTextList.get(currentTag).getText().length() > 0) {
                 editTextList.get(currentTag).setText("");
+                editTextList.get(currentTag).setBackground(ContextCompat.getDrawable(getContext(), mPinBackground));
+            }
         }
-        editTextList.get(currentTag).setBackgroundResource(mPinBackground);
+//        editTextList.get(currentTag).setBackground(ContextCompat.getDrawable(getContext(), mPinBackground));
     }
 
     /**
@@ -580,7 +584,7 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
     public void setPinBackgroundRes(@DrawableRes int res) {
         this.mPinBackground = res;
         for (EditText editText : editTextList)
-            editText.setBackgroundResource(res);
+            editText.setBackground(ContextCompat.getDrawable(getContext(), res));
     }
 
     @Override
@@ -656,7 +660,6 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
             public CharSequence subSequence(int start, int end) {
                 return new PasswordCharSequence(this.source.subSequence(start, end));
             }
-
         }
     }
 

@@ -41,10 +41,6 @@ class LogInActivity : BaseActivity(), LogInMvpView, NumberKeyboardListener {
     override fun setUp() {
         numberKeyboard.setListener(this)
 
-        mPinView.setOnClickListener {
-            mPinView.requestPinEntryFocus()
-        }
-
         mForgotPinTextView.setOnClickListener {
             startActivity(ForgotActivity.getStartIntent(this))
         }
