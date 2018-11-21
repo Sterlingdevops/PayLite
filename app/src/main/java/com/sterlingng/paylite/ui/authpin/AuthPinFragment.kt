@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.davidmiguel.numberkeyboard.NumberKeyboard
+import com.davidmiguel.numberkeyboard.NumberKeyboardListener
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.rx.EventBus
@@ -15,7 +16,7 @@ import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.fund.FundFragment
 import javax.inject.Inject
 
-class AuthPinFragment : BaseFragment(), AuthPinMvpView {
+class AuthPinFragment : BaseFragment(), AuthPinMvpView, NumberKeyboardListener {
 
     @Inject
     lateinit var mPresenter: AuthPinMvpContract<AuthPinMvpView>
@@ -23,11 +24,11 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
     @Inject
     lateinit var eventBus: EventBus
 
+    private lateinit var mNumberKeyboard: NumberKeyboard
     private lateinit var mSubTitleTextView: TextView
     private lateinit var mTitleTextView: TextView
     private lateinit var mPinView: PinView
     private lateinit var exit: ImageView
-    private lateinit var next: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_pin, container, false)
@@ -39,14 +40,15 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
-        next = view.findViewById(R.id.next)
         mPinView = view.findViewById(R.id.pin_view)
         mTitleTextView = view.findViewById(R.id.textView3)
         mSubTitleTextView = view.findViewById(R.id.textView2)
+        mNumberKeyboard = view.findViewById(R.id.numberKeyboard)
     }
 
     override fun setUp(view: View) {
         mPinView.requestPinEntryFocus()
+        mNumberKeyboard.setListener(this)
 
         val mode = OpenPinMode.valueOf(arguments?.getString(OPEN_PIN_MODE)!!)
         when (mode) {
@@ -74,10 +76,6 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
         }
 
         mPinView.setPinViewEventListener { _, _ ->
-            validate()
-        }
-
-        next.setOnClickListener {
             validate()
         }
     }
@@ -125,6 +123,18 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView {
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
 
+    }
+
+    override fun onNumberClicked(number: Int) {
+        mPinView.append(number.toString())
+    }
+
+    override fun onLeftAuxButtonClicked() {
+
+    }
+
+    override fun onRightAuxButtonClicked() {
+        mPinView.backSpaceClicked()
     }
 
     companion object {

@@ -13,7 +13,6 @@ import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
 import com.sterlingng.paylite.utils.AppUtils.hasInternetConnection
-import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class LogInActivity : BaseActivity(), LogInMvpView, NumberKeyboardListener {
@@ -39,7 +38,7 @@ class LogInActivity : BaseActivity(), LogInMvpView, NumberKeyboardListener {
     }
 
     override fun setUp() {
-        numberKeyboard.setListener(this)
+        mNumberKeyboard.setListener(this)
 
         mForgotPinTextView.setOnClickListener {
             startActivity(ForgotActivity.getStartIntent(this))

@@ -8,21 +8,22 @@ import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
+import com.davidmiguel.numberkeyboard.NumberKeyboard
+import com.davidmiguel.numberkeyboard.NumberKeyboardListener
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseDialog
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import javax.inject.Inject
 
-class ConfirmFragment : BaseDialog(), ConfirmMvpView {
+class ConfirmFragment : BaseDialog(), ConfirmMvpView, NumberKeyboardListener {
     @Inject
     lateinit var mPresenter: ConfirmMvpContract<ConfirmMvpView>
 
-    private lateinit var next: Button
     private lateinit var exit: ImageView
     private lateinit var mPinView: PinView
+    private lateinit var mNumberKeyboard: NumberKeyboard
     var onPinValidatedListener: OnPinValidated? = null
 
     private val mBottomSheetBehaviorCallback =
@@ -69,21 +70,19 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
-        next = view.findViewById(R.id.next)
         mPinView = view.findViewById(R.id.pin_view)
+        mNumberKeyboard = view.findViewById(R.id.numberKeyboard)
     }
 
     override fun setUp(view: View) {
+        mNumberKeyboard.setListener(this)
+
         exit.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.clearDialogFragment()
         }
 
         mPinView.requestPinEntryFocus()
         mPinView.setPinViewEventListener { _, _ ->
-            mPresenter.validatePin(mPinView.value)
-        }
-
-        next.setOnClickListener {
             mPresenter.validatePin(mPinView.value)
         }
     }
@@ -106,6 +105,18 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView {
 
     override fun show(message: String, useToast: Boolean) {
         baseActivity.show(message, useToast)
+    }
+
+    override fun onNumberClicked(number: Int) {
+        mPinView.append(number.toString())
+    }
+
+    override fun onLeftAuxButtonClicked() {
+
+    }
+
+    override fun onRightAuxButtonClicked() {
+        mPinView.backSpaceClicked()
     }
 
     companion object {

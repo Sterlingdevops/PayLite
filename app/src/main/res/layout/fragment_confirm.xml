@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:keyboard="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lighter_gray">
@@ -40,13 +40,12 @@
         android:id="@+id/pin_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:windowSoftInputMode="adjustPan"
+        android:layout_marginTop="64dp"
+        android:focusable="true"
         app:cursorVisible="true"
-        app:hint="0"
+        app:forceKeyboard="false"
         app:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:password="true"
@@ -55,26 +54,16 @@
         app:pinLength="4"
         app:pinWidth="48dp"/>
 
-    <Button
-        android:id="@+id/next"
+    <com.davidmiguel.numberkeyboard.NumberKeyboard
+        android:id="@+id/numberKeyboard"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="196dp"
-        android:background="@drawable/button"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:stateListAnimator="@null"
-        android:text="@string/_continue"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/pin_view"
-        app:layout_constraintVertical_bias="1.0"
-        tools:targetApi="lollipop"/>
+        keyboard:keyboardType="integer"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
@@ -88,14 +77,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"/>
+        app:layout_constraintGuide_begin="32dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp"/>
+        app:layout_constraintGuide_end="32dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineBottom"
