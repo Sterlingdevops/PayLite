@@ -103,6 +103,8 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
                     with(data as List<String>) {
                         signUpRequest.firstName = get(0)
                         signUpRequest.lastName = get(1)
+                        signUpRequest.dob  = get(2)
+                        signUpRequest.gender = get(3)
                     }
                 }
                 5 -> {

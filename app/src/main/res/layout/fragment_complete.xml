@@ -12,25 +12,63 @@
         android:layout_height="0dp"
         android:contentDescription="@string/account_setup_completed"
         android:scaleType="centerInside"
-        app:layout_constraintDimensionRatio="w,4:5"
+        app:layout_constraintDimensionRatio="w,3:6"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"
-        app:srcCompat="@drawable/icon_welcome"/>
+        app:srcCompat="@drawable/illustration_welcome_illo"/>
 
     <Button
-        android:id="@+id/next_complete"
+        android:id="@+id/fund_wallet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:stateListAnimator="@null"
-        android:text="@string/finish"
+        android:text="@string/fund_your_wallet"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/security_questions"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        tools:targetApi="lollipop"/>
+
+    <Button
+        android:id="@+id/security_questions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:stateListAnimator="@null"
+        android:text="@string/setup_security_questions"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/skip"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        tools:targetApi="lollipop"/>
+
+    <Button
+        android:id="@+id/skip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_light_rose"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:stateListAnimator="@null"
+        android:text="@string/skip"
+        android:textAllCaps="false"
+        android:textColor="@color/scarlet"
         app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,13 +80,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/welcome_to_paylite"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="@string/welcome_yinka"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="28sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/go_banking_on_the_move_anytime_anywhere"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_text"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
@@ -76,6 +127,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="60dp"/>
+        app:layout_constraintGuide_end="32dp"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -10,8 +10,8 @@
         android:id="@+id/exit"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:clickable="true"
         android:contentDescription="@string/exit"
@@ -77,14 +77,45 @@
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/first_name"/>
 
+    <EditText
+        android:id="@+id/dob"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_light_blue_outline"
+        android:editable="false"
+        android:hint="@string/dob"
+        android:inputType="none"
+        android:padding="16dp"
+        android:textColor="@color/blue_black_dark"
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/last_name"/>
+
+    <com.sterlingng.views.ClickToSelectEditText
+        android:id="@+id/gender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_light_blue_outline"
+        android:editable="false"
+        android:hint="@string/gender"
+        android:inputType="none"
+        android:padding="16dp"
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/dob"/>
+
     <Button
         android:id="@+id/next_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"

@@ -301,18 +301,8 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
         if (currentEditText != null) {
             currentEditText.requestFocus();
         }
-//        openKeyboard();
         return currentEditText;
     }
-
-//    private void openKeyboard() {
-//        if (mForceKeyboard) {
-//            InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//            if (inputMethodManager != null) {
-//                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-//            }
-//        }
-//    }
 
     /**
      * Clears the values in the Pinview

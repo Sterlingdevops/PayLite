@@ -47,7 +47,6 @@ class AuthPinFragment : BaseFragment(), AuthPinMvpView, NumberKeyboardListener {
     }
 
     override fun setUp(view: View) {
-        mPinView.requestPinEntryFocus()
         mNumberKeyboard.setListener(this)
 
         val mode = OpenPinMode.valueOf(arguments?.getString(OPEN_PIN_MODE)!!)

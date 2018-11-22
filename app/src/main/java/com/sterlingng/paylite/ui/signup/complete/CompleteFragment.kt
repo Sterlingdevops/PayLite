@@ -19,8 +19,10 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
     @Inject
     lateinit var mPresenter: CompleteMvpContract<CompleteMvpView>
 
-    private lateinit var next: Button
+    private lateinit var mSkipButton: Button
+    private lateinit var mFundWalletButton: Button
     private lateinit var mWelcomeTextView: TextView
+    private lateinit var mSecurityQuestionsButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_complete, container, false)
@@ -31,8 +33,10 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
     }
 
     override fun bindViews(view: View) {
-        next = view.findViewById(R.id.next_complete)
+        mSkipButton = view.findViewById(R.id.skip)
         mWelcomeTextView = view.findViewById(R.id.welcome_text)
+        mFundWalletButton = view.findViewById(R.id.fund_wallet)
+        mSecurityQuestionsButton = view.findViewById(R.id.security_questions)
     }
 
     override fun setWelcomeText() {
@@ -42,7 +46,7 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
     override fun setUp(view: View) {
         mPresenter.initView()
 
-        next.setOnClickListener {
+        mSkipButton.setOnClickListener {
             when (arguments?.getString(WELCOME_TEXT)) {
                 "Welcome back to Paylite" -> baseActivity.finish()
                 "Your login PIN has been changed" -> (baseActivity as DashboardActivity).mNavController.clearStack()

@@ -80,8 +80,6 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView, NumberKeyboardListener {
 
     override fun setUp(view: View) {
         mNumberKeyboard.setListener(this)
-
-        mPinView.requestPinEntryFocus()
         mPinView.setPinViewEventListener { _, _ ->
             mPresenter.validatePin(mPinView.value)
         }

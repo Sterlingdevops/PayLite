@@ -66,8 +66,8 @@ class PinFragment : BaseFragment(), PinMvpView, NumberKeyboardListener {
 
     }
 
-    override fun onDoSignUpFailed() {
-        show("An error occurred while processing your request", true)
+    override fun onDoSignUpFailed(failureReason: String) {
+        show(failureReason.replace("(Duplicate Records)", ""), true)
     }
 
     override fun onDoSignUpSuccessful() {

@@ -3,7 +3,9 @@ package com.sterlingng.paylite.data.model
 import com.sterlingng.paylite.utils.AppUtils.gson
 
 class SignUpRequest {
+    var dob: String = ""
     var email: String = ""
+    var gender: String = ""
     var password: String = ""
     var lastName: String = ""
     var firstName: String = ""
@@ -15,7 +17,9 @@ class SignUpRequest {
 
     fun toHashMap(): HashMap<String, Any> {
         val data = HashMap<String, Any>()
+        data["DOB"] = dob
         data["email"] = email
+        data["Gender"] = gender
         data["Password"] = password
         data["lastname"] = lastName
         data["mobile"] = phoneNumber

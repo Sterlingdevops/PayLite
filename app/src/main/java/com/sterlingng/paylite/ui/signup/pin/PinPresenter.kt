@@ -39,7 +39,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                     }
 
                     override fun onRequestFailed(code: Int, failureReason: String) {
-                        mvpView.onDoSignUpFailed()
+                        mvpView.onDoSignUpFailed(failureReason)
                         mvpView.hideLoading()
                     }
 

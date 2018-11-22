@@ -4,5 +4,5 @@ import com.sterlingng.paylite.ui.base.MvpView
 
 interface PinMvpView : MvpView {
     fun onDoSignUpSuccessful()
-    fun onDoSignUpFailed()
+    fun onDoSignUpFailed(failureReason: String)
 }
