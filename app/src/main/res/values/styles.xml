@@ -55,12 +55,12 @@
         <!-- This would set the toolbar's background color,
               but setting this also changes the popup menu's background,
               even if we define popupTheme for our <Toolbar> -->
-        <item name="android:background">@color/denim_dark</item>
+        <item name="android:background">@color/denim</item>
     </style>
 
-    <!--<style name="AppTheme.Launcher" parent="AppTheme.NoActionBar">-->
-    <!--<item name="android:windowBackground">@drawable/ic_launcher_background</item>-->
-    <!--</style>-->
+    <style name="AppTheme.Launcher" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@mipmap/ic_launcher</item>
+    </style>
 
     <style name="FlatButton" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">@color/colorPrimary</item>

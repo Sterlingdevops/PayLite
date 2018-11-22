@@ -282,7 +282,7 @@
     <string name="to_bank">To Bank</string>
     <string name="send_money_to_bank_accounts">Send money to bank accounts</string>
     <string name="to_phone_or_email">To Phone or Email</string>
-    <string name="send_money_to_contacts_on_your_phone">Send money to contacts on your phone</string>
+    <string name="send_money_to_contacts_on_your_phone">Send money to your contacts</string>
     <string name="reset_password_text">An OTP will be sent to\n your phone number</string>
     <string name="reset_password">Reset Password</string>
     <string name="input_the_6_digit_otp">Input the 6-digit OTP</string>
@@ -329,9 +329,11 @@
     <string name="value_added_services">Value added Services</string>
     <string name="mtn">MTN</string>
     <string name="gopay">GoPay</string>
-    <string name="anywhere_anytime">anywhere, anytime</string>
+    <string name="anywhere_anytime">Banking anywhere, anytime</string>
     <string name="create_an_account">Create an account</string>
     <string name="gender">Gender</string>
     <string name="go_banking_on_the_move_anytime_anywhere">GO! banking on the move, anytime anywhere.</string>
     <string name="setup_security_questions">Setup security questions</string>
+    <string name="a_verification_code_will_be_sent_to_this_number">A verification code will be sent\n to this number</string>
+    <string name="input_your_phone_number">Input your phone number</string>
 </resources>

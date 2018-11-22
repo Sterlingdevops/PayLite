@@ -46,7 +46,7 @@
         android:paddingBottom="8dp"
         android:text="@string/_9075755888"
         android:textColor="@color/gray"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/title"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.0"
