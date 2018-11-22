@@ -1,5 +1,4 @@
-package com.sterlingng.paylite.ui.signup.complete
-
+package com.sterlingng.paylite.ui.complete
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +10,6 @@ import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.signup.SignUpActivity
 import javax.inject.Inject
 
 class CompleteFragment : BaseFragment(), CompleteMvpView {
@@ -19,10 +17,8 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
     @Inject
     lateinit var mPresenter: CompleteMvpContract<CompleteMvpView>
 
-    private lateinit var mSkipButton: Button
-    private lateinit var mFundWalletButton: Button
+    private lateinit var mNextButton: Button
     private lateinit var mWelcomeTextView: TextView
-    private lateinit var mSecurityQuestionsButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_complete, container, false)
@@ -33,10 +29,8 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
     }
 
     override fun bindViews(view: View) {
-        mSkipButton = view.findViewById(R.id.skip)
+        mNextButton = view.findViewById(R.id.next)
         mWelcomeTextView = view.findViewById(R.id.welcome_text)
-        mFundWalletButton = view.findViewById(R.id.fund_wallet)
-        mSecurityQuestionsButton = view.findViewById(R.id.security_questions)
     }
 
     override fun setWelcomeText() {
@@ -46,16 +40,10 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
     override fun setUp(view: View) {
         mPresenter.initView()
 
-        mSkipButton.setOnClickListener {
+        mNextButton.setOnClickListener {
             when (arguments?.getString(WELCOME_TEXT)) {
-                "Welcome back to Paylite" -> baseActivity.finish()
+                "Welcome back to GoPay" -> baseActivity.finish()
                 "Your login PIN has been changed" -> (baseActivity as DashboardActivity).mNavController.clearStack()
-                else -> {
-                    val data = HashMap<String, String>()
-                    data["username"] = (baseActivity as SignUpActivity).signUpRequest.email
-                    data["password"] = (baseActivity as SignUpActivity).signUpRequest.password
-                    mPresenter.doLogIn(data)
-                }
             }
         }
     }
@@ -82,7 +70,7 @@ class CompleteFragment : BaseFragment(), CompleteMvpView {
         const val WELCOME_TEXT = "CompleteFragment.WELCOME_TEXT"
 
         @JvmOverloads
-        fun newInstance(welcomeText: String = "Welcome to Paylite"): CompleteFragment {
+        fun newInstance(welcomeText: String = "Welcome back to GoPay"): CompleteFragment {
             val fragment = CompleteFragment()
             val args = Bundle()
             args.putString(WELCOME_TEXT, welcomeText)

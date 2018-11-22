@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.signup.complete
+package com.sterlingng.paylite.ui.complete
 
 import com.sterlingng.paylite.ui.base.MvpView
 

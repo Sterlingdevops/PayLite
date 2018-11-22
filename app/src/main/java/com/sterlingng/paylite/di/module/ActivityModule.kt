@@ -36,6 +36,9 @@ import com.sterlingng.paylite.ui.bills.BillsPresenter
 import com.sterlingng.paylite.ui.cashoutbank.CashOutMvpContract
 import com.sterlingng.paylite.ui.cashoutbank.CashOutMvpView
 import com.sterlingng.paylite.ui.cashoutbank.CashOutPresenter
+import com.sterlingng.paylite.ui.complete.CompleteMvpContract
+import com.sterlingng.paylite.ui.complete.CompleteMvpView
+import com.sterlingng.paylite.ui.complete.CompletePresenter
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpContract
 import com.sterlingng.paylite.ui.confirm.ConfirmMvpView
 import com.sterlingng.paylite.ui.confirm.ConfirmPresenter
@@ -128,9 +131,9 @@ import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionPresent
 import com.sterlingng.paylite.ui.signup.SignUpMvpContract
 import com.sterlingng.paylite.ui.signup.SignUpMvpView
 import com.sterlingng.paylite.ui.signup.SignUpPresenter
-import com.sterlingng.paylite.ui.signup.complete.CompleteMvpContract
-import com.sterlingng.paylite.ui.signup.complete.CompleteMvpView
-import com.sterlingng.paylite.ui.signup.complete.CompletePresenter
+import com.sterlingng.paylite.ui.signup.complete.CompleteSignUpMvpContract
+import com.sterlingng.paylite.ui.signup.complete.CompleteSignUpMvpView
+import com.sterlingng.paylite.ui.signup.complete.CompleteSignUpPresenter
 import com.sterlingng.paylite.ui.signup.email.EmailMvpContract
 import com.sterlingng.paylite.ui.signup.email.EmailMvpView
 import com.sterlingng.paylite.ui.signup.email.EmailPresenter
@@ -368,9 +371,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideOnBoardingPresenter(presenter: OnBoardingPresenter<OnBoardingMvpView>): OnBoardingMvpContract<OnBoardingMvpView> = presenter
 
     @Provides
-    internal fun provideCategoriesPresenter(presenter: TransactionCategoriesPresenter<TransactionCategoriesMvpView>): TransactionCategoriesMvpContract<TransactionCategoriesMvpView> = presenter
-
-    @Provides
     internal fun provideSplitAmountPresenter(presenter: SplitAmountPresenter<SplitAmountMvpView>): SplitAmountMvpContract<SplitAmountMvpView> = presenter
 
     @Provides
@@ -389,6 +389,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideSelectContactPresenter(presenter: SelectContactPresenter<SelectContactsMvpView>): SelectContactsMvpContract<SelectContactsMvpView> = presenter
 
     @Provides
+    internal fun provideCompleteSignUpPresenter(presenter: CompleteSignUpPresenter<CompleteSignUpMvpView>): CompleteSignUpMvpContract<CompleteSignUpMvpView> = presenter
+
+    @Provides
     internal fun provideNewBankTransferPresenter(presenter: NewBankTransferPresenter<NewBankTransferMvpView>): NewBankTransferMvpContract<NewBankTransferMvpView> = presenter
 
     @Provides
@@ -399,6 +402,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideBankTransferAmountPresenter(presenter: BankTransferAmountPresenter<BankTransferAmountMvpView>): BankTransferAmountMvpContract<BankTransferAmountMvpView> = presenter
+
+    @Provides
+    internal fun provideCategoriesPresenter(presenter: TransactionCategoriesPresenter<TransactionCategoriesMvpView>): TransactionCategoriesMvpContract<TransactionCategoriesMvpView> = presenter
 
     @Provides
     internal fun provideScheduledTransactionPresenter(presenter: ScheduledTransactionPresenter<ScheduledTransactionMvpView>): ScheduledTransactionMvpContract<ScheduledTransactionMvpView> = presenter

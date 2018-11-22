@@ -122,6 +122,7 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
         params = new LayoutParams(mPinWidth, mPinHeight);
         setOrientation(HORIZONTAL);
         createEditTexts();
+        requestPinEntryFocus();
         super.setOnClickListener(view -> {
             boolean focused = false;
             for (EditText editText : editTextList) {
@@ -138,9 +139,6 @@ public class PinView extends LinearLayout implements TextWatcher, View.OnFocusCh
                 mClickListener.onClick(PinView.this);
             }
         });
-        // Bring up the keyboard
-//        final View firstEditText = editTextList.get(0);
-//        if (firstEditText != null) firstEditText.postDelayed(this::openKeyboard, 200);
         updateEnabledState();
     }
 

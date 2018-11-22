@@ -11,10 +11,10 @@ import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 import javax.inject.Inject
 
-class CompletePresenter<V : CompleteMvpView>
+class CompleteSignUpPresenter<V : CompleteSignUpMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CompleteMvpContract<V> {
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CompleteSignUpMvpContract<V> {
 
     override fun initView() {
         mvpView.setWelcomeText()

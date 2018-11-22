@@ -10,6 +10,7 @@ import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsFragment
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
 import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
+import com.sterlingng.paylite.ui.complete.CompleteFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.contacts.SelectContactsFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
@@ -28,7 +29,6 @@ import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
 import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
-import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesFragment
 import com.sterlingng.paylite.ui.profile.ProfileFragment
 import com.sterlingng.paylite.ui.profile.edit.EditProfileFragment
 import com.sterlingng.paylite.ui.profile.notifications.NotificationsFragment
@@ -41,7 +41,7 @@ import com.sterlingng.paylite.ui.services.ServicesFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
-import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
+import com.sterlingng.paylite.ui.signup.complete.CompleteSignUpFragment
 import com.sterlingng.paylite.ui.signup.email.EmailFragment
 import com.sterlingng.paylite.ui.signup.name.NameFragment
 import com.sterlingng.paylite.ui.signup.otp.OtpFragment
@@ -54,6 +54,7 @@ import com.sterlingng.paylite.ui.successful.SuccessfulActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesFragment
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailFragment
+import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesFragment
 import dagger.Component
 
 /**
@@ -110,7 +111,7 @@ interface ActivityComponent {
 
     fun inject(countryFragment: PasswordFragment)
 
-    fun inject(completeFragment: CompleteFragment)
+    fun inject(completeSignUpFragment: CompleteSignUpFragment)
 
     fun inject(scheduledFragment: ScheduledFragment)
 
@@ -173,4 +174,6 @@ interface ActivityComponent {
     fun inject(paymentCategoriesFragment: PaymentCategoriesFragment)
 
     fun inject(servicesFragment: ServicesFragment)
+
+    fun inject(completeFragment: CompleteFragment)
 }

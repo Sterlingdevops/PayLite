@@ -9,9 +9,9 @@ import android.widget.Button
 import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.complete.CompleteFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
-import com.sterlingng.paylite.ui.signup.complete.CompleteFragment
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.views.LargeLabelEditText
 import javax.inject.Inject
