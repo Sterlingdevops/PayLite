@@ -116,6 +116,9 @@ import com.sterlingng.paylite.ui.scheduled.ScheduledPresenter
 import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpContract
 import com.sterlingng.paylite.ui.security.LoginAndSecurityMvpView
 import com.sterlingng.paylite.ui.security.LoginAndSecurityPresenter
+import com.sterlingng.paylite.ui.securityquestions.SetSecurityQuestionMvpContract
+import com.sterlingng.paylite.ui.securityquestions.SetSecurityQuestionMvpPresenter
+import com.sterlingng.paylite.ui.securityquestions.SetSecurityQuestionMvpView
 import com.sterlingng.paylite.ui.send.SendMoneyMvpContract
 import com.sterlingng.paylite.ui.send.SendMoneyMvpView
 import com.sterlingng.paylite.ui.send.SendMoneyPresenter
@@ -291,7 +294,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
 
     @Provides
-    internal fun provideTransferPresenter(presenter: CashOutPresenter<CashOutMvpView>): CashOutMvpContract<CashOutMvpView> = presenter
+    internal fun provideCashOutPresenter(presenter: CashOutPresenter<CashOutMvpView>): CashOutMvpContract<CashOutMvpView> = presenter
 
     @Provides
     internal fun provideSendMoneyPresenter(presenter: SendMoneyPresenter<SendMoneyMvpView>): SendMoneyMvpContract<SendMoneyMvpView> = presenter
@@ -321,6 +324,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideHelpPresenter(presenter: HelpPresenter<HelpMvpView>): HelpMvpContract<HelpMvpView> = presenter
+
+    @Provides
+    internal fun provideSetSecurityQuestionPresenter(presenter: SetSecurityQuestionMvpPresenter<SetSecurityQuestionMvpView>): SetSecurityQuestionMvpContract<SetSecurityQuestionMvpView> = presenter
 
     @Provides
     internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter

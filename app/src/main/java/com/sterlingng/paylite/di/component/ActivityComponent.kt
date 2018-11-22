@@ -36,6 +36,7 @@ import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.request.custom.CustomRequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.security.LoginAndSecurityFragment
+import com.sterlingng.paylite.ui.securityquestions.SetSecurityQuestionFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.services.ServicesFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
@@ -176,4 +177,6 @@ interface ActivityComponent {
     fun inject(servicesFragment: ServicesFragment)
 
     fun inject(completeFragment: CompleteFragment)
+
+    fun inject(setSecurityQuestionFragment: SetSecurityQuestionFragment)
 }

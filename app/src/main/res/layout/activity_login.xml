@@ -26,7 +26,7 @@
         android:id="@+id/cardView"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         app:cardCornerRadius="28dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.498"
@@ -93,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="64dp"/>
+        app:layout_constraintGuide_end="32dp"/>
 
     <TextView
         android:id="@+id/textView27"
@@ -101,12 +101,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/enter_your_pin"
         android:textColor="@color/denim"
-        android:textSize="22sp"
+        android:textSize="16sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/title"/>
@@ -115,7 +116,6 @@
         android:id="@+id/pin_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:forceKeyboard="false"
         app:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -140,7 +140,7 @@
         android:layout_marginRight="8dp"
         android:text="@string/forgot_password"
         android:textColor="@color/denim"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/pin_view"/>
@@ -150,14 +150,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="-1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgot"
-        keyboard:keyboardType="integer"
-        keyboard:layout_constraintBottom_toBottomOf="parent"
-        keyboard:layout_constraintEnd_toEndOf="parent"
-        keyboard:layout_constraintStart_toStartOf="parent"/>
+        keyboard:keyboardType="integer"/>
 
 </android.support.constraint.ConstraintLayout>
