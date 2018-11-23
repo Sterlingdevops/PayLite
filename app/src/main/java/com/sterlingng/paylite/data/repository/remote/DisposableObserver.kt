@@ -28,7 +28,7 @@ abstract class DisposableObserver : DisposableObserver<Response>() {
     override fun onNext(t: Response) {
         Log.d("Request Response ----> " + t.toString())
         val message = t.message?.let { it } ?: "The server didn't return a valid response"
-        if (t.data == null || t.data is String || (t.data is List<*> && (t.data as List<*>).isEmpty())) {
+        if (t.data == null) {
             onRequestFailed(t.code, message)
             return
         }

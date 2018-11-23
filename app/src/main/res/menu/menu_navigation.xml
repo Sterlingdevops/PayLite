@@ -21,7 +21,6 @@
         android:icon="@drawable/icon_services_selector"
         android:orderInCategory="102"
         android:title="@string/services"
-        android:visible="false"
         app:showAsAction="ifRoom"/>
 
     <item

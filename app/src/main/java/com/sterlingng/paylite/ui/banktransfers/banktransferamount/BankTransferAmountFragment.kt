@@ -19,7 +19,6 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
-import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.utils.then
 import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
@@ -205,9 +204,7 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
     }
 
     override fun logout() {
-        show("Session has timed out", true)
-        startActivity(MainActivity.getStartIntent(baseActivity))
-        baseActivity.finish()
+        baseActivity.logout()
     }
 
     override fun bindViews(view: View) {

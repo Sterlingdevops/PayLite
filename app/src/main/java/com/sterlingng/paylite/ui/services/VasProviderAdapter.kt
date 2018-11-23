@@ -42,8 +42,8 @@ class VasProviderAdapter(private val mContext: Context, private val sectionIndex
         providers.add(vAService)
         val serviceSet =
                 providers.asSequence()
-                        .sortedByDescending { it.name }
-                        .distinctBy { it.name }.toList()
+                        .sortedBy { it.index }
+                        .distinctBy { it.index }.toList()
 
         clear()
 
@@ -55,8 +55,8 @@ class VasProviderAdapter(private val mContext: Context, private val sectionIndex
         newVAService += this.providers
         val serviceSet =
                 newVAService.asSequence()
-                        .sortedByDescending { it.name }
-                        .distinctBy { it.name }.toList()
+                        .sortedBy { it.index }
+                        .distinctBy { it.index }.toList()
 
         clear()
 
@@ -104,7 +104,7 @@ class VasProviderAdapter(private val mContext: Context, private val sectionIndex
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
 
-            with(providers[position]) {
+            with(providers[adapterPosition]) {
                 providerName.text = name
                 providerImage.setImageDrawable(ContextCompat.getDrawable(mContext, this.resId))
             }

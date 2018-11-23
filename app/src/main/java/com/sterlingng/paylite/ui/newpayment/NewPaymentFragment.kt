@@ -171,10 +171,11 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
                 mSelectionArgs, null/*Sort order*/)/*Uri*//*Selection args*/
 
         // If the cursor returned is valid, get the phone number
-        var phone = ""
+        var phone: String? = ""
         if (phoneCursor != null && phoneCursor.moveToFirst()) {
             val numberIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER)
-            phone = phoneCursor.getString(numberIndex).replace("+234", "0")
+            if (phoneCursor.getString(numberIndex) != null)
+                phone = phoneCursor.getString(numberIndex).replace("+234", "0")
         }
         phoneCursor?.close()
 
@@ -186,7 +187,7 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
     }
 
     override fun initView(wallet: Wallet?) {
-        mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet?.balance?.toFloat())
+        mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet?.balance?.toFloat()).replace(".", ",")
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

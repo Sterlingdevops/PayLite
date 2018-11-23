@@ -118,7 +118,7 @@ class TransactionDetailFragment : BaseFragment(), TransactionDetailMvpView {
         mEditCategoryImageView.setOnClickListener {
             (baseActivity as DashboardActivity)
                     .mNavController
-                    .pushFragment(PaymentCategoriesFragment.newInstance(transaction.id.toString()))
+                    .pushFragment(PaymentCategoriesFragment.newInstance(transaction))
         }
     }
 

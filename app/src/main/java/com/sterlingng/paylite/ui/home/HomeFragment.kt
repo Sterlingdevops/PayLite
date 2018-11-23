@@ -105,7 +105,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     }
 
     override fun onGetWalletSuccessful(wallet: Wallet) {
-        mMainAmountTextView.text = String.format("₦%,.0f", wallet.balance.toFloat())
+        mMainAmountTextView.text = String.format("₦%,.0f", wallet.balance.toFloat()).replace(".", ",")
     }
 
     override fun onGetWalletFailed() {

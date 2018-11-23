@@ -4,14 +4,11 @@ import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SnapHelper
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.VAService
 import com.sterlingng.paylite.ui.base.BaseViewHolder
@@ -20,7 +17,6 @@ import com.sterlingng.paylite.utils.ServiceItemClickedListener
 class ServicesAdapter(private val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
     val services: ArrayList<VAService> = ArrayList()
-    private var recycledViewPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool()
     lateinit var serviceItemClickedListener: ServiceItemClickedListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -47,7 +43,7 @@ class ServicesAdapter(private val mContext: Context) : RecyclerView.Adapter<Base
         services += vAService
         val serviceSet =
                 services.asSequence()
-                        .sortedByDescending { it.name }
+                        .sortedBy { it.name }
                         .distinctBy { it.name }.toList()
 
         clear()
@@ -60,8 +56,8 @@ class ServicesAdapter(private val mContext: Context) : RecyclerView.Adapter<Base
         newVAService += this.services
         val serviceSet =
                 newVAService.asSequence()
-                        .sortedByDescending { it.name }
-                        .distinctBy { it.name }.toList()
+                        .sortedBy { it.index }
+                        .distinctBy { it.index }.toList()
 
         clear()
 
@@ -105,22 +101,22 @@ class ServicesAdapter(private val mContext: Context) : RecyclerView.Adapter<Base
         private var serviceName: TextView = itemView.findViewById(R.id.service_name)
         private var serviceImage: ImageView = itemView.findViewById(R.id.service_image)
         private var recyclerView: RecyclerView = itemView.findViewById(R.id.recyclerView)
-        private var snapHelper: SnapHelper = GravitySnapHelper(Gravity.START)
+//        private var snapHelper: SnapHelper = GravitySnapHelper(Gravity.START)
 
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
 
             val vasProviderAdapter = VasProviderAdapter(mContext, adapterPosition)
             vasProviderAdapter.serviceItemClickedListener = serviceItemClickedListener
-            vasProviderAdapter.providers = services[position].providers
+            vasProviderAdapter.providers.addAll(services[adapterPosition].providers)
 
             recyclerView.adapter = vasProviderAdapter
             recyclerView.setHasFixedSize(true)
-            recyclerView.setRecycledViewPool(recycledViewPool)
+            recyclerView.setRecycledViewPool(RecyclerView.RecycledViewPool())
             recyclerView.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-            snapHelper.attachToRecyclerView(recyclerView)
+//            snapHelper.attachToRecyclerView(recyclerView)
 
-            with(services[position]) {
+            with(services[adapterPosition]) {
                 serviceName.text = name
                 serviceImage.setImageDrawable(ContextCompat.getDrawable(mContext, this.resId))
             }

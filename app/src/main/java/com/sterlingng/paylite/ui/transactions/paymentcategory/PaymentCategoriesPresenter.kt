@@ -2,6 +2,7 @@ package com.sterlingng.paylite.ui.transactions.paymentcategory
 
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Response
+import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.data.repository.remote.DisposableObserver
 import com.sterlingng.paylite.rx.SchedulerProvider
 import com.sterlingng.paylite.ui.base.BasePresenter
@@ -14,7 +15,7 @@ class PaymentCategoriesPresenter<V : PaymentCategoriesMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), PaymentCategoriesMvpContract<V> {
 
-    override fun updateTransactionCategory(data: HashMap<String, Any>) {
+    override fun updateTransactionCategory(data: HashMap<String, Any>, transaction: Transaction) {
         mvpView.showLoading()
         dataManager
                 .updateTransactionCategory(data, "Bearer ${dataManager.getCurrentUser()?.accessToken!!}", AppUtils.gson.toJson(data).sha256())
@@ -22,6 +23,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                 .observeOn(schedulerProvider.ui())
                 .subscribe(object : DisposableObserver() {
                     override fun onRequestSuccessful(response: Response, message: String) {
+                        dataManager.saveTransaction(transaction)
                         mvpView.onUpdateTransactionCategorySuccessful()
                         mvpView.hideLoading()
                     }

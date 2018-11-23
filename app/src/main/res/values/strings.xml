@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Paylite</string>
+    <string name="app_name">Go</string>
     <string name="log_in">Already have an account?</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Start</string>

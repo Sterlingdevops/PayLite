@@ -19,7 +19,6 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
-import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesFragment
 import com.sterlingng.paylite.utils.isValidEmail
 import com.sterlingng.paylite.utils.then
 import com.tsongkha.spinnerdatepicker.DatePicker
@@ -265,8 +264,8 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
             if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
             eventBus.post(UpdateWallet())
             (baseActivity as DashboardActivity)
-                    .mNavController
-                    .pushFragment(PaymentCategoriesFragment.newInstance())
+                    .mNavController.clearStack()
+//                    .pushFragment(PaymentCategoriesFragment.newInstance())
             hideKeyboard()
         }
     }
@@ -280,8 +279,8 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         if (contact.name.isNotEmpty()) mPresenter.saveContact(contact)
         eventBus.post(UpdateWallet())
         (baseActivity as DashboardActivity)
-                .mNavController
-                .pushFragment(PaymentCategoriesFragment.newInstance())
+                .mNavController.clearStack()
+//                .pushFragment(PaymentCategoriesFragment.newInstance())
     }
 
     override fun onSendMoneyFailed() {

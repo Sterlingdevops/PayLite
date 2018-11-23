@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PaymentCategory
+import com.sterlingng.paylite.data.model.Transaction
 import com.sterlingng.paylite.data.model.UpdateTransaction
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
@@ -31,7 +31,6 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
     lateinit var eventBus: EventBus
 
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mDoneTextView: TextView
     private lateinit var category: String
     private lateinit var exit: ImageView
 
@@ -46,13 +45,6 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
     override fun setUp(view: View) {
         exit.setOnClickListener {
             baseActivity.onBackPressed()
-        }
-
-        mDoneTextView.setOnClickListener {
-            val data = HashMap<String, Any>()
-            data["TransactionID"] = arguments?.getString(TRANSACTION)!!
-            data["Category"] = category
-            mPresenter.updateTransactionCategory(data)
         }
 
         mPresenter.onViewInitialized()
@@ -70,15 +62,21 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
-        mDoneTextView = view.findViewById(R.id.done)
         mRecyclerView = view.findViewById(R.id.recyclerView)
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
-        mDoneTextView.visibility = View.VISIBLE
         mPaymentCategoriesAdapter.toggleSelection(position)
         category = mPaymentCategoriesAdapter.get(position).name
+
+        val transaction = arguments?.getParcelable<Transaction>(TRANSACTION)!!
+        val data = HashMap<String, Any>()
+        data["TransactionID"] = transaction.id
+        data["Category"] = category
+        transaction.category = category
+        mPresenter.updateTransactionCategory(data, transaction)
     }
+
 
     override fun logout() {
         baseActivity.logout()
@@ -88,10 +86,10 @@ class PaymentCategoriesFragment : BaseFragment(), PaymentCategoriesMvpView {
         private const val TRANSACTION = "PaymentCategoriesFragment.TRANSACTION"
 
         @JvmOverloads
-        fun newInstance(transaction: String = ""): PaymentCategoriesFragment {
+        fun newInstance(transaction: Transaction = Transaction()): PaymentCategoriesFragment {
             val fragment = PaymentCategoriesFragment()
             val args = Bundle()
-            args.putString(TRANSACTION, transaction)
+            args.putParcelable(TRANSACTION, transaction)
             fragment.arguments = args
             return fragment
         }
