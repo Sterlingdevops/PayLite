@@ -73,7 +73,6 @@ class ScheduledFragment : BaseFragment(), ScheduledMvpView {
     }
 
     override fun onScheduledPaymentsFailed() {
-        show("Failed getting transactions", true)
         mSwipeRefreshLayout.isRefreshing = false
     }
 

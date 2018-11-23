@@ -113,9 +113,9 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
             with(paymentMethods[adapterPosition]) {
                 expiryTextView.text = isCard then "Exp: $expiry" ?: ""
                 nameTextView.text = name
-                numberTextView.text = isCard then "Card: $number" ?: "$bankname: $number"
+                numberTextView.text = isCard then "Card: ${String(number.toCharArray().takeLast(4).toCharArray())}" ?: "$bankname: $number"
                 imageView.setImageDrawable(ContextCompat.getDrawable(mContext,
-                        (image != 0) then image ?: R.drawable.card))
+                        (image != 0) then image ?: R.drawable.icon_card))
             }
 
             defaultCheckBox.isChecked = selectedItems.get(adapterPosition)

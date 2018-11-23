@@ -16,7 +16,7 @@ class Bank {
 
     fun asPaymentMethod(): PaymentMethod {
         val paymentMethod = PaymentMethod()
-        paymentMethod.image = R.drawable.icon_my_bank
+        paymentMethod.image = R.drawable.icon_bank
         paymentMethod.number = accountnumber
         paymentMethod.bankname = bankname
         paymentMethod.name = accountname

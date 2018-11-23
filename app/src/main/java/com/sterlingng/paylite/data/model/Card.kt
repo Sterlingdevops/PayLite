@@ -12,7 +12,7 @@ class Card {
 
     fun asPaymentMethod(): PaymentMethod {
         val paymentMethod = PaymentMethod()
-        paymentMethod.image = R.drawable.card
+        paymentMethod.image = R.drawable.icon_card
         paymentMethod.default = default
         paymentMethod.expiry = expiry
         paymentMethod.number = number

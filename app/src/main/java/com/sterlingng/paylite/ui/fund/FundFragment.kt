@@ -231,7 +231,6 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
     }
 
     override fun onResolveCardNumberSuccessful(it: Response) {
-        show("Card BIN Resolved", true)
         val data = HashMap<String, Any>()
         data["pin"] = "1234"
         data["currency"] = "NGN"

@@ -104,7 +104,6 @@
 
     </android.support.v7.widget.CardView>
 
-
     <android.support.v7.widget.CardView
         android:id="@+id/to_bank"
         android:layout_width="0dp"
