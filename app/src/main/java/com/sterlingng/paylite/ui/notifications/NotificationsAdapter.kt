@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.profile.notifications
+package com.sterlingng.paylite.ui.notifications
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

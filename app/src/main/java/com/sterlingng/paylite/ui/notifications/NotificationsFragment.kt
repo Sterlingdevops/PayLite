@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.profile.notifications
+package com.sterlingng.paylite.ui.notifications
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager

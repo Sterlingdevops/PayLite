@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.profile.notifications
+package com.sterlingng.paylite.ui.notifications
 
 import com.sterlingng.paylite.data.model.Notification
 import com.sterlingng.paylite.ui.base.MvpView

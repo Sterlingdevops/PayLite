@@ -6,19 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/backdrop"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/backdrop"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_small"
-        app:layout_constraintDimensionRatio="w,1:5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
         android:layout_width="wrap_content"
@@ -47,26 +34,37 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_end="56dp"/>
 
+    <View
+        android:id="@+id/view11"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/balance"/>
+
     <ImageView
         android:id="@+id/exit"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
         android:clickable="true"
         android:contentDescription="@string/exit"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:layout_constraintStart_toStartOf="@+id/backdrop"
+        android:tint="@color/black"
+        app:layout_constraintStart_toEndOf="@id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/textView"
-        app:srcCompat="@drawable/chevron_left"/>
+        app:srcCompat="@drawable/chevron_left"
+        tools:layout_editor_absoluteX="16dp"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/airtime_and_data"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -77,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/balance_201_00"
-        android:textColor="@color/white"
+        android:textColor="@color/gray"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
@@ -87,11 +85,11 @@
         android:id="@+id/next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"
@@ -123,7 +121,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop"
+        app:layout_constraintTop_toBottomOf="@+id/view11"
         app:textColor="@color/blue_black_dark"
         tools:targetApi="m"/>
 

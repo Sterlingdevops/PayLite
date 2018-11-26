@@ -30,8 +30,8 @@ import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.profile.ProfileFragment
-import com.sterlingng.paylite.ui.profile.edit.EditProfileFragment
-import com.sterlingng.paylite.ui.profile.notifications.NotificationsFragment
+import com.sterlingng.paylite.ui.editprofile.EditProfileFragment
+import com.sterlingng.paylite.ui.notifications.NotificationsFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.request.custom.CustomRequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
@@ -51,7 +51,6 @@ import com.sterlingng.paylite.ui.signup.phone.PhoneFragment
 import com.sterlingng.paylite.ui.signup.pin.PinFragment
 import com.sterlingng.paylite.ui.splitamount.SplitAmountFragment
 import com.sterlingng.paylite.ui.splitcontacts.SplitContactFragment
-import com.sterlingng.paylite.ui.successful.SuccessfulActivity
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesFragment
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailFragment
@@ -87,8 +86,6 @@ interface ActivityComponent {
     fun inject(onBoardingActivity: SignUpActivity)
 
     fun inject(dashboardActivity: DashboardActivity)
-
-    fun inject(successfulActivity: SuccessfulActivity)
 
     fun inject(transactionsFragment: TransactionsFragment)
 
@@ -179,4 +176,5 @@ interface ActivityComponent {
     fun inject(completeFragment: CompleteFragment)
 
     fun inject(setSecurityQuestionFragment: SetSecurityQuestionFragment)
+
 }

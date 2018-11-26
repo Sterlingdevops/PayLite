@@ -96,13 +96,13 @@ import com.sterlingng.paylite.ui.payment.PaymentPresenter
 import com.sterlingng.paylite.ui.profile.ProfileMvpContract
 import com.sterlingng.paylite.ui.profile.ProfileMvpView
 import com.sterlingng.paylite.ui.profile.ProfilePresenter
-import com.sterlingng.paylite.ui.profile.edit.EditMvpContract
-import com.sterlingng.paylite.ui.profile.edit.EditMvpView
-import com.sterlingng.paylite.ui.profile.edit.EditPresenter
-import com.sterlingng.paylite.ui.profile.notifications.NotificationMvpContract
-import com.sterlingng.paylite.ui.profile.notifications.NotificationMvpView
-import com.sterlingng.paylite.ui.profile.notifications.NotificationPresenter
-import com.sterlingng.paylite.ui.profile.notifications.NotificationsAdapter
+import com.sterlingng.paylite.ui.editprofile.EditMvpContract
+import com.sterlingng.paylite.ui.editprofile.EditMvpView
+import com.sterlingng.paylite.ui.editprofile.EditPresenter
+import com.sterlingng.paylite.ui.notifications.NotificationMvpContract
+import com.sterlingng.paylite.ui.notifications.NotificationMvpView
+import com.sterlingng.paylite.ui.notifications.NotificationPresenter
+import com.sterlingng.paylite.ui.notifications.NotificationsAdapter
 import com.sterlingng.paylite.ui.request.RequestMvpContract
 import com.sterlingng.paylite.ui.request.RequestMvpView
 import com.sterlingng.paylite.ui.request.RequestPresenter
@@ -161,10 +161,6 @@ import com.sterlingng.paylite.ui.splitamount.SplitAmountPresenter
 import com.sterlingng.paylite.ui.splitcontacts.SplitContactMvpContract
 import com.sterlingng.paylite.ui.splitcontacts.SplitContactMvpView
 import com.sterlingng.paylite.ui.splitcontacts.SplitContactPresenter
-import com.sterlingng.paylite.ui.successful.CategoriesAdapter
-import com.sterlingng.paylite.ui.successful.SuccessfulMvpContract
-import com.sterlingng.paylite.ui.successful.SuccessfulMvpView
-import com.sterlingng.paylite.ui.successful.SuccessfulPresenter
 import com.sterlingng.paylite.ui.transactions.TransactionsMvpContract
 import com.sterlingng.paylite.ui.transactions.TransactionsMvpView
 import com.sterlingng.paylite.ui.transactions.TransactionsPresenter
@@ -210,9 +206,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
-
-    @Provides
-    internal fun provideCategoriesAdapter(activity: AppCompatActivity): CategoriesAdapter = CategoriesAdapter(activity)
 
     @Provides
     internal fun providePaymentCategoriesAdapter(activity: AppCompatActivity): PaymentCategoriesAdapter = PaymentCategoriesAdapter(activity)
@@ -301,9 +294,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideNewPaymentPresenter(presenter: NewPaymentPresenter<NewPaymentMvpView>): NewPaymentMvpContract<NewPaymentMvpView> = presenter
-
-    @Provides
-    internal fun provideSuccessfulPresenter(presenter: SuccessfulPresenter<SuccessfulMvpView>): SuccessfulMvpContract<SuccessfulMvpView> = presenter
 
     @Provides
     internal fun provideTransactionsPresenter(presenter: TransactionsPresenter<TransactionsMvpView>): TransactionsMvpContract<TransactionsMvpView> = presenter

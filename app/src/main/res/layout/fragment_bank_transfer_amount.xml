@@ -6,37 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/backdrop"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/backdrop"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_small"
-        app:layout_constraintDimensionRatio="w,1:5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <TextView
         android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/balance_201_00"
-        android:textColor="@color/white"
+        android:textColor="@color/gray"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/title2"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="@+id/title2"
         app:layout_constraintTop_toBottomOf="@+id/title2"/>
 
+    <View
+        android:id="@+id/view6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/balance"/>
+
     <TextView
         android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bank_transfer"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -47,7 +45,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:contentDescription="@string/exit"
-        app:layout_constraintBottom_toBottomOf="@+id/balance"
+        android:tint="@color/black"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/title2"
         app:srcCompat="@drawable/chevron_left"/>
@@ -56,14 +54,15 @@
         android:id="@+id/amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/background_light_blue_outline"
         android:hint="@string/amount"
         android:inputType="number"
         android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop"/>
+        app:layout_constraintTop_toBottomOf="@+id/view6"/>
 
     <EditText
         android:id="@+id/reference"
@@ -186,6 +185,7 @@
         android:text="@string/_22_jun_2018"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/set_start_date"
         app:layout_constraintEnd_toEndOf="@+id/set_start_date"
         app:layout_constraintTop_toTopOf="@+id/set_start_date"/>
@@ -226,6 +226,7 @@
         android:text="@string/_22_jun_2018"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/set_end_date"
         app:layout_constraintEnd_toEndOf="@+id/set_end_date"
         app:layout_constraintTop_toTopOf="@+id/set_end_date"/>

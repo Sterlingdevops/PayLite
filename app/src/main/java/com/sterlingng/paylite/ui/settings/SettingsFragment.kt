@@ -8,11 +8,11 @@ import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.editprofile.EditProfileFragment
 import com.sterlingng.paylite.ui.help.HelpFragment
 import com.sterlingng.paylite.ui.main.MainActivity
+import com.sterlingng.paylite.ui.notifications.NotificationsFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
-import com.sterlingng.paylite.ui.profile.edit.EditProfileFragment
-import com.sterlingng.paylite.ui.profile.notifications.NotificationsFragment
 import com.sterlingng.paylite.ui.security.LoginAndSecurityFragment
 import javax.inject.Inject
 

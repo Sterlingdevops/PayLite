@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.profile.edit
+package com.sterlingng.paylite.ui.editprofile
 
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.data.model.Response

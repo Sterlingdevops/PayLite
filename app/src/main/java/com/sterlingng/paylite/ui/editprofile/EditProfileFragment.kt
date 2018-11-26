@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.profile.edit
+package com.sterlingng.paylite.ui.editprofile
 
 import android.os.Bundle
 import android.view.LayoutInflater

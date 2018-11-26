@@ -338,4 +338,5 @@
     <string name="input_your_phone_number">Input your phone number</string>
     <string name="input_your_email_address">Input your email address</string>
     <string name="we_need_this_to_send_you_important_updates_and_help_with_account_recovery">We need this to send you important updates and help with account recovery.</string>
+    <string name="input_your_bvn">Input your BVN</string>
 </resources>

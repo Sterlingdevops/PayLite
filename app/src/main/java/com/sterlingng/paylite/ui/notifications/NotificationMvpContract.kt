@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.profile.notifications
+package com.sterlingng.paylite.ui.notifications
 
 import com.sterlingng.paylite.di.annotations.PerActivity
 import com.sterlingng.paylite.ui.base.MvpPresenter

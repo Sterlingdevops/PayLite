@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.profile.notifications
+package com.sterlingng.paylite.ui.notifications
 
 import com.sterlingng.paylite.data.manager.DataManager
 import com.sterlingng.paylite.rx.SchedulerProvider

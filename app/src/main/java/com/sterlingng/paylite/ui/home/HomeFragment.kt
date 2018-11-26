@@ -21,7 +21,7 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.getcash.GetCashFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
-import com.sterlingng.paylite.ui.profile.notifications.NotificationsFragment
+import com.sterlingng.paylite.ui.notifications.NotificationsFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
