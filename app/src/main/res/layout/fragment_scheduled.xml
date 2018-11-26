@@ -6,19 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/backdrop"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/backdrop"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_small"
-        app:layout_constraintDimensionRatio="w,1:5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <android.support.constraint.Guideline
         android:id="@+id/guidelineTop"
         android:layout_width="wrap_content"
@@ -57,6 +44,7 @@
         android:contentDescription="@string/exit"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
+        android:tint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/title"
         app:srcCompat="@drawable/chevron_left"/>
@@ -67,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="@string/scheduled_payments"
         android:textAppearance="@style/MyAppearance"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -79,11 +67,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/balance_201_00"
-        android:textColor="@color/white"
+        android:textColor="@color/gray"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/title"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/balance"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
@@ -92,7 +91,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop">
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"

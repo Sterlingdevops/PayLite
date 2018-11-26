@@ -279,7 +279,7 @@ public class EditCredit extends TextInputEditText {
             }
         }
         if (!containsFlag(disabledCards, Card.VISA.value)) {
-            mCCPatterns.put(R.drawable.visa, Pattern.compile("^ 4[0-9]{1,12}(?:[0-9]{6})?$"));
+            mCCPatterns.put(R.drawable.visa, Pattern.compile("^4[0-9]{1,12}(?:[0-9]{6})?$"));
         }
         if (!containsFlag(disabledCards, Card.MASTERCARD.value)) {
             mCCPatterns.put(R.drawable.mastercard, Pattern.compile("^5[1-5][0-9]{0,14}$"));

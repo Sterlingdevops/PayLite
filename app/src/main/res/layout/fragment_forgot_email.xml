@@ -11,11 +11,13 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/exit"
-        android:tint="@color/slate_green"
+        android:tint="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/chevron_left"/>
 
@@ -24,32 +26,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/open_sans_bold"
         android:text="@string/reset_password"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/exit"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/exit"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/reset_password_text"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        app:layout_constraintBottom_toTopOf="@+id/phone"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
     <com.sterlingng.views.LargeLabelEditText
         android:id="@+id/phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:inputType="number"
         app:hint="@string/_9075755888"
         app:label="@string/ng_234"
@@ -57,17 +62,18 @@
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.3"
         app:maxLength="10"/>
 
     <Button
         android:id="@+id/next_reset"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/button"
         android:clickable="true"
         android:focusable="true"
@@ -108,6 +114,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="32dp"/>
+        app:layout_constraintGuide_end="56dp"/>
 
 </android.support.constraint.ConstraintLayout>

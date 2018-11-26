@@ -14,6 +14,7 @@ import com.sterlingng.paylite.ui.complete.CompleteFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.contacts.SelectContactsFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.editprofile.EditProfileFragment
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
 import com.sterlingng.paylite.ui.forgot.email.EmailForgotFragment
@@ -28,10 +29,8 @@ import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.main.onboarding.OnBoardingFragment
 import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
-import com.sterlingng.paylite.ui.payment.PaymentFragment
-import com.sterlingng.paylite.ui.profile.ProfileFragment
-import com.sterlingng.paylite.ui.editprofile.EditProfileFragment
 import com.sterlingng.paylite.ui.notifications.NotificationsFragment
+import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.request.custom.CustomRequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
@@ -80,8 +79,6 @@ interface ActivityComponent {
     fun inject(confirmFragment: ConfirmFragment)
 
     fun inject(airTimeFragment: AirTimeFragment)
-
-    fun inject(profileFragment: ProfileFragment)
 
     fun inject(onBoardingActivity: SignUpActivity)
 

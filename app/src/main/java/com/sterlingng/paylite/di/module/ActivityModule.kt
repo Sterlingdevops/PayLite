@@ -48,6 +48,9 @@ import com.sterlingng.paylite.ui.contacts.SelectContactsMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
+import com.sterlingng.paylite.ui.editprofile.EditMvpContract
+import com.sterlingng.paylite.ui.editprofile.EditMvpView
+import com.sterlingng.paylite.ui.editprofile.EditPresenter
 import com.sterlingng.paylite.ui.filter.FilterMvpContract
 import com.sterlingng.paylite.ui.filter.FilterMvpView
 import com.sterlingng.paylite.ui.filter.FilterPresenter
@@ -90,19 +93,13 @@ import com.sterlingng.paylite.ui.newpayment.NewPaymentPresenter
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountMvpContract
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountMvpView
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountPresenter
-import com.sterlingng.paylite.ui.payment.PaymentMvpContract
-import com.sterlingng.paylite.ui.payment.PaymentMvpView
-import com.sterlingng.paylite.ui.payment.PaymentPresenter
-import com.sterlingng.paylite.ui.profile.ProfileMvpContract
-import com.sterlingng.paylite.ui.profile.ProfileMvpView
-import com.sterlingng.paylite.ui.profile.ProfilePresenter
-import com.sterlingng.paylite.ui.editprofile.EditMvpContract
-import com.sterlingng.paylite.ui.editprofile.EditMvpView
-import com.sterlingng.paylite.ui.editprofile.EditPresenter
 import com.sterlingng.paylite.ui.notifications.NotificationMvpContract
 import com.sterlingng.paylite.ui.notifications.NotificationMvpView
 import com.sterlingng.paylite.ui.notifications.NotificationPresenter
 import com.sterlingng.paylite.ui.notifications.NotificationsAdapter
+import com.sterlingng.paylite.ui.payment.PaymentMvpContract
+import com.sterlingng.paylite.ui.payment.PaymentMvpView
+import com.sterlingng.paylite.ui.payment.PaymentPresenter
 import com.sterlingng.paylite.ui.request.RequestMvpContract
 import com.sterlingng.paylite.ui.request.RequestMvpView
 import com.sterlingng.paylite.ui.request.RequestPresenter
@@ -279,9 +276,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideAirTimePresenter(presenter: AirTimePresenter<AirTimeMvpView>): AirTimeMvpContract<AirTimeMvpView> = presenter
-
-    @Provides
-    internal fun provideProfilePresenter(presenter: ProfilePresenter<ProfileMvpView>): ProfileMvpContract<ProfileMvpView> = presenter
 
     @Provides
     internal fun provideRequestPresenter(presenter: RequestPresenter<RequestMvpView>): RequestMvpContract<RequestMvpView> = presenter
