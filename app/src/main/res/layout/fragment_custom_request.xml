@@ -8,19 +8,6 @@
     tools:context=".ui.request.custom.CustomRequestFragment">
 
     <ImageView
-        android:id="@+id/backdrop"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/backdrop"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_small"
-        app:layout_constraintDimensionRatio="w,1:5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <ImageView
         android:id="@+id/exit"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -31,6 +18,7 @@
         android:contentDescription="@string/exit"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
+        android:tint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/chevron_left"/>
@@ -41,12 +29,23 @@
         android:layout_height="wrap_content"
         android:text="@string/request_money"
         android:textAppearance="@style/MyAppearance"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>
+
+    <TextView
+        android:id="@+id/balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/balance_201_00"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
 
     <TextView
         android:id="@+id/textView_10"
@@ -56,7 +55,7 @@
         android:text="@string/recepient_s_phone"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop"/>
+        app:layout_constraintTop_toBottomOf="@+id/balance"/>
 
     <EditText
         android:id="@+id/phone"

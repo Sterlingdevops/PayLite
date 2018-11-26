@@ -37,7 +37,7 @@ class MainActivityTest {
     fun onLoginActionTest() {
         onView(withId(R.id.log_in)).perform(click())
 
-        onView(withId(R.id.username)).perform(typeText("rtukpe"))
+        onView(withId(R.id.uniform)).perform(typeText("rtukpe"))
         onView(withId(R.id.password)).perform(typeText("00000tukpe"), closeSoftKeyboard())
         onView(withId(R.id.sign_in)).perform(click())
 
