@@ -17,6 +17,11 @@ class SplitContactPresenter<V : SplitContactMvpView>
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SplitContactMvpContract<V> {
 
+    override fun onViewInitialized() {
+        super.onViewInitialized()
+        mvpView.initView(dataManager.getWallet())
+    }
+
     override fun splitPayment(data: HashMap<String, Any>) {
         val user = dataManager.getCurrentUser()
         data["userid"] = user?.phoneNumber!!

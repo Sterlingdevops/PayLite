@@ -101,7 +101,7 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClic
 
     @SuppressLint("SetTextI18n")
     override fun initView(wallet: Wallet?, count: String) {
-        mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet?.balance?.toFloat())
+        mBalanceTextView.text = String.format("Balance: ₦%,.0f", wallet?.balance?.toFloat())
         mScheduledRefView.label = "$count standing orders"
     }
 

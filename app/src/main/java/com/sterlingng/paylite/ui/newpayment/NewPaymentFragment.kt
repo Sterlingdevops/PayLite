@@ -187,7 +187,7 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
     }
 
     override fun initView(wallet: Wallet?) {
-        mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet?.balance?.toFloat()).replace(".", ",")
+        mBalanceTextView.text = String.format("Balance: ₦%,.0f", wallet?.balance?.toFloat())
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

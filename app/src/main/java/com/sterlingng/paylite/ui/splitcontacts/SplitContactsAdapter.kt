@@ -52,7 +52,7 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
 
     fun remove(index: Int) {
         if (contacts.size <= 2) {
-            Toast.makeText(mContext, "Split action needs at least people", LENGTH_SHORT).show()
+            Toast.makeText(mContext, "Split action needs at least two people", LENGTH_SHORT).show()
             return
         }
         contacts.removeAt(index)

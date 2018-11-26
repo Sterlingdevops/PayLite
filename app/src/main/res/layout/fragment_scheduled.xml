@@ -54,10 +54,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scheduled_payments"
-        android:textAppearance="@style/MyAppearance"
+        android:fontFamily="@font/open_sans_semibold"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guidelineTop"/>

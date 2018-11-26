@@ -2,6 +2,7 @@ package com.sterlingng.paylite.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -20,14 +21,13 @@ import com.sterlingng.paylite.ui.authpin.OpenPinMode
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.getcash.GetCashFragment
-import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.notifications.NotificationsFragment
+import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.splitamount.SplitAmountFragment
 import com.sterlingng.paylite.utils.SpacesItemDecoration
-import com.sterlingng.views.NoScrollingGridLayoutManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -41,17 +41,17 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     @Inject
     lateinit var eventBus: EventBus
 
+    @Inject
+    lateinit var gridLayoutManager: GridLayoutManager
+
+    private lateinit var mFundButton: ImageView
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mListModeImageView: ImageView
+    private lateinit var mMainAmountTextView: TextView
+    private lateinit var mFundWalletTextView: TextView
+    private lateinit var mUserGreetingTextView: TextView
     private lateinit var mNotificationsImageView: ImageView
     private lateinit var mGridMenuItemsAdapter: MenuItemsAdapter
-
-    @Inject
-    lateinit var gridLayoutManager: NoScrollingGridLayoutManager
-
-    private lateinit var mUserGreetingTextView: TextView
-    private lateinit var mMainAmountTextView: TextView
-    private lateinit var mFundButton: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
@@ -64,6 +64,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     override fun bindViews(view: View) {
         mFundButton = view.findViewById(R.id.fund_outline)
         mRecyclerView = view.findViewById(R.id.recyclerView)
+        mFundWalletTextView = view.findViewById(R.id.fund_wallet)
         mMainAmountTextView = view.findViewById(R.id.main_amount)
         mListModeImageView = view.findViewById(R.id.list_mode_icon)
         mUserGreetingTextView = view.findViewById(R.id.user_greeting)
@@ -73,16 +74,14 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     @SuppressLint("CheckResult")
     override fun setUp(view: View) {
         mGridMenuItemsAdapter = MenuItemsAdapter(baseActivity, MenuItemsAdapter.Mode.GRID)
-        mGridMenuItemsAdapter.mRecyclerViewClickListener = this
         mRecyclerView.addItemDecoration(SpacesItemDecoration(0))
-        gridLayoutManager.spanCount = 2
+        mGridMenuItemsAdapter.mRecyclerViewClickListener = this
         mRecyclerView.layoutManager = gridLayoutManager
         mRecyclerView.adapter = mGridMenuItemsAdapter
 
         mPresenter.onViewInitialized()
         mPresenter.loadCachedWallet()
         mPresenter.loadWallet()
-        hideKeyboard()
 
         eventBus.observe(UpdateWallet::class.java)
                 .delay(1L, TimeUnit.MILLISECONDS)
@@ -91,6 +90,13 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 .subscribe {
                     mPresenter.loadCachedWallet()
                 }
+
+        mFundWalletTextView.setOnClickListener {
+            when {
+                mPresenter.getAuthPin() -> (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
+                else -> (baseActivity as DashboardActivity).mNavController.pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name, openFund = true))
+            }
+        }
 
         mFundButton.setOnClickListener {
             when {
@@ -105,7 +111,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     }
 
     override fun onGetWalletSuccessful(wallet: Wallet) {
-        mMainAmountTextView.text = String.format("₦%,.0f", wallet.balance.toFloat()).replace(".", ",")
+        mMainAmountTextView.text = String.format("₦%,.0f", wallet.balance.toFloat())
     }
 
     override fun onGetWalletFailed() {

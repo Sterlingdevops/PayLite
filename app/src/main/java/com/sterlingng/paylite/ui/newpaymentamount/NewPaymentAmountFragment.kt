@@ -253,7 +253,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     }
 
     override fun initView(wallet: Wallet) {
-        mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet.balance.toFloat())
+        mBalanceTextView.text = String.format("Balance: ₦%,.0f", wallet.balance.toFloat())
     }
 
     override fun onSendMoneySuccessful() {

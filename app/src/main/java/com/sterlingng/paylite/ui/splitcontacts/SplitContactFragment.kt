@@ -19,10 +19,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.ChosenContact
-import com.sterlingng.paylite.data.model.ContactItem
-import com.sterlingng.paylite.data.model.SplitPaymentRequest
-import com.sterlingng.paylite.data.model.SplitPerson
+import com.sterlingng.paylite.data.model.*
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.contacts.SelectContactsFragment
@@ -79,6 +76,8 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView, SplitContactsA
 
     @SuppressLint("CheckResult")
     override fun setUp(view: View) {
+        mPresenter.onViewInitialized()
+
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }
@@ -116,7 +115,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView, SplitContactsA
                     try {
                         contact.amount.toInt()
                     } catch (e: NumberFormatException) {
-                        show("Invalid amounts entered for split participants", true)
+                        show("Invalid amount entered for split participants", true)
                         return@setOnClickListener
                     }
 
@@ -199,6 +198,10 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView, SplitContactsA
 
     override fun onSplitPaymentFailed() {
         show("An error occurred while processing the transaction", true)
+    }
+
+    override fun initView(wallet: Wallet?) {
+        mBalanceTextView.text = String.format("Balance: ₦%,.0f", wallet?.balance?.toFloat())
     }
 
     companion object {

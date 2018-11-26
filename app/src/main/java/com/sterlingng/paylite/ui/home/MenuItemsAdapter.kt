@@ -12,6 +12,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.MenuItem
 import com.sterlingng.paylite.ui.base.BaseViewHolder
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import com.sterlingng.paylite.utils.ViewUtils.dpToPx
 import com.sterlingng.paylite.utils.then
 import java.util.*
 
@@ -95,8 +96,16 @@ class MenuItemsAdapter(val mContext: Context, val type: Mode) : RecyclerView.Ada
             super.onBind(adapterPosition)
             when (type) {
                 Mode.GRID -> {
-                    itemView.setBackgroundResource((adapterPosition % 2 == 0) then
-                    R.drawable.background_home_left_item ?: R.drawable.background_home_right_item)
+                    val layoutParams: ViewGroup.MarginLayoutParams = itemView.layoutParams as ViewGroup.MarginLayoutParams
+
+                    (adapterPosition % 2 == 0) then
+                    layoutParams.setMargins(dpToPx(16f), dpToPx(16f), dpToPx(8f),
+                            (adapterPosition == items.count() - 1) then dpToPx(16f) ?: 0)
+                            ?: layoutParams.setMargins(dpToPx(8f), dpToPx(16f), dpToPx(16f),
+                                    (adapterPosition == items.count() - 1) then dpToPx(16f) ?: 0)
+
+                    itemView.layoutParams = layoutParams
+                    itemView.requestLayout()
                 }
                 Mode.LIST -> return
             }

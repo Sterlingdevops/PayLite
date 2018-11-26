@@ -81,7 +81,7 @@ class ScheduledFragment : BaseFragment(), ScheduledMvpView {
     }
 
     override fun initView(wallet: Wallet, payments: ArrayList<ScheduledPayment>) {
-        mBalanceTextView.text = String.format("Balance: ₦%,.2f", wallet.balance.toFloat())
+        mBalanceTextView.text = String.format("Balance: ₦%,.0f", wallet.balance.toFloat())
         mScheduledPaymentAdapter.add(payments)
     }
 
