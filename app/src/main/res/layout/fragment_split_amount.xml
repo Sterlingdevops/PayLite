@@ -26,14 +26,14 @@
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:clickable="true"
         android:contentDescription="@string/exit"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:tint="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/balance"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/chevron_left"/>
 
     <TextView

@@ -15,9 +15,12 @@ import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailFragment
+import com.sterlingng.paylite.utils.Log
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -35,8 +38,12 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
     @Inject
     lateinit var eventBus: EventBus
 
+    private lateinit var monthsAdapter: MonthsAdapter
+    private val months = ArrayList<String>()
+
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
-    lateinit var recyclerView: RecyclerView
+    private lateinit var mMonthsRecyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_transaction_type, container, false)
@@ -48,12 +55,16 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
 
     @SuppressLint("CheckResult")
     override fun setUp(view: View) {
-        mPresenter.onViewInitialized()
         mTransactionCategoriesAdapter.mRecyclerViewClickListener = this
 
         recyclerView.adapter = mTransactionCategoriesAdapter
         recyclerView.layoutManager = mLinearLayoutManager
         recyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(mTransactionCategoriesAdapter))
+
+        monthsAdapter = MonthsAdapter(baseActivity)
+        monthsAdapter.mRecyclerViewClickListener = this
+        mMonthsRecyclerView.adapter = monthsAdapter
+        recyclerView.layoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.VERTICAL, false)
 
         eventBus.observe(UpdateTransaction::class.java)
                 .delay(1L, TimeUnit.MILLISECONDS)
@@ -67,6 +78,8 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
         mSwipeRefreshLayout.setOnRefreshListener {
             mPresenter.loadTransactions()
         }
+
+        mPresenter.onViewInitialized()
     }
 
     override fun updateCategories(it: ArrayList<Transaction>) {
@@ -77,12 +90,20 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
     override fun bindViews(view: View) {
         recyclerView = view.findViewById(R.id.recyclerView)
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefresh)
+        mMonthsRecyclerView = view.findViewById(R.id.monthsRecyclerView)
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
-        (baseActivity as DashboardActivity)
-                .mNavController
-                .pushFragment(TransactionDetailFragment.newInstance(mTransactionCategoriesAdapter.get(position), position))
+        when (v.id) {
+            R.id.month -> {
+                Log.d(months[position])
+            }
+            else -> {
+                (baseActivity as DashboardActivity)
+                        .mNavController
+                        .pushFragment(TransactionDetailFragment.newInstance(mTransactionCategoriesAdapter.get(position), position))
+            }
+        }
     }
 
     override fun initView(transactions: ArrayList<Transaction>) {
@@ -95,6 +116,11 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
             else -> transactions
         }
 
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+        val monthFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
+        months += newTransactions.map { monthFormat.format(formatter.parse(it.date)) }.toSortedSet()
+
+        monthsAdapter.items += months
         mTransactionCategoriesAdapter.add(newTransactions)
         recyclerView.scrollToPosition(0)
     }

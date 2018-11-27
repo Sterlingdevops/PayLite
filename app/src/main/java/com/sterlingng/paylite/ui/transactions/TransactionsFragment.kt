@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
@@ -21,7 +19,6 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
 
     private lateinit var mPagerAdapter: CustomPagerAdapter
 
-    private lateinit var mBalanceTextView: TextView
     private lateinit var mViewPager: CustomViewPager
     private lateinit var mSmartTabLayout: SmartTabLayout
 
@@ -34,7 +31,6 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
     }
 
     override fun setUp(view: View) {
-        mPresenter.onViewInitialized()
         mPagerAdapter = CustomPagerAdapter(childFragmentManager)
 
         mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance("ALL"), "ALL")
@@ -48,13 +44,8 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
         mSmartTabLayout.setViewPager(mViewPager)
     }
 
-    override fun initView(wallet: Wallet) {
-        mBalanceTextView.text = String.format("Balance: ₦%,.0f", wallet.balance.toFloat())
-    }
-
     override fun bindViews(view: View) {
         mViewPager = view.findViewById(R.id.viewpager)
-        mBalanceTextView = view.findViewById(R.id.balance)
         mSmartTabLayout = view.findViewById(R.id.viewpagertab)
     }
 

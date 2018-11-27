@@ -215,7 +215,7 @@ class GetCashFragment : BaseFragment(), GetCashMvpView {
     }
 
     override fun initView(wallet: Wallet) {
-        mBalanceTextView.text = String.format("₦%,.2f", wallet.balance.toFloat())
+        mBalanceTextView.text = String.format("₦%,.0f", wallet.balance.toFloat())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

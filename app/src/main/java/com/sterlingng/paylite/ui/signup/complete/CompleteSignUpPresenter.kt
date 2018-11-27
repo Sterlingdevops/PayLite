@@ -17,6 +17,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CompleteSignUpMvpContract<V> {
 
     override fun initView() {
+        dataManager.deleteAll()
         mvpView.setWelcomeText()
     }
 
