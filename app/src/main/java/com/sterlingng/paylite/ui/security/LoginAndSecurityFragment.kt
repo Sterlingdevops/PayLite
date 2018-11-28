@@ -12,6 +12,7 @@ import com.sterlingng.paylite.ui.authpin.OpenPinMode
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.forgot.reset.ResetFragment
+import com.sterlingng.paylite.ui.securityquestions.SetSecurityQuestionFragment
 import javax.inject.Inject
 
 class LoginAndSecurityFragment : BaseFragment(), LoginAndSecurityMvpView {
@@ -20,6 +21,7 @@ class LoginAndSecurityFragment : BaseFragment(), LoginAndSecurityMvpView {
     lateinit var mPresenter: LoginAndSecurityMvpContract<LoginAndSecurityMvpView>
 
     private lateinit var mChangeTransactionPinTextView: TextView
+    private lateinit var mSecurityQuestionsTextView: TextView
     private lateinit var mChangeLoginPinTextView: TextView
     private lateinit var exit: ImageView
 
@@ -33,13 +35,20 @@ class LoginAndSecurityFragment : BaseFragment(), LoginAndSecurityMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
-        mChangeTransactionPinTextView = view.findViewById(R.id.change_transaction_pin)
         mChangeLoginPinTextView = view.findViewById(R.id.change_login_pin)
+        mSecurityQuestionsTextView = view.findViewById(R.id.security_questions)
+        mChangeTransactionPinTextView = view.findViewById(R.id.change_transaction_pin)
     }
 
     override fun setUp(view: View) {
         exit.setOnClickListener {
             baseActivity.onBackPressed()
+        }
+
+        mSecurityQuestionsTextView.setOnClickListener {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(SetSecurityQuestionFragment.newInstance())
         }
 
         mChangeLoginPinTextView.setOnClickListener {

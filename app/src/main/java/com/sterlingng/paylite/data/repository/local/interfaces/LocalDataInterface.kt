@@ -58,7 +58,7 @@ interface LocalDataInterface {
     fun getBanks(): ArrayList<Bank>
     fun deleteBank(accountNumber: String)
 
-    // contacts
+    // questions
 
     fun saveContact(contact: PayliteContact)
     fun deleteContact(contact: PayliteContact)

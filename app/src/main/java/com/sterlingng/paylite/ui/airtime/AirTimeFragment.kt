@@ -246,7 +246,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
                                 }).start()
                     }
                 }
-                category.mTextEditText.setText(s)
+                category.text = s
             }
         }
         dialog.dismiss()

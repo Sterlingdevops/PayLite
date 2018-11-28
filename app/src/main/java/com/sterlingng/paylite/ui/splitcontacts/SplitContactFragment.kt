@@ -146,7 +146,7 @@ class SplitContactFragment : BaseFragment(), SplitContactMvpView, SplitContactsA
             mPresenter.splitPayment(data)
         }
 
-        // listen for the event when a user selects a contact, then update the list of contacts
+        // listen for the event when a user selects a contact, then update the list of questions
         eventBus.observe(ChosenContact::class.java)
                 .delay(1L, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())

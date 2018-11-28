@@ -8,6 +8,15 @@ import kotlin.collections.ArrayList
 
 class MockHelper @Inject
 internal constructor() : MockerInterface {
+
+    override fun mockQuestions(): ArrayList<Question> {
+        val questions = ArrayList<Question>()
+        questions += Question("What is your father’s middle name?", "")
+        questions += Question("What street did you grow up on?", "")
+        questions += Question("What is your favorite color?", "")
+        return questions
+    }
+
     override fun mockVAS(): ArrayList<VAService> {
         val vas = ArrayList<VAService>()
 //        val utilityProviders = ArrayList<VasProvider>()

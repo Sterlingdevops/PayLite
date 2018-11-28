@@ -14,7 +14,7 @@ import android.widget.TextView
 
 class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
-    var mLabelTextView: TextView
+    private var mLabelTextView: TextView
     var mTextEditText: EditText
 
     init {
@@ -23,6 +23,7 @@ class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayo
         val type = a.getInt(R.styleable.LargeLabelEditText_android_inputType, EditorInfo.TYPE_TEXT_VARIATION_NORMAL)
         val enabled = a.getBoolean(R.styleable.LargeLabelEditText_android_enabled, true)
         val plainText: String? = a.getString(R.styleable.LargeLabelClickToSelectEditText_android_text)
+        val background = a.getDrawable(R.styleable.LargeLabelEditText_android_background)
         val textLength = a.getInt(R.styleable.LargeLabelEditText_maxLength, Int.MAX_VALUE)
         val drawable = a.getDrawable(R.styleable.LargeLabelEditText_drawable)
         val text = a.getString(R.styleable.LargeLabelEditText_label)
@@ -30,6 +31,7 @@ class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayo
 
         LayoutInflater.from(context).inflate(R.layout.large_label_edit_text, this, true)
         val root = this[0] as ConstraintLayout
+        root.background = background
 
         mLabelTextView = root[1] as TextView
         mLabelTextView.setTextColor(color)

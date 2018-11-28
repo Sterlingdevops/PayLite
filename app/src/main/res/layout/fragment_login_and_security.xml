@@ -19,7 +19,7 @@
         android:tint="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
         app:srcCompat="@drawable/chevron_left"/>
 
     <TextView
@@ -57,8 +57,8 @@
         tools:layout_editor_absoluteY="138dp"/>
 
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -94,9 +94,30 @@
         app:layout_constraintTop_toBottomOf="@id/change_login_pin"
         tools:layout_editor_absoluteY="217dp"/>
 
+    <TextView
+        android:id="@+id/security_questions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/background_settings_item"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:text="@string/set_security_questions"
+        android:textColor="@color/blue_black_dark"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/change_transaction_pin"
+        tools:layout_editor_absoluteY="217dp"/>
+
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -109,6 +130,23 @@
         app:layout_constraintBottom_toBottomOf="@+id/change_transaction_pin"
         app:layout_constraintEnd_toEndOf="@+id/change_transaction_pin"
         app:layout_constraintTop_toTopOf="@+id/change_transaction_pin"
+        app:srcCompat="@drawable/chevron_right"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/security_questions"
+        app:layout_constraintEnd_toEndOf="@+id/security_questions"
+        app:layout_constraintTop_toTopOf="@+id/security_questions"
         app:srcCompat="@drawable/chevron_right"/>
 
     <android.support.constraint.Guideline

@@ -2,14 +2,14 @@ package com.sterlingng.paylite.ui.payment
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import com.daimajia.swipe.SwipeLayout
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.PaymentMethod
 import com.sterlingng.paylite.ui.base.BaseViewHolder
@@ -18,18 +18,19 @@ import com.sterlingng.paylite.utils.then
 import java.util.*
 
 
-class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+class PaymentMethodsAdapter(val mContext: Context) : RecyclerSwipeAdapter<BaseViewHolder>() {
 
     val paymentMethods: ArrayList<PaymentMethod> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
     lateinit var onAddPaymentMethodListener: OnAddPaymentMethod
+    lateinit var onDeletePaymentMethodListener: OnDeletePaymentMethod
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View?
         return when (viewType) {
             VIEW_TYPE_NORMAL -> {
                 view = LayoutInflater.from(mContext).inflate(R.layout.layout_payment_method_item, parent, false)
-                ViewHolder(view, mRecyclerViewClickListener)
+                ViewHolder(view, onDeletePaymentMethodListener, mRecyclerViewClickListener)
             }
             VIEW_TYPE_EMPTY -> {
                 view = LayoutInflater.from(mContext).inflate(R.layout.layout_fund_empty_view, parent, false)
@@ -41,6 +42,8 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
             }
         }
     }
+
+    override fun getSwipeLayoutResourceId(adapterPosition: Int): Int = R.id.swipe
 
     private val selectedItems: SparseBooleanArray = SparseBooleanArray()
 
@@ -98,37 +101,30 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
         }
     }
 
-    inner class ViewHolder(itemView: View, private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View,
+                           private var onDeletePaymentMethodListener: OnDeletePaymentMethod,
+                           private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
 
-        private val expiryTextView: TextView = itemView.findViewById(R.id.expiry)
-        private val nameTextView: TextView = itemView.findViewById(R.id.name)
-        private val numberTextView: TextView = itemView.findViewById(R.id.number)
         private val imageView: ImageView = itemView.findViewById(R.id.image)
-        private val defaultCheckBox: CheckBox = itemView.findViewById(R.id.checkbox)
-        private val defaultTextView: TextView = itemView.findViewById(R.id.default_payment_method)
+        private val swipeLayout: SwipeLayout = itemView.findViewById(R.id.swipe)
+        private val expiryTextView: TextView = itemView.findViewById(R.id.expiry)
+        private val numberTextView: TextView = itemView.findViewById(R.id.number)
+        private val deleteContactTextView: TextView = itemView.findViewById(R.id.delete)
 
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
 
+            swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
+
             with(paymentMethods[adapterPosition]) {
                 expiryTextView.text = isCard then "Exp: $expiry" ?: ""
-                nameTextView.text = name
                 numberTextView.text = isCard then "Card: ${String(number.toCharArray().takeLast(4).toCharArray())}" ?: "$bankname: $number"
                 imageView.setImageDrawable(ContextCompat.getDrawable(mContext,
                         (image != 0) then image ?: R.drawable.icon_card))
             }
 
-            defaultCheckBox.isChecked = selectedItems.get(adapterPosition)
-            if (selectedItems.get(adapterPosition)) {
-                defaultTextView.text = mContext.getString(R.string.default_payment_method)
-                defaultTextView.setTextColor(ContextCompat.getColor(mContext, R.color.black))
-            } else {
-                defaultTextView.text = mContext.getString(R.string.set_default_payment_method)
-                defaultTextView.setTextColor(ContextCompat.getColor(mContext, R.color.dark_sky_blue))
-            }
-
-            defaultTextView.setOnClickListener {
-                recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
+            deleteContactTextView.setOnClickListener {
+                onDeletePaymentMethodListener.onPaymentMethodDeleted(adapterPosition)
             }
 
             itemView.setOnClickListener {
@@ -149,6 +145,10 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerView.Adapter<BaseVi
                 onAddPaymentMethodListener.onAddPaymentMethodClicked()
             }
         }
+    }
+
+    interface OnDeletePaymentMethod {
+        fun onPaymentMethodDeleted(adapterPosition: Int)
     }
 
     interface OnAddPaymentMethod {

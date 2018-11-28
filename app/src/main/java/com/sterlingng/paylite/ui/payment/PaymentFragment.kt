@@ -17,7 +17,7 @@ import com.sterlingng.paylite.ui.fund.FundFragment
 import com.sterlingng.paylite.utils.then
 import javax.inject.Inject
 
-class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.OnAddPaymentMethod {
+class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.OnAddPaymentMethod, PaymentMethodsAdapter.OnDeletePaymentMethod {
 
     @Inject
     lateinit var mPresenter: PaymentMvpContract<PaymentMvpView>
@@ -61,6 +61,7 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
         mPaymentMethodsAdapter = PaymentMethodsAdapter(baseActivity)
         mPaymentMethodsAdapter.mRecyclerViewClickListener = this
         mPaymentMethodsAdapter.onAddPaymentMethodListener = this
+        mPaymentMethodsAdapter.onDeletePaymentMethodListener = this
 
         mRecyclerView.adapter = mPaymentMethodsAdapter
         mRecyclerView.layoutManager = mLinearLayoutManager
@@ -82,17 +83,17 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
         when (v.id) {
-            R.id.default_payment_method -> {
-                if (mPaymentMethodsAdapter.get(position).isCard)
-                    mPresenter.setCardDefault(mPaymentMethodsAdapter.get(position))
-                else
-                    mPresenter.setBankDefault(mPaymentMethodsAdapter.get(position))
-                mPaymentMethodsAdapter.toggleSelection(position)
+            R.id.delete -> {
+                show("Delete ${mPaymentMethodsAdapter.get(position)}", true)
             }
             R.id.payment_method -> (baseActivity as DashboardActivity)
                     .mNavController
                     .pushFragment(FundFragment.newInstance(mPaymentMethodsAdapter.get(position)))
         }
+    }
+
+    override fun onPaymentMethodDeleted(adapterPosition: Int) {
+
     }
 
     companion object {

@@ -8,4 +8,9 @@ import javax.inject.Inject
 
 class SetSecurityQuestionMvpPresenter<V : SetSecurityQuestionMvpView> @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SetSecurityQuestionMvpContract<V>
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SetSecurityQuestionMvpContract<V> {
+
+    override fun loadQuestions() {
+        mvpView.initView(dataManager.mockQuestions())
+    }
+}

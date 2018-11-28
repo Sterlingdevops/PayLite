@@ -154,7 +154,7 @@
     <string name="face_id">Face ID</string>
     <string name="notifications_settings">Notifications Settings</string>
     <string name="payment_methods">Payment Methods</string>
-    <string name="mastercard_2334">MASTERCARD (2334)</string>
+    <string name="mastercard_2334">Mastercard *0813</string>
     <string name="add_new_payment_method">Add new payment method</string>
     <string name="notifications">Notifications</string>
     <string name="clear">Clear</string>
@@ -339,4 +339,7 @@
     <string name="we_need_this_to_send_you_important_updates_and_help_with_account_recovery">We need this to send you important updates and help with account recovery.</string>
     <string name="input_your_bvn">Input your BVN</string>
     <string name="jan">JAN</string>
+    <string name="answer">Answer</string>
+    <string name="security_questions">Security Questions</string>
+    <string name="set_security_questions">Set Security Questions</string>
 </resources>
