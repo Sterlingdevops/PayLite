@@ -1,7 +1,6 @@
 package com.sterlingng.paylite.utils
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,6 +13,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+
 /**
  * Created by rtukpe on 13/03/2018.
  */
@@ -24,14 +24,10 @@ object CommonUtils {
 
     val timeStamp: String = SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT, Locale.US).format(Date())
 
-    fun showLoadingDialog(context: Context): ProgressDialog {
-        val progressDialog = ProgressDialog(context)
-        progressDialog.show()
-        if (progressDialog.window != null) {
-            progressDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        }
+    fun showLoadingDialog(context: Context): MyProgressDialog {
+        val progressDialog = MyProgressDialog.show(context)
+        progressDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         progressDialog.setContentView(R.layout.progress_dialog)
-        progressDialog.isIndeterminate = true
         progressDialog.setCancelable(false)
         progressDialog.setCanceledOnTouchOutside(false)
         return progressDialog

@@ -27,6 +27,8 @@ internal constructor(@param:ApplicationContext val context: Context,
                      private val mPayStackServiceHelper: PayStackServiceHelper,
                      private val mMockHelper: MockHelper) : DataManager {
 
+    override fun setSecurityQuestion(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceHelper.setSecurityQuestion(data, authorization, hash)
+
     override fun mockQuestions(): ArrayList<Question> = mMockHelper.mockQuestions()
 
     override fun mockVAS(): ArrayList<VAService> = mMockHelper.mockVAS()

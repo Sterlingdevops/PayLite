@@ -1,7 +1,6 @@
 package com.sterlingng.paylite.ui.base
 
 import android.annotation.TargetApi
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -20,6 +19,7 @@ import com.sterlingng.paylite.di.component.DaggerActivityComponent
 import com.sterlingng.paylite.di.module.ActivityModule
 import com.sterlingng.paylite.root.MvpApp
 import com.sterlingng.paylite.utils.CommonUtils
+import com.sterlingng.paylite.utils.MyProgressDialog
 import com.sterlingng.paylite.utils.NetworkUtils
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 
@@ -30,7 +30,7 @@ import com.sterlingng.paylite.utils.RecyclerViewClickListener
 abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickListener {
 
     var onBackClickedListener: OnBackClicked? = null
-    private lateinit var mProgressDialog: ProgressDialog
+    private lateinit var mProgressDialog: MyProgressDialog
     lateinit var activityComponent: ActivityComponent
         private set
 
@@ -42,6 +42,8 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
         activityComponent = DaggerActivityComponent.builder()
                 .activityModule(ActivityModule(this))
                 .applicationComponent((application as MvpApp).component).build()
+
+        mProgressDialog = CommonUtils.showLoadingDialog(this)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -70,7 +72,6 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, RecyclerViewClickLis
     }
 
     override fun showLoading() {
-        mProgressDialog = CommonUtils.showLoadingDialog(this)
         mProgressDialog.show()
     }
 

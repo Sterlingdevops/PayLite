@@ -5,4 +5,7 @@ import com.sterlingng.paylite.ui.base.MvpView
 
 interface SetSecurityQuestionMvpView : MvpView {
     fun initView(mockQuestions: ArrayList<Question>)
+    fun logout()
+    fun onSaveQuestionsFailed()
+    fun onSaveQuestionsSuccessful()
 }

@@ -1,6 +1,7 @@
 package com.sterlingng.paylite.ui.payment
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -104,17 +105,17 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerSwipeAdapter<BaseVi
     inner class ViewHolder(itemView: View,
                            private var onDeletePaymentMethodListener: OnDeletePaymentMethod,
                            private var recyclerViewClickListener: RecyclerViewClickListener) : BaseViewHolder(itemView) {
-
         private val imageView: ImageView = itemView.findViewById(R.id.image)
         private val swipeLayout: SwipeLayout = itemView.findViewById(R.id.swipe)
         private val expiryTextView: TextView = itemView.findViewById(R.id.expiry)
         private val numberTextView: TextView = itemView.findViewById(R.id.number)
+        private val root: ConstraintLayout = itemView.findViewById(R.id.payment_method)
         private val deleteContactTextView: TextView = itemView.findViewById(R.id.delete)
 
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
 
-            swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
+            swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
 
             with(paymentMethods[adapterPosition]) {
                 expiryTextView.text = isCard then "Exp: $expiry" ?: ""
@@ -127,7 +128,7 @@ class PaymentMethodsAdapter(val mContext: Context) : RecyclerSwipeAdapter<BaseVi
                 onDeletePaymentMethodListener.onPaymentMethodDeleted(adapterPosition)
             }
 
-            itemView.setOnClickListener {
+            root.setOnClickListener {
                 recyclerViewClickListener.recyclerViewItemClicked(it, adapterPosition)
             }
 

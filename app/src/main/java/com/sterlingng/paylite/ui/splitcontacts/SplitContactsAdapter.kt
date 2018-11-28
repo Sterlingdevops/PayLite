@@ -68,8 +68,8 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mContactAmountTextWatcher.updatePosition(holder.adapterPosition)
-        holder.mContactNameTextWatcher.updatePosition(holder.adapterPosition)
+        holder.contactAmountTextWatcher.updatePosition(holder.adapterPosition)
+        holder.contactNameTextWatcher.updatePosition(holder.adapterPosition)
 
         holder.chooseContactEditText.setText(contacts[holder.adapterPosition].contact)
         holder.contactAmountEditText.setText(contacts[holder.adapterPosition].amount)
@@ -80,21 +80,18 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
     inner class ViewHolder(itemView: View,
                            recyclerViewClickListener: RecyclerViewClickListener,
                            onDeleteContactWatcher: OnDeleteContactWatcher,
-                           contactNameTextWatcher: ContactNameTextWatcher,
-                           contactAmountTextWatcher: ContactAmountTextWatcher) : RecyclerView.ViewHolder(itemView) {
+                           val contactNameTextWatcher: ContactNameTextWatcher,
+                           val contactAmountTextWatcher: ContactAmountTextWatcher) : RecyclerView.ViewHolder(itemView) {
 
         private val swipeLayout: SwipeLayout = itemView.findViewById(R.id.swipe)
         private val deleteContactTextView: TextView = itemView.findViewById(R.id.delete)
         val chooseContactEditText: EditText = itemView.findViewById(R.id.choose_contact)
         val contactAmountEditText: EditText = itemView.findViewById(R.id.contact_amount)
 
-        val mContactNameTextWatcher: ContactNameTextWatcher = contactNameTextWatcher
-        val mContactAmountTextWatcher: ContactAmountTextWatcher = contactAmountTextWatcher
-
         init {
             contactAmountEditText.addTextChangedListener(contactAmountTextWatcher)
             chooseContactEditText.addTextChangedListener(contactNameTextWatcher)
-            swipeLayout.showMode = SwipeLayout.ShowMode.LayDown
+            swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
 
             val drawable = ContextCompat.getDrawable(mContext, R.drawable.icon_phone_book)
             drawable?.setBounds(0, 0, (drawable.intrinsicWidth * 0.7).toInt(), (drawable.intrinsicHeight * 0.7).toInt())

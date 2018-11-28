@@ -83,9 +83,6 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
         when (v.id) {
-            R.id.delete -> {
-                show("Delete ${mPaymentMethodsAdapter.get(position)}", true)
-            }
             R.id.payment_method -> (baseActivity as DashboardActivity)
                     .mNavController
                     .pushFragment(FundFragment.newInstance(mPaymentMethodsAdapter.get(position)))
@@ -93,7 +90,7 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
     }
 
     override fun onPaymentMethodDeleted(adapterPosition: Int) {
-
+        show("Delete ${mPaymentMethodsAdapter.get(adapterPosition)}", true)
     }
 
     companion object {

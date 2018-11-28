@@ -5,13 +5,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Question
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.confirm.ConfirmFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.views.NoScrollingLinearLayoutManager
 import javax.inject.Inject
 
-class SetSecurityQuestionFragment : BaseFragment(), SetSecurityQuestionMvpView {
+class SetSecurityQuestionFragment : BaseFragment(), SetSecurityQuestionMvpView, ConfirmFragment.OnPinValidated {
 
     @Inject
     lateinit var mPresenter: SetSecurityQuestionMvpContract<SetSecurityQuestionMvpView>
@@ -19,7 +22,8 @@ class SetSecurityQuestionFragment : BaseFragment(), SetSecurityQuestionMvpView {
     @Inject
     lateinit var mLinearLayoutManager: NoScrollingLinearLayoutManager
 
-    lateinit var mRecyclerView: RecyclerView
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mSetSecurityQuestionButton: Button
     private lateinit var mSetSecurityQuestionAdapter: SetSecurityQuestionAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,6 +36,7 @@ class SetSecurityQuestionFragment : BaseFragment(), SetSecurityQuestionMvpView {
 
     override fun bindViews(view: View) {
         mRecyclerView = view.findViewById(R.id.recyclerView)
+        mSetSecurityQuestionButton = view.findViewById(R.id.next)
     }
 
     override fun setUp(view: View) {
@@ -40,6 +45,12 @@ class SetSecurityQuestionFragment : BaseFragment(), SetSecurityQuestionMvpView {
         mRecyclerView.adapter = mSetSecurityQuestionAdapter
 
         mPresenter.loadQuestions()
+
+        mSetSecurityQuestionButton.setOnClickListener {
+            val confirmFragment = ConfirmFragment.newInstance()
+            confirmFragment.onPinValidatedListener = this
+            (baseActivity as DashboardActivity).mNavController.showDialogFragment(confirmFragment)
+        }
     }
 
     override fun initView(mockQuestions: ArrayList<Question>) {
@@ -48,6 +59,32 @@ class SetSecurityQuestionFragment : BaseFragment(), SetSecurityQuestionMvpView {
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
 
+    }
+
+    override fun onPinCorrect() {
+        mSetSecurityQuestionAdapter.questions.forEach {
+            val data = HashMap<String, Any>()
+            data["QuestionAnswer"] = it.answer
+            data["QuestionCode"] = it.question[0].toString().toInt()
+            mPresenter.saveQuestions(data)
+        }
+    }
+
+    override fun logout() {
+        baseActivity.logout()
+    }
+
+    override fun onPinIncorrect() {
+        show("The PIN entered is incorrect", true)
+    }
+
+    override fun onSaveQuestionsFailed() {
+        show("An error occurred in communicating with the server", true)
+    }
+
+    override fun onSaveQuestionsSuccessful() {
+        show("Security Questions successfully setup", true)
+        (baseActivity as DashboardActivity).mNavController.clearStack()
     }
 
     companion object {

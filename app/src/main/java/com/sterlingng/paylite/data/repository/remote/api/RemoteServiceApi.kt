@@ -169,8 +169,14 @@ interface RemoteServiceApi {
     @POST("api/Paylite/UpdateTransactionCategory")
     @Headers("X-CID: $CLIENT_ID")
     fun updateTransactionCategory(@Body data: HashMap<String, Any>,
-                          @Header("Authorization") authorization: String,
-                          @Header("X-CS") hash: String): Observable<Response>
+                                  @Header("Authorization") authorization: String,
+                                  @Header("X-CS") hash: String): Observable<Response>
+
+    @POST("api/Paylite/SetSecurityQuestion")
+    @Headers("X-CID: $CLIENT_ID")
+    fun setSecurityQuestion(@Body data: HashMap<String, Any>,
+                            @Header("Authorization") authorization: String,
+                            @Header("X-CS") hash: String): Observable<Response>
 
     // PUT
 

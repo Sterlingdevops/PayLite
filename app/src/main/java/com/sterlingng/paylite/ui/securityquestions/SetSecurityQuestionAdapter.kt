@@ -2,6 +2,8 @@ package com.sterlingng.paylite.ui.securityquestions
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +14,14 @@ import com.sterlingng.paylite.ui.base.BaseViewHolder
 
 class SetSecurityQuestionAdapter(val mContext: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    private val questions: ArrayList<Question> = ArrayList()
+    val questions: ArrayList<Question> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View?
         return when (viewType) {
             VIEW_TYPE_NORMAL -> {
                 view = LayoutInflater.from(mContext).inflate(R.layout.layout_question_item, parent, false)
-                ViewHolder(view)
+                ViewHolder(view, AnswerTextWatcher())
             }
             else -> {
                 view = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_view, parent, false)
@@ -73,12 +75,14 @@ class SetSecurityQuestionAdapter(val mContext: Context) : RecyclerView.Adapter<B
         }
     }
 
-    inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, private val answerTextWatcher: AnswerTextWatcher) : BaseViewHolder(itemView) {
+        private val answerTextView: EditText = itemView.findViewById(R.id.answer)
         private val questionTextView: EditText = itemView.findViewById(R.id.question)
 
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
-
+            answerTextWatcher.updatePosition(adapterPosition)
+            answerTextView.addTextChangedListener(answerTextWatcher)
             questionTextView.setText(questions[position].question)
         }
     }
@@ -89,5 +93,25 @@ class SetSecurityQuestionAdapter(val mContext: Context) : RecyclerView.Adapter<B
 
         private const val VIEW_TYPE_NORMAL = 1
         private const val VIEW_TYPE_EMPTY = 0
+    }
+
+    inner class AnswerTextWatcher : TextWatcher {
+        var index: Int = -1
+
+        fun updatePosition(position: Int) {
+            this.index = position
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            questions[index].answer = s?.toString()!!
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+        }
     }
 }

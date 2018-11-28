@@ -78,7 +78,6 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
                         mvpView.hideLoading()
                     }
                 })
-
     }
 
     override fun fundWalletWithBankAccount(data: HashMap<String, Any>) {

@@ -146,6 +146,7 @@ dependencies {
     def appCenterSdkVersion = '1.10.0'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
 }
 /*
 Resolves dependency versions across test and production APKs, specifically, transitive
