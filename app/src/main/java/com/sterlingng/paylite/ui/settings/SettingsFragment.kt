@@ -4,29 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.editprofile.EditProfileFragment
-import com.sterlingng.paylite.ui.help.HelpFragment
 import com.sterlingng.paylite.ui.main.MainActivity
-import com.sterlingng.paylite.ui.notifications.NotificationsFragment
-import com.sterlingng.paylite.ui.payment.PaymentFragment
-import com.sterlingng.paylite.ui.security.LoginAndSecurityFragment
 import javax.inject.Inject
 
 class SettingsFragment : BaseFragment(), SettingsMvpView {
 
     @Inject
     lateinit var mPresenter: SettingsMvpContract<SettingsMvpView>
-
-    private lateinit var mLoginAndSecurityTextView: TextView
-    private lateinit var mHelpAndFeedbackTextView: TextView
-    private lateinit var mPaymentMethodsTextView: TextView
-    private lateinit var mNotificationTextView: TextView
-    private lateinit var mPersonalInfoTextView: TextView
-    private lateinit var mLogOutTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
@@ -37,48 +23,39 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
     }
 
     override fun bindViews(view: View) {
-        mLoginAndSecurityTextView = view.findViewById(R.id.login_and_security)
-        mHelpAndFeedbackTextView = view.findViewById(R.id.help_and_feedback)
-        mPaymentMethodsTextView = view.findViewById(R.id.payment_methods)
-        mPersonalInfoTextView = view.findViewById(R.id.personal_info)
-        mNotificationTextView = view.findViewById(R.id.notifications)
-        mLogOutTextView = view.findViewById(R.id.log_out)
+
     }
 
     override fun setUp(view: View) {
-        mHelpAndFeedbackTextView.setOnClickListener {
-            (baseActivity as DashboardActivity)
-                    .mNavController
-                    .pushFragment(HelpFragment.newInstance())
-        }
-
-        mPersonalInfoTextView.setOnClickListener {
-            (baseActivity as DashboardActivity)
-                    .mNavController
-                    .pushFragment(EditProfileFragment.newInstance())
-        }
-
-        mPaymentMethodsTextView.setOnClickListener {
-            (baseActivity as DashboardActivity)
-                    .mNavController
-                    .pushFragment(PaymentFragment.newInstance())
-        }
-
-        mLoginAndSecurityTextView.setOnClickListener {
-            (baseActivity as DashboardActivity)
-                    .mNavController
-                    .pushFragment(LoginAndSecurityFragment.newInstance())
-        }
-
-        mNotificationTextView.setOnClickListener {
-            (baseActivity as DashboardActivity)
-                    .mNavController
-                    .pushFragment(NotificationsFragment.newInstance())
-        }
-
-        mLogOutTextView.setOnClickListener {
-            mPresenter.logOut()
-        }
+//        mHelpAndFeedbackTextView.setOnClickListener {
+//            (baseActivity as DashboardActivity)
+//                    .mNavController
+//                    .pushFragment(HelpFragment.newInstance())
+//        }
+//
+//        mPersonalInfoTextView.setOnClickListener {
+//            (baseActivity as DashboardActivity)
+//                    .mNavController
+//                    .pushFragment(EditProfileFragment.newInstance())
+//        }
+//
+//        mPaymentMethodsTextView.setOnClickListener {
+//            (baseActivity as DashboardActivity)
+//                    .mNavController
+//                    .pushFragment(PaymentFragment.newInstance())
+//        }
+//
+//        mLoginAndSecurityTextView.setOnClickListener {
+//            (baseActivity as DashboardActivity)
+//                    .mNavController
+//                    .pushFragment(LoginAndSecurityFragment.newInstance())
+//        }
+//
+//        mNotificationTextView.setOnClickListener {
+//            (baseActivity as DashboardActivity)
+//                    .mNavController
+//                    .pushFragment(NotificationsFragment.newInstance())
+//        }
     }
 
     override fun onLogOutComplete() {

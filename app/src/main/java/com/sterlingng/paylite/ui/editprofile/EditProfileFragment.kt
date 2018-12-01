@@ -12,10 +12,10 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.views.LargeLabelEditText
 import javax.inject.Inject
 
-class EditProfileFragment : BaseFragment(), EditMvpView {
+class EditProfileFragment : BaseFragment(), EditProfileMvpView {
 
     @Inject
-    lateinit var mPresenter: EditMvpContract<EditMvpView>
+    lateinit var mPresenter: EditProfileMvpContract<EditProfileMvpView>
 
     private lateinit var exit: ImageView
     private lateinit var mDoneTextView: TextView

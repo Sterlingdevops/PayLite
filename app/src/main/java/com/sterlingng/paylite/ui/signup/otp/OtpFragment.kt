@@ -8,9 +8,12 @@ import android.widget.ImageView
 import com.davidmiguel.numberkeyboard.NumberKeyboard
 import com.davidmiguel.numberkeyboard.NumberKeyboardListener
 import com.goodiebag.pinview.PinView
+import com.microsoft.appcenter.analytics.Analytics
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
+import com.sterlingng.paylite.utils.AppUtils
+import com.sterlingng.paylite.utils.CommonUtils
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import javax.inject.Inject
 
@@ -62,6 +65,12 @@ class OtpFragment : BaseFragment(), OtpMvpView, NumberKeyboardListener {
     }
 
     override fun onValidateOtpSuccessful() {
+        val data = HashMap<String, String>()
+        data["SessionID"] = AppUtils.createId()
+        data["UserID"] = CommonUtils.getDeviceId(baseActivity)
+        data["Progress"] = "1"
+        data["Screen Name"] = javaClass.simpleName
+        Analytics.trackEvent("Onboarding", data)
         mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPinView.value)
     }
 

@@ -6,12 +6,16 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.login.LogInActivity
 import com.sterlingng.paylite.ui.signup.SignUpActivity
 import javax.inject.Inject
+
 
 class MainActivity : BaseActivity(), MainMvpView {
 
@@ -27,6 +31,8 @@ class MainActivity : BaseActivity(), MainMvpView {
         setContentView(R.layout.activity_main)
         activityComponent.inject(this)
         mPresenter.onAttach(this)
+
+        AppCenter.start(application, "3e9e59d2-f183-4729-a723-cc2fea013055", Analytics::class.java, Crashes::class.java)
     }
 
     override fun initView(currentUser: User) {

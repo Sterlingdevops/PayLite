@@ -19,6 +19,11 @@
         <attr name="label"/>
     </declare-styleable>
 
+    <declare-styleable name="TitleIconView">
+        <attr name="drawable"/>
+        <attr name="title"/>
+    </declare-styleable>
+
     <declare-styleable name="LargeLabelEditText">
         <attr name="android:background"/>
         <attr name="android:inputType"/>

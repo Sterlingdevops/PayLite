@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import com.microsoft.appcenter.analytics.Analytics
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.utils.AppUtils
+import com.sterlingng.paylite.utils.CommonUtils
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.views.LargeLabelEditText
 import javax.inject.Inject
@@ -58,6 +61,12 @@ class PhoneFragment : BaseFragment(), PhoneMvpView {
     }
 
     override fun onSendOTPSuccessful() {
+        val data = HashMap<String, String>()
+        data["SessionID"] = AppUtils.createId()
+        data["UserID"] = CommonUtils.getDeviceId(baseActivity)
+        data["Progress"] = "1"
+        data["Screen Name"] = javaClass.simpleName
+        Analytics.trackEvent("Onboarding", data)
         mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPhoneEditText.text)
     }
 

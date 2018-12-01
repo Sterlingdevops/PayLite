@@ -48,9 +48,9 @@ import com.sterlingng.paylite.ui.contacts.SelectContactsMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpContract
 import com.sterlingng.paylite.ui.dashboard.DashboardMvpView
 import com.sterlingng.paylite.ui.dashboard.DashboardPresenter
-import com.sterlingng.paylite.ui.editprofile.EditMvpContract
-import com.sterlingng.paylite.ui.editprofile.EditMvpView
-import com.sterlingng.paylite.ui.editprofile.EditPresenter
+import com.sterlingng.paylite.ui.editprofile.EditProfileMvpContract
+import com.sterlingng.paylite.ui.editprofile.EditProfileMvpView
+import com.sterlingng.paylite.ui.editprofile.EditProfilePresenter
 import com.sterlingng.paylite.ui.filter.FilterMvpContract
 import com.sterlingng.paylite.ui.filter.FilterMvpView
 import com.sterlingng.paylite.ui.filter.FilterPresenter
@@ -125,6 +125,9 @@ import com.sterlingng.paylite.ui.services.ServicesPresenter
 import com.sterlingng.paylite.ui.settings.SettingsMvpContract
 import com.sterlingng.paylite.ui.settings.SettingsMvpView
 import com.sterlingng.paylite.ui.settings.SettingsPresenter
+import com.sterlingng.paylite.ui.settings.profile.ProfileMvpContract
+import com.sterlingng.paylite.ui.settings.profile.ProfileMvpView
+import com.sterlingng.paylite.ui.settings.profile.ProfilePresenter
 import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionMvpContract
 import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionMvpView
 import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionPresenter
@@ -316,7 +319,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideHomePresenter(presenter: HomePresenter<HomeMvpView>): HomeMvpContract<HomeMvpView> = presenter
 
     @Provides
-    internal fun provideEditPresenter(presenter: EditPresenter<EditMvpView>): EditMvpContract<EditMvpView> = presenter
+    internal fun provideEditPresenter(profilePresenter: EditProfilePresenter<EditProfileMvpView>): EditProfileMvpContract<EditProfileMvpView> = profilePresenter
 
     @Provides
     internal fun provideNamePresenter(presenter: NamePresenter<NameMvpView>): NameMvpContract<NameMvpView> = presenter
@@ -335,6 +338,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideFilterPresenter(presenter: FilterPresenter<FilterMvpView>): FilterMvpContract<FilterMvpView> = presenter
+
+    @Provides
+    internal fun provideProfilePresenter(presenter: ProfilePresenter<ProfileMvpView>): ProfileMvpContract<ProfileMvpView> = presenter
 
     @Provides
     internal fun provideAuthPinPresenter(presenter: AuthPinPresenter<AuthPinMvpView>): AuthPinMvpContract<AuthPinMvpView> = presenter

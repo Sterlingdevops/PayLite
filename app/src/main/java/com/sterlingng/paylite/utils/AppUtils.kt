@@ -17,7 +17,7 @@ object AppUtils {
 
     val gson = gson()
 
-    fun createMessageID(): String {
+    fun createId(): String {
         return UUID.randomUUID().toString().replace("-", "")
     }
 

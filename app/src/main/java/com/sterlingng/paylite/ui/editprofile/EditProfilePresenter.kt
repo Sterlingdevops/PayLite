@@ -11,9 +11,9 @@ import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class EditPresenter<V : EditMvpView> @Inject
+class EditProfilePresenter<V : EditProfileMvpView> @Inject
 internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), EditMvpContract<V> {
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), EditProfileMvpContract<V> {
     override fun onViewInitialized() {
         super.onViewInitialized()
         dataManager.getCurrentUser()?.let { mvpView.initView(it) }

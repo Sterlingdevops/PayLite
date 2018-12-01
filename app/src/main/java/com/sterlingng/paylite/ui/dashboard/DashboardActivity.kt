@@ -18,6 +18,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.microsoft.appcenter.analytics.Analytics
 import com.ncapdevi.fragnav.FragNavController
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Bank
@@ -97,6 +98,7 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
                     }
                 }).check()
 
+        Analytics.trackEvent("User Logged In")
         mNavController = FragNavController(supportFragmentManager, R.id.container)
         mNavController.apply {
             createEager = true
