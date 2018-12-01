@@ -1,18 +1,23 @@
 package com.sterlingng.paylite.ui.settings
 
 import android.os.Bundle
+import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.main.MainActivity
+import com.sterlingng.paylite.ui.settings.profile.ProfileFragment
 import javax.inject.Inject
 
 class SettingsFragment : BaseFragment(), SettingsMvpView {
 
     @Inject
     lateinit var mPresenter: SettingsMvpContract<SettingsMvpView>
+
+    private lateinit var mProfileCardView: CardView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
@@ -23,21 +28,21 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
     }
 
     override fun bindViews(view: View) {
-
+        mProfileCardView = view.findViewById(R.id.profile_settings)
     }
 
     override fun setUp(view: View) {
+        mProfileCardView.setOnClickListener {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(ProfileFragment.newInstance())
+        }
 //        mHelpAndFeedbackTextView.setOnClickListener {
 //            (baseActivity as DashboardActivity)
 //                    .mNavController
 //                    .pushFragment(HelpFragment.newInstance())
 //        }
 //
-//        mPersonalInfoTextView.setOnClickListener {
-//            (baseActivity as DashboardActivity)
-//                    .mNavController
-//                    .pushFragment(EditProfileFragment.newInstance())
-//        }
 //
 //        mPaymentMethodsTextView.setOnClickListener {
 //            (baseActivity as DashboardActivity)

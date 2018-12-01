@@ -345,4 +345,13 @@
     <string name="profile_settings">Profile Settings</string>
     <string name="help_and_support"><![CDATA[Help & Support]]></string>
     <string name="become_an_agent">Become an agent</string>
+    <string name="limits">Limits</string>
+    <string name="link_bvn">Link BVN</string>
+    <string name="security">Security</string>
+    <string name="passwords">Passwords</string>
+    <string name="privacy">Privacy</string>
+    <string name="about">About</string>
+    <string name="rate">Rate this app</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="terms_and_conditions"><![CDATA[Terms & conditions]]></string>
 </resources>
