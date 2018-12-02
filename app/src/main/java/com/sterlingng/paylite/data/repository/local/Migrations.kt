@@ -12,9 +12,9 @@ class Migrations : RealmMigration {
 
         //version 2
         if (version == 1L) {
-            schema.get("UserRealm")!!
-                    .addField("token", String::class.java)
-                    .setRequired("token", true)
+            schema.get("UserRealm")
+                    ?.addField("token", String::class.java)
+                    ?.setRequired("token", true)
             ++version
         }
 
@@ -33,24 +33,24 @@ class Migrations : RealmMigration {
 
         //version 4
         if (version == 3L) {
-            schema.get("UserRealm")!!
-                    .removeField("token")
-                    .removeField("userid")
-                    .removeField("wallet")
-                    .addPrimaryKey("bvn")
+            schema.get("UserRealm")
+                    ?.removeField("token")
+                    ?.removeField("userid")
+                    ?.removeField("wallet")
+                    ?.addPrimaryKey("bvn")
             ++version
         }
 
         //version 5
         if (version == 4L) {
-            schema.get("UserRealm")!!
-                    .removeField("bvn")
-                    .removeField("latitude")
-                    .removeField("longitude")
-                    .removeField("username")
-                    .addField("accesstoken", String::class.java)
-                    .setRequired("accesstoken", true)
-                    .addPrimaryKey("phone")
+            schema.get("UserRealm")
+                    ?.removeField("bvn")
+                    ?.removeField("latitude")
+                    ?.removeField("longitude")
+                    ?.removeField("username")
+                    ?.addField("accesstoken", String::class.java)
+                    ?.setRequired("accesstoken", true)
+                    ?.addPrimaryKey("phone")
             ++version
         }
 
@@ -112,36 +112,36 @@ class Migrations : RealmMigration {
 
         //version 9
         if (version == 8L) {
-            schema.get("BankRealm")!!
-                    .removeField("default")
+            schema.get("BankRealm")
+                    ?.removeField("default")
 
-            schema.get("CardRealm")!!
-                    .removeField("default")
+            schema.get("CardRealm")
+                    ?.removeField("default")
             ++version
         }
 
         //version 10
         if (version == 9L) {
-            schema.get("TransactionRealm")!!
-                    .removeField("name")
-                    .addField("mobile", String::class.java)
-                    .addField("sendername", String::class.java)
-                    .addField("recipientname", String::class.java)
-                    .addField("recipientemail", String::class.java)
-                    .addField("recipientphone", String::class.java)
-                    .setRequired("mobile", true)
-                    .setRequired("sendername", true)
-                    .setRequired("recipientname", true)
-                    .setRequired("recipientemail", true)
-                    .setRequired("recipientphone", true)
+            schema.get("TransactionRealm")
+                    ?.removeField("name")
+                    ?.addField("mobile", String::class.java)
+                    ?.addField("sendername", String::class.java)
+                    ?.addField("recipientname", String::class.java)
+                    ?.addField("recipientemail", String::class.java)
+                    ?.addField("recipientphone", String::class.java)
+                    ?.setRequired("mobile", true)
+                    ?.setRequired("sendername", true)
+                    ?.setRequired("recipientname", true)
+                    ?.setRequired("recipientemail", true)
+                    ?.setRequired("recipientphone", true)
             ++version
         }
 
         //version 11
         if (version == 10L) {
-            schema.get("TransactionRealm")!!
-                    .addField("credit", String::class.java)
-                    .setRequired("credit", true)
+            schema.get("TransactionRealm")
+                    ?.addField("credit", String::class.java)
+                    ?.setRequired("credit", true)
             ++version
         }
 
@@ -183,37 +183,45 @@ class Migrations : RealmMigration {
 
         // version 14
         if (version == 13L) {
-            schema.get("ContactRealm")!!
-                    .addField("accountname", String::class.java)
-                    .addField("accountnumber", String::class.java)
-                    .setRequired("accountname", true)
-                    .setRequired("accountnumber", true)
+            schema.get("ContactRealm")
+                    ?.addField("accountname", String::class.java)
+                    ?.addField("accountnumber", String::class.java)
+                    ?.setRequired("accountname", true)
+                    ?.setRequired("accountnumber", true)
             ++version
         }
 
         // version 15
         if (version == 14L) {
-            schema.get("TransactionRealm")!!
-                    .addField("sendernumber", String::class.java)
-                    .setRequired("sendernumber", true)
+            schema.get("TransactionRealm")
+                    ?.addField("sendernumber", String::class.java)
+                    ?.setRequired("sendernumber", true)
             ++version
         }
 
         // version 16
         if (version == 15L) {
-            schema.get("TransactionRealm")!!
-                    .addField("category", String::class.java)
-                    .setRequired("category", true)
+            schema.get("TransactionRealm")
+                    ?.addField("category", String::class.java)
+                    ?.setRequired("category", true)
             ++version
         }
 
         // version 17
         if (version == 16L) {
-            schema.get("UserRealm")!!
-                    .addField("dob", String::class.java)
-                    .addField("gender", String::class.java)
-                    .setRequired("dob", true)
-                    .setRequired("gender", true)
+            schema.get("UserRealm")
+                    ?.addField("dob", String::class.java)
+                    ?.addField("gender", String::class.java)
+                    ?.setRequired("dob", true)
+                    ?.setRequired("gender", true)
+            ++version
+        }
+
+        // version 18
+        if (version == 17L) {
+            schema.get("ContactRealm")
+                    ?.addField("occupation", String::class.java)
+                    ?.setRequired("occupation", true)
             ++version
         }
     }

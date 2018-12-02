@@ -1,5 +1,6 @@
 package com.sterlingng.paylite.ui.newpaymentamount
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -62,6 +63,8 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     private lateinit var mAmountEditText: TextView
 
     private lateinit var mBalanceTextView: TextView
+    private lateinit var mTitleTextView: TextView
+
     private var request = SendMoneyRequest()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -93,11 +96,15 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         mRepeatTextView = view.findViewById(R.id.repeat)
 
         mBalanceTextView = view.findViewById(R.id.balance)
+        mTitleTextView = view.findViewById(R.id.balance)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setUp(view: View) {
         mPresenter.loadCachedWallet()
         request = arguments?.getParcelable(REQUEST)!!
+
+        mTitleTextView.text = "Send Money to ${request.recipientName}"
 
         exit.setOnClickListener {
             baseActivity.onBackPressed()
@@ -110,7 +117,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
             }
 
             try {
-                request?.amount = mAmountEditText.text.toString()
+                request.amount = mAmountEditText.text.toString()
             } catch (e: NumberFormatException) {
                 show("Amount should be more than NGN100", true)
             }

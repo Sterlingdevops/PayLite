@@ -11,6 +11,7 @@ open class ContactRealm : RealmObject() {
     lateinit var name: String
     lateinit var phone: String
     lateinit var email: String
+    lateinit var occupation: String
     lateinit var accountname: String
     lateinit var accountnumber: String
 
@@ -18,6 +19,7 @@ open class ContactRealm : RealmObject() {
         val contact = PayliteContact()
         contact.accountnumber = accountnumber
         contact.accountname = accountname
+        contact.occupation = occupation
         contact.phone = phone
         contact.email = email
         contact.name = name

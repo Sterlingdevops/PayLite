@@ -9,7 +9,6 @@ import com.sterlingng.paylite.ui.banktransfers.banktransferamount.BankTransferAm
 import com.sterlingng.paylite.ui.banktransfers.contacts.ContactsFragment
 import com.sterlingng.paylite.ui.banktransfers.newbanktransfer.NewBankTransferFragment
 import com.sterlingng.paylite.ui.bills.BillsActivity
-import com.sterlingng.paylite.ui.cashoutbank.CashOutFragment
 import com.sterlingng.paylite.ui.complete.CompleteFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.contacts.SelectContactsFragment
@@ -31,6 +30,7 @@ import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.notifications.NotificationsFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
+import com.sterlingng.paylite.ui.paystaff.PayStaffFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.request.custom.CustomRequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
@@ -127,8 +127,6 @@ interface ActivityComponent {
 
     fun inject(getCashFragment: GetCashFragment)
 
-    fun inject(cashOutFragment: CashOutFragment)
-
     fun inject(settingsFragment: SettingsFragment)
 
     fun inject(sendMoneyFragment: SendMoneyFragment)
@@ -176,5 +174,7 @@ interface ActivityComponent {
     fun inject(setSecurityQuestionFragment: SetSecurityQuestionFragment)
 
     fun inject(profileFragment: ProfileFragment)
+
+    fun inject(payStaffFragment: PayStaffFragment)
 
 }

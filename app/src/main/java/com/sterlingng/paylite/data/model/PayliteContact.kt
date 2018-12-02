@@ -10,6 +10,7 @@ class PayliteContact() : Parcelable {
     var name: String = ""
     var phone: String = ""
     var email: String = ""
+    var occupation: String = ""
     var accountname: String = ""
     var accountnumber: String = ""
 
@@ -18,12 +19,16 @@ class PayliteContact() : Parcelable {
         name = parcel.readString()
         phone = parcel.readString()
         email = parcel.readString()
+        occupation = parcel.readString()
+        accountname = parcel.readString()
+        accountnumber = parcel.readString()
     }
 
     fun asContactRealm(): ContactRealm {
         val contactRealm = ContactRealm()
         contactRealm.accountnumber = accountnumber
         contactRealm.accountname = accountname
+        contactRealm.occupation = occupation
         contactRealm.email = email
         contactRealm.phone = phone
         contactRealm.name = name
@@ -40,6 +45,9 @@ class PayliteContact() : Parcelable {
         parcel.writeString(name)
         parcel.writeString(phone)
         parcel.writeString(email)
+        parcel.writeString(occupation)
+        parcel.writeString(accountname)
+        parcel.writeString(accountnumber)
     }
 
     override fun describeContents(): Int {

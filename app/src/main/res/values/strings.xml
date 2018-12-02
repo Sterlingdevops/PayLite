@@ -92,6 +92,7 @@
     <string name="quick_actions">Quick actions</string>
     <string name="pay_code">Pay Code</string>
     <string name="you_have_no_scheduled_payments_created">You have no scheduled payments</string>
+    <string name="you_have_no_staff">Add a staff to see payment info here</string>
     <string name="create">Create</string>
     <string name="irrigation_2018">Irrigation 2018</string>
     <string name="agriculture">Agriculture</string>
@@ -354,4 +355,6 @@
     <string name="rate">Rate this app</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="terms_and_conditions"><![CDATA[Terms & conditions]]></string>
+    <string name="driver">Driver</string>
+    <string name="add_new_staff">Add New Staff</string>
 </resources>
