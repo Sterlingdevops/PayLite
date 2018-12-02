@@ -31,6 +31,8 @@ import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
 import com.sterlingng.paylite.ui.notifications.NotificationsFragment
 import com.sterlingng.paylite.ui.payment.PaymentFragment
 import com.sterlingng.paylite.ui.paystaff.PayStaffFragment
+import com.sterlingng.paylite.ui.paystaff.addstaff.AddStaffFragment
+import com.sterlingng.paylite.ui.paystaff.salarydetails.SalaryDetailsFragment
 import com.sterlingng.paylite.ui.request.RequestFragment
 import com.sterlingng.paylite.ui.request.custom.CustomRequestFragment
 import com.sterlingng.paylite.ui.scheduled.ScheduledFragment
@@ -176,5 +178,9 @@ interface ActivityComponent {
     fun inject(profileFragment: ProfileFragment)
 
     fun inject(payStaffFragment: PayStaffFragment)
+
+    fun inject(payStaffFragment: AddStaffFragment)
+
+    fun inject(salaryDetailsFragment: SalaryDetailsFragment)
 
 }

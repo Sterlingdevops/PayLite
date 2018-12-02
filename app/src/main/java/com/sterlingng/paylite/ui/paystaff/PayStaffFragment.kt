@@ -6,9 +6,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import com.sterlingng.paylite.R
+import com.sterlingng.paylite.ui.paystaff.addstaff.AddStaffFragment
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import javax.inject.Inject
 
 class PayStaffFragment : BaseFragment(), PayStaffMvpView {
@@ -20,6 +23,7 @@ class PayStaffFragment : BaseFragment(), PayStaffMvpView {
     lateinit var mLinearLayoutManager: LinearLayoutManager
 
     private lateinit var exit: ImageView
+    private lateinit var mAddNewButton: Button
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mStaffAdapter: StaffAdapter
 
@@ -36,6 +40,12 @@ class PayStaffFragment : BaseFragment(), PayStaffMvpView {
             baseActivity.onBackPressed()
         }
 
+        mAddNewButton.setOnClickListener {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(AddStaffFragment.newInstance())
+        }
+
         mStaffAdapter = StaffAdapter(baseActivity)
         mStaffAdapter.mRecyclerViewClickListener = this
 
@@ -49,6 +59,8 @@ class PayStaffFragment : BaseFragment(), PayStaffMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
+        mAddNewButton = view.findViewById(R.id.add_new)
+        mRecyclerView = view.findViewById(R.id.recyclerView)
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

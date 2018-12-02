@@ -96,7 +96,7 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         mRepeatTextView = view.findViewById(R.id.repeat)
 
         mBalanceTextView = view.findViewById(R.id.balance)
-        mTitleTextView = view.findViewById(R.id.balance)
+        mTitleTextView = view.findViewById(R.id.title)
     }
 
     @SuppressLint("SetTextI18n")

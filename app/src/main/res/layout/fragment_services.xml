@@ -35,7 +35,7 @@
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.CardView
-                android:id="@+id/backdrop"
+                android:id="@+id/pay_staff"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -53,19 +53,19 @@
                     android:background="@drawable/bg_home">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/fund_outline"
+                        android:id="@+id/pay_staff_image"
                         android:layout_width="36dp"
                         android:layout_height="40dp"
                         android:layout_marginEnd="32dp"
                         android:layout_marginRight="32dp"
-                        android:contentDescription="@string/backdrop"
+                        android:contentDescription="@string/pay_staff"
                         android:src="@drawable/icon_arrow"
-                        app:layout_constraintBottom_toBottomOf="@+id/main_amount"
+                        app:layout_constraintBottom_toBottomOf="@+id/pay_staff_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/main_amount"/>
+                        app:layout_constraintTop_toTopOf="@+id/pay_staff_text"/>
 
                     <TextView
-                        android:id="@+id/main_amount"
+                        android:id="@+id/pay_staff_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
@@ -92,10 +92,10 @@
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/fund_outline"
+                        app:layout_constraintEnd_toEndOf="@+id/pay_staff_image"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/main_amount"
-                        app:layout_constraintTop_toBottomOf="@+id/main_amount"
+                        app:layout_constraintStart_toStartOf="@+id/pay_staff_text"
+                        app:layout_constraintTop_toBottomOf="@+id/pay_staff_text"
                         app:layout_constraintVertical_bias="0.0"/>
 
                 </android.support.constraint.ConstraintLayout>
@@ -109,7 +109,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/backdrop"
+                app:layout_constraintTop_toBottomOf="@id/pay_staff"
                 app:layout_constraintVertical_bias="0.0"
                 tools:itemCount="4"
                 tools:listitem="@layout/layout_services_item"/>

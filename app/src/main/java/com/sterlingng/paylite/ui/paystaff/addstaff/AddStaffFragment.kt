@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.newpayment
+package com.sterlingng.paylite.ui.paystaff.addstaff
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -7,12 +7,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -20,101 +23,44 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
-import com.sterlingng.paylite.data.model.PayliteContact
-import com.sterlingng.paylite.data.model.SendMoneyRequest
-import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.newpaymentamount.NewPaymentAmountFragment
-import com.sterlingng.paylite.utils.isValidEmail
-import java.util.regex.Pattern
+import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
+import com.sterlingng.paylite.ui.paystaff.salarydetails.SalaryDetailsFragment
 import javax.inject.Inject
 
-
-class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
+class AddStaffFragment : BaseFragment(), AddStaffMvpView {
 
     @Inject
-    lateinit var mPresenter: NewPaymentMvpContract<NewPaymentMvpView>
+    lateinit var mPresenter: AddStaffMvpContract<AddStaffMvpView>
 
-    private lateinit var exit: ImageView
+    @Inject
+    lateinit var mLinearLayoutManager: LinearLayoutManager
+
     private lateinit var next: Button
-
-    private lateinit var mRecipientNameEditText: EditText
-    private lateinit var mSaveRecipientTextView: TextView
+    private lateinit var exit: ImageView
     private lateinit var mPhoneEmailEditText: EditText
-    private lateinit var mSaveRecipientSwitch: Switch
-    private lateinit var mBalanceTextView: TextView
+    private lateinit var mOccupationEditText: EditText
+    private lateinit var mEmployeeNameEditText: EditText
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_new_payment, container, false)
+        val view = inflater.inflate(R.layout.fragment_add_staff, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)
         return view
     }
 
-    override fun bindViews(view: View) {
-        exit = view.findViewById(R.id.exit)
-        next = view.findViewById(R.id.next)
-
-        mSaveRecipientSwitch = view.findViewById(R.id.save_recipient_switch)
-        mSaveRecipientTextView = view.findViewById(R.id.save_recipient)
-
-        mRecipientNameEditText = view.findViewById(R.id.recipient_name)
-        mPhoneEmailEditText = view.findViewById(R.id.phone_email)
-        mBalanceTextView = view.findViewById(R.id.balance)
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     override fun setUp(view: View) {
-        mPresenter.loadCachedWallet()
-
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }
 
-        mSaveRecipientTextView.setOnClickListener {
-            mSaveRecipientSwitch.toggle()
-        }
-
         next.setOnClickListener {
-            if (mPhoneEmailEditText.text.isEmpty() || mRecipientNameEditText.text.isEmpty()) {
-                show("The fields are required and cannot be empty", true)
-                return@setOnClickListener
-            }
-
-            val pattern = Pattern.compile("[0-9]{11}")
-            val matcher = pattern.matcher(mPhoneEmailEditText.text.toString())
-            if (!mPhoneEmailEditText.text.toString().isValidEmail() && (mPhoneEmailEditText.text.length != 11 || !matcher.matches())) {
-                show("Please enter a valid email or phone number", true)
-                return@setOnClickListener
-            }
-
-            val request = SendMoneyRequest()
-            val contact = PayliteContact()
-            contact.id = mRecipientNameEditText.text.toString().toLowerCase()
-            contact.name = mRecipientNameEditText.text.toString()
-
-            if (mPhoneEmailEditText.text.toString().isValidEmail()) {
-                request.email = mPhoneEmailEditText.text.toString()
-                contact.email = mPhoneEmailEditText.text.toString()
-            } else {
-                contact.phone = mPhoneEmailEditText.text.toString()
-                request.phone = mPhoneEmailEditText.text.toString()
-            }
-
-            request.recipientName = mRecipientNameEditText.text.toString()
-            request.paymentReference = System.currentTimeMillis().toString()
-
-            if (mSaveRecipientSwitch.isChecked) {
-                (baseActivity as DashboardActivity)
-                        .mNavController
-                        .pushFragment(NewPaymentAmountFragment.newInstance(request, contact))
-            } else {
-                (baseActivity as DashboardActivity)
-                        .mNavController
-                        .pushFragment(NewPaymentAmountFragment.newInstance(request))
-            }
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(SalaryDetailsFragment.newInstance())
         }
 
         val drawable = ContextCompat.getDrawable(baseActivity, R.drawable.icon_phone_book)
@@ -124,7 +70,7 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
         mPhoneEmailEditText.setOnTouchListener { _, event ->
 
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
+                if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.compoundDrawables[NewPaymentFragment.DRAWABLE_RIGHT].bounds.width())) {
                     Dexter.withActivity(baseActivity)
                             .withPermission(Manifest.permission.READ_CONTACTS)
                             .withListener(object : PermissionListener {
@@ -139,7 +85,7 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
                                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                                     val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
                                     if (intent.resolveActivity(baseActivity.packageManager) != null) {
-                                        startActivityForResult(intent, REQUEST_SELECT_CONTACT)
+                                        startActivityForResult(intent, NewPaymentFragment.REQUEST_SELECT_CONTACT)
                                     }
                                 }
 
@@ -154,7 +100,7 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            REQUEST_SELECT_CONTACT -> {
+            NewPaymentFragment.REQUEST_SELECT_CONTACT -> {
                 data?.data?.let { handleContactPickerResult(it) }
             }
         }
@@ -167,8 +113,8 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
         val phoneSelection = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?"
         val phoneCursor = baseActivity.contentResolver.query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, /*Projection*/
-                phoneSelection, /*Selection*/
-                mSelectionArgs, null/*Sort order*/)/*Uri*//*Selection args*/
+                phoneSelection,
+                mSelectionArgs, null)
 
         // If the cursor returned is valid, get the phone number
         var phone: String? = ""
@@ -186,8 +132,16 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
         mPhoneEmailEditText.setText(phone)
     }
 
-    override fun initView(wallet: Wallet?) {
-        mBalanceTextView.text = String.format("Balance: ₦%,.0f", wallet?.balance?.toFloat())
+    override fun logout() {
+        baseActivity.logout()
+    }
+
+    override fun bindViews(view: View) {
+        next = view.findViewById(R.id.next)
+        exit = view.findViewById(R.id.exit)
+        mOccupationEditText = view.findViewById(R.id.occupation)
+        mPhoneEmailEditText = view.findViewById(R.id.phone_email)
+        mEmployeeNameEditText = view.findViewById(R.id.employee_name)
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {
@@ -195,12 +149,8 @@ class NewPaymentFragment : BaseFragment(), NewPaymentMvpView {
     }
 
     companion object {
-
-        const val DRAWABLE_RIGHT = 2
-        const val REQUEST_SELECT_CONTACT = 1001
-
-        fun newInstance(): NewPaymentFragment {
-            val fragment = NewPaymentFragment()
+        fun newInstance(): AddStaffFragment {
+            val fragment = AddStaffFragment()
             val args = Bundle()
             fragment.arguments = args
             return fragment

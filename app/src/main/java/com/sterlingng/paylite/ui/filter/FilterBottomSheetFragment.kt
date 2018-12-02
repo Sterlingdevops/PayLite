@@ -89,7 +89,7 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     override fun setUp(view: View) {
         mFilterAdapter = FilterAdapter(baseActivity)
         mFilterAdapter.mRecyclerViewClickListener = this
-        mFilterAdapter.addItems(items)
+        mFilterAdapter.add(items)
         mRecyclerView.adapter = mFilterAdapter
         mRecyclerView.layoutManager = mLinearLayoutManager
         mRecyclerView.addItemDecoration(mDividerItemDecoration)

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ScheduleView">
+        <attr name="frequencyText" format="string"/>
+        <attr name="dateFormat" format="string"/>
+        <attr name="startText" format="string"/>
+        <attr name="endText" format="string"/>
+    </declare-styleable>
+</resources>

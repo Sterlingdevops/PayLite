@@ -178,6 +178,7 @@
     <string name="close">Close</string>
     <string name="account_number_email_or_phone">Account number, email or phone</string>
     <string name="recipient_name">Recipient\'s Name</string>
+    <string name="employee_name">Employee Name</string>
     <string name="recipient_username">Recipient\'s Username</string>
     <string name="mastercard">Mastercard</string>
     <string name="card_details">Card Details</string>
@@ -357,4 +358,11 @@
     <string name="terms_and_conditions"><![CDATA[Terms & conditions]]></string>
     <string name="driver">Driver</string>
     <string name="add_new_staff">Add New Staff</string>
+    <string name="job_title">Job title</string>
+    <string name="add_staff">Add Staff</string>
+    <string name="salary_details">Salary details</string>
+    <string name="salary_amount">Salary Amount</string>
+    <string name="frequency">Frequency</string>
+    <string name="payday">Payday</string>
+    <string name="stop">Stop</string>
 </resources>

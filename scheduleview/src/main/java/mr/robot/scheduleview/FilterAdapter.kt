@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.filter
+package mr.robot.scheduleview
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.sterlingng.paylite.R
-import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
 class FilterAdapter(val mContext: Context) : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
 
-    val items: ArrayList<String> = ArrayList()
+    private val items: ArrayList<String> = ArrayList()
     lateinit var mRecyclerViewClickListener: RecyclerViewClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

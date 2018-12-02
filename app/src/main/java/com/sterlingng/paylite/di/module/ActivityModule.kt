@@ -100,6 +100,12 @@ import com.sterlingng.paylite.ui.payment.PaymentPresenter
 import com.sterlingng.paylite.ui.paystaff.PayStaffMvpContract
 import com.sterlingng.paylite.ui.paystaff.PayStaffMvpView
 import com.sterlingng.paylite.ui.paystaff.PayStaffPresenter
+import com.sterlingng.paylite.ui.paystaff.addstaff.AddStaffMvpContract
+import com.sterlingng.paylite.ui.paystaff.addstaff.AddStaffMvpView
+import com.sterlingng.paylite.ui.paystaff.addstaff.AddStaffPresenter
+import com.sterlingng.paylite.ui.paystaff.salarydetails.SalaryDetailsMvpContract
+import com.sterlingng.paylite.ui.paystaff.salarydetails.SalaryDetailsMvpView
+import com.sterlingng.paylite.ui.paystaff.salarydetails.SalaryDetailsPresenter
 import com.sterlingng.paylite.ui.request.RequestMvpContract
 import com.sterlingng.paylite.ui.request.RequestMvpView
 import com.sterlingng.paylite.ui.request.RequestPresenter
@@ -331,6 +337,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun providePayStaffPresenter(presenter: PayStaffPresenter<PayStaffMvpView>): PayStaffMvpContract<PayStaffMvpView> = presenter
 
     @Provides
+    internal fun provideAddStaffPresenter(presenter: AddStaffPresenter<AddStaffMvpView>): AddStaffMvpContract<AddStaffMvpView> = presenter
+
+    @Provides
     internal fun provideSettingsPresenter(presenter: SettingsPresenter<SettingsMvpView>): SettingsMvpContract<SettingsMvpView> = presenter
 
     @Provides
@@ -368,6 +377,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideEditPresenter(profilePresenter: EditProfilePresenter<EditProfileMvpView>): EditProfileMvpContract<EditProfileMvpView> = profilePresenter
+
+    @Provides
+    internal fun provideSalaryDetailsPresenter(presenter: SalaryDetailsPresenter<SalaryDetailsMvpView>): SalaryDetailsMvpContract<SalaryDetailsMvpView> = presenter
 
     @Provides
     internal fun provideCustomRequestPresenter(presenter: CustomRequestPresenter<CustomRequestMvpView>): CustomRequestMvpContract<CustomRequestMvpView> = presenter

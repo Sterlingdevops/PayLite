@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="NumberPickerStyle">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColorPrimary">@color/denim</item>
+        <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/denim</item>
+    </style>
+</resources>
