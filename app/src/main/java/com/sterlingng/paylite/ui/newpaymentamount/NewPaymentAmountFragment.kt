@@ -1,7 +1,6 @@
 package com.sterlingng.paylite.ui.newpaymentamount
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,19 +18,15 @@ import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.utils.isValidEmail
 import com.sterlingng.paylite.utils.then
-import com.tsongkha.spinnerdatepicker.DatePicker
-import com.tsongkha.spinnerdatepicker.DatePickerDialog
-import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
+import mr.robot.scheduleview.ScheduleView
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 
-class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePickerDialog.OnDateSetListener,
-        FilterBottomSheetFragment.OnFilterItemSelected, ConfirmFragment.OnPinValidated {
+class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, ConfirmFragment.OnPinValidated {
 
     @Inject
     lateinit var mPresenter: NewPaymentAmountMvpContract<NewPaymentAmountMvpView>
@@ -39,22 +34,10 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     @Inject
     lateinit var eventBus: EventBus
 
-    private var now: Calendar = Calendar.getInstance()
-    private var type: Int = -1
-
-    private lateinit var mScheduleReferenceTextView: TextView
-
-    private lateinit var mSetStartDateTextView: TextView
-    private lateinit var mSetEndDateTextView: TextView
-
-    private lateinit var mStartDateTextView: TextView
-    private lateinit var mEndDateTextView: TextView
-
-    private lateinit var mScheduleRepeatSwitch: Switch
-    private lateinit var mSetRepeatTextView: TextView
-
+    private lateinit var mScheduleView: ScheduleView
     private lateinit var mScheduleTextView: TextView
-    private lateinit var mRepeatTextView: TextView
+    private lateinit var mScheduleRepeatSwitch: Switch
+    private lateinit var mScheduleReferenceTextView: TextView
 
     private lateinit var exit: ImageView
     private lateinit var next: Button
@@ -79,21 +62,14 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         exit = view.findViewById(R.id.exit)
         next = view.findViewById(R.id.next)
 
+        mScheduleView = view.findViewById(R.id.scheduleView)
+
         mAmountReferenceEditText = view.findViewById(R.id.reference)
         mAmountEditText = view.findViewById(R.id.amount)
 
         mScheduleReferenceTextView = view.findViewById(R.id.schedule_payment_ref)
         mScheduleRepeatSwitch = view.findViewById(R.id.schedule_switch)
         mScheduleTextView = view.findViewById(R.id.schedule_payment)
-
-        mSetStartDateTextView = view.findViewById(R.id.set_start_date)
-        mStartDateTextView = view.findViewById(R.id.start_date)
-
-        mSetEndDateTextView = view.findViewById(R.id.set_end_date)
-        mEndDateTextView = view.findViewById(R.id.end_date)
-
-        mSetRepeatTextView = view.findViewById(R.id.set_repeat)
-        mRepeatTextView = view.findViewById(R.id.repeat)
 
         mBalanceTextView = view.findViewById(R.id.balance)
         mTitleTextView = view.findViewById(R.id.title)
@@ -133,89 +109,20 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
             }
         }
 
-        mSetStartDateTextView.visibility = View.GONE
-        mSetEndDateTextView.visibility = View.GONE
-        mStartDateTextView.visibility = View.GONE
-        mSetRepeatTextView.visibility = View.GONE
-        mEndDateTextView.visibility = View.GONE
-        mRepeatTextView.visibility = View.GONE
-
-        val simpleDateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.US)
-        mStartDateTextView.text = simpleDateFormat.format(Date())
-        mEndDateTextView.text = simpleDateFormat.format(Date())
+        mScheduleView.visibility = View.GONE
 
         mScheduleTextView.setOnClickListener {
             mScheduleRepeatSwitch.toggle()
-            if (mScheduleRepeatSwitch.isChecked) {
-                mSetEndDateTextView.visibility = (mRepeatTextView.text.toString().toLowerCase() == "never") then View.GONE ?: View.VISIBLE
-                mSetStartDateTextView.visibility = View.VISIBLE
-                mStartDateTextView.visibility = View.VISIBLE
-                mSetRepeatTextView.visibility = View.VISIBLE
-                mEndDateTextView.visibility = View.VISIBLE
-                mRepeatTextView.visibility = View.VISIBLE
-            } else {
-                mSetStartDateTextView.visibility = View.GONE
-                mSetEndDateTextView.visibility = View.GONE
-                mSetRepeatTextView.visibility = View.GONE
-                mStartDateTextView.visibility = View.GONE
-                mEndDateTextView.visibility = View.GONE
-                mRepeatTextView.visibility = View.GONE
-            }
+            mScheduleView.visibility = mScheduleRepeatSwitch.isChecked then View.VISIBLE ?: View.GONE
         }
 
         mScheduleReferenceTextView.setOnClickListener {
             mScheduleRepeatSwitch.toggle()
-            if (mScheduleRepeatSwitch.isChecked) {
-                mSetEndDateTextView.visibility = (mRepeatTextView.text.toString().toLowerCase() == "never") then View.GONE ?: View.VISIBLE
-                mSetStartDateTextView.visibility = View.VISIBLE
-                mStartDateTextView.visibility = View.VISIBLE
-                mSetRepeatTextView.visibility = View.VISIBLE
-                mEndDateTextView.visibility = View.VISIBLE
-                mRepeatTextView.visibility = View.VISIBLE
-            } else {
-                mSetStartDateTextView.visibility = View.GONE
-                mSetEndDateTextView.visibility = View.GONE
-                mSetRepeatTextView.visibility = View.GONE
-                mStartDateTextView.visibility = View.GONE
-                mEndDateTextView.visibility = View.GONE
-                mRepeatTextView.visibility = View.GONE
-            }
-        }
-
-        mSetRepeatTextView.setOnClickListener {
-            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
-            filterBottomSheetFragment.onFilterItemSelectedListener = this
-            filterBottomSheetFragment.title = "Repeat Payment"
-            filterBottomSheetFragment.items = listOf("Never", "Daily", "Weekly", "Monthly", "Yearly")
-            filterBottomSheetFragment.show(childFragmentManager, "filter")
-        }
-
-        mSetStartDateTextView.setOnClickListener {
-            showDatePicker(0)
-            hideKeyboard()
-        }
-
-        mSetEndDateTextView.setOnClickListener {
-            showDatePicker(1)
-            hideKeyboard()
+            mScheduleView.visibility = mScheduleRepeatSwitch.isChecked then View.VISIBLE ?: View.GONE
         }
 
         mScheduleRepeatSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                mSetEndDateTextView.visibility = (mRepeatTextView.text.toString().toLowerCase() == "never") then View.GONE ?: View.VISIBLE
-                mSetStartDateTextView.visibility = View.VISIBLE
-                mStartDateTextView.visibility = View.VISIBLE
-                mSetRepeatTextView.visibility = View.VISIBLE
-                mEndDateTextView.visibility = View.VISIBLE
-                mRepeatTextView.visibility = View.VISIBLE
-            } else {
-                mSetStartDateTextView.visibility = View.GONE
-                mSetEndDateTextView.visibility = View.GONE
-                mSetRepeatTextView.visibility = View.GONE
-                mStartDateTextView.visibility = View.GONE
-                mEndDateTextView.visibility = View.GONE
-                mRepeatTextView.visibility = View.GONE
-            }
+            mScheduleView.visibility = isChecked then View.VISIBLE ?: View.GONE
         }
     }
 
@@ -226,9 +133,9 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
     override fun onPinCorrect() {
         if (mScheduleRepeatSwitch.isChecked) {
             val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
-            var end: Date = dateFormat.parse(mEndDateTextView.text.toString())
-            val start: Date = dateFormat.parse(mStartDateTextView.text.toString())
-            val interval = when (mRepeatTextView.text.toString().toLowerCase()) {
+            var end: Date = dateFormat.parse(mScheduleView.endDate)
+            val start: Date = dateFormat.parse(mScheduleView.startDate)
+            val interval = when (mScheduleView.frequency.toLowerCase()) {
                 "daily" -> 1
                 "weekly" -> 2
                 "monthly" -> 3
@@ -300,10 +207,10 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
 
         val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
 
-        var end: Date = dateFormat.parse(mEndDateTextView.text.toString())
-        val start: Date = dateFormat.parse(mStartDateTextView.text.toString())
+        var end: Date = dateFormat.parse(mScheduleView.endDate)
+        val start: Date = dateFormat.parse(mScheduleView.startDate)
 
-        data["interval"] = when (mRepeatTextView.text.toString().toLowerCase()) {
+        data["interval"] = when (mScheduleView.frequency.toLowerCase()) {
             "daily" -> 1
             "weekly" -> 2
             "monthly" -> 3
@@ -325,66 +232,6 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, DatePi
         data["end_date"] = endDate
         data["start_date"] = startDate
         mPresenter.schedulePayment(data)
-    }
-
-    private fun showDatePicker(type: Int) {
-        this.type = type
-        SpinnerDatePickerDialogBuilder()
-                .context(baseActivity)
-                .callback(this@NewPaymentAmountFragment)
-                .spinnerTheme(R.style.NumberPickerStyle)
-                .showTitle(true)
-                .defaultDate(now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH))
-                .minDate(now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH))
-                .showDaySpinner(true)
-                .build()
-                .show()
-    }
-
-    override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        val date = "$year/${monthOfYear + 1}/$dayOfMonth"
-        val df = SimpleDateFormat("yyyy/MM/dd", Locale.US)
-        val today = df.parse(date)
-        val simpleDateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.US)
-        when (type) {
-            0 -> {
-                mStartDateTextView.text = simpleDateFormat.format(today)
-            }
-            1 -> {
-                mEndDateTextView.text = simpleDateFormat.format(today)
-            }
-        }
-    }
-
-    override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
-        // 0-daily, 1-weekly, 2-monthly, 3-yearly
-        mRepeatTextView.text = s
-        when (s.toLowerCase()) {
-            "never" -> {
-                mSetEndDateTextView.visibility = View.GONE
-            }
-
-            "daily" -> {
-                mSetEndDateTextView.visibility = View.VISIBLE
-            }
-
-            "weekly" -> {
-                mSetEndDateTextView.visibility = View.VISIBLE
-            }
-
-            "monthly" -> {
-                mSetEndDateTextView.visibility = View.VISIBLE
-            }
-
-            "yearly" -> {
-                mSetEndDateTextView.visibility = View.VISIBLE
-            }
-        }
-        dialog.dismiss()
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

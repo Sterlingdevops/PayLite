@@ -19,6 +19,9 @@ class ScheduleView(context: Context, attrs: AttributeSet) : ConstraintLayout(con
         DatePickerDialog.OnDateSetListener, FilterBottomSheetFragment.OnFilterItemSelected {
 
     private var now: Calendar = Calendar.getInstance()
+    private var mStartDate: String = ""
+    private var mEndDate: String = ""
+
     private var dateFormat: String?
     private var select = Select.StartDate
 
@@ -59,17 +62,9 @@ class ScheduleView(context: Context, attrs: AttributeSet) : ConstraintLayout(con
 
         mFrequencyTextView = root[5] as TextView
 
-//        // set start date views
-//        mStartDateTitleTextView.visibility = View.GONE
-//        mStartDateTextView.visibility = View.GONE
-//
-//        // set end date views
-//        mEndDateTitleTextView.visibility = View.GONE
-//        mEndDateTextView.visibility = View.GONE
-//
-//        // set frequency views
-//        mFrequencyTitleTextView.visibility = View.GONE
-//        mFrequencyTextView.visibility = View.GONE
+        // set end date views
+        mEndDateTitleTextView.visibility = View.GONE
+        mEndDateTextView.visibility = View.GONE
 
         mStartDateTitleTextView.setOnClickListener {
             showDatePicker(Select.StartDate)
@@ -115,12 +110,17 @@ class ScheduleView(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                 .callback(this@ScheduleView)
                 .spinnerTheme(R.style.NumberPickerStyle)
                 .showTitle(true)
-                .defaultDate(now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH))
-                .minDate(now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH))
+                .defaultDate(when (select) {
+                    Select.StartDate -> if (mStartDate.isEmpty()) now.get(Calendar.YEAR) else mStartDate.split("/")[0].toInt()
+                    Select.EndDate -> if (mEndDate.isEmpty()) now.get(Calendar.YEAR) else mEndDate.split("/")[0].toInt()
+                }, when (select) {
+                    Select.StartDate -> if (mStartDate.isEmpty()) now.get(Calendar.MONTH) else mStartDate.split("/")[1].toInt() - 1
+                    Select.EndDate -> if (mEndDate.isEmpty()) now.get(Calendar.MONTH) else mEndDate.split("/")[1].toInt() - 1
+                }, when (select) {
+                    Select.StartDate -> if (mStartDate.isEmpty()) now.get(Calendar.DAY_OF_MONTH) else mStartDate.split("/")[2].toInt()
+                    Select.EndDate -> if (mEndDate.isEmpty()) now.get(Calendar.DAY_OF_MONTH) else mEndDate.split("/")[2].toInt()
+                })
+                .minDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
                 .showDaySpinner(true)
                 .build()
                 .show()
@@ -132,19 +132,23 @@ class ScheduleView(context: Context, attrs: AttributeSet) : ConstraintLayout(con
         val today = df.parse(date)
         val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.US)
         when (select) {
-            Select.StartDate -> mStartDateTextView.text = simpleDateFormat.format(today)
-            Select.EndDate -> mEndDateTextView.text = simpleDateFormat.format(today)
+            Select.StartDate -> {
+                mStartDateTextView.text = simpleDateFormat.format(today); mStartDate = date
+            }
+            Select.EndDate -> {
+                mEndDateTextView.text = simpleDateFormat.format(today); mEndDate = date
+            }
         }
     }
 
     override fun onFilterItemSelected(dialog: Dialog, s: String) {
         mFrequencyTextView.text = s
         when (s.toLowerCase()) {
-            "never" -> mEndDateTitleTextView.visibility = View.GONE
-            "daily" -> mEndDateTitleTextView.visibility = View.VISIBLE
-            "weekly" -> mEndDateTitleTextView.visibility = View.VISIBLE
-            "monthly" -> mEndDateTitleTextView.visibility = View.VISIBLE
-            "yearly" -> mEndDateTitleTextView.visibility = View.VISIBLE
+            "never" ->{ mEndDateTitleTextView.visibility = View.GONE; mEndDateTextView.visibility = View.GONE; }
+            "daily" -> { mEndDateTitleTextView.visibility = View.VISIBLE; mEndDateTextView.visibility = View.VISIBLE; }
+            "weekly" -> { mEndDateTitleTextView.visibility = View.VISIBLE; mEndDateTextView.visibility = View.VISIBLE; }
+            "monthly" -> { mEndDateTitleTextView.visibility = View.VISIBLE; mEndDateTextView.visibility = View.VISIBLE; }
+            "yearly" -> { mEndDateTitleTextView.visibility = View.VISIBLE; mEndDateTextView.visibility = View.VISIBLE; }
         }
         dialog.dismiss()
     }
