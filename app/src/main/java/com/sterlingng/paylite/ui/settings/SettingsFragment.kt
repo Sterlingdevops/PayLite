@@ -9,6 +9,7 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.main.MainActivity
+import com.sterlingng.paylite.ui.securityquestions.SetSecurityQuestionFragment
 import com.sterlingng.paylite.ui.settings.profile.ProfileFragment
 import javax.inject.Inject
 
@@ -36,6 +37,12 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
             (baseActivity as DashboardActivity)
                     .mNavController
                     .pushFragment(ProfileFragment.newInstance())
+        }
+
+        if (arguments?.getBoolean(SECURITY)!!) {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(SetSecurityQuestionFragment.newInstance())
         }
 //        mHelpAndFeedbackTextView.setOnClickListener {
 //            (baseActivity as DashboardActivity)
@@ -74,9 +81,13 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
 
     companion object {
 
-        fun newInstance(): SettingsFragment {
+        private const val SECURITY = "SettingsFragment.SECURITY"
+
+        @JvmOverloads
+        fun newInstance(security: Boolean = false): SettingsFragment {
             val fragment = SettingsFragment()
             val args = Bundle()
+            args.putBoolean(SECURITY, security)
             fragment.arguments = args
             return fragment
         }

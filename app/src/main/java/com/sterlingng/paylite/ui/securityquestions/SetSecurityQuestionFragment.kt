@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Question
 import com.sterlingng.paylite.ui.base.BaseFragment
@@ -22,6 +23,7 @@ class SetSecurityQuestionFragment : BaseFragment(), SetSecurityQuestionMvpView, 
     @Inject
     lateinit var mLinearLayoutManager: NoScrollingLinearLayoutManager
 
+    private lateinit var exit: ImageView
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mSetSecurityQuestionButton: Button
     private lateinit var mSetSecurityQuestionAdapter: SetSecurityQuestionAdapter
@@ -35,11 +37,16 @@ class SetSecurityQuestionFragment : BaseFragment(), SetSecurityQuestionMvpView, 
     }
 
     override fun bindViews(view: View) {
+        exit = view.findViewById(R.id.exit)
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mSetSecurityQuestionButton = view.findViewById(R.id.next)
     }
 
     override fun setUp(view: View) {
+        exit.setOnClickListener {
+            baseActivity.onBackPressed()
+        }
+
         mSetSecurityQuestionAdapter = SetSecurityQuestionAdapter(baseActivity)
         mRecyclerView.layoutManager = mLinearLayoutManager
         mRecyclerView.adapter = mSetSecurityQuestionAdapter

@@ -8,6 +8,10 @@ import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.User
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.ui.editprofile.EditProfileFragment
+import com.sterlingng.paylite.ui.security.LoginAndSecurityFragment
+import com.sterlingng.views.TitleIconView
 import javax.inject.Inject
 
 class ProfileFragment : BaseFragment(), ProfileMvpView {
@@ -15,6 +19,8 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
     @Inject
     lateinit var mPresenter: ProfileMvpContract<ProfileMvpView>
 
+    private lateinit var mPersonDetailsTextView: TitleIconView
+    private lateinit var mPasswordsTextView: TitleIconView
     private lateinit var exit: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,6 +37,18 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
         exit.setOnClickListener {
             baseActivity.onBackPressed()
         }
+
+        mPersonDetailsTextView.setOnClickListener {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(EditProfileFragment.newInstance())
+        }
+
+        mPasswordsTextView.setOnClickListener {
+            (baseActivity as DashboardActivity)
+                    .mNavController
+                    .pushFragment(LoginAndSecurityFragment.newInstance())
+        }
     }
 
     override fun logout() {
@@ -39,6 +57,8 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
+        mPasswordsTextView = view.findViewById(R.id.passwords)
+        mPersonDetailsTextView = view.findViewById(R.id.personal_details)
     }
 
     override fun initView(user: User) {

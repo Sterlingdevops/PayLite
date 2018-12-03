@@ -25,6 +25,7 @@ class CompleteSignUpFragment : BaseFragment(), CompleteSignUpMvpView {
     private lateinit var mSkipButton: Button
     private lateinit var mFundWalletButton: Button
     private lateinit var mWelcomeTextView: TextView
+    private lateinit var mCompletionType: CompletionType
     private lateinit var mSecurityQuestionsButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,7 +51,24 @@ class CompleteSignUpFragment : BaseFragment(), CompleteSignUpMvpView {
     override fun setUp(view: View) {
         mPresenter.initView()
 
+        mSecurityQuestionsButton.setOnClickListener {
+            mCompletionType = CompletionType.SECURITY_QUESTIONS
+            val data = HashMap<String, String>()
+            data["username"] = (baseActivity as SignUpActivity).signUpRequest.email
+            data["password"] = (baseActivity as SignUpActivity).signUpRequest.password
+            mPresenter.doLogIn(data)
+        }
+
+        mFundWalletButton.setOnClickListener {
+            mCompletionType = CompletionType.FUND_WALLET
+            val data = HashMap<String, String>()
+            data["username"] = (baseActivity as SignUpActivity).signUpRequest.email
+            data["password"] = (baseActivity as SignUpActivity).signUpRequest.password
+            mPresenter.doLogIn(data)
+        }
+
         mSkipButton.setOnClickListener {
+            mCompletionType = CompletionType.NORMAL
             val data = HashMap<String, String>()
             data["username"] = (baseActivity as SignUpActivity).signUpRequest.email
             data["password"] = (baseActivity as SignUpActivity).signUpRequest.password
@@ -74,9 +92,27 @@ class CompleteSignUpFragment : BaseFragment(), CompleteSignUpMvpView {
                 javaClass.simpleName,
                 ""
         )
-        val intent = DashboardActivity.getStartIntent(baseActivity)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                .putExtra(DashboardActivity.SELECTED_ITEM, 0)
+
+        val intent: Intent = when (mCompletionType) {
+            CompletionType.FUND_WALLET -> {
+                DashboardActivity.getStartIntent(baseActivity)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .putExtra(DashboardActivity.SELECTED_ITEM, 0)
+                        .putExtra(DashboardActivity.FUND_WALLET, true)
+            }
+            CompletionType.NORMAL -> {
+                DashboardActivity.getStartIntent(baseActivity)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .putExtra(DashboardActivity.SELECTED_ITEM, 0)
+            }
+            CompletionType.SECURITY_QUESTIONS -> {
+                DashboardActivity.getStartIntent(baseActivity)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .putExtra(DashboardActivity.SELECTED_ITEM, 0)
+                        .putExtra(DashboardActivity.SECURITY_QUESTIONS, true)
+            }
+        }
+
         startActivity(intent)
         baseActivity.finish()
     }
@@ -84,6 +120,10 @@ class CompleteSignUpFragment : BaseFragment(), CompleteSignUpMvpView {
     override fun onAccessTokenFailed() {
         show("An error occurred while processing your request, Please try again", true)
         hideLoading()
+    }
+
+    enum class CompletionType {
+        FUND_WALLET, SECURITY_QUESTIONS, NORMAL
     }
 
     companion object {

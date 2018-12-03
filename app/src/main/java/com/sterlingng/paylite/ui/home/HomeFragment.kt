@@ -92,21 +92,26 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 }
 
         mFundWalletTextView.setOnClickListener {
-            when {
-                mPresenter.getAuthPin() -> (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
-                else -> (baseActivity as DashboardActivity).mNavController.pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name, openFund = true))
-            }
+            fundWallet()
         }
 
         mFundButton.setOnClickListener {
-            when {
-                mPresenter.getAuthPin() -> (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
-                else -> (baseActivity as DashboardActivity).mNavController.pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name, openFund = true))
-            }
+            fundWallet()
         }
 
         mNotificationsImageView.setOnClickListener {
             (baseActivity as DashboardActivity).mNavController.pushFragment(NotificationsFragment.newInstance())
+        }
+
+        if (arguments?.getBoolean(FUND_WALLET)!!) {
+            fundWallet()
+        }
+    }
+
+    fun fundWallet() {
+        when {
+            mPresenter.getAuthPin() -> (baseActivity as DashboardActivity).mNavController.pushFragment(PaymentFragment.newInstance())
+            else -> (baseActivity as DashboardActivity).mNavController.pushFragment(AuthPinFragment.newInstance(OpenPinMode.ENTER_NEW.name, openFund = true))
         }
     }
 
@@ -153,9 +158,13 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     companion object {
 
-        fun newInstance(): HomeFragment {
+        private const val FUND_WALLET = "HomeFragment.FUND_WALLET"
+
+        @JvmOverloads
+        fun newInstance(fundWallet: Boolean = false): HomeFragment {
             val fragment = HomeFragment()
             val args = Bundle()
+            args.putBoolean(FUND_WALLET, fundWallet)
             fragment.arguments = args
             return fragment
         }

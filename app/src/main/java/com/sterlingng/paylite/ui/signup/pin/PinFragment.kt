@@ -1,10 +1,12 @@
 package com.sterlingng.paylite.ui.signup.pin
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.davidmiguel.numberkeyboard.NumberKeyboard
 import com.davidmiguel.numberkeyboard.NumberKeyboardListener
 import com.goodiebag.pinview.PinView
@@ -24,8 +26,10 @@ class PinFragment : BaseFragment(), PinMvpView, NumberKeyboardListener {
     @Inject
     lateinit var mPresenter: PinMvpContract<PinMvpView>
 
-    private lateinit var mNumberKeyboard: NumberKeyboard
     lateinit var mDidClickNext: OnChildDidClickNext
+
+    private lateinit var mNumberKeyboard: NumberKeyboard
+    private lateinit var mTitleTextView: TextView
     private lateinit var mPinView: PinView
     private lateinit var exit: ImageView
 
@@ -37,6 +41,7 @@ class PinFragment : BaseFragment(), PinMvpView, NumberKeyboardListener {
         return view
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setUp(view: View) {
         mNumberKeyboard.setListener(this)
 
@@ -44,9 +49,15 @@ class PinFragment : BaseFragment(), PinMvpView, NumberKeyboardListener {
             baseActivity.onBackPressed()
         }
 
+        val index = arguments?.getInt(INDEX)!!
+
+        when (index) {
+            5 -> mTitleTextView.text = "Create a PIN"
+            6 -> mTitleTextView.text = "Confirm the PIN"
+        }
+
         mPinView.setPinViewEventListener { _, _ ->
             val password = mPinView.value
-            val index = arguments?.getInt(INDEX)!!
 
             when (index) {
                 5 -> {
@@ -77,6 +88,7 @@ class PinFragment : BaseFragment(), PinMvpView, NumberKeyboardListener {
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
         mPinView = view.findViewById(R.id.pin_view)
+        mTitleTextView = view.findViewById(R.id.title)
         mNumberKeyboard = view.findViewById(R.id.numberKeyboard)
     }
 

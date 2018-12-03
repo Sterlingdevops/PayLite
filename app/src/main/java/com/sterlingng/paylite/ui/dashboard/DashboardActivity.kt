@@ -119,8 +119,8 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
 
     override fun getRootFragment(index: Int): Fragment {
         return when (index) {
-            INDEX_HOME -> HomeFragment.newInstance()
-            INDEX_PROFILE -> SettingsFragment.newInstance()
+            INDEX_HOME -> HomeFragment.newInstance(intent.getBooleanExtra(FUND_WALLET, false))
+            INDEX_PROFILE -> SettingsFragment.newInstance(intent.getBooleanExtra(SECURITY_QUESTIONS, false))
             INDEX_SERVICES -> ServicesFragment.newInstance()
             INDEX_TRANSACTIONS -> TransactionsFragment.newInstance()
             else -> throw IllegalStateException("Need to send an index that we know")
@@ -366,6 +366,8 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         private const val INDEX_SERVICES = FragNavController.TAB3
         private const val INDEX_TRANSACTIONS = FragNavController.TAB2
         const val SELECTED_ITEM = "arg_selected_item"
+        const val FUND_WALLET = "DashboardActivity.FUND_WALLET"
+        const val SECURITY_QUESTIONS = "DashboardActivity.SECURITY_QUESTIONS"
 
         fun getStartIntent(context: Context): Intent {
             val intent = Intent(context, DashboardActivity::class.java)
