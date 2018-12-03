@@ -57,7 +57,7 @@ class NewBankTransferFragment : BaseFragment(), NewBankTransferMvpView,
 
         mAccountNumberEditText.addTextChangedListener(AccountNumberTextWatcher())
 
-        mChooseBankTextView.setOnClickListener { _ ->
+        mChooseBankTextView.setOnClickListener {
             val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.selector = 1

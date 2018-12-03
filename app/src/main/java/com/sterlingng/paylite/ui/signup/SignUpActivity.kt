@@ -1,9 +1,18 @@
 package com.sterlingng.paylite.ui.signup
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.View
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.SignUpRequest
 import com.sterlingng.paylite.ui.base.BaseActivity
@@ -15,6 +24,7 @@ import com.sterlingng.paylite.ui.signup.phone.PhoneFragment
 import com.sterlingng.paylite.ui.signup.pin.PinFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.paylite.utils.OnChildDidClickNext
+import com.sterlingng.paylite.utils.asString
 import com.sterlingng.views.CustomViewPager
 import javax.inject.Inject
 
@@ -27,7 +37,10 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
     lateinit var mPagerAdapter: CustomPagerAdapter
 
     private lateinit var mViewPager: CustomViewPager
+
     val signUpRequest = SignUpRequest()
+    var latitude: String = "0"
+    var longitude: String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +54,8 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
     }
 
     override fun setUp() {
+        getLocation()
+
         val phoneFragment = PhoneFragment.newInstance(1)
         phoneFragment.mDidClickNext = this
 
@@ -113,6 +128,56 @@ class SignUpActivity : BaseActivity(), SignUpMvpView, OnChildDidClickNext {
             }
             mViewPager.currentItem = index % mPagerAdapter.count
         }
+    }
+
+    private fun getLocation() {
+        Dexter.withActivity(this)
+                .withPermissions(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(object : MultiplePermissionsListener {
+                    @SuppressLint("MissingPermission")
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                        if (report?.isAnyPermissionPermanentlyDenied!!) {
+                            val permissions = report.deniedPermissionResponses
+                                    .asSequence()
+                                    .filter { it.isPermanentlyDenied }
+                                    .map { it.permissionName }
+
+                            show("Please allow ${permissions.toList().asString()} " + "it has been permanently denied", true)
+                        }
+
+                        if (report.areAllPermissionsGranted()) {
+                                val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, object : LocationListener {
+
+                                    override fun onLocationChanged(location: Location?) {
+                                        longitude = location?.longitude.toString()
+                                        latitude = location?.latitude.toString()
+                                    }
+
+                                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
+
+                                    }
+
+                                    override fun onProviderEnabled(provider: String) {
+
+                                    }
+
+                                    override fun onProviderDisabled(provider: String) {
+
+                                    }
+                                })
+
+                        } else {
+                            val permissions = report.deniedPermissionResponses.map { it.permissionName }
+                            show("These permissions: ${permissions.asString()}" +
+                                    " have been denied. Please enabled them to continue", true)
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>?, token: PermissionToken?) {
+                        token?.continuePermissionRequest()
+                    }
+                }).check()
     }
 
     companion object {

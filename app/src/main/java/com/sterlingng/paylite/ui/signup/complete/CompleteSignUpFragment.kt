@@ -13,6 +13,8 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.signup.SignUpActivity
+import com.sterlingng.paylite.utils.AppConstants
+import com.sterlingng.paylite.utils.AppUtils
 import javax.inject.Inject
 
 class CompleteSignUpFragment : BaseFragment(), CompleteSignUpMvpView {
@@ -61,6 +63,17 @@ class CompleteSignUpFragment : BaseFragment(), CompleteSignUpMvpView {
     }
 
     override fun onAccessTokenSuccessful() {
+        AppUtils.createEvent(
+                baseActivity,
+                AppConstants.ON_BOARDING,
+                AppConstants.EVENT_SEVEN,
+                AppConstants.EVENT_SEVEN,
+                AppUtils.createId(),
+                (baseActivity as SignUpActivity).latitude,
+                (baseActivity as SignUpActivity).longitude,
+                javaClass.simpleName,
+                ""
+        )
         val intent = DashboardActivity.getStartIntent(baseActivity)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .putExtra(DashboardActivity.SELECTED_ITEM, 0)

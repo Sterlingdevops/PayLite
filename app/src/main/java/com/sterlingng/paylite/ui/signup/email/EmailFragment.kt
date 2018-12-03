@@ -9,6 +9,10 @@ import android.widget.Button
 import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
+import com.sterlingng.paylite.ui.signup.SignUpActivity
+import com.sterlingng.paylite.utils.AppConstants
+import com.sterlingng.paylite.utils.AppUtils.createEvent
+import com.sterlingng.paylite.utils.AppUtils.createId
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.paylite.utils.isValidEmail
 import com.sterlingng.views.LargeLabelEditText
@@ -51,6 +55,17 @@ class EmailFragment : BaseFragment(), EmailMvpView {
                 return@setOnClickListener
             }
 
+            createEvent(
+                    baseActivity,
+                    AppConstants.ON_BOARDING,
+                    AppConstants.EVENT_THREE,
+                    AppConstants.EVENT_SEVEN,
+                    createId(),
+                    (baseActivity as SignUpActivity).latitude,
+                    (baseActivity as SignUpActivity).longitude,
+                    javaClass.simpleName,
+                    ""
+            )
             mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mEmailEditText.text)
         }
     }

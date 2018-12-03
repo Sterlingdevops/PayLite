@@ -12,6 +12,12 @@ import android.widget.ImageView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
+import com.sterlingng.paylite.ui.signup.SignUpActivity
+import com.sterlingng.paylite.utils.AppConstants.EVENT_FOUR
+import com.sterlingng.paylite.utils.AppConstants.EVENT_SEVEN
+import com.sterlingng.paylite.utils.AppConstants.ON_BOARDING
+import com.sterlingng.paylite.utils.AppUtils.createEvent
+import com.sterlingng.paylite.utils.AppUtils.createId
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.views.ClickToSelectEditText
 import com.tsongkha.spinnerdatepicker.DatePicker
@@ -67,6 +73,18 @@ class NameFragment : BaseFragment(), NameMvpView, DatePickerDialog.OnDateSetList
                 show("All the fields are required", true)
                 return@setOnClickListener
             }
+
+            createEvent(
+                    baseActivity,
+                    ON_BOARDING,
+                    EVENT_FOUR,
+                    EVENT_SEVEN,
+                    createId(),
+                    (baseActivity as SignUpActivity).latitude,
+                    (baseActivity as SignUpActivity).longitude,
+                    javaClass.simpleName,
+                    ""
+            )
 
             mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!,
                     listOf(mFirstNameEditText.text.toString(),

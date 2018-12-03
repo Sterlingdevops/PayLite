@@ -7,6 +7,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.LongSerializationPolicy
+import com.microsoft.appcenter.analytics.Analytics
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -16,6 +17,28 @@ import java.util.*
 object AppUtils {
 
     val gson = gson()
+
+    fun createEvent(context: Context,
+                    eventName: String,
+                    eventIndex: String,
+                    maxEvents: String,
+                    userId: String,
+                    latitude: String,
+                    longitude: String,
+                    screenName: String,
+                    group: String) {
+        val data = HashMap<String, String>()
+        data["Group"] = group
+        data["UserID"] = userId
+        data["Latitude"] = latitude
+        data["DeviceID"] = CommonUtils.getDeviceId(context)
+        data["MaxEvents"] = maxEvents
+        data["Longitude"] = longitude
+        data["TimeStamp"] = System.currentTimeMillis().toString()
+        data["EventIndex"] = eventIndex
+        data["Screen Name"] = screenName
+        Analytics.trackEvent(eventName, data)
+    }
 
     fun createId(): String {
         return UUID.randomUUID().toString().replace("-", "")

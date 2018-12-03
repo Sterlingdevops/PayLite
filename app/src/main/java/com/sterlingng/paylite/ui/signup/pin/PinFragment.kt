@@ -11,6 +11,11 @@ import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.signup.SignUpActivity
+import com.sterlingng.paylite.utils.AppConstants
+import com.sterlingng.paylite.utils.AppConstants.EVENT_FIVE
+import com.sterlingng.paylite.utils.AppConstants.EVENT_SEVEN
+import com.sterlingng.paylite.utils.AppConstants.EVENT_SIX
+import com.sterlingng.paylite.utils.AppUtils
 import com.sterlingng.paylite.utils.OnChildDidClickNext
 import javax.inject.Inject
 
@@ -44,7 +49,20 @@ class PinFragment : BaseFragment(), PinMvpView, NumberKeyboardListener {
             val index = arguments?.getInt(INDEX)!!
 
             when (index) {
-                5 -> mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPinView.value)
+                5 -> {
+                    AppUtils.createEvent(
+                            baseActivity,
+                            AppConstants.ON_BOARDING,
+                            EVENT_FIVE,
+                            EVENT_SEVEN,
+                            AppUtils.createId(),
+                            (baseActivity as SignUpActivity).latitude,
+                            (baseActivity as SignUpActivity).longitude,
+                            javaClass.simpleName,
+                            ""
+                    )
+                    mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPinView.value)
+                }
                 6 -> {
                     if (password == (baseActivity as SignUpActivity).signUpRequest.password)
                         mPresenter.doSignUp((baseActivity as SignUpActivity).signUpRequest.toHashMap())
@@ -71,6 +89,17 @@ class PinFragment : BaseFragment(), PinMvpView, NumberKeyboardListener {
     }
 
     override fun onDoSignUpSuccessful() {
+        AppUtils.createEvent(
+                baseActivity,
+                AppConstants.ON_BOARDING,
+                EVENT_SIX,
+                EVENT_SEVEN,
+                AppUtils.createId(),
+                (baseActivity as SignUpActivity).latitude,
+                (baseActivity as SignUpActivity).longitude,
+                javaClass.simpleName,
+                ""
+        )
         mDidClickNext.onNextClick(arguments?.getInt(INDEX)!!, mPinView.value)
     }
 

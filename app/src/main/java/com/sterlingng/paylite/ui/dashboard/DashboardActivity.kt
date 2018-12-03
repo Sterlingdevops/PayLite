@@ -1,12 +1,18 @@
 package com.sterlingng.paylite.ui.dashboard
 
+import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.design.widget.BottomNavigationView
+import android.support.v13.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.CursorLoader
 import android.view.MenuItem
@@ -18,7 +24,6 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.microsoft.appcenter.analytics.Analytics
 import com.ncapdevi.fragnav.FragNavController
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.Bank
@@ -36,7 +41,6 @@ import java.util.HashMap
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.set
-
 
 class DashboardActivity : BaseActivity(), DashboardMvpView,
         BottomNavigationView.OnNavigationItemSelectedListener,
@@ -58,6 +62,9 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
     @Inject
     lateinit var eventBus: EventBus
 
+    var latitude: String = "0"
+    var longitude: String = "0"
+
     override fun onResume() {
         super.onResume()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
@@ -69,36 +76,9 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
         activityComponent.inject(this)
         mPresenter.onAttach(this)
 
-        Dexter.withActivity(this)
-                .withPermissions(android.Manifest.permission.READ_CONTACTS,
-                        android.Manifest.permission.WRITE_CONTACTS)
-                .withListener(object : MultiplePermissionsListener {
-                    override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>?, token: PermissionToken?) {
-                        token?.continuePermissionRequest()
-                    }
+        getLocation()
+        loadContacts()
 
-                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                        if (report?.isAnyPermissionPermanentlyDenied!!) {
-                            val permissions = report.deniedPermissionResponses
-                                    .asSequence()
-                                    .filter { it.isPermanentlyDenied }
-                                    .map { it.permissionName }
-
-                            show("Please allow ${permissions.toList().asString()} " +
-                                    "it has been permanently denied", true)
-                        }
-
-                        if (report.areAllPermissionsGranted()) {
-                            contacts = setUpLoader()
-                        } else {
-                            val permissions = report.deniedPermissionResponses.map { it.permissionName }
-                            show("These permissions: ${permissions.asString()}" +
-                                    " have been denied. Please enabled them to continue", true)
-                        }
-                    }
-                }).check()
-
-        Analytics.trackEvent("User Logged In")
         mNavController = FragNavController(supportFragmentManager, R.id.container)
         mNavController.apply {
             createEager = true
@@ -172,6 +152,90 @@ class DashboardActivity : BaseActivity(), DashboardMvpView,
                 super.onBackPressed()
             }
         }
+    }
+
+
+    private fun getLocation() {
+        Dexter.withActivity(this)
+                .withPermissions(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                        if (report?.isAnyPermissionPermanentlyDenied!!) {
+                            val permissions = report.deniedPermissionResponses
+                                    .asSequence()
+                                    .filter { it.isPermanentlyDenied }
+                                    .map { it.permissionName }
+
+                            show("Please allow ${permissions.toList().asString()} " +
+                                    "it has been permanently denied", true)
+                        }
+
+                        if (report.areAllPermissionsGranted()) {
+                            if (ActivityCompat.checkSelfPermission(this@DashboardActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                                    ActivityCompat.checkSelfPermission(this@DashboardActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(this@DashboardActivity, listOf(Manifest.permission.ACCESS_FINE_LOCATION).toTypedArray(), 1)
+                                val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, object : LocationListener {
+
+                                    override fun onLocationChanged(location: Location?) {
+                                        longitude = location?.longitude.toString()
+                                        latitude = location?.latitude.toString()
+                                    }
+
+                                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
+
+                                    }
+
+                                    override fun onProviderEnabled(provider: String) {
+
+                                    }
+
+                                    override fun onProviderDisabled(provider: String) {
+
+                                    }
+                                })
+                            }
+                        } else {
+                            val permissions = report.deniedPermissionResponses.map { it.permissionName }
+                            show("These permissions: ${permissions.asString()}" +
+                                    " have been denied. Please enabled them to continue", true)
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>?, token: PermissionToken?) {
+                        token?.continuePermissionRequest()
+                    }
+                }).check()
+    }
+
+    private fun loadContacts() {
+        Dexter.withActivity(this)
+                .withPermissions(android.Manifest.permission.READ_CONTACTS, android.Manifest.permission.WRITE_CONTACTS)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>?, token: PermissionToken?) {
+                        token?.continuePermissionRequest()
+                    }
+
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                        if (report?.isAnyPermissionPermanentlyDenied!!) {
+                            val permissions = report.deniedPermissionResponses
+                                    .asSequence()
+                                    .filter { it.isPermanentlyDenied }
+                                    .map { it.permissionName }
+
+                            show("Please allow ${permissions.toList().asString()} " +
+                                    "it has been permanently denied", true)
+                        }
+
+                        if (report.areAllPermissionsGranted()) {
+                            contacts = setUpLoader()
+                        } else {
+                            val permissions = report.deniedPermissionResponses.map { it.permissionName }
+                            show("These permissions: ${permissions.asString()}" +
+                                    " have been denied. Please enabled them to continue", true)
+                        }
+                    }
+                }).check()
     }
 
     private fun setUpLoader(): ArrayList<Contact> {

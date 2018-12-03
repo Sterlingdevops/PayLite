@@ -17,7 +17,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), CompleteSignUpMvpContract<V> {
 
     override fun initView() {
-        dataManager.deleteAll()
         mvpView.setWelcomeText()
     }
 
@@ -32,6 +31,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({
+                            dataManager.deleteAll()
                             val user = User()
                             user.email = it["Email"] as String
                             user.lastName = it["LastName"] as String
