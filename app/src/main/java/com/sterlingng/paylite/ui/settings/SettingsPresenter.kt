@@ -9,11 +9,4 @@ import javax.inject.Inject
 class SettingsPresenter<V : SettingsMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SettingsMvpContract<V> {
-
-    override fun logOut() {
-        dataManager.deleteAllScheduledPayments()
-        dataManager.deleteAllTransactions()
-        mvpView.onLogOutComplete()
-    }
-}
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), SettingsMvpContract<V>

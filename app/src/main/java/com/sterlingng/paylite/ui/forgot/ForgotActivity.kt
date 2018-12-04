@@ -8,8 +8,8 @@ import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.ForgotPasswordRequest
 import com.sterlingng.paylite.ui.base.BaseActivity
 import com.sterlingng.paylite.ui.complete.CompleteFragment
-import com.sterlingng.paylite.ui.forgot.email.EmailForgotFragment
-import com.sterlingng.paylite.ui.forgot.reset.ResetFragment
+import com.sterlingng.paylite.ui.forgot.email.ForgotPhoneFragment
+import com.sterlingng.paylite.ui.forgot.reset.ResetPasswordFragment
 import com.sterlingng.paylite.ui.forgot.token.TokenFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.paylite.utils.OnChildDidClickNext
@@ -39,21 +39,25 @@ class ForgotActivity : BaseActivity(), ForgotMvpView, OnChildDidClickNext {
     }
 
     override fun setUp() {
-        val emailForgotFragment = EmailForgotFragment.newInstance(1)
+        val emailForgotFragment = ForgotPhoneFragment.newInstance(1)
         emailForgotFragment.mDidClickNext = this
 
         val tokenFragment = TokenFragment.newInstance(2)
         tokenFragment.mDidClickNext = this
 
-        val resetFragment = ResetFragment.newInstance(3)
-        resetFragment.mDidClickNext = this
+        val resetPasswordFragment = ResetPasswordFragment.newInstance(3)
+        resetPasswordFragment.mDidClickNext = this
+
+        val confirmResetPasswordFragment = ResetPasswordFragment.newInstance(4)
+        confirmResetPasswordFragment.mDidClickNext = this
 
         val completeFragment = CompleteFragment.newInstance(welcomeText = "Welcome back to GoPay")
 
         mPagerAdapter = CustomPagerAdapter(supportFragmentManager)
         mPagerAdapter.addFragment(emailForgotFragment, "email")
         mPagerAdapter.addFragment(tokenFragment, "token")
-        mPagerAdapter.addFragment(resetFragment, "reset")
+        mPagerAdapter.addFragment(resetPasswordFragment, "reset")
+        mPagerAdapter.addFragment(confirmResetPasswordFragment, "confirm-reset")
         mPagerAdapter.addFragment(completeFragment, "complete")
 
         mViewPager.adapter = mPagerAdapter
@@ -82,6 +86,9 @@ class ForgotActivity : BaseActivity(), ForgotMvpView, OnChildDidClickNext {
             }
             2 -> {
                 forgotPasswordRequest.token = data as String
+            }
+            3 -> {
+                forgotPasswordRequest.newPassword = data as String
             }
         }
         mViewPager.currentItem = index % mPagerAdapter.count

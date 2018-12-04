@@ -34,7 +34,7 @@ class PinFragment : BaseFragment(), PinMvpView, NumberKeyboardListener {
     private lateinit var exit: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_token, container, false)
+        val view = inflater.inflate(R.layout.fragment_sign_up_pin, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)
@@ -81,7 +81,6 @@ class PinFragment : BaseFragment(), PinMvpView, NumberKeyboardListener {
                         show("Passwords do no match", true)
                 }
             }
-            hideKeyboard()
         }
     }
 

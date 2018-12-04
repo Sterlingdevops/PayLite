@@ -12,13 +12,13 @@ import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class ResetPresenter<V : ResetMvpView>
+class ResetPasswordPresenter<V : ResetPasswordMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ResetMvpContract<V> {
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ResetPasswordMvpContract<V> {
 
-    override fun resetPassword(data: HashMap<String, Any>, type: Int) {
-        if (type == -1) data["PhoneNumber"] = dataManager.getCurrentUser()?.phoneNumber!!
+    override fun resetPassword(data: HashMap<String, Any>) {
+        data["PhoneNumber"] = dataManager.getCurrentUser()?.phoneNumber!!
         mvpView.showLoading()
         dataManager.updateForgotPassword(data, gson.toJson(data).sha256())
                 .subscribeOn(schedulerProvider.io())
@@ -29,7 +29,7 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
                     }
 
                     override fun onRequestSuccessful(response: Response, message: String) {
-                        if (type != -1) dataManager.deleteAll()
+                        dataManager.deleteAll()
 
                         val dataType = object : TypeToken<HashMap<String, Any>>() {}.type
                         val d = gson.fromJson<HashMap<String, Any>>(gson.toJson(response.data), dataType)

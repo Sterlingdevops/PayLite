@@ -12,26 +12,32 @@ import android.widget.TextView
 
 class TitleIconView(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
+    private var mDrawableSize: Int = 32
     private val mTitleTextView: TextView
     private val mIconImageView: ImageView
     private val mChevronImageView: ImageView
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.TitleIconView, 0, 0)
+        val textSize = a.getDimensionPixelSize(R.styleable.TitleIconView_android_textSize, 18)
+        val chevronVisible = a.getBoolean(R.styleable.TitleIconView_chevron, true)
+        mDrawableSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                a.getInt(R.styleable.TitleIconView_size, mDrawableSize).toFloat(), resources.displayMetrics).toInt()
         val drawable = a.getDrawable(R.styleable.TitleIconView_drawable)
         val title = a.getString(R.styleable.TitleIconView_title)
-        val chevronVisible = a.getBoolean(R.styleable.TitleIconView_chevron, true)
-        val textSize = a.getDimensionPixelSize(R.styleable.TitleIconView_android_textSize, 18)
 
         LayoutInflater.from(context).inflate(R.layout.title_icon_view, this, true)
         val root = this[0] as ConstraintLayout
 
+        mIconImageView = root[0] as ImageView
+        mIconImageView.setImageDrawable(drawable)
+        mIconImageView.layoutParams.width = mDrawableSize
+        mIconImageView.layoutParams.height = mDrawableSize
+        mIconImageView.requestLayout()
+
         mTitleTextView = root[1] as TextView
         mTitleTextView.text = title
         mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
-
-        mIconImageView = root[0] as ImageView
-        mIconImageView.setImageDrawable(drawable)
 
         mChevronImageView = root[2] as ImageView
         mChevronImageView.visibility = if (chevronVisible) View.VISIBLE else View.GONE

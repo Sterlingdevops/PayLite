@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.main.MainActivity
 import com.sterlingng.paylite.ui.securityquestions.SetSecurityQuestionFragment
 import com.sterlingng.paylite.ui.settings.profile.ProfileFragment
 import javax.inject.Inject
@@ -68,11 +67,6 @@ class SettingsFragment : BaseFragment(), SettingsMvpView {
 //                    .mNavController
 //                    .pushFragment(NotificationsFragment.newInstance())
 //        }
-    }
-
-    override fun onLogOutComplete() {
-        startActivity(MainActivity.getStartIntent(baseActivity))
-        baseActivity.finish()
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

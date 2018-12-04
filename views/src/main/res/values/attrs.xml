@@ -21,6 +21,7 @@
     </declare-styleable>
 
     <declare-styleable name="TitleIconView">
+        <attr name="size" format="integer"/>
         <attr name="android:textSize"/>
         <attr name="drawable"/>
         <attr name="chevron"/>

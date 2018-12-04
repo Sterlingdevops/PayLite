@@ -12,10 +12,10 @@ import com.sterlingng.paylite.utils.OnChildDidClickNext
 import com.sterlingng.views.LargeLabelEditText
 import javax.inject.Inject
 
-class EmailForgotFragment : BaseFragment(), EmailForgotMvpView {
+class ForgotPhoneFragment : BaseFragment(), ForgotPhoneMvpView {
 
     @Inject
-    lateinit var mPresenter: EmailForgotMvpContract<EmailForgotMvpView>
+    lateinit var mPresenter: ForgotPhoneMvpContract<ForgotPhoneMvpView>
 
     private lateinit var exit: ImageView
     private lateinit var next: Button
@@ -23,7 +23,7 @@ class EmailForgotFragment : BaseFragment(), EmailForgotMvpView {
     lateinit var mDidClickNext: OnChildDidClickNext
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_forgot_email, container, false)
+        val view = inflater.inflate(R.layout.fragment_forgot_phone, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)
@@ -72,10 +72,10 @@ class EmailForgotFragment : BaseFragment(), EmailForgotMvpView {
 
     companion object {
 
-        private const val INDEX = "EmailForgotFragment.INDEX"
+        private const val INDEX = "ForgotPhoneFragment.INDEX"
 
-        fun newInstance(index: Int): EmailForgotFragment {
-            val fragment = EmailForgotFragment()
+        fun newInstance(index: Int): ForgotPhoneFragment {
+            val fragment = ForgotPhoneFragment()
             val args = Bundle()
             args.putInt(INDEX, index)
             fragment.arguments = args

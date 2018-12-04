@@ -37,7 +37,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
             return
         }
         dataManager.getCurrentUser()?.email?.let { data["username"] = it }
-        // data["username"] = "ejiro.akhibi@gmail.com" // "bsrtukpe@gmail.com"
 
         val username: String = (data["username"] as String).encryptAES(initializationVector)
         val password: String = (data["password"] as String).encryptAES(initializationVector)

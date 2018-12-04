@@ -10,6 +10,12 @@ class ProfilePresenter<V : ProfileMvpView> @Inject
 internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ProfileMvpContract<V> {
 
+    override fun logOut() {
+        dataManager.deleteAllScheduledPayments()
+        dataManager.deleteAllTransactions()
+        mvpView.onLogOutComplete()
+    }
+
     override fun onViewInitialized() {
         super.onViewInitialized()
         dataManager.getCurrentUser()?.let { mvpView.initView(it) }

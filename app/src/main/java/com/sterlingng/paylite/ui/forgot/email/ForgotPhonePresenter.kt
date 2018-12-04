@@ -10,10 +10,10 @@ import com.sterlingng.paylite.utils.sha256
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class EmailForgotPresenter<V : EmailForgotMvpView>
+class ForgotPhonePresenter<V : ForgotPhoneMvpView>
 @Inject
 constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), EmailForgotMvpContract<V> {
+    : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ForgotPhoneMvpContract<V> {
 
     override fun sendPasswordResetToken(data: HashMap<String, Any>) {
         mvpView.showLoading()

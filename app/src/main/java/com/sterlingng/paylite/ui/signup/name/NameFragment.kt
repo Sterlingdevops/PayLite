@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
@@ -35,7 +36,7 @@ class NameFragment : BaseFragment(), NameMvpView, DatePickerDialog.OnDateSetList
     private lateinit var mGenderEditText: ClickToSelectEditText<String>
     private lateinit var mFirstNameEditText: EditText
     private lateinit var mLastNameEditText: EditText
-    private lateinit var mDobEditText: EditText
+    private lateinit var mDobEditText: TextView
     private lateinit var exit: ImageView
     private lateinit var next: Button
 

@@ -96,7 +96,7 @@
     <string name="create">Create</string>
     <string name="irrigation_2018">Irrigation 2018</string>
     <string name="agriculture">Agriculture</string>
-    <string name="reference">Reference</string>
+    <string name="reference">Purpose of Payment</string>
     <string name="red_cross_society">Red Cross Society</string>
     <string name="health">Health</string>
     <string name="exit">exit</string>
@@ -365,4 +365,6 @@
     <string name="frequency">Frequency</string>
     <string name="payday">Payday</string>
     <string name="stop">Stop</string>
+    <string name="create_a_login_pin">Create a login PIN</string>
+    <string name="version_0_0_1">Version 0.0.1</string>
 </resources>

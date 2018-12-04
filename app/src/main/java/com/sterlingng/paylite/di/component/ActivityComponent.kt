@@ -16,8 +16,8 @@ import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.editprofile.EditProfileFragment
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
 import com.sterlingng.paylite.ui.forgot.ForgotActivity
-import com.sterlingng.paylite.ui.forgot.email.EmailForgotFragment
-import com.sterlingng.paylite.ui.forgot.reset.ResetFragment
+import com.sterlingng.paylite.ui.forgot.email.ForgotPhoneFragment
+import com.sterlingng.paylite.ui.forgot.reset.ResetPasswordFragment
 import com.sterlingng.paylite.ui.forgot.token.TokenFragment
 import com.sterlingng.paylite.ui.fund.FundFragment
 import com.sterlingng.paylite.ui.getcash.GetCashFragment
@@ -48,7 +48,6 @@ import com.sterlingng.paylite.ui.signup.complete.CompleteSignUpFragment
 import com.sterlingng.paylite.ui.signup.email.EmailFragment
 import com.sterlingng.paylite.ui.signup.name.NameFragment
 import com.sterlingng.paylite.ui.signup.otp.OtpFragment
-import com.sterlingng.paylite.ui.signup.password.PasswordFragment
 import com.sterlingng.paylite.ui.signup.phone.PhoneFragment
 import com.sterlingng.paylite.ui.signup.pin.PinFragment
 import com.sterlingng.paylite.ui.splitamount.SplitAmountFragment
@@ -107,8 +106,6 @@ interface ActivityComponent {
 
     fun inject(paymentFragment: PaymentFragment)
 
-    fun inject(countryFragment: PasswordFragment)
-
     fun inject(completeSignUpFragment: CompleteSignUpFragment)
 
     fun inject(scheduledFragment: ScheduledFragment)
@@ -121,7 +118,7 @@ interface ActivityComponent {
 
     fun inject(tokenFragment: TokenFragment)
 
-    fun inject(resetFragment: ResetFragment)
+    fun inject(resetPasswordFragment: ResetPasswordFragment)
 
     fun inject(phoneFragment: PhoneFragment)
 
@@ -135,7 +132,7 @@ interface ActivityComponent {
 
     fun inject(newPaymentFragment: NewPaymentFragment)
 
-    fun inject(emailForgotFragment: EmailForgotFragment)
+    fun inject(forgotPhoneFragment: ForgotPhoneFragment)
 
     fun inject(splitAmountFragment: SplitAmountFragment)
 

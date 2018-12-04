@@ -54,12 +54,12 @@ import com.sterlingng.paylite.ui.filter.FilterPresenter
 import com.sterlingng.paylite.ui.forgot.ForgotMvpContract
 import com.sterlingng.paylite.ui.forgot.ForgotMvpView
 import com.sterlingng.paylite.ui.forgot.ForgotPresenter
-import com.sterlingng.paylite.ui.forgot.email.EmailForgotMvpContract
-import com.sterlingng.paylite.ui.forgot.email.EmailForgotMvpView
-import com.sterlingng.paylite.ui.forgot.email.EmailForgotPresenter
-import com.sterlingng.paylite.ui.forgot.reset.ResetMvpContract
-import com.sterlingng.paylite.ui.forgot.reset.ResetMvpView
-import com.sterlingng.paylite.ui.forgot.reset.ResetPresenter
+import com.sterlingng.paylite.ui.forgot.email.ForgotPhoneMvpContract
+import com.sterlingng.paylite.ui.forgot.email.ForgotPhoneMvpView
+import com.sterlingng.paylite.ui.forgot.email.ForgotPhonePresenter
+import com.sterlingng.paylite.ui.forgot.reset.ResetPasswordMvpContract
+import com.sterlingng.paylite.ui.forgot.reset.ResetPasswordMvpView
+import com.sterlingng.paylite.ui.forgot.reset.ResetPasswordPresenter
 import com.sterlingng.paylite.ui.forgot.token.TokenMvpContract
 import com.sterlingng.paylite.ui.forgot.token.TokenMvpView
 import com.sterlingng.paylite.ui.forgot.token.TokenPresenter
@@ -152,9 +152,6 @@ import com.sterlingng.paylite.ui.signup.name.NamePresenter
 import com.sterlingng.paylite.ui.signup.otp.OtpMvpContract
 import com.sterlingng.paylite.ui.signup.otp.OtpMvpView
 import com.sterlingng.paylite.ui.signup.otp.OtpPresenter
-import com.sterlingng.paylite.ui.signup.password.PasswordMvpContract
-import com.sterlingng.paylite.ui.signup.password.PasswordMvpView
-import com.sterlingng.paylite.ui.signup.password.PasswordPresenter
 import com.sterlingng.paylite.ui.signup.phone.PhoneMvpContract
 import com.sterlingng.paylite.ui.signup.phone.PhoneMvpView
 import com.sterlingng.paylite.ui.signup.phone.PhonePresenter
@@ -289,7 +286,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideNamePresenter(presenter: NamePresenter<NameMvpView>): NameMvpContract<NameMvpView> = presenter
 
     @Provides
-    internal fun provideResetPresenter(presenter: ResetPresenter<ResetMvpView>): ResetMvpContract<ResetMvpView> = presenter
+    internal fun provideResetPresenter(presenter: ResetPasswordPresenter<ResetPasswordMvpView>): ResetPasswordMvpContract<ResetPasswordMvpView> = presenter
 
     @Provides
     internal fun provideTokenPresenter(presenter: TokenPresenter<TokenMvpView>): TokenMvpContract<TokenMvpView> = presenter
@@ -343,9 +340,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideSettingsPresenter(presenter: SettingsPresenter<SettingsMvpView>): SettingsMvpContract<SettingsMvpView> = presenter
 
     @Provides
-    internal fun providePasswordPresenter(presenter: PasswordPresenter<PasswordMvpView>): PasswordMvpContract<PasswordMvpView> = presenter
-
-    @Provides
     internal fun provideScheduledPresenter(presenter: ScheduledPresenter<ScheduledMvpView>): ScheduledMvpContract<ScheduledMvpView> = presenter
 
     @Provides
@@ -361,7 +355,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideSplitAmountPresenter(presenter: SplitAmountPresenter<SplitAmountMvpView>): SplitAmountMvpContract<SplitAmountMvpView> = presenter
 
     @Provides
-    internal fun provideEmailForgotPresenter(presenter: EmailForgotPresenter<EmailForgotMvpView>): EmailForgotMvpContract<EmailForgotMvpView> = presenter
+    internal fun provideEmailForgotPresenter(presenter: ForgotPhonePresenter<ForgotPhoneMvpView>): ForgotPhoneMvpContract<ForgotPhoneMvpView> = presenter
 
     @Provides
     internal fun provideSplitContactPresenter(presenter: SplitContactPresenter<SplitContactMvpView>): SplitContactMvpContract<SplitContactMvpView> = presenter
