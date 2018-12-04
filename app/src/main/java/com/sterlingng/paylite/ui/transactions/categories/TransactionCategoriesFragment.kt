@@ -139,6 +139,12 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
             else -> transactions
         }
 
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+        val monthFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
+        months += newTransactions.map { monthFormat.format(formatter.parse(it.date)) }.toSortedSet()
+
+        monthsAdapter.items += months
+
         mTransactionCategoriesAdapter.add(newTransactions)
         recyclerView.scrollToPosition(0)
         mSwipeRefreshLayout.isRefreshing = false

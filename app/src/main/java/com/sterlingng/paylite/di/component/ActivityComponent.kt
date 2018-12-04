@@ -40,6 +40,7 @@ import com.sterlingng.paylite.ui.security.LoginAndSecurityFragment
 import com.sterlingng.paylite.ui.securityquestions.SetSecurityQuestionFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.services.ServicesFragment
+import com.sterlingng.paylite.ui.services.dstv.DstvServiceFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.settings.profile.ProfileFragment
 import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionFragment
@@ -179,5 +180,7 @@ interface ActivityComponent {
     fun inject(payStaffFragment: AddStaffFragment)
 
     fun inject(salaryDetailsFragment: SalaryDetailsFragment)
+
+    fun inject(dstvServiceFragment: DstvServiceFragment)
 
 }

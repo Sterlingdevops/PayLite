@@ -5,6 +5,7 @@
     <attr name="drawable" format="reference"/>
     <attr name="maxLength" format="integer"/>
     <attr name="chevron" format="boolean"/>
+    <attr name="hintColor" format="color"/>
     <attr name="textColor" format="color"/>
     <attr name="label" format="string"/>
     <attr name="hint" format="string"/>
@@ -35,6 +36,7 @@
         <attr name="android:text"/>
         <attr name="textColor"/>
         <attr name="maxLength"/>
+        <attr name="hintColor"/>
         <attr name="drawable"/>
         <attr name="label"/>
         <attr name="hint"/>
@@ -44,6 +46,7 @@
         <attr name="android:drawableTint"/>
         <attr name="android:text"/>
         <attr name="textColor"/>
+        <attr name="hintColor"/>
         <attr name="drawable"/>
         <attr name="label"/>
         <attr name="hint"/>

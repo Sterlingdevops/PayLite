@@ -162,7 +162,8 @@ class GetCashFragment : BaseFragment(), GetCashMvpView {
         var phone = ""
         if (phoneCursor != null && phoneCursor.moveToFirst()) {
             val numberIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER)
-            phone = phoneCursor.getString(numberIndex).replace("+234", "0")
+            if (phoneCursor.getString(numberIndex) != null)
+                phone = phoneCursor.getString(numberIndex).replace("+234", "0")
         }
         phoneCursor?.close()
 

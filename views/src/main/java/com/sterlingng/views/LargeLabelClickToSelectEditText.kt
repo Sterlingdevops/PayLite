@@ -20,6 +20,7 @@ class LargeLabelClickToSelectEditText<T>(context: Context, attrs: AttributeSet) 
         val a = context.obtainStyledAttributes(attrs, R.styleable.LargeLabelClickToSelectEditText, 0, 0)
         val tint = a.getColor(R.styleable.LargeLabelClickToSelectEditText_android_drawableTint, ContextCompat.getColor(context, R.color.black))
         val color = a.getColor(R.styleable.LargeLabelClickToSelectEditText_textColor, ContextCompat.getColor(context, R.color.dark_sky_blue))
+        val hintColor = a.getColor(R.styleable.LargeLabelClickToSelectEditText_hintColor, ContextCompat.getColor(context, R.color.gray))
         val plainText: String? = a.getString(R.styleable.LargeLabelClickToSelectEditText_android_text)
         var drawable = a.getDrawable(R.styleable.LargeLabelClickToSelectEditText_drawable)
         val hint = a.getString(R.styleable.LargeLabelClickToSelectEditText_hint)
@@ -29,7 +30,7 @@ class LargeLabelClickToSelectEditText<T>(context: Context, attrs: AttributeSet) 
         val root = this[0] as ConstraintLayout
 
         mLabelTextView = root[1] as TextView
-        mLabelTextView.setTextColor(color)
+        mLabelTextView.setTextColor(hintColor)
         mLabelTextView.text = text
 
         mTextEditText = root[0] as ClickToSelectEditText<T>

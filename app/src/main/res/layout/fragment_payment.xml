@@ -50,6 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerView"/>
 
     <ImageView
+        android:id="@+id/plus"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:tint="@color/denim"

@@ -56,8 +56,7 @@
         android:tint="@color/black"
         app:layout_constraintStart_toEndOf="@id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/textView"
-        app:srcCompat="@drawable/chevron_left"
-        tools:layout_editor_absoluteX="16dp"/>
+        app:srcCompat="@drawable/chevron_left"/>
 
     <TextView
         android:id="@+id/textView"

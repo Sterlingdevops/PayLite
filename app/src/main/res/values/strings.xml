@@ -367,4 +367,9 @@
     <string name="stop">Stop</string>
     <string name="create_a_login_pin">Create a login PIN</string>
     <string name="version_0_0_1">Version 0.0.1</string>
+    <string name="tv_bills">Tv Bills</string>
+    <string name="dstv">DStv</string>
+    <string name="purchase_airtime_and_data_for_yourself_or_loved_ones">Purchase airtime and data for yourself or loved ones.</string>
+    <string name="smart_card_no">SmartCard No</string>
+    <string name="compact">Compact</string>
 </resources>

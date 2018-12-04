@@ -101,7 +101,6 @@ class ServicesAdapter(private val mContext: Context) : RecyclerView.Adapter<Base
         private var serviceName: TextView = itemView.findViewById(R.id.service_name)
         private var serviceImage: ImageView = itemView.findViewById(R.id.service_image)
         private var recyclerView: RecyclerView = itemView.findViewById(R.id.recyclerView)
-//        private var snapHelper: SnapHelper = GravitySnapHelper(Gravity.START)
 
         override fun onBind(position: Int) {
             super.onBind(adapterPosition)
@@ -114,7 +113,6 @@ class ServicesAdapter(private val mContext: Context) : RecyclerView.Adapter<Base
             recyclerView.setHasFixedSize(true)
             recyclerView.setRecycledViewPool(RecyclerView.RecycledViewPool())
             recyclerView.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-//            snapHelper.attachToRecyclerView(recyclerView)
 
             with(services[adapterPosition]) {
                 serviceName.text = name

@@ -19,6 +19,7 @@ class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayo
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.LargeLabelEditText, 0, 0)
+        val hintColor = a.getColor(R.styleable.LargeLabelEditText_hintColor, ContextCompat.getColor(context, R.color.gray))
         val color = a.getColor(R.styleable.LargeLabelEditText_textColor, ContextCompat.getColor(context, R.color.black))
         val type = a.getInt(R.styleable.LargeLabelEditText_android_inputType, EditorInfo.TYPE_TEXT_VARIATION_NORMAL)
         val enabled = a.getBoolean(R.styleable.LargeLabelEditText_android_enabled, true)
@@ -34,7 +35,7 @@ class LargeLabelEditText(context: Context, attrs: AttributeSet) : ConstraintLayo
         root.background = background
 
         mLabelTextView = root[1] as TextView
-        mLabelTextView.setTextColor(color)
+        mLabelTextView.setTextColor(hintColor)
         mLabelTextView.text = text
 
         mTextEditText = root[0] as EditText

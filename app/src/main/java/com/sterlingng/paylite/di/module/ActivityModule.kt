@@ -128,6 +128,9 @@ import com.sterlingng.paylite.ui.send.SendMoneyPresenter
 import com.sterlingng.paylite.ui.services.ServicesMvpContract
 import com.sterlingng.paylite.ui.services.ServicesMvpView
 import com.sterlingng.paylite.ui.services.ServicesPresenter
+import com.sterlingng.paylite.ui.services.dstv.DstvServiceMvpContract
+import com.sterlingng.paylite.ui.services.dstv.DstvServiceMvpView
+import com.sterlingng.paylite.ui.services.dstv.DstvServicePresenter
 import com.sterlingng.paylite.ui.settings.SettingsMvpContract
 import com.sterlingng.paylite.ui.settings.SettingsMvpView
 import com.sterlingng.paylite.ui.settings.SettingsPresenter
@@ -286,9 +289,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideNamePresenter(presenter: NamePresenter<NameMvpView>): NameMvpContract<NameMvpView> = presenter
 
     @Provides
-    internal fun provideResetPresenter(presenter: ResetPasswordPresenter<ResetPasswordMvpView>): ResetPasswordMvpContract<ResetPasswordMvpView> = presenter
-
-    @Provides
     internal fun provideTokenPresenter(presenter: TokenPresenter<TokenMvpView>): TokenMvpContract<TokenMvpView> = presenter
 
     @Provides
@@ -355,6 +355,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideSplitAmountPresenter(presenter: SplitAmountPresenter<SplitAmountMvpView>): SplitAmountMvpContract<SplitAmountMvpView> = presenter
 
     @Provides
+    internal fun provideDstvServicePresenter(presenter: DstvServicePresenter<DstvServiceMvpView>): DstvServiceMvpContract<DstvServiceMvpView> = presenter
+
+    @Provides
     internal fun provideEmailForgotPresenter(presenter: ForgotPhonePresenter<ForgotPhoneMvpView>): ForgotPhoneMvpContract<ForgotPhoneMvpView> = presenter
 
     @Provides
@@ -371,6 +374,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideEditPresenter(profilePresenter: EditProfilePresenter<EditProfileMvpView>): EditProfileMvpContract<EditProfileMvpView> = profilePresenter
+
+    @Provides
+    internal fun provideResetPasswordPresenter(presenter: ResetPasswordPresenter<ResetPasswordMvpView>): ResetPasswordMvpContract<ResetPasswordMvpView> = presenter
 
     @Provides
     internal fun provideSalaryDetailsPresenter(presenter: SalaryDetailsPresenter<SalaryDetailsMvpView>): SalaryDetailsMvpContract<SalaryDetailsMvpView> = presenter
@@ -403,11 +409,11 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideBankTransferAmountPresenter(presenter: BankTransferAmountPresenter<BankTransferAmountMvpView>): BankTransferAmountMvpContract<BankTransferAmountMvpView> = presenter
 
     @Provides
-    internal fun provideCategoriesPresenter(presenter: TransactionCategoriesPresenter<TransactionCategoriesMvpView>): TransactionCategoriesMvpContract<TransactionCategoriesMvpView> = presenter
-
-    @Provides
     internal fun provideSetSecurityQuestionPresenter(presenter: SetSecurityQuestionMvpPresenter<SetSecurityQuestionMvpView>): SetSecurityQuestionMvpContract<SetSecurityQuestionMvpView> = presenter
 
     @Provides
     internal fun provideScheduledTransactionPresenter(presenter: ScheduledTransactionPresenter<ScheduledTransactionMvpView>): ScheduledTransactionMvpContract<ScheduledTransactionMvpView> = presenter
+
+    @Provides
+    internal fun provideTransactionCategoriesPresenter(presenter: TransactionCategoriesPresenter<TransactionCategoriesMvpView>): TransactionCategoriesMvpContract<TransactionCategoriesMvpView> = presenter
 }

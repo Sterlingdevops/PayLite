@@ -15,6 +15,7 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.fund.FundFragment
 import com.sterlingng.paylite.utils.then
+import de.hdodenhof.circleimageview.CircleImageView
 import javax.inject.Inject
 
 class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.OnAddPaymentMethod, PaymentMethodsAdapter.OnDeletePaymentMethod {
@@ -24,7 +25,9 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
 
     private lateinit var add: TextView
     private lateinit var exit: ImageView
+    private lateinit var mAddImageView: ImageView
     private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mAddBackImageView: CircleImageView
     private lateinit var mPaymentMethodsAdapter: PaymentMethodsAdapter
 
     @Inject
@@ -44,7 +47,9 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
     override fun bindViews(view: View) {
         add = view.findViewById(R.id.add)
         exit = view.findViewById(R.id.exit)
+        mAddImageView = view.findViewById(R.id.plus)
         mRecyclerView = view.findViewById(R.id.recyclerView)
+        mAddBackImageView = view.findViewById(R.id.circleImageView)
     }
 
     override fun setUp(view: View) {
@@ -73,6 +78,8 @@ class PaymentFragment : BaseFragment(), PaymentMvpView, PaymentMethodsAdapter.On
     override fun updatePaymentMethods(it: ArrayList<PaymentMethod>) {
         mPaymentMethodsAdapter.add(it)
         add.visibility = (mPaymentMethodsAdapter.paymentMethods.size == 0) then View.GONE ?: View.VISIBLE
+        mAddImageView.visibility = (mPaymentMethodsAdapter.paymentMethods.size == 0) then View.GONE ?: View.VISIBLE
+        mAddBackImageView.visibility = (mPaymentMethodsAdapter.paymentMethods.size == 0) then View.GONE ?: View.VISIBLE
     }
 
     override fun onAddPaymentMethodClicked() {
