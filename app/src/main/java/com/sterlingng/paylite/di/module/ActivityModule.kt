@@ -128,6 +128,9 @@ import com.sterlingng.paylite.ui.send.SendMoneyPresenter
 import com.sterlingng.paylite.ui.services.ServicesMvpContract
 import com.sterlingng.paylite.ui.services.ServicesMvpView
 import com.sterlingng.paylite.ui.services.ServicesPresenter
+import com.sterlingng.paylite.ui.services.airtel.AirtelServiceMvpContract
+import com.sterlingng.paylite.ui.services.airtel.AirtelServiceMvpView
+import com.sterlingng.paylite.ui.services.airtel.AirtelServicePresenter
 import com.sterlingng.paylite.ui.services.dstv.DstvServiceMvpContract
 import com.sterlingng.paylite.ui.services.dstv.DstvServiceMvpView
 import com.sterlingng.paylite.ui.services.dstv.DstvServicePresenter
@@ -374,6 +377,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideEditPresenter(profilePresenter: EditProfilePresenter<EditProfileMvpView>): EditProfileMvpContract<EditProfileMvpView> = profilePresenter
+
+    @Provides
+    internal fun provideAirtelServicePresenter(presenter: AirtelServicePresenter<AirtelServiceMvpView>): AirtelServiceMvpContract<AirtelServiceMvpView> = presenter
 
     @Provides
     internal fun provideResetPasswordPresenter(presenter: ResetPasswordPresenter<ResetPasswordMvpView>): ResetPasswordMvpContract<ResetPasswordMvpView> = presenter

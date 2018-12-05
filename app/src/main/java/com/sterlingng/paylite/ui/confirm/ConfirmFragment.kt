@@ -1,22 +1,18 @@
 package com.sterlingng.paylite.ui.confirm
 
-import android.annotation.SuppressLint
-import android.app.Dialog
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.davidmiguel.numberkeyboard.NumberKeyboard
 import com.davidmiguel.numberkeyboard.NumberKeyboardListener
 import com.goodiebag.pinview.PinView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseDialog
-import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import javax.inject.Inject
 
 class ConfirmFragment : BaseDialog(), ConfirmMvpView, NumberKeyboardListener {
+
     @Inject
     lateinit var mPresenter: ConfirmMvpContract<ConfirmMvpView>
 
@@ -24,53 +20,28 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView, NumberKeyboardListener {
     var onPinValidatedListener: OnPinValidated? = null
     private lateinit var mNumberKeyboard: NumberKeyboard
 
-    private val mBottomSheetBehaviorCallback =
-            object : BottomSheetBehavior.BottomSheetCallback() {
-
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                        dismiss()
-                    }
-                }
-
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-                }
-            }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return BottomSheetDialog(baseActivity, theme)
-    }
-
-    @SuppressLint("RestrictedApi")
-    override fun setupDialog(dialog: Dialog, style: Int) {
-        super.setupDialog(dialog, style)
-
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_confirm, null)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_confirm, container, false)
 
         val component = activityComponent
         dialog.setContentView(view)
         component.inject(this)
         mPresenter.onAttach(this)
 
-        val params = (view.parent as View).layoutParams as CoordinatorLayout.LayoutParams
-        val behavior = params.behavior
-
-        if (behavior != null && behavior is BottomSheetBehavior<*>) {
-            behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
-
-            val displayMetrics = baseActivity.resources.displayMetrics
-            val height = displayMetrics.heightPixels
-
-            val maxHeight = (height * 0.88).toInt()
-            val mBehavior = BottomSheetBehavior.from(view.parent as View)
-            mBehavior.peekHeight = maxHeight
-        }
-
         if (onPinValidatedListener == null) throw IllegalStateException("onPinValidatedListener not implemented")
 
+        showsDialog = false
         bindViews(view)
         setUp(view)
+
+        return view
+    }
+
+    override fun getPeekHeight(): Int {
+        val displayMetrics = baseActivity.resources.displayMetrics
+        val height = displayMetrics.heightPixels
+        return (height * 0.8).toInt()
     }
 
     override fun bindViews(view: View) {
@@ -86,18 +57,10 @@ class ConfirmFragment : BaseDialog(), ConfirmMvpView, NumberKeyboardListener {
     }
 
     override fun onPinEnteredCorrect() {
-        hideKeyboard()
         onPinValidatedListener?.onPinCorrect()
-        (baseActivity as DashboardActivity).mNavController.clearDialogFragment()
-    }
-
-    override fun dismiss() {
-        super.dismiss()
-        hideKeyboard()
     }
 
     override fun onPinEnteredIncorrect() {
-        hideKeyboard()
         onPinValidatedListener?.onPinIncorrect()
     }
 

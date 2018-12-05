@@ -1,17 +1,13 @@
 package com.sterlingng.paylite.ui.filter
 
-
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.sterlingng.paylite.R
@@ -41,43 +37,20 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     lateinit var title: String
     var selector: Int = -1
 
-    private val mBottomSheetBehaviorCallback = object : BottomSheetBehavior.BottomSheetCallback() {
-
-        override fun onStateChanged(bottomSheet: View, newState: Int) {
-            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                dismiss()
-            }
-        }
-
-        override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-        }
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return BottomSheetDialog(baseActivity, theme)
-    }
-
-    @SuppressLint("RestrictedApi")
-    override fun setupDialog(dialog: Dialog, style: Int) {
-        super.setupDialog(dialog, style)
-
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_filter_bottom_sheet, null)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_filter_bottom_sheet, container, false)
 
         val component = activityComponent
         dialog.setContentView(view)
         component.inject(this)
         mPresenter.onAttach(this)
 
-        val params = (view.parent as View).layoutParams as CoordinatorLayout.LayoutParams
-        val behavior = params.behavior
-
-        if (behavior != null && behavior is BottomSheetBehavior<*>) {
-            behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
-        }
-
+        showsDialog = false
         bindViews(view)
         setUp(view)
+
+        return view
     }
 
     override fun bindViews(view: View) {
@@ -98,6 +71,12 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
         closeImageView.setOnClickListener {
             dialog.dismiss()
         }
+    }
+
+    override fun getPeekHeight(): Int {
+        val displayMetrics = baseActivity.resources.displayMetrics
+        val height = displayMetrics.heightPixels
+        return (height * 0.9).toInt()
     }
 
     override fun show(message: String, useToast: Boolean) {

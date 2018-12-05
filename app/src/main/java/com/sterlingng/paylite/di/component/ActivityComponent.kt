@@ -40,6 +40,7 @@ import com.sterlingng.paylite.ui.security.LoginAndSecurityFragment
 import com.sterlingng.paylite.ui.securityquestions.SetSecurityQuestionFragment
 import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.services.ServicesFragment
+import com.sterlingng.paylite.ui.services.airtel.AirtelServiceFragment
 import com.sterlingng.paylite.ui.services.dstv.DstvServiceFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.settings.profile.ProfileFragment
@@ -183,4 +184,5 @@ interface ActivityComponent {
 
     fun inject(dstvServiceFragment: DstvServiceFragment)
 
+    fun inject(airtelServiceFragment: AirtelServiceFragment)
 }

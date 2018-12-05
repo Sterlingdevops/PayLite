@@ -107,7 +107,7 @@ class NameFragment : BaseFragment(), NameMvpView, DatePickerDialog.OnDateSetList
             filterBottomSheetFragment.selector = 1
             filterBottomSheetFragment.title = "Gender"
             filterBottomSheetFragment.items = listOf("Male", "Female")
-            filterBottomSheetFragment.show(childFragmentManager, "filter")
+            filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
         }
     }
 

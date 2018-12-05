@@ -206,7 +206,7 @@
     <string name="movies_and_events">Movies and\n Events</string>
     <string name="give">Give</string>
     <string name="filter">filter</string>
-    <string name="airtime_and_data">Airtime and Data</string>
+    <string name="airtime_and_data">Airtime and Mobile Data</string>
     <string name="choose_a_funding_method">Choose a funding method</string>
     <string name="bank">Bank</string>
     <string name="please_input_your_card_details">Please input your card details</string>
@@ -372,4 +372,5 @@
     <string name="purchase_airtime_and_data_for_yourself_or_loved_ones">Purchase airtime and data for yourself or loved ones.</string>
     <string name="smart_card_no">SmartCard No</string>
     <string name="compact">Compact</string>
+    <string name="airtel_mobile">Airtel Mobile</string>
 </resources>

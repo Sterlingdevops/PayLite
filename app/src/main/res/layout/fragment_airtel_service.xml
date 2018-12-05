@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="@string/tv_bills"
+        android:text="@string/airtime_and_data"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -69,7 +69,7 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_blue">
+            android:background="@drawable/bg_red">
 
             <TextView
                 android:id="@+id/pay_staff_text"
@@ -78,7 +78,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/dstv"
+                android:text="@string/airtel_mobile"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -106,19 +106,19 @@
     </android.support.v7.widget.CardView>
 
     <com.sterlingng.views.LargeLabelEditText
-        android:id="@+id/smart_card_no"
+        android:id="@+id/phone_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:imeOptions="actionNext"
         android:inputType="number"
         app:hint="@string/_9075755888"
-        app:label="@string/smart_card_no"
+        app:label="Phone    "
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/header"
-        app:maxLength="11"
+        app:maxLength="10"
         app:textColor="@color/blue_black_dark"/>
 
     <com.sterlingng.views.LargeLabelClickToSelectEditText
@@ -129,16 +129,16 @@
         android:clickable="false"
         android:drawableTint="@color/light_gray"
         android:gravity="center_vertical"
-        android:text="@string/compact"
+        android:text="@string/mobile_top_up"
         android:textColor="@color/blue_black_dark"
         android:textSize="16sp"
         app:drawable="@drawable/chevron_down"
         app:hint="Data bundle"
-        app:label="Category         "
+        app:label="Category"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/smart_card_no"
+        app:layout_constraintTop_toBottomOf="@+id/phone_email"
         app:textColor="@color/blue_black_dark"
         tools:targetApi="m"/>
 

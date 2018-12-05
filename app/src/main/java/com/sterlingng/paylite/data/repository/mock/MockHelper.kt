@@ -41,8 +41,8 @@ internal constructor() : MockerInterface {
         vas += VAService(2, "Internet Bill", R.drawable.icon_internet, internetProviders)
 
         val airtimeProviders = ArrayList<VasProvider>()
-        airtimeProviders += VasProvider(2, "Airtel", R.drawable.icon_airtel)
         airtimeProviders += VasProvider(1, "MTN", R.drawable.icon_mtn)
+        airtimeProviders += VasProvider(2, "Airtel", R.drawable.icon_airtel)
         airtimeProviders += VasProvider(3, "Glo", R.drawable.icon_glo)
         airtimeProviders += VasProvider(4, "9mobile", R.drawable.icon_9_mobile)
         vas += VAService(1, "Airtime & mobile data ", R.drawable.icon_airtime_data, airtimeProviders)

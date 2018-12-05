@@ -100,7 +100,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
                 if (matcher.matches()) {
                     val confirmFragment = ConfirmFragment.newInstance()
                     confirmFragment.onPinValidatedListener = this
-                    (baseActivity as DashboardActivity).mNavController.showDialogFragment(confirmFragment)
+                    confirmFragment.show(baseActivity.supportFragmentManager, "confirm")
                 } else {
                     show("Please enter a phone number", true)
                 }
@@ -116,7 +116,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
 //            filterBottomSheetFragment.selector = 1
 //            filterBottomSheetFragment.title = "Select a bundle"
 //            filterBottomSheetFragment.items = listOf("30MB - 24hrs", "300MB - 48hrs", "3000MB - 72hrs", "Unlimted - 1 month")
-//            filterBottomSheetFragment.show(childFragmentManager, "filter")
+//            filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
 //        }
 
 //        category.mTextEditText.isClickable = true
@@ -126,7 +126,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
 //            filterBottomSheetFragment.selector = 2
 //            filterBottomSheetFragment.title = "Project"
 //            filterBottomSheetFragment.items = listOf("Data bundle", "Mobile Top-up")
-//            filterBottomSheetFragment.show(childFragmentManager, "filter")
+//            filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
 //        }
 
         provider.isClickable = true
@@ -136,7 +136,7 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
             filterBottomSheetFragment.selector = 0
             filterBottomSheetFragment.title = "Network provider"
             filterBottomSheetFragment.items = listOf("AIRTEL", "GLO", "MTN", "9 MOBILE")
-            filterBottomSheetFragment.show(childFragmentManager, "filter")
+            filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
         }
 
         val drawable = ContextCompat.getDrawable(baseActivity, R.drawable.icon_phone_book)

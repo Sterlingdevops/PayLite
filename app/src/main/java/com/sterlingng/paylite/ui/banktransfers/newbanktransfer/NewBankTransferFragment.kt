@@ -63,7 +63,7 @@ class NewBankTransferFragment : BaseFragment(), NewBankTransferMvpView,
             filterBottomSheetFragment.selector = 1
             filterBottomSheetFragment.title = "Banks"
             filterBottomSheetFragment.items = (baseActivity as DashboardActivity).banks.map { bank: Bank -> bank.bankname }
-            filterBottomSheetFragment.show(childFragmentManager, "filter")
+            filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
         }
     }
 

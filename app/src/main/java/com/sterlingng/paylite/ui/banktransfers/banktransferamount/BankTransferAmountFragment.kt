@@ -97,7 +97,7 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
             if (cashOutRequest.amount >= 100) {
                 val confirmFragment = ConfirmFragment.newInstance()
                 confirmFragment.onPinValidatedListener = this
-                (baseActivity as DashboardActivity).mNavController.showDialogFragment(confirmFragment)
+                confirmFragment.show(baseActivity.supportFragmentManager, "confirm")
             } else {
                 show("Amount should be more than NGN100", true)
             }
@@ -157,7 +157,7 @@ class BankTransferAmountFragment : BaseFragment(), BankTransferAmountMvpView,
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.title = "Repeat Payment"
             filterBottomSheetFragment.items = listOf("Never", "Daily", "Weekly", "Monthly", "Yearly")
-            filterBottomSheetFragment.show(childFragmentManager, "filter")
+            filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
         }
 
         mSetStartDateTextView.setOnClickListener {

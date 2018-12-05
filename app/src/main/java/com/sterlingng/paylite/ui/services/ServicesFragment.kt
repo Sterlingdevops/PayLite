@@ -13,6 +13,7 @@ import com.sterlingng.paylite.data.model.VAService
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.paystaff.PayStaffFragment
+import com.sterlingng.paylite.ui.services.airtel.AirtelServiceFragment
 import com.sterlingng.paylite.ui.services.dstv.DstvServiceFragment
 import com.sterlingng.paylite.utils.ServiceItemClickedListener
 import javax.inject.Inject
@@ -74,17 +75,17 @@ class ServicesFragment : BaseFragment(), ServicesMvpView, ServiceItemClickedList
 
     override fun serviceItemClicked(v: View, sectionIndex: Int, position: Int) {
         when (sectionIndex) {
+            0 -> {
+                when (position) {
+                    1 -> (baseActivity as DashboardActivity).mNavController.pushFragment(AirtelServiceFragment.newInstance())
+                }
+            }
             2 -> {
                 when (position) {
-                    2 -> {
-                        (baseActivity as DashboardActivity)
-                                .mNavController
-                                .pushFragment(DstvServiceFragment.newInstance())
-                    }
+                    2 -> (baseActivity as DashboardActivity).mNavController.pushFragment(DstvServiceFragment.newInstance())
                 }
             }
         }
-//        show(servicesAdapter.get(sectionIndex).providers[position].name, true)
     }
 
     companion object {

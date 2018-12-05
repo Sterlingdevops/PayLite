@@ -56,7 +56,7 @@ class SetSecurityQuestionFragment : BaseFragment(), SetSecurityQuestionMvpView, 
         mSetSecurityQuestionButton.setOnClickListener {
             val confirmFragment = ConfirmFragment.newInstance()
             confirmFragment.onPinValidatedListener = this
-            (baseActivity as DashboardActivity).mNavController.showDialogFragment(confirmFragment)
+            confirmFragment.show(baseActivity.supportFragmentManager, "confirm")
         }
     }
 

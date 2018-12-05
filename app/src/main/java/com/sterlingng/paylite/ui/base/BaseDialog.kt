@@ -1,21 +1,14 @@
 package com.sterlingng.paylite.ui.base
 
-import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatDialogFragment
 import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.RelativeLayout
+import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.sterlingng.paylite.di.component.ActivityComponent
 
 
-abstract class BaseDialog : AppCompatDialogFragment(), DialogMvpView {
+abstract class BaseDialog : SuperBottomSheetFragment(), DialogMvpView {
 
     lateinit var baseActivity: BaseActivity private set
 
@@ -69,27 +62,6 @@ abstract class BaseDialog : AppCompatDialogFragment(), DialogMvpView {
     abstract fun bindViews(view: View)
 
     protected abstract fun setUp(view: View)
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // the content
-        val root = RelativeLayout(activity)
-        root.layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        // creating the fullscreen dialog
-        val dialog = Dialog(baseActivity)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(root)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        dialog.setCanceledOnTouchOutside(false)
-
-        return dialog
-    }
 
     override fun show(fragmentManager: FragmentManager, tag: String) {
         val transaction = fragmentManager.beginTransaction()
