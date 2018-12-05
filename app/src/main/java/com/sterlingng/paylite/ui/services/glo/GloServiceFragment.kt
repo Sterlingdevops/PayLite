@@ -1,4 +1,4 @@
-package com.sterlingng.paylite.ui.services.airtel
+package com.sterlingng.paylite.ui.services.glo
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -25,16 +25,16 @@ import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.views.LargeLabelEditText
 import javax.inject.Inject
 
-class AirtelServiceFragment : BaseFragment(), AirtelServiceMvpView {
+class GloServiceFragment : BaseFragment(), GloServiceMvpView {
 
     @Inject
-    lateinit var mPresenter: AirtelServiceMvpContract<AirtelServiceMvpView>
+    lateinit var mPresenter: GloServiceMvpContract<GloServiceMvpView>
 
     private lateinit var exit: ImageView
     private lateinit var mPhoneEmailEditText: LargeLabelEditText
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_airtel_service, container, false)
+        val view = inflater.inflate(R.layout.fragment_glo_service, container, false)
         val component = activityComponent
         component.inject(this)
         mPresenter.onAttach(this)
@@ -126,8 +126,8 @@ class AirtelServiceFragment : BaseFragment(), AirtelServiceMvpView {
 
     companion object {
 
-        fun newInstance(): AirtelServiceFragment {
-            val fragment = AirtelServiceFragment()
+        fun newInstance(): GloServiceFragment {
+            val fragment = GloServiceFragment()
             val args = Bundle()
             fragment.arguments = args
             return fragment

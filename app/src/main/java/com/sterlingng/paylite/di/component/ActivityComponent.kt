@@ -42,6 +42,9 @@ import com.sterlingng.paylite.ui.send.SendMoneyFragment
 import com.sterlingng.paylite.ui.services.ServicesFragment
 import com.sterlingng.paylite.ui.services.airtel.AirtelServiceFragment
 import com.sterlingng.paylite.ui.services.dstv.DstvServiceFragment
+import com.sterlingng.paylite.ui.services.etisalat.EtisalatServiceFragment
+import com.sterlingng.paylite.ui.services.glo.GloServiceFragment
+import com.sterlingng.paylite.ui.services.mtn.MtnServiceFragment
 import com.sterlingng.paylite.ui.settings.SettingsFragment
 import com.sterlingng.paylite.ui.settings.profile.ProfileFragment
 import com.sterlingng.paylite.ui.sheduledtransaction.ScheduledTransactionFragment
@@ -185,4 +188,10 @@ interface ActivityComponent {
     fun inject(dstvServiceFragment: DstvServiceFragment)
 
     fun inject(airtelServiceFragment: AirtelServiceFragment)
+
+    fun inject(mtnServiceFragment: MtnServiceFragment)
+
+    fun inject(gloServiceFragment: GloServiceFragment)
+
+    fun inject(etisalatServiceFragment: EtisalatServiceFragment)
 }

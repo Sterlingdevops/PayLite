@@ -355,7 +355,7 @@
     <string name="about">About</string>
     <string name="rate">Rate this app</string>
     <string name="privacy_policy">Privacy policy</string>
-    <string name="terms_and_conditions"><![CDATA[Terms & conditions]]></string>
+    <string name="terms_and_conditions">Terms &amp; conditions</string>
     <string name="driver">Driver</string>
     <string name="add_new_staff">Add New Staff</string>
     <string name="job_title">Job title</string>
@@ -373,4 +373,6 @@
     <string name="smart_card_no">SmartCard No</string>
     <string name="compact">Compact</string>
     <string name="airtel_mobile">Airtel Mobile</string>
+    <string name="globacom">Globacom</string>
+    <string name="_9mobile">9mobile</string>
 </resources>

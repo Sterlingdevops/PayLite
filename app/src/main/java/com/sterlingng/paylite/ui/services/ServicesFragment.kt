@@ -15,6 +15,9 @@ import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.paystaff.PayStaffFragment
 import com.sterlingng.paylite.ui.services.airtel.AirtelServiceFragment
 import com.sterlingng.paylite.ui.services.dstv.DstvServiceFragment
+import com.sterlingng.paylite.ui.services.etisalat.EtisalatServiceFragment
+import com.sterlingng.paylite.ui.services.glo.GloServiceFragment
+import com.sterlingng.paylite.ui.services.mtn.MtnServiceFragment
 import com.sterlingng.paylite.utils.ServiceItemClickedListener
 import javax.inject.Inject
 
@@ -77,7 +80,10 @@ class ServicesFragment : BaseFragment(), ServicesMvpView, ServiceItemClickedList
         when (sectionIndex) {
             0 -> {
                 when (position) {
+                    0 -> (baseActivity as DashboardActivity).mNavController.pushFragment(MtnServiceFragment.newInstance())
                     1 -> (baseActivity as DashboardActivity).mNavController.pushFragment(AirtelServiceFragment.newInstance())
+                    2 -> (baseActivity as DashboardActivity).mNavController.pushFragment(GloServiceFragment.newInstance())
+                    3 -> (baseActivity as DashboardActivity).mNavController.pushFragment(EtisalatServiceFragment.newInstance())
                 }
             }
             2 -> {

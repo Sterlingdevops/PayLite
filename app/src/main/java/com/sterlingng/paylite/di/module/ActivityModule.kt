@@ -134,6 +134,15 @@ import com.sterlingng.paylite.ui.services.airtel.AirtelServicePresenter
 import com.sterlingng.paylite.ui.services.dstv.DstvServiceMvpContract
 import com.sterlingng.paylite.ui.services.dstv.DstvServiceMvpView
 import com.sterlingng.paylite.ui.services.dstv.DstvServicePresenter
+import com.sterlingng.paylite.ui.services.etisalat.EtisalatServiceMvpContract
+import com.sterlingng.paylite.ui.services.etisalat.EtisalatServiceMvpView
+import com.sterlingng.paylite.ui.services.etisalat.EtisalatServicePresenter
+import com.sterlingng.paylite.ui.services.glo.GloServiceMvpContract
+import com.sterlingng.paylite.ui.services.glo.GloServiceMvpView
+import com.sterlingng.paylite.ui.services.glo.GloServicePresenter
+import com.sterlingng.paylite.ui.services.mtn.MtnServiceMvpContract
+import com.sterlingng.paylite.ui.services.mtn.MtnServiceMvpView
+import com.sterlingng.paylite.ui.services.mtn.MtnServicePresenter
 import com.sterlingng.paylite.ui.settings.SettingsMvpContract
 import com.sterlingng.paylite.ui.settings.SettingsMvpView
 import com.sterlingng.paylite.ui.settings.SettingsPresenter
@@ -352,6 +361,12 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideOnBoardingPresenter(presenter: OnBoardingPresenter<OnBoardingMvpView>): OnBoardingMvpContract<OnBoardingMvpView> = presenter
 
     @Provides
+    internal fun provideMtnServicePresenter(presenter: MtnServicePresenter<MtnServiceMvpView>): MtnServiceMvpContract<MtnServiceMvpView> = presenter
+
+    @Provides
+    internal fun provideGloServicePresenter(presenter: GloServicePresenter<GloServiceMvpView>): GloServiceMvpContract<GloServiceMvpView> = presenter
+
+    @Provides
     internal fun provideNewPaymentPresenter(presenter: NewPaymentPresenter<NewPaymentMvpView>): NewPaymentMvpContract<NewPaymentMvpView> = presenter
 
     @Provides
@@ -398,6 +413,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     internal fun provideNewBankTransferPresenter(presenter: NewBankTransferPresenter<NewBankTransferMvpView>): NewBankTransferMvpContract<NewBankTransferMvpView> = presenter
+
+    @Provides
+    internal fun provideEtisalatServicePresenter(presenter: EtisalatServicePresenter<EtisalatServiceMvpView>): EtisalatServiceMvpContract<EtisalatServiceMvpView> = presenter
 
     @Provides
     internal fun provideLoginAndSecurityPresenter(presenter: LoginAndSecurityPresenter<LoginAndSecurityMvpView>): LoginAndSecurityMvpContract<LoginAndSecurityMvpView> = presenter
