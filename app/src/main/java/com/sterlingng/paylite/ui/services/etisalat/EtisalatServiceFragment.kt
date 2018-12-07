@@ -60,7 +60,7 @@ class EtisalatServiceFragment : BaseFragment(), EtisalatServiceMvpView, FilterBo
 
         mCategoryEditText.mTextEditText.isClickable = true
         mCategoryEditText.mTextEditText.setOnClickListener {
-            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance(true)
+            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance()
             filterBottomSheetFragment.onFilterItemSelectedListener = this
             filterBottomSheetFragment.title = "Category"
             filterBottomSheetFragment.items = listOf("Data bundle", "Mobile Top-up")

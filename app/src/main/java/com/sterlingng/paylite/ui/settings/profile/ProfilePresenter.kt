@@ -13,6 +13,7 @@ internal constructor(dataManager: DataManager, schedulerProvider: SchedulerProvi
     override fun logOut() {
         dataManager.deleteAllScheduledPayments()
         dataManager.deleteAllTransactions()
+        dataManager.deleteAll()
         mvpView.onLogOutComplete()
     }
 

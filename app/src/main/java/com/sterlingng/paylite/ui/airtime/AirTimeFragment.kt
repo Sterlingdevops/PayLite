@@ -77,7 +77,6 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
         data["Amount"] = mAmountEditText.text.toString()
         data["BeneficiaryPhoneNumber"] = "0${phone.text}"
         mPresenter.buyAirtime(data)
-        hideKeyboard()
     }
 
     override fun onPinIncorrect() {
@@ -102,7 +101,9 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
                 if (matcher.matches()) {
                     val confirmFragment = ConfirmFragment.newInstance()
                     confirmFragment.onPinValidatedListener = this
-                    confirmFragment.show(baseActivity.supportFragmentManager, "confirm")
+                    (baseActivity as DashboardActivity)
+                            .mNavController
+                            .showDialogFragment(confirmFragment)
                 } else {
                     show("Please enter a phone number", true)
                 }

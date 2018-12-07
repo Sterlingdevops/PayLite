@@ -119,7 +119,9 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
             if (isCard) {
                 val confirmFragment = ConfirmFragment.newInstance()
                 confirmFragment.onPinValidatedListener = this
-                confirmFragment.show(baseActivity.supportFragmentManager, "confirm")
+                (baseActivity as DashboardActivity)
+                        .mNavController
+                        .showDialogFragment(confirmFragment)
                 return@setOnClickListener
             }
 
@@ -136,7 +138,9 @@ class FundFragment : BaseFragment(), FundMvpView, ConfirmFragment.OnPinValidated
             if (!isCard) {
                 val confirmFragment = ConfirmFragment.newInstance()
                 confirmFragment.onPinValidatedListener = this
-                confirmFragment.show(baseActivity.supportFragmentManager, "confirm")
+                (baseActivity as DashboardActivity)
+                        .mNavController
+                        .showDialogFragment(confirmFragment)
                 return@setOnClickListener
             }
         }

@@ -18,7 +18,6 @@ constructor(dataManager: DataManager, schedulerProvider: SchedulerProvider, comp
     : BasePresenter<V>(dataManager, schedulerProvider, compositeDisposable), ResetPasswordMvpContract<V> {
 
     override fun resetPassword(data: HashMap<String, Any>) {
-        data["PhoneNumber"] = dataManager.getCurrentUser()?.phoneNumber!!
         mvpView.showLoading()
         dataManager.updateForgotPassword(data, gson.toJson(data).sha256())
                 .subscribeOn(schedulerProvider.io())

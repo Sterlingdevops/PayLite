@@ -73,7 +73,7 @@ class SendMoneyFragment : BaseFragment(), SendMoneyMvpView, RecyclerViewLongClic
         mContactsRecyclerView.scrollToPosition(0)
 
         mNewPaymentTextView.setOnClickListener {
-            (baseActivity as DashboardActivity).mNavController.pushFragment(newInstance())
+            (baseActivity as DashboardActivity).mNavController.pushFragment(NewPaymentFragment.newInstance())
         }
 
         mBankTransferTextView.setOnClickListener {

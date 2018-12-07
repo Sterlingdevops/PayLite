@@ -103,7 +103,9 @@ class NewPaymentAmountFragment : BaseFragment(), NewPaymentAmountMvpView, Confir
             if (request.amount.toInt() >= 100) {
                 val confirmFragment = ConfirmFragment.newInstance()
                 confirmFragment.onPinValidatedListener = this
-                confirmFragment.show(baseActivity.supportFragmentManager, "confirm")
+                (baseActivity as DashboardActivity)
+                        .mNavController
+                        .showDialogFragment(confirmFragment)
             } else {
                 show("Amount should be more than NGN100", true)
             }
