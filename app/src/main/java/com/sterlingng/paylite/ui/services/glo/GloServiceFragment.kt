@@ -2,6 +2,7 @@ package com.sterlingng.paylite.ui.services.glo
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -21,17 +22,21 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
-import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
+import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
+import com.sterlingng.paylite.utils.AppConstants.DRAWABLE_RIGHT
+import com.sterlingng.paylite.utils.AppConstants.REQUEST_SELECT_CONTACT
+import com.sterlingng.views.LargeLabelClickToSelectEditText
 import com.sterlingng.views.LargeLabelEditText
 import javax.inject.Inject
 
-class GloServiceFragment : BaseFragment(), GloServiceMvpView {
+class GloServiceFragment : BaseFragment(), GloServiceMvpView, FilterBottomSheetFragment.OnFilterItemSelected {
 
     @Inject
     lateinit var mPresenter: GloServiceMvpContract<GloServiceMvpView>
 
     private lateinit var exit: ImageView
     private lateinit var mPhoneEmailEditText: LargeLabelEditText
+    private lateinit var mCategoryEditText: LargeLabelClickToSelectEditText<String>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_glo_service, container, false)
@@ -43,6 +48,7 @@ class GloServiceFragment : BaseFragment(), GloServiceMvpView {
 
     override fun bindViews(view: View) {
         exit = view.findViewById(R.id.exit)
+        mCategoryEditText = view.findViewById(R.id.category)
         mPhoneEmailEditText = view.findViewById(R.id.phone_email)
     }
 
@@ -52,13 +58,22 @@ class GloServiceFragment : BaseFragment(), GloServiceMvpView {
             baseActivity.onBackPressed()
         }
 
+        mCategoryEditText.mTextEditText.isClickable = true
+        mCategoryEditText.mTextEditText.setOnClickListener {
+            val filterBottomSheetFragment = FilterBottomSheetFragment.newInstance(true)
+            filterBottomSheetFragment.onFilterItemSelectedListener = this
+            filterBottomSheetFragment.title = "Category"
+            filterBottomSheetFragment.items = listOf("Data bundle", "Mobile Top-up")
+            filterBottomSheetFragment.show(baseActivity.supportFragmentManager, "filter")
+        }
+
         val drawable = ContextCompat.getDrawable(baseActivity, R.drawable.icon_phone_book)
         drawable?.setBounds(0, 0, (drawable.intrinsicWidth * 0.7).toInt(), (drawable.intrinsicHeight * 0.7).toInt())
         mPhoneEmailEditText.mTextEditText.setCompoundDrawables(null, null, drawable, null)
         mPhoneEmailEditText.mTextEditText.setOnTouchListener { _, event ->
 
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.mTextEditText.compoundDrawables[NewPaymentFragment.DRAWABLE_RIGHT].bounds.width())) {
+                if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.mTextEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
                     Dexter.withActivity(baseActivity)
                             .withPermission(Manifest.permission.READ_CONTACTS)
                             .withListener(object : PermissionListener {
@@ -73,7 +88,7 @@ class GloServiceFragment : BaseFragment(), GloServiceMvpView {
                                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                                     val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
                                     if (intent.resolveActivity(baseActivity.packageManager) != null) {
-                                        startActivityForResult(intent, NewPaymentFragment.REQUEST_SELECT_CONTACT)
+                                        startActivityForResult(intent, REQUEST_SELECT_CONTACT)
                                     }
                                 }
 
@@ -88,9 +103,7 @@ class GloServiceFragment : BaseFragment(), GloServiceMvpView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            NewPaymentFragment.REQUEST_SELECT_CONTACT -> {
-                data?.data?.let { handleContactPickerResult(it) }
-            }
+            REQUEST_SELECT_CONTACT -> data?.data?.let { handleContactPickerResult(it) }
         }
     }
 
@@ -105,7 +118,7 @@ class GloServiceFragment : BaseFragment(), GloServiceMvpView {
                 mSelectionArgs, null)
 
         // If the cursor returned is valid, get the phone number
-        var phone: String? = ""
+        var phone = ""
         if (phoneCursor != null && phoneCursor.moveToFirst()) {
             val numberIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER)
             if (phoneCursor.getString(numberIndex) != null)
@@ -117,7 +130,12 @@ class GloServiceFragment : BaseFragment(), GloServiceMvpView {
             show("Invalid contact", true)
             return
         }
-        mPhoneEmailEditText.mTextEditText.setText(phone)
+        mPhoneEmailEditText.text = phone
+    }
+
+    override fun onFilterItemSelected(dialog: Dialog, selector: Int, s: String) {
+        mCategoryEditText.text = s
+        dialog.dismiss()
     }
 
     override fun recyclerViewItemClicked(v: View, position: Int) {

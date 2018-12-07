@@ -14,7 +14,7 @@ import android.widget.TextView
 class LargeLabelClickToSelectEditText<T>(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
     private var mLabelTextView: TextView
-    private var mTextEditText: ClickToSelectEditText<T>
+    var mTextEditText: ClickToSelectEditText<T>
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.LargeLabelClickToSelectEditText, 0, 0)
@@ -45,7 +45,17 @@ class LargeLabelClickToSelectEditText<T>(context: Context, attrs: AttributeSet) 
         a.recycle()
     }
 
-    fun label(): String = mLabelTextView.text.toString()
+    var text: String
+        get() = mTextEditText.text.toString()
+        set(value) {
+            mTextEditText.setText(value)
+        }
+
+    var label: String
+        get() = mLabelTextView.text.toString()
+        set(value) {
+            mLabelTextView.text = value
+        }
 
     operator fun ViewGroup.get(position: Int): View = getChildAt(position)
 }

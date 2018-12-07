@@ -60,6 +60,7 @@ import com.sterlingng.paylite.ui.splitcontacts.SplitContactFragment
 import com.sterlingng.paylite.ui.transactions.TransactionsFragment
 import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesFragment
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailFragment
+import com.sterlingng.paylite.ui.transactions.insights.InsightsFragment
 import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesFragment
 import dagger.Component
 
@@ -194,4 +195,6 @@ interface ActivityComponent {
     fun inject(gloServiceFragment: GloServiceFragment)
 
     fun inject(etisalatServiceFragment: EtisalatServiceFragment)
+
+    fun inject(insightsFragment: InsightsFragment)
 }

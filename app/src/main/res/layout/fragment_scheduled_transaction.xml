@@ -226,6 +226,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guidelineLeft2"
                 app:layout_constraintTop_toBottomOf="@+id/textView7"
                 app:layout_constraintVertical_bias="0.0"
+                tools:itemCount="1"
                 tools:listitem="@layout/layout_payment_history_item"/>
 
             <android.support.constraint.Guideline

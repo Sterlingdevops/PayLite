@@ -9,6 +9,9 @@ import android.view.ViewGroup
  */
 
 internal object AppConstants {
+
+    const val DRAWABLE_RIGHT = 2
+    const val REQUEST_SELECT_CONTACT = 1001
     const val TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss"
     //Network Messages
     const val SOCKET_TIME_OUT_EXCEPTION = "Request timed out while trying to connect. Please ensure you have a strong signal and try again."

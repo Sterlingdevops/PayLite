@@ -13,6 +13,8 @@ import javax.inject.Inject
 class RemoteServiceHelper @Inject
 internal constructor() : BaseHelper(), RemoteServiceApi {
 
+    override fun validateSecurityQuestion(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.validateSecurityQuestion(data, authorization, hash)
+
     override fun setSecurityQuestion(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.setSecurityQuestion(data, authorization, hash)
 
     override fun updateTransactionCategory(data: HashMap<String, Any>, authorization: String, hash: String): Observable<Response> = mRemoteServiceApi.updateTransactionCategory(data, authorization, hash)

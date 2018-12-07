@@ -17,6 +17,7 @@ import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.data.model.ContactItem
+import com.sterlingng.paylite.utils.AppConstants.DRAWABLE_RIGHT
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
 import java.util.*
 
@@ -110,10 +111,6 @@ class SplitContactsAdapter(private val mContext: Context) : RecyclerSwipeAdapter
                 onDeleteContactWatcher.onContactDeleted()
             }
         }
-    }
-
-    companion object {
-        const val DRAWABLE_RIGHT = 2
     }
 
     interface OnDeleteContactWatcher {

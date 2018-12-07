@@ -26,6 +26,8 @@ import com.sterlingng.paylite.data.model.Wallet
 import com.sterlingng.paylite.rx.EventBus
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
+import com.sterlingng.paylite.utils.AppConstants.DRAWABLE_RIGHT
+import com.sterlingng.paylite.utils.AppConstants.REQUEST_SELECT_CONTACT
 import javax.inject.Inject
 
 class GetCashFragment : BaseFragment(), GetCashMvpView {
@@ -228,9 +230,6 @@ class GetCashFragment : BaseFragment(), GetCashMvpView {
     }
 
     companion object {
-
-        const val DRAWABLE_RIGHT = 2
-        const val REQUEST_SELECT_CONTACT = 1001
 
         fun newInstance(): GetCashFragment {
             val fragment = GetCashFragment()

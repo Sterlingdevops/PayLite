@@ -30,6 +30,8 @@ import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.confirm.ConfirmFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
 import com.sterlingng.paylite.ui.filter.FilterBottomSheetFragment
+import com.sterlingng.paylite.utils.AppConstants.DRAWABLE_RIGHT
+import com.sterlingng.paylite.utils.AppConstants.REQUEST_SELECT_CONTACT
 import com.sterlingng.paylite.utils.toNumber
 import com.sterlingng.views.LargeLabelEditText
 import java.util.regex.Pattern
@@ -293,9 +295,6 @@ class AirTimeFragment : BaseFragment(), AirTimeMvpView,
     }
 
     companion object {
-
-        const val DRAWABLE_RIGHT = 2
-        const val REQUEST_SELECT_CONTACT = 1001
 
         fun newInstance(): AirTimeFragment {
             val fragment = AirTimeFragment()

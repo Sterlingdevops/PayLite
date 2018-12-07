@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseDialog
 import com.sterlingng.paylite.utils.RecyclerViewClickListener
+import com.sterlingng.paylite.utils.then
 import javax.inject.Inject
 
 class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClickListener {
@@ -76,7 +77,7 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
     override fun getPeekHeight(): Int {
         val displayMetrics = baseActivity.resources.displayMetrics
         val height = displayMetrics.heightPixels
-        return (height * 0.9).toInt()
+        return arguments?.getBoolean(HEIGHT)!! then super.getPeekHeight() ?: (height * 0.9).toInt()
     }
 
     override fun show(message: String, useToast: Boolean) {
@@ -93,9 +94,13 @@ class FilterBottomSheetFragment : BaseDialog(), FilterMvpView, RecyclerViewClick
 
     companion object {
 
-        fun newInstance(): FilterBottomSheetFragment {
+        const val HEIGHT = "FilterBottomSheetFragment.HEIGHT"
+
+        @JvmOverloads
+        fun newInstance(height: Boolean = false): FilterBottomSheetFragment {
             val dialog = FilterBottomSheetFragment()
             val args = Bundle()
+            args.putBoolean(HEIGHT, height)
             dialog.arguments = args
             return dialog
         }

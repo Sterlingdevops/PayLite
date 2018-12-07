@@ -101,27 +101,19 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
             else -> {
                 (baseActivity as DashboardActivity)
                         .mNavController
-                        .pushFragment(TransactionDetailFragment.newInstance(mTransactionCategoriesAdapter.get(position), position))
+                        .pushFragment(TransactionDetailFragment
+                                .newInstance(mTransactionCategoriesAdapter.get(position), position))
             }
         }
     }
 
     override fun initView(transactions: ArrayList<Transaction>) {
-        val transactionType = arguments?.getString(TYPE)!!
-        val newTransactions: ArrayList<Transaction>
-
-        newTransactions = when (transactionType) {
-            "IN" -> transactions.filter { it.credit == "11" } as ArrayList<Transaction>
-            "OUT" -> transactions.filter { it.credit == "00" } as ArrayList<Transaction>
-            else -> transactions
-        }
-
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
         val monthFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
-        months += newTransactions.map { monthFormat.format(formatter.parse(it.date)) }.toSortedSet()
+        months += transactions.map { monthFormat.format(formatter.parse(it.date)) }.toSortedSet()
 
         monthsAdapter.items += months
-        mTransactionCategoriesAdapter.add(newTransactions)
+        mTransactionCategoriesAdapter.add(transactions)
         recyclerView.scrollToPosition(0)
     }
 
@@ -130,22 +122,13 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
     }
 
     override fun onGetUserTransactionsSuccessful(transactions: ArrayList<Transaction>) {
-        val transactionType = arguments?.getString(TYPE)!!
-        val newTransactions: ArrayList<Transaction>
-
-        newTransactions = when (transactionType) {
-            "IN" -> transactions.filter { it.credit == "11" } as ArrayList<Transaction>
-            "OUT" -> transactions.filter { it.credit == "00" } as ArrayList<Transaction>
-            else -> transactions
-        }
-
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
         val monthFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
-        months += newTransactions.map { monthFormat.format(formatter.parse(it.date)) }.toSortedSet()
+        months += transactions.map { monthFormat.format(formatter.parse(it.date)) }.toSortedSet()
 
         monthsAdapter.items += months
 
-        mTransactionCategoriesAdapter.add(newTransactions)
+        mTransactionCategoriesAdapter.add(transactions)
         recyclerView.scrollToPosition(0)
         mSwipeRefreshLayout.isRefreshing = false
     }
@@ -156,12 +139,9 @@ class TransactionCategoriesFragment : BaseFragment(), TransactionCategoriesMvpVi
 
     companion object {
 
-        private const val TYPE = "TransactionCategoriesFragment.TYPE"
-
-        fun newInstance(type: String): TransactionCategoriesFragment {
+        fun newInstance(): TransactionCategoriesFragment {
             val fragment = TransactionCategoriesFragment()
             val args = Bundle()
-            args.putString(TYPE, type)
             fragment.arguments = args
             return fragment
         }

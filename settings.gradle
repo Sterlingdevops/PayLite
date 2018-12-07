@@ -1,1 +1,1 @@
-include ':app', ':pinview', ':expandabletextview', ':views', ':scheduleview', ":editcredit", ":currencyedittext", ':numberkeyboard'
+include ':app', ':pinview', ':superbottomsheet', ':expandabletextview', ':views', ':scheduleview', ":editcredit", ":currencyedittext", ':numberkeyboard'

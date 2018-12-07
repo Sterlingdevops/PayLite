@@ -25,8 +25,9 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.dashboard.DashboardActivity
-import com.sterlingng.paylite.ui.newpayment.NewPaymentFragment
 import com.sterlingng.paylite.ui.paystaff.salarydetails.SalaryDetailsFragment
+import com.sterlingng.paylite.utils.AppConstants.DRAWABLE_RIGHT
+import com.sterlingng.paylite.utils.AppConstants.REQUEST_SELECT_CONTACT
 import javax.inject.Inject
 
 class AddStaffFragment : BaseFragment(), AddStaffMvpView {
@@ -70,7 +71,7 @@ class AddStaffFragment : BaseFragment(), AddStaffMvpView {
         mPhoneEmailEditText.setOnTouchListener { _, event ->
 
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.compoundDrawables[NewPaymentFragment.DRAWABLE_RIGHT].bounds.width())) {
+                if (event.rawX >= (mPhoneEmailEditText.right - mPhoneEmailEditText.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
                     Dexter.withActivity(baseActivity)
                             .withPermission(Manifest.permission.READ_CONTACTS)
                             .withListener(object : PermissionListener {
@@ -85,7 +86,7 @@ class AddStaffFragment : BaseFragment(), AddStaffMvpView {
                                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                                     val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
                                     if (intent.resolveActivity(baseActivity.packageManager) != null) {
-                                        startActivityForResult(intent, NewPaymentFragment.REQUEST_SELECT_CONTACT)
+                                        startActivityForResult(intent, REQUEST_SELECT_CONTACT)
                                     }
                                 }
 
@@ -100,9 +101,7 @@ class AddStaffFragment : BaseFragment(), AddStaffMvpView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            NewPaymentFragment.REQUEST_SELECT_CONTACT -> {
-                data?.data?.let { handleContactPickerResult(it) }
-            }
+            REQUEST_SELECT_CONTACT -> data?.data?.let { handleContactPickerResult(it) }
         }
     }
 

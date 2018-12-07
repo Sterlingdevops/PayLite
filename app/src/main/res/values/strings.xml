@@ -375,4 +375,12 @@
     <string name="airtel_mobile">Airtel Mobile</string>
     <string name="globacom">Globacom</string>
     <string name="_9mobile">9mobile</string>
+    <string name="summary">Summary</string>
+    <string name="total_n20_000">Total: N20,000</string>
+    <string name="_10_000">₦ 10,000</string>
+    <string name="money_in">Money in</string>
+    <string name="money_out">Money out</string>
+    <string name="saved">Saved</string>
+    <string name="categories">Categories</string>
+    <string name="entertainment">Entertainment</string>
 </resources>

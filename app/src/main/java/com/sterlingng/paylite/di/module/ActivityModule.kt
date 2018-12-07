@@ -189,6 +189,9 @@ import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesPr
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailMvpContract
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailMvpView
 import com.sterlingng.paylite.ui.transactions.detail.TransactionDetailPresenter
+import com.sterlingng.paylite.ui.transactions.insights.InsightsMvpContract
+import com.sterlingng.paylite.ui.transactions.insights.InsightsMvpView
+import com.sterlingng.paylite.ui.transactions.insights.InsightsPresenter
 import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesAdapter
 import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesMvpContract
 import com.sterlingng.paylite.ui.transactions.paymentcategory.PaymentCategoriesMvpView
@@ -343,6 +346,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideContactsPresenter(presenter: ContactsPresenter<ContactsMvpView>): ContactsMvpContract<ContactsMvpView> = presenter
 
     @Provides
+    internal fun provideInsightsPresenter(presenter: InsightsPresenter<InsightsMvpView>): InsightsMvpContract<InsightsMvpView> = presenter
+
+    @Provides
     internal fun providePayStaffPresenter(presenter: PayStaffPresenter<PayStaffMvpView>): PayStaffMvpContract<PayStaffMvpView> = presenter
 
     @Provides
@@ -391,7 +397,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     internal fun provideTransactionsPresenter(presenter: TransactionsPresenter<TransactionsMvpView>): TransactionsMvpContract<TransactionsMvpView> = presenter
 
     @Provides
-    internal fun provideEditPresenter(profilePresenter: EditProfilePresenter<EditProfileMvpView>): EditProfileMvpContract<EditProfileMvpView> = profilePresenter
+    internal fun provideEditProfilePresenter(presenter: EditProfilePresenter<EditProfileMvpView>): EditProfileMvpContract<EditProfileMvpView> = presenter
 
     @Provides
     internal fun provideAirtelServicePresenter(presenter: AirtelServicePresenter<AirtelServiceMvpView>): AirtelServiceMvpContract<AirtelServiceMvpView> = presenter

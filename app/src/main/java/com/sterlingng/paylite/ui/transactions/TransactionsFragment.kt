@@ -8,6 +8,7 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout
 import com.sterlingng.paylite.R
 import com.sterlingng.paylite.ui.base.BaseFragment
 import com.sterlingng.paylite.ui.transactions.categories.TransactionCategoriesFragment
+import com.sterlingng.paylite.ui.transactions.insights.InsightsFragment
 import com.sterlingng.paylite.utils.CustomPagerAdapter
 import com.sterlingng.views.CustomViewPager
 import javax.inject.Inject
@@ -33,14 +34,9 @@ class TransactionsFragment : BaseFragment(), TransactionsMvpView {
     override fun setUp(view: View) {
         mPagerAdapter = CustomPagerAdapter(childFragmentManager)
 
-        mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance("ALL"), "ALL")
-        mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance("IN"), "IN")
-        mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance("OUT"), "OUT")
-
-        mViewPager.isPagingEnabled = false
+        mPagerAdapter.addFragment(TransactionCategoriesFragment.newInstance(), "HISTORY")
+        mPagerAdapter.addFragment(InsightsFragment.newInstance(), "INSIGHTS")
         mViewPager.adapter = mPagerAdapter
-        mViewPager.offscreenPageLimit = 3
-
         mSmartTabLayout.setViewPager(mViewPager)
     }
 
